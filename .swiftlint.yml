@@ -1,0 +1,86 @@
+disabled_rules:
+  - trailing_whitespace
+  - force_cast
+  - force_try
+  - file_length
+  - valid_ibinspectable
+  - shorthand_operator
+  - file_header
+  - discarded_notification_center_observer
+  - empty_enum_arguments
+  - prohibited_super_call
+  - unneeded_override
+  - unused_parameter
+  - contrasted_opening_brace
+  - missing_docs
+
+opt_in_rules:
+  - vertical_whitespace_opening_braces
+  - vertical_whitespace_closing_braces
+  - overridden_super_call
+  - vertical_parameter_alignment
+  - weak_delegate
+  - yoda_condition
+  - vertical_whitespace
+  - indentation_width
+  - literal_expression_end_indentation
+  - closure_end_indentation
+  - multiline_function_chains
+  - multiline_parameters_brackets
+  - quick_discouraged_call
+  - array_init
+  - anonymous_argument_in_multiline_closure
+  - explicit_init
+  - force_unwrapping
+  - multiline_arguments
+  - multiline_arguments_brackets
+  - async_without_await
+  
+#  - explicit_type_interface
+#  - no_magic_numbers
+#  - implicit_return
+#  - attributes
+
+  - balanced_xctest_lifecycle
+  - closure_spacing
+  - collection_alignment
+  - enum_case_associated_values_count
+  - fatal_error_message
+  - file_name
+  - file_name_no_space
+  - final_test_case
+  - identical_operands
+  - multiline_literal_brackets
+  - multiline_parameters
+  - number_separator
+  - operator_usage_whitespace
+  - prefer_zero_over_explicit_init
+  - prohibited_super_call
+  - shorthand_optional_binding
+  - single_test_class
+  - static_operator
+  - strict_fileprivate
+  - unavailable_function
+  - unhandled_throwing_task
+  - vertical_parameter_alignment_on_call
+  
+analyzer_rules:
+  - unused_import
+
+excluded:
+  - Carthage/
+  - Pods/
+  - Generated/
+
+# Rule to enforce camelCase for variable and constant names
+identifier_name:
+  min_length: 1
+  max_length:
+      warning: 50
+      error: 60
+  excluded: ["id", "url"]  # Exclude certain identifiers from the rule
+
+# Rule to limit the length of function bodies
+function_body_length:
+  warning: 100
+  error: 200

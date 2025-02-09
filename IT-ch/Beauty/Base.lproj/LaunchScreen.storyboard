@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,6 +24,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="CbB-Dn-mGE"/>
                         <color key="backgroundColor" name="primaryGray"/>
                         <constraints>
                             <constraint firstItem="kRr-4U-n6u" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Oyq-Go-dYY"/>

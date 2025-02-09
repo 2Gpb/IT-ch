@@ -68,6 +68,7 @@
 				D09028FD2D54C89D008001CE /* Sources */,
 				D09028FE2D54C89D008001CE /* Frameworks */,
 				D09028FF2D54C89D008001CE /* Resources */,
+				D0B311A32D58B93500135F5B /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -107,6 +108,8 @@
 			);
 			mainGroup = D09028F82D54C89D008001CE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D09029022D54C89D008001CE /* Products */;
 			projectDirPath = "";
@@ -127,6 +130,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D0B311A32D58B93500135F5B /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/opt/homebrew/bin:$PATH\n/opt/homebrew/bin/swiftlint\nif which swiftlint > /dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLine not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\ncount=0\nfor file_path in $(git ls-files -om --exclude-from=.gitignore | grep \".swift$\"); do\n    export SCRIPT_INPUT_FILE_$count=$file_path\n    count=$((count + 1))\ndone\n\nfor file_path in $(git diff --cached --name-only | grep \".swift$\"); do\n    export SCRIPT_INPUT_FILE_$count=$file_path\n    count=$((count + 1))\ndone\n\nexport SCRIPT_INPUT_FILE_COUNT=$count\nswiftlint lint --use-script-input-files\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D09028FD2D54C89D008001CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -146,12 +171,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "IT-ch/Application/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -173,12 +200,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "IT-ch/Application/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

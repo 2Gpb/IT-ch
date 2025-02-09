@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Foundation
+import SafariServices
 
 final class ViewController: UIViewController {
     // MARK: - Lifecycle
