@@ -15,13 +15,5 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: "24282C")
-        
-        button.apply(StylesManager.shared.style(for: .primaryButton))
-        button.setTitle("Войти через ЕЛК", for: .normal)
-        
-        view.addSubview(button)
-        button.pinCenterY(to: view)
-        button.pinHorizontal(to: view, 16)
-        button.setHeight(48)
     }
 }

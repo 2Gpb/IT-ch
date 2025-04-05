@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D09029132D54C89E008001CE /* Exceptions for "IT-ch" folder in "IT-ch" target */ = {
+		D09029132D54C89E008001CE /* Exceptions for "Sources" folder in "IT-ch" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Application/Info.plist,
@@ -21,12 +21,17 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D09029032D54C89D008001CE /* IT-ch */ = {
+		D09029032D54C89D008001CE /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D09029132D54C89E008001CE /* Exceptions for "IT-ch" folder in "IT-ch" target */,
+				D09029132D54C89E008001CE /* Exceptions for "Sources" folder in "IT-ch" target */,
 			);
-			path = "IT-ch";
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D091B0CD2DA1591700960496 /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -45,7 +50,8 @@
 		D09028F82D54C89D008001CE = {
 			isa = PBXGroup;
 			children = (
-				D09029032D54C89D008001CE /* IT-ch */,
+				D091B0CD2DA1591700960496 /* Packages */,
+				D09029032D54C89D008001CE /* Sources */,
 				D09029022D54C89D008001CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,14 +74,14 @@
 				D09028FD2D54C89D008001CE /* Sources */,
 				D09028FE2D54C89D008001CE /* Frameworks */,
 				D09028FF2D54C89D008001CE /* Resources */,
-				D0B311A32D58B93500135F5B /* SwiftLint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D09029032D54C89D008001CE /* IT-ch */,
+				D09029032D54C89D008001CE /* Sources */,
+				D091B0CD2DA1591700960496 /* Packages */,
 			);
 			name = "IT-ch";
 			packageProductDependencies = (
@@ -130,28 +136,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		D0B311A32D58B93500135F5B /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export PATH=/opt/homebrew/bin:$PATH\n/opt/homebrew/bin/swiftlint\nif which swiftlint > /dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLine not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\ncount=0\nfor file_path in $(git ls-files -om --exclude-from=.gitignore | grep \".swift$\"); do\n    export SCRIPT_INPUT_FILE_$count=$file_path\n    count=$((count + 1))\ndone\n\nfor file_path in $(git diff --cached --name-only | grep \".swift$\"); do\n    export SCRIPT_INPUT_FILE_$count=$file_path\n    count=$((count + 1))\ndone\n\nexport SCRIPT_INPUT_FILE_COUNT=$count\nswiftlint lint --use-script-input-files\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		D09028FD2D54C89D008001CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -173,7 +157,7 @@
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "IT-ch/Application/Info.plist";
+				INFOPLIST_FILE = Sources/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -202,7 +186,7 @@
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "IT-ch/Application/Info.plist";
+				INFOPLIST_FILE = Sources/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
