@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUIComponents
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -18,6 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else {
             return
         }
+        
+        ITCHFont.registerFonts()
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = ViewController()

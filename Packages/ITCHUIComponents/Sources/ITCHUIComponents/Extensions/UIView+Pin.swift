@@ -2,7 +2,7 @@ import UIKit
 
 // MARK: - Pin methods
 /// Will throw exceptions when there is no common superview between constrained views.
-extension UIView {
+public extension UIView {
     enum ConstraintMode {
         case equal
         /// greaterOrEqual
