@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PrimaryNavigationRow: UIView {
+final class ITCHNavigationRow: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {

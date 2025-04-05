@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PrimaryHomeWorkCell: UIView {
+final class ITCHHomeWorkCell: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -57,11 +57,11 @@ final class PrimaryHomeWorkCell: UIView {
     private let dateLabel: UILabel = UILabel()
     private let dateImage: UIImageView = UIImageView()
     private let separator: UIView = UIView()
-    private var navigationRow: PrimaryNavigationRow = PrimaryNavigationRow()
-    private var secondNavigationRow: PrimaryNavigationRow = PrimaryNavigationRow()
+    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow()
+    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
     
     // MARK: - Lifecycle
-    init(title: String, date: Date, type: HomeWorkCellType) {
+    init(title: String, date: Date, type: ITCHHomeWorkCellType) {
         super.init(frame: .zero)
         setUp()
         

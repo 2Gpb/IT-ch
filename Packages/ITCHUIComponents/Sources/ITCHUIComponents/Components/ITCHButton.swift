@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PrimaryButton: UIView {
+final class ITCHButton: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -26,7 +26,7 @@ final class PrimaryButton: UIView {
     // MARK: - Lifecycle
     init(
         title: String?,
-        type: ButtonType = .primary
+        type: ITCHButtonType = .primary
     ) {
         super.init(frame: .zero)
         

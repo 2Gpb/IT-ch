@@ -5,7 +5,7 @@
 //  Created by Peter on 05.04.2025.
 //
 
-enum HomeWorkCellType {
+enum ITCHHomeWorkCellType {
     case teacher
     case student
     case assistant

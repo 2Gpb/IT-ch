@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension PrimaryTextField {
+extension ITCHTextField {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -32,7 +32,7 @@ extension PrimaryTextField {
     }
 }
 
-final class PrimaryTextField: UIView {
+final class ITCHTextField: UIView {
     // MARK: - UI Components
     private let label: UILabel = UILabel()
     private let textField: UITextField = UITextField()
