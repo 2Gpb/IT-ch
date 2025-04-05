@@ -20,28 +20,22 @@ final class PrimaryButton: UIView {
         }
     }
     
-    // MARK: - Button types
-    enum typeButton {
-        case primary
-        case delete
-    }
-    
     // MARK: - UI Components
     private let button: UIButton = UIButton(type: .system)
     
     // MARK: - Lifecycle
     init(
         title: String?,
-        type: typeButton = .primary
+        type: ButtonType = .primary
     ) {
         super.init(frame: .zero)
         
         button.setTitle(title, for: .normal)
         switch type {
         case .primary:
-            button.backgroundColor = UIColor(color: .blue60)
+            button.backgroundColor = ITCHColor.blue60.color
         case .delete:
-            button.backgroundColor = UIColor(color: .red50)
+            button.backgroundColor = ITCHColor.red50.color
         }
         
         setUp()
@@ -54,7 +48,7 @@ final class PrimaryButton: UIView {
     
     // MARK: - SetUp
     private func setUp() {
-        button.tintColor = UIColor(color: .base0)
+        button.tintColor = ITCHColor.base0.color
         button.titleLabel?.font = ITCHFont.bodySMedium.font
         button.layer.cornerRadius = Constant.Button.cornerRadius
         

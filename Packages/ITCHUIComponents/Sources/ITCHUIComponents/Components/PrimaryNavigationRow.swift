@@ -70,8 +70,7 @@ final class PrimaryNavigationRow: UIView {
     
     private func setUpLeftView() {
         guard leftView.image != nil else { return }
-        leftView.tintColor = UIColor(color: .base50)
-        
+        leftView.tintColor = ITCHColor.base50.color
         
         addSubview(leftView)
         leftView.pinLeft(to: self)
@@ -82,7 +81,7 @@ final class PrimaryNavigationRow: UIView {
     
     private func setUpLabel() {
         label.font = ITCHFont.bodyMMedium.font
-        label.textColor = UIColor(color: .base0)
+        label.textColor =  ITCHColor.base0.color
         
         addSubview(label)
         label.pinCenterY(to: self)
@@ -95,7 +94,7 @@ final class PrimaryNavigationRow: UIView {
     
     private func setUpChevron() {
         chevron.image = Constant.Chevron.image
-        chevron.tintColor = UIColor(color: .base50)
+        chevron.tintColor = ITCHColor.base50.color
         
         addSubview(chevron)
         chevron.pinRight(to: self)

@@ -7,12 +7,6 @@
 
 import UIKit
 
-enum HomeWorkCellType {
-    case teacher
-    case student
-    case assistant
-}
-
 final class PrimaryHomeWorkCell: UIView {
     // MARK: - Constants
     private enum Constant {
@@ -97,7 +91,7 @@ final class PrimaryHomeWorkCell: UIView {
     
     // MARK: - SetUp
     private func setUp() {
-        backgroundColor = UIColor(color: .backgroundGray)
+        backgroundColor = ITCHColor.backgroundGray.color
         layer.cornerRadius = Constant.View.cornerRadius
         
         setUpTitle()
@@ -109,7 +103,7 @@ final class PrimaryHomeWorkCell: UIView {
     }
     
     private func setUpTitle() {
-        title.textColor = UIColor(color: .base0)
+        title.textColor = ITCHColor.base0.color
         title.font = ITCHFont.bodyMMedium.font
         
         addSubview(title)
@@ -119,7 +113,7 @@ final class PrimaryHomeWorkCell: UIView {
     
     private func setUpDateImage() {
         dateImage.image = Constant.DateImage.image
-        dateImage.tintColor = UIColor(color: .red50)
+        dateImage.tintColor = ITCHColor.red50.color
         
         dateStack.addArrangedSubview(dateImage)
         dateImage.setWidth(Constant.DateImage.size)
@@ -127,7 +121,7 @@ final class PrimaryHomeWorkCell: UIView {
     }
     
     private func setUpDateLabel() {
-        dateLabel.textColor = UIColor(color: .base30)
+        dateLabel.textColor = ITCHColor.base30.color
         dateLabel.font = ITCHFont.bodySMedium.font
         
         dateStack.addArrangedSubview(dateLabel)
@@ -143,7 +137,7 @@ final class PrimaryHomeWorkCell: UIView {
     }
     
     private func setUpSeparator() {
-        separator.backgroundColor = UIColor(color: .base70)
+        separator.backgroundColor = ITCHColor.base70.color
         
         addSubview(separator)
         separator.pinTop(to: dateStack.bottomAnchor, Constant.Separator.topOffset)

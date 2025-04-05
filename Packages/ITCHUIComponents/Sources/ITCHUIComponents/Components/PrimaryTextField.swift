@@ -22,7 +22,7 @@ extension PrimaryTextField {
             static let edgeViewsFrame: CGRect = CGRect(x: 0, y: 0, width: 16, height: 1)
             @MainActor static let placeholderAttributes: [NSAttributedString.Key : Any] = [
                 .font: ITCHFont.bodyMRegular.font,
-                .foregroundColor: UIColor(color: .base50)
+                .foregroundColor: ITCHColor.base50.color
             ]
         }
         
@@ -69,7 +69,7 @@ final class PrimaryTextField: UIView {
     }
     
     private func setUpLabel() {
-        label.textColor = UIColor(color: .base60)
+        label.textColor = ITCHColor.base60.color
         label.font = ITCHFont.bodySRegular.font
         
         addSubview(label)
@@ -82,11 +82,11 @@ final class PrimaryTextField: UIView {
         textField.rightView = rightView
         textField.leftViewMode = .always
         textField.rightViewMode = .always
-        textField.textColor = UIColor(color: .base10)
+        textField.textColor = ITCHColor.base10.color
         textField.font = ITCHFont.bodyMRegular.font
         textField.layer.cornerRadius = Constant.TextField.cornerRadius
         textField.layer.borderWidth = Constant.TextField.borderwidth
-        textField.layer.borderColor = UIColor(color: .cellLightGray).cgColor
+        textField.layer.borderColor = ITCHColor.cellLightGray.color.cgColor
         
         addSubview(textField)
         textField.pinHorizontal(to: self)

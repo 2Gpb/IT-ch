@@ -57,7 +57,7 @@ final class PrimaryNavigationBar: UIView {
     }
     
     private func setUpTitle() {
-        title.textColor = UIColor(color: .base0)
+        title.textColor = ITCHColor.base0.color
         title.font = ITCHFont.header5Medium.font
         title.textAlignment = .center
         
@@ -69,7 +69,7 @@ final class PrimaryNavigationBar: UIView {
         guard leftButton.currentImage != nil else { return }
         leftButton.setPreferredSymbolConfiguration(Constant.Buttons.imageConfiguraton, forImageIn: .normal)
         leftButton.backgroundColor = .clear
-        leftButton.tintColor = UIColor(color: .blue60)
+        leftButton.tintColor = ITCHColor.blue60.color
         
         addSubview(leftButton)
         leftButton.pinLeft(to: self)
@@ -82,7 +82,7 @@ final class PrimaryNavigationBar: UIView {
         guard rightButton.currentImage != nil else { return }
         rightButton.backgroundColor = .clear
         rightButton.setPreferredSymbolConfiguration(Constant.Buttons.imageConfiguraton, forImageIn: .normal)
-        rightButton.tintColor = UIColor(color: .blue60)
+        rightButton.tintColor = ITCHColor.blue60.color
         
         addSubview(rightButton)
         rightButton.pinRight(to: self)
