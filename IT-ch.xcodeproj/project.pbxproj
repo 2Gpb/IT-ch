@@ -15,10 +15,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D084A7012DA18047004BEFA6 /* Exceptions for "Packages" folder in "IT-ch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ITCHUIComponents,
+			);
+			target = D09029002D54C89D008001CE /* IT-ch */;
+		};
 		D09029132D54C89E008001CE /* Exceptions for "Sources" folder in "IT-ch" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"/Localized: Beauty/LaunchScreen.storyboard",
 				Application/Info.plist,
+				Beauty/Assets.xcassets,
 			);
 			target = D09029002D54C89D008001CE /* IT-ch */;
 		};
@@ -35,6 +44,9 @@
 		};
 		D091B0CD2DA1591700960496 /* Packages */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D084A7012DA18047004BEFA6 /* Exceptions for "Packages" folder in "IT-ch" target */,
+			);
 			path = Packages;
 			sourceTree = "<group>";
 		};

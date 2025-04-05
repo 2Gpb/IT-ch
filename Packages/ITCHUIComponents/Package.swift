@@ -13,11 +13,20 @@ let package = Package(
             name: "ITCHUIComponents",
             targets: ["ITCHUIComponents"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0")
+    ],
     targets: [
         .target(
             name: "ITCHUIComponents",
+            exclude: [
+                "../../swiftgen.yml"
+            ],
             resources: [.process(
                 "Resources/Fonts/FontsSources")
+            ],
+            plugins: [
+                .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
             ]
         ),
     ]
