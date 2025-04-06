@@ -10,22 +10,29 @@ import ITCHUIComponents
 
 final class ViewController: UIViewController {
     // MARK: - Private fields
-    private let button: UIButton = UIButton(type: .system)
-    private let label: UILabel = UILabel()
-    private let image: UIImageView = UIImageView()
+    private let button: ITCHButton = ITCHButton(title: "Далее")
+    private let row: ITCHNavigationRow = ITCHNavigationRow(title: "Чат курса", leftImage: ITCHImage.vk28.image)
+    private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
+    private let navBar: ITCHNavigationBar = ITCHNavigationBar(
+        title: "Текущий курс",
+        leftImage: ITCHImage.chevronLeft24.image,
+        rightImage: ITCHImage.plus24.image
+    )
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.backgroundColor = ITCHColor.backgroundDark.color
+        cell.firstAction = {
+            print(1)
+        }
         
-        label.text = "good"
-        label.textColor = ITCHColor.red50.color
-        label.font = ITCHFont.header3.font
+        cell.secondAction = {
+            print(2)
+        }
         
-        image.image = ITCHImage.appearance32.image
-        
-        view.addSubview(image)
-        image.pinCenter(to: view)
+        view.addSubview(cell)
+        cell.pinCenterY(to: view)
+        cell.pinHorizontal(to: view, 16)
     }
 }

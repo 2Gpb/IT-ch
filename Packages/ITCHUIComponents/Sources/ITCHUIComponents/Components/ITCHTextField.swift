@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension ITCHTextField {
+final class ITCHTextField: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -30,9 +30,7 @@ extension ITCHTextField {
             static let height: CGFloat = 73
         }
     }
-}
 
-final class ITCHTextField: UIView {
     // MARK: - UI Components
     private let label: UILabel = UILabel()
     private let textField: UITextField = UITextField()

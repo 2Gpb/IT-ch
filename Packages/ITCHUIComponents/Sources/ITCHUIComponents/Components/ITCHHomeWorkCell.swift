@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ITCHHomeWorkCell: UIView {
+public final class ITCHHomeWorkCell: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -24,7 +24,7 @@ final class ITCHHomeWorkCell: UIView {
         }
         
         enum DateImage {
-            static let image: UIImage? = UIImage(named: "Time")?.withRenderingMode(.alwaysTemplate)
+            static let image: UIImage? = ITCHImage.time20.image
             static let size: CGFloat = 20
         }
         
@@ -57,31 +57,40 @@ final class ITCHHomeWorkCell: UIView {
     private let dateLabel: UILabel = UILabel()
     private let dateImage: UIImageView = UIImageView()
     private let separator: UIView = UIView()
-    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow()
-    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
+    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow(
+        title: Constant.NavigationRows.teacherTitle
+    )
+    
+    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(
+        title: Constant.NavigationRows.teacherSecondTitle
+    )
+    
+    // MARK: - Properties
+    public var firstAction: (() -> Void)? {
+        didSet {
+            navigationRow.action = firstAction
+        }
+    }
+    
+    public var secondAction: (() -> Void)? {
+        didSet {
+            secondNavigationRow.action = secondAction
+        }
+    }
     
     // MARK: - Lifecycle
-    init(title: String, date: Date, type: ITCHHomeWorkCellType) {
+    public init(
+        title: String,
+        date: Date,
+        type: ITCHHomeWorkCellType
+    ) {
         super.init(frame: .zero)
-        setUp()
         
-        self.title.text = title
-        self.dateLabel.text = configure(with: date)
-        
-        switch type {
-        case .teacher:
-            navigationRow.title = Constant.NavigationRows.teacherTitle
-            secondNavigationRow.title = Constant.NavigationRows.teacherSecondTitle
-            
-            setUpSecondNavigationRow()
-            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .student:
-            navigationRow.title = Constant.NavigationRows.studentTitle
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .assistant:
-            navigationRow.title = Constant.NavigationRows.assistantTitle
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        }
+        setUp(
+            title: title,
+            date: date,
+            type: type
+        )
     }
     
     @available(*, unavailable)
@@ -90,7 +99,13 @@ final class ITCHHomeWorkCell: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(
+        title: String,
+        date: Date,
+        type: ITCHHomeWorkCellType
+    ) {
+        self.title.text = title
+        self.dateLabel.text = date.configure()
         backgroundColor = ITCHColor.backgroundGray.color
         layer.cornerRadius = Constant.View.cornerRadius
         
@@ -100,6 +115,18 @@ final class ITCHHomeWorkCell: UIView {
         setUpDateStack()
         setUpSeparator()
         setUpNavigationRow()
+        
+        switch type {
+        case .teacher:
+            setUpSecondNavigationRow()
+            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        case .student:
+            navigationRow.title = Constant.NavigationRows.studentTitle
+            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        case .assistant:
+            navigationRow.title = Constant.NavigationRows.assistantTitle
+            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        }
     }
     
     private func setUpTitle() {
@@ -116,8 +143,6 @@ final class ITCHHomeWorkCell: UIView {
         dateImage.tintColor = ITCHColor.red50.color
         
         dateStack.addArrangedSubview(dateImage)
-        dateImage.setWidth(Constant.DateImage.size)
-        dateImage.setHeight(Constant.DateImage.size)
     }
     
     private func setUpDateLabel() {
@@ -147,24 +172,13 @@ final class ITCHHomeWorkCell: UIView {
     
     private func setUpNavigationRow() {
         addSubview(navigationRow)
-        
         navigationRow.pinTop(to: separator.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
     }
     
     private func setUpSecondNavigationRow() {
         addSubview(secondNavigationRow)
-        
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-    }
-    
-    // MARK: - Private methods
-    private func configure(with date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = Constant.DateStack.dateFormat
-        let dateString = formatter.string(from: date)
-        
-        return dateString
     }
 }

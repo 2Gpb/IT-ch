@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ITCHNavigationRow: UIView {
+public final class ITCHNavigationRow: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -27,7 +27,7 @@ final class ITCHNavigationRow: UIView {
         }
         
         enum Chevron {
-            static let image: UIImage? = UIImage(named: "ArrowRight")?.withRenderingMode(.alwaysTemplate)
+            static let image: UIImage? = ITCHImage.chevronRight16.image
             static let dimension: CGFloat = 18
         }
     }
@@ -37,7 +37,8 @@ final class ITCHNavigationRow: UIView {
     private let label: UILabel = UILabel()
     private let chevron: UIImageView = UIImageView()
     
-    // MARK: - Variables
+    // MARK: - Properties
+    public var action: (() -> Void)?
     var title: String? {
         didSet {
             label.text = title
@@ -45,13 +46,10 @@ final class ITCHNavigationRow: UIView {
     }
     
     // MARK: - Lifecycle
-    init(title: String = "test", leftImage: UIImage? = nil) {
+    public init(title: String, leftImage: UIImage? = nil) {
         super.init(frame: .zero)
         
-        label.text = title
-        leftView.image = leftImage?.withRenderingMode(.alwaysTemplate)
-        
-        setUp()
+        setUp(title: title, leftImage: leftImage)
     }
     
     @available(*, unavailable)
@@ -60,12 +58,15 @@ final class ITCHNavigationRow: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(title: String?, leftImage: UIImage?) {
+        label.text = title
+        leftView.image = leftImage
         setHeight(Constant.View.height)
         
         setUpLeftView()
         setUpLabel()
         setUpChevron()
+        setUpGesture()
     }
     
     private func setUpLeftView() {
@@ -101,5 +102,15 @@ final class ITCHNavigationRow: UIView {
         chevron.pinCenterY(to: self)
         chevron.setHeight(Constant.Chevron.dimension)
         chevron.setWidth(Constant.Chevron.dimension)
+    }
+    
+    private func setUpGesture() {
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewAction)))
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func viewAction() {
+        action?()
     }
 }

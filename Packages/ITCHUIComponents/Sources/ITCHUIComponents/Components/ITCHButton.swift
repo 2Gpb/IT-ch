@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ITCHButton: UIView {
+public final class ITCHButton: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -23,22 +23,23 @@ final class ITCHButton: UIView {
     // MARK: - UI Components
     private let button: UIButton = UIButton(type: .system)
     
+    // MARK: - Properties
+    public var action: (() -> Void)?
+    
     // MARK: - Lifecycle
-    init(
-        title: String?,
+    public init(
+        title: String,
         type: ITCHButtonType = .primary
     ) {
         super.init(frame: .zero)
         
-        button.setTitle(title, for: .normal)
+        setUp(title: title)
         switch type {
         case .primary:
             button.backgroundColor = ITCHColor.blue60.color
         case .delete:
             button.backgroundColor = ITCHColor.red50.color
         }
-        
-        setUp()
     }
     
     @available(*, unavailable)
@@ -47,13 +48,21 @@ final class ITCHButton: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(title: String) {
+        button.setTitle(title, for: .normal)
         button.tintColor = ITCHColor.base0.color
-        button.titleLabel?.font = ITCHFont.bodySMedium.font
+        button.titleLabel?.font = ITCHFont.bodyMMedium.font
         button.layer.cornerRadius = Constant.Button.cornerRadius
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         addSubview(button)
         button.pin(to: self)
         button.setHeight(Constant.Button.height)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func buttonAction() {
+        action?()
     }
 }

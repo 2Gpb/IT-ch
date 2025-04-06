@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ITCHNavigationBar: UIView {
+public final class ITCHNavigationBar: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -20,26 +20,33 @@ final class ITCHNavigationBar: UIView {
         
         enum Buttons {
             static let dimension: CGFloat = 50
-            static let imageConfiguraton: UIImage.SymbolConfiguration = UIImage.SymbolConfiguration(
-                pointSize: 24,
-                weight: .medium
-            )
+            static let leftOffset: CGFloat = 16
+            static let rightOffset: CGFloat = 16
         }
     }
     
     // MARK: - UI Components
-    private let leftButton: UIButton = UIButton(type: .system)
+    private let leftButton: ITCHCustomButton = ITCHCustomButton(type: .system)
     private let title: UILabel = UILabel()
-    private let rightButton: UIButton = UIButton(type: .system)
+    private let rightButton: ITCHCustomButton = ITCHCustomButton(type: .system)
+    
+    // MARK: - Properties
+    public var leftAction: (() -> Void)?
+    public var rightAction: (() -> Void)?
     
     // MARK: - lifecycle
-    init(title: String, leftImage: UIImage? = nil, rightImage: UIImage? = nil) {
+    public init(
+        title: String,
+        leftImage: UIImage? = nil,
+        rightImage: UIImage? = nil
+    ) {
         super.init(frame: .zero)
-        
-        self.title.text = title
-        leftButton.setImage(leftImage?.withRenderingMode(.alwaysTemplate), for: .normal)
-        rightButton.setImage(rightImage?.withRenderingMode(.alwaysTemplate), for: .normal)
-        setUp()
+    
+        setUp(
+            title: title,
+            leftImage: leftImage,
+            rightImage: rightImage
+        )
     }
     
     @available(*, unavailable)
@@ -48,7 +55,14 @@ final class ITCHNavigationBar: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(
+        title: String,
+        leftImage: UIImage?,
+        rightImage: UIImage?
+    ) {
+        self.title.text = title
+        leftButton.setImage(leftImage, for: .normal)
+        rightButton.setImage(rightImage, for: .normal)
         setHeight(Constant.View.height)
         
         setUpTitle()
@@ -67,27 +81,34 @@ final class ITCHNavigationBar: UIView {
     
     private func setUpLeftView() {
         guard leftButton.currentImage != nil else { return }
-        leftButton.setPreferredSymbolConfiguration(Constant.Buttons.imageConfiguraton, forImageIn: .normal)
         leftButton.backgroundColor = .clear
         leftButton.tintColor = ITCHColor.blue60.color
+        leftButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
         
         addSubview(leftButton)
-        leftButton.pinLeft(to: self)
+        leftButton.pinLeft(to: self, Constant.Buttons.leftOffset)
         leftButton.pinCenterY(to: self)
-        leftButton.setHeight(Constant.Buttons.dimension)
-        leftButton.setWidth(Constant.Buttons.dimension)
     }
     
     private func setUpRightView() {
         guard rightButton.currentImage != nil else { return }
         rightButton.backgroundColor = .clear
-        rightButton.setPreferredSymbolConfiguration(Constant.Buttons.imageConfiguraton, forImageIn: .normal)
         rightButton.tintColor = ITCHColor.blue60.color
+        rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
         
         addSubview(rightButton)
-        rightButton.pinRight(to: self)
+        rightButton.pinRight(to: self, Constant.Buttons.rightOffset)
         rightButton.pinCenterY(to: self)
-        rightButton.setHeight(Constant.Buttons.dimension)
-        rightButton.setWidth(Constant.Buttons.dimension)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func leftButtonAction() {
+        leftAction?()
+    }
+    
+    @objc
+    private func rightButtonAction() {
+        rightAction?()
     }
 }
