@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ITCHTextField: UIView {
+public final class ITCHTextField: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -37,19 +37,14 @@ final class ITCHTextField: UIView {
     private let leftView: UIView = UIView(frame: Constant.TextField.edgeViewsFrame)
     private let rightView: UIView = UIView(frame: Constant.TextField.edgeViewsFrame)
     
-    var onDidFinish: ((String) -> Void)?
+    // MARK: - Properties
+    public var returnAction: (() -> Void)?
     
     // MARK: - Lifecycle
-    init(title: String, placeholder: String) {
+    public init(title: String, placeholder: String) {
         super.init(frame: .zero)
-
-        label.text = title
-        textField.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
-            attributes: Constant.TextField.placeholderAttributes
-        )
         
-        setUp()
+        setUp(title: title, placeholder: placeholder)
     }
     
     @available(*, unavailable)
@@ -57,8 +52,24 @@ final class ITCHTextField: UIView {
         fatalError(Constant.Error.message)
     }
     
+    // MARK: - Methods
+    public func setKeyboard(_ state: KeyboardState) {
+        switch state {
+        case .open:
+            textField.becomeFirstResponder()
+        case .close:
+            textField.resignFirstResponder()
+        }
+    }
+    
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(title: String, placeholder: String) {
+        label.text = title
+        textField.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: Constant.TextField.placeholderAttributes
+        )
+        
         backgroundColor = .clear
         setHeight(Constant.View.height)
         
@@ -76,6 +87,7 @@ final class ITCHTextField: UIView {
     }
     
     private func setUpTextField() {
+        textField.delegate = self
         textField.leftView = leftView
         textField.rightView = rightView
         textField.leftViewMode = .always
@@ -90,5 +102,14 @@ final class ITCHTextField: UIView {
         textField.pinHorizontal(to: self)
         textField.pinTop(to: label.bottomAnchor, Constant.TextField.topOffset)
         textField.setHeight(Constant.TextField.height)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension ITCHTextField: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        returnAction?()
+        return true
     }
 }

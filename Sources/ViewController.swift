@@ -13,6 +13,7 @@ final class ViewController: UIViewController {
     private let button: ITCHButton = ITCHButton(title: "Далее")
     private let row: ITCHNavigationRow = ITCHNavigationRow(title: "Чат курса", leftImage: ITCHImage.vk28.image)
     private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
+    private let textField: ITCHTextField = ITCHTextField(title: "Номер телефона", placeholder: "Введите ваш номер")
     private let navBar: ITCHNavigationBar = ITCHNavigationBar(
         title: "Текущий курс",
         leftImage: ITCHImage.chevronLeft24.image,
@@ -31,8 +32,12 @@ final class ViewController: UIViewController {
             print(2)
         }
         
-        view.addSubview(cell)
-        cell.pinCenterY(to: view)
-        cell.pinHorizontal(to: view, 16)
+        textField.returnAction = {
+            print("Return")
+        }
+        
+        view.addSubview(textField)
+        textField.pinCenterY(to: view)
+        textField.pinHorizontal(to: view, 16)
     }
 }

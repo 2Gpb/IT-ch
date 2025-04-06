@@ -33,13 +33,7 @@ public final class ITCHButton: UIView {
     ) {
         super.init(frame: .zero)
         
-        setUp(title: title)
-        switch type {
-        case .primary:
-            button.backgroundColor = ITCHColor.blue60.color
-        case .delete:
-            button.backgroundColor = ITCHColor.red50.color
-        }
+        setUp(title: title, type: type)
     }
     
     @available(*, unavailable)
@@ -48,12 +42,18 @@ public final class ITCHButton: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(title: String) {
+    private func setUp(title: String, type: ITCHButtonType) {
         button.setTitle(title, for: .normal)
         button.tintColor = ITCHColor.base0.color
         button.titleLabel?.font = ITCHFont.bodyMMedium.font
         button.layer.cornerRadius = Constant.Button.cornerRadius
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        switch type {
+        case .primary:
+            button.backgroundColor = ITCHColor.blue60.color
+        case .delete:
+            button.backgroundColor = ITCHColor.red50.color
+        }
         
         addSubview(button)
         button.pin(to: self)
