@@ -24,6 +24,13 @@ final class ViewController: UIViewController {
         type: .teacher,
         date: Date()
     )
+    private let cell3: ITCHCourseCell = ITCHCourseCell(
+        duration: "1 - 3 модуль",
+        role: "Преподаватель",
+        courseName: "НИС “Основы iOS разработки на UIKit”",
+        teacherName: "Сосновский Григорий Михайлович",
+        image: UIImage()
+    )
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -37,8 +44,8 @@ final class ViewController: UIViewController {
             print(2)
         }
         
-        view.addSubview(cell2)
-        cell2.pinCenterY(to: view)
-        cell2.pinHorizontal(to: view, 16)
+        view.addSubview(cell3)
+        cell3.pinCenterY(to: view)
+        cell3.pinHorizontal(to: view, 16)
     }
 }
