@@ -36,15 +36,36 @@ public final class ITCHTextField: UIView {
     private let textField: UITextField = UITextField()
     private let leftView: UIView = UIView(frame: Constant.TextField.edgeViewsFrame)
     private let rightView: UIView = UIView(frame: Constant.TextField.edgeViewsFrame)
+    private let eyeButton: ITCHCustomButton = ITCHCustomButton()
+    private let eyeOffButton: ITCHCustomButton = ITCHCustomButton()
     
     // MARK: - Properties
     public var returnAction: (() -> Void)?
+    public var isError: Bool = false {
+        didSet {
+            updateErrorState()
+        }
+    }
+    
+    public var keyboardState: ITCHKeyboardState = .close {
+        didSet {
+            setKeyboard()
+        }
+    }
     
     // MARK: - Lifecycle
-    public init(title: String, placeholder: String) {
+    public init(
+        title: String,
+        placeholder: String,
+        type: ITCHTextFieldType = .normal
+    ) {
         super.init(frame: .zero)
         
-        setUp(title: title, placeholder: placeholder)
+        setUp(
+            title: title,
+            placeholder: placeholder,
+            type: type
+        )
     }
     
     @available(*, unavailable)
@@ -52,18 +73,12 @@ public final class ITCHTextField: UIView {
         fatalError(Constant.Error.message)
     }
     
-    // MARK: - Methods
-    public func setKeyboard(_ state: KeyboardState) {
-        switch state {
-        case .open:
-            textField.becomeFirstResponder()
-        case .close:
-            textField.resignFirstResponder()
-        }
-    }
-    
     // MARK: - SetUp
-    private func setUp(title: String, placeholder: String) {
+    private func setUp(
+        title: String,
+        placeholder: String,
+        type: ITCHTextFieldType
+    ) {
         label.text = title
         textField.attributedPlaceholder = NSAttributedString(
             string: placeholder,
@@ -75,6 +90,10 @@ public final class ITCHTextField: UIView {
         
         setUpLabel()
         setUpTextField()
+        
+        if type == .password {
+            setUpHideShowButton()
+        }
     }
     
     private func setUpLabel() {
@@ -102,6 +121,54 @@ public final class ITCHTextField: UIView {
         textField.pinHorizontal(to: self)
         textField.pinTop(to: label.bottomAnchor, Constant.TextField.topOffset)
         textField.setHeight(Constant.TextField.height)
+    }
+    
+    private func setUpHideShowButton() {
+        eyeButton.setImage(ITCHImage.eye20.image, for: .normal)
+        eyeOffButton.setImage(ITCHImage.eyeOff20.image, for: .normal)
+        eyeOffButton.isHidden = true
+        
+        [eyeButton, eyeOffButton].forEach { button in
+            button.addTarget(self, action: #selector(eyeButtonTapped), for: .touchUpInside)
+            
+            addSubview(button)
+            button.pinCenterY(to: textField)
+            button.pinRight(to: textField, 16)
+        }
+    }
+    
+    // MARK: - Private methods
+    private func updateErrorState() {
+        if isError {
+            textField.layer.borderColor = ITCHColor.red60.color.cgColor
+        } else {
+            textField.layer.borderColor = ITCHColor.cellLightGray.color.cgColor
+        }
+    }
+    
+    private func setKeyboard() {
+        switch keyboardState {
+        case .open:
+            textField.becomeFirstResponder()
+        case .close:
+            textField.resignFirstResponder()
+        }
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func eyeButtonTapped() {
+        if eyeOffButton.isHidden {
+            eyeOffButton.isHidden = false
+            eyeButton.isHidden = true
+            
+            textField.isSecureTextEntry = false
+        } else {
+            eyeOffButton.isHidden = true
+            eyeButton.isHidden = false
+            
+            textField.isSecureTextEntry = true
+        }
     }
 }
 
