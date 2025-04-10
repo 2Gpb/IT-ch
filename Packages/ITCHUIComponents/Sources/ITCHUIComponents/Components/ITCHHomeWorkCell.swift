@@ -104,10 +104,10 @@ public final class ITCHHomeWorkCell: UIView {
         date: Date,
         type: ITCHHomeWorkCellType
     ) {
-        self.title.text = title
-        self.dateLabel.text = date.configure()
         backgroundColor = ITCHColor.backgroundGray.color
         layer.cornerRadius = Constant.View.cornerRadius
+        self.title.text = title
+        self.dateLabel.text = date.configure(to: Constant.DateStack.dateFormat)
         
         setUpTitle()
         setUpDateImage()

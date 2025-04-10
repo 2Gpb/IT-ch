@@ -82,7 +82,7 @@ public final class ITCHNavigationRow: UIView {
     
     private func setUpLabel() {
         label.font = ITCHFont.bodyMMedium.font
-        label.textColor =  ITCHColor.base0.color
+        label.textColor = ITCHColor.base0.color
         
         addSubview(label)
         label.pinCenterY(to: self)

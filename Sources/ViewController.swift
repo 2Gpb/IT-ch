@@ -20,24 +20,25 @@ final class ViewController: UIViewController {
         rightImage: ITCHImage.plus24.image
     )
     
+    private let cell2: ITCHClassRecordCell = ITCHClassRecordCell(
+        type: .teacher,
+        date: Date()
+    )
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
-        cell.firstAction = {
+        cell2.firstAction = {
             print(1)
         }
         
-        cell.secondAction = {
+        cell2.secondAction = {
             print(2)
         }
         
-        textField.returnAction = {
-            print("Return")
-        }
-        
-        view.addSubview(textField)
-        textField.pinCenterY(to: view)
-        textField.pinHorizontal(to: view, 16)
+        view.addSubview(cell2)
+        cell2.pinCenterY(to: view)
+        cell2.pinHorizontal(to: view, 16)
     }
 }

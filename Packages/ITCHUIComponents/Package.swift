@@ -5,13 +5,14 @@ import PackageDescription
 
 let package = Package(
     name: "ITCHUIComponents",
-    platforms: [.iOS(
-        .v16)
+    platforms: [
+        .iOS(.v16)
     ],
     products: [
         .library(
             name: "ITCHUIComponents",
-            targets: ["ITCHUIComponents"]),
+            targets: ["ITCHUIComponents"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0")
@@ -22,12 +23,12 @@ let package = Package(
             exclude: [
                 "../../swiftgen.yml"
             ],
-            resources: [.process(
-                "Resources/Fonts/FontsSources")
+            resources: [
+                .process("Resources/Fonts/FontsSources")
             ],
             plugins: [
                 .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
             ]
-        ),
+        )
     ]
 )

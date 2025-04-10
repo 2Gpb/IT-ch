@@ -20,7 +20,7 @@ public final class ITCHTextField: UIView {
             static let topOffset: CGFloat = 8
             static let height: CGFloat = 48
             static let edgeViewsFrame: CGRect = CGRect(x: 0, y: 0, width: 16, height: 1)
-            @MainActor static let placeholderAttributes: [NSAttributedString.Key : Any] = [
+            @MainActor static let placeholderAttributes: [NSAttributedString.Key: Any] = [
                 .font: ITCHFont.bodyMRegular.font,
                 .foregroundColor: ITCHColor.base50.color
             ]
