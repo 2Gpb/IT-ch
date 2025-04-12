@@ -42,22 +42,26 @@ final class ViewController: UIViewController {
         description: "Вы сможете присоединиться,\nкак только вас пригласят."
     )
     
+    private let deadline: ITCHDeadlineView = ITCHDeadlineView(
+        course: "НИС “Основы iOS разработки на UIKit”",
+        title: "Домашняя работа 5",
+        deadline: Date()
+    )
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
-        cell2.firstAction = {
-            print(1)
-        }
         
-        cell2.secondAction = {
-            print(2)
-        }
+        deadline.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
         
-        textField.isError = true
-        
-        view.addSubview(emptyState)
-        emptyState.pinCenterY(to: view)
-        emptyState.pinHorizontal(to: view, 16)
+        view.addSubview(deadline)
+        deadline.pinCenterY(to: view)
+        deadline.pinHorizontal(to: view, 16)
+    }
+    
+    @objc private func handleTap() {
+        deadline.isCheck.toggle()
+        print(1)
     }
 }
