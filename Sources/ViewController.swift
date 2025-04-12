@@ -13,7 +13,11 @@ final class ViewController: UIViewController {
     private let button: ITCHButton = ITCHButton(title: "Далее")
     private let row: ITCHNavigationRow = ITCHNavigationRow(title: "Чат курса", leftImage: ITCHImage.vk28.image)
     private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
-    private let textField: ITCHTextField = ITCHTextField(title: "Номер телефона", placeholder: "Введите ваш номер", type: .password)
+    private let textField: ITCHTextField = ITCHTextField(
+        title: "Номер телефона",
+        placeholder: "Введите ваш номер",
+        type: .password
+    )
     private let navBar: ITCHNavigationBar = ITCHNavigationBar(
         title: "Текущий курс",
         leftImage: ITCHImage.chevronLeft24.image,
@@ -24,12 +28,18 @@ final class ViewController: UIViewController {
         type: .teacher,
         date: Date()
     )
+    
     private let cell3: ITCHCourseCell = ITCHCourseCell(
         duration: "1 - 3 модуль",
         role: "Преподаватель",
         courseName: "НИС “Основы iOS разработки на UIKit”",
         teacherName: "Сосновский Григорий Михайлович",
         image: UIImage()
+    )
+    
+    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView(
+        title: "У вас пока нет курсов",
+        description: "Вы сможете присоединиться,\nкак только вас пригласят."
     )
     
     // MARK: - Lifecycle
@@ -46,8 +56,8 @@ final class ViewController: UIViewController {
         
         textField.isError = true
         
-        view.addSubview(textField)
-        textField.pinCenterY(to: view)
-        textField.pinHorizontal(to: view, 16)
+        view.addSubview(emptyState)
+        emptyState.pinCenterY(to: view)
+        emptyState.pinHorizontal(to: view, 16)
     }
 }
