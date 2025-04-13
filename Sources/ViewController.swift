@@ -48,16 +48,22 @@ final class ViewController: UIViewController {
         deadline: Date()
     )
     
+    private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
+        image: ITCHImage.info32.image,
+        title: "О приложении",
+        subtitle: "Самое важное"
+    )
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        deadline.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+        settingRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
         
-        view.addSubview(deadline)
-        deadline.pinCenterY(to: view)
-        deadline.pinHorizontal(to: view, 16)
+        view.addSubview(settingRow)
+        settingRow.pinCenterY(to: view)
+        settingRow.pinHorizontal(to: view, 32)
     }
     
     @objc private func handleTap() {
