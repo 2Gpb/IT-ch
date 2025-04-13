@@ -54,20 +54,15 @@ final class ViewController: UIViewController {
         subtitle: "Самое важное"
     )
     
+    private let user: ITCHUserRow = ITCHUserRow(name: "Тюхменев Петр Вячеславович", info: "Бакалавриат 21 ПИ-3")
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        settingRow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
-        
-        view.addSubview(settingRow)
-        settingRow.pinCenterY(to: view)
-        settingRow.pinHorizontal(to: view, 32)
-    }
-    
-    @objc private func handleTap() {
-        deadline.isCheck.toggle()
-        print(1)
+        view.addSubview(user)
+        user.pinCenterY(to: view)
+        user.pinHorizontal(to: view, 16)
     }
 }

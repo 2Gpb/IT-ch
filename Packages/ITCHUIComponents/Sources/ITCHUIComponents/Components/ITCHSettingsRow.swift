@@ -14,7 +14,7 @@ public final class ITCHSettingsRow: UIView {
             static let message: String = "init(coder:) has not been implemented"
         }
         
-        enum leftImage {
+        enum LeftImage {
             static let size: CGFloat = 32
         }
         
@@ -64,7 +64,7 @@ public final class ITCHSettingsRow: UIView {
         addSubview(leftImage)
         leftImage.pinLeft(to: self)
         leftImage.pinCenterY(to: self)
-        leftImage.setWidth(Constant.leftImage.size)
+        leftImage.setWidth(Constant.LeftImage.size)
     }
     
     private func setUpChevronImage() {
