@@ -14,7 +14,16 @@ public final class ITCHEmptyStateView: UIView {
             static let message: String = "init(coder:) has not been implemented"
         }
         
-        enum Description {
+        enum Title {
+            static let textColor: UIColor = ITCHColor.base5.color
+            static let font: UIFont = ITCHFont.header4.font
+            static let alignment: NSTextAlignment = .center
+        }
+        
+        enum Subtitle {
+            static let textColor: UIColor = ITCHColor.base5.color
+            static let font: UIFont = ITCHFont.bodyMMedium.font
+            static let alignment: NSTextAlignment = .center
             static let topOffset: CGFloat = 24
             static let numberOfLines: Int = 2
         }
@@ -22,12 +31,12 @@ public final class ITCHEmptyStateView: UIView {
     
     // MARK: - UI Components
     private let titleLabel: UILabel = UILabel()
-    private let descriptionLabel: UILabel = UILabel()
+    private let subtitleLabel: UILabel = UILabel()
     
     // MARK: - Lifecycle
-    public init(title: String, description: String) {
+    public init() {
         super.init(frame: .zero)
-        setUp(titleText: title, descriptionText: description)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -35,32 +44,43 @@ public final class ITCHEmptyStateView: UIView {
         fatalError(Constant.Error.message)
     }
     
-    // MARK: - SetUp
-    private func setUp(titleText: String, descriptionText: String) {
-        setUpTitle(with: titleText)
-        setUpDescription(with: descriptionText)
+    // MARK: - Properties
+    public var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
     }
     
-    private func setUpTitle(with text: String) {
-        titleLabel.text = text
-        titleLabel.textColor = ITCHColor.base5.color
-        titleLabel.font = ITCHFont.header4.font
-        titleLabel.textAlignment = .center
+    public var subtitle: String? {
+        didSet {
+            subtitleLabel.text = subtitle
+        }
+    }
+    
+    // MARK: - SetUp
+    private func setUp() {
+        setUpTitleLabel()
+        setUpSubtitleLabel()
+    }
+    
+    private func setUpTitleLabel() {
+        titleLabel.textColor = Constant.Title.textColor
+        titleLabel.font = Constant.Title.font
+        titleLabel.textAlignment = Constant.Title.alignment
         
         addSubview(titleLabel)
         titleLabel.pinTop(to: self)
         titleLabel.pinCenterX(to: self)
     }
     
-    private func setUpDescription(with text: String) {
-        descriptionLabel.text = text
-        descriptionLabel.textColor = ITCHColor.base5.color
-        descriptionLabel.font = ITCHFont.bodyMMedium.font
-        descriptionLabel.textAlignment = .center
-        descriptionLabel.numberOfLines = Constant.Description.numberOfLines
+    private func setUpSubtitleLabel() {
+        subtitleLabel.textColor = Constant.Subtitle.textColor
+        subtitleLabel.font = Constant.Subtitle.font
+        subtitleLabel.textAlignment = Constant.Subtitle.alignment
+        subtitleLabel.numberOfLines = Constant.Subtitle.numberOfLines
         
-        addSubview(descriptionLabel)
-        descriptionLabel.pinTop(to: titleLabel.bottomAnchor, Constant.Description.topOffset)
-        descriptionLabel.pinHorizontal(to: self)
+        addSubview(subtitleLabel)
+        subtitleLabel.pinTop(to: titleLabel.bottomAnchor, Constant.Subtitle.topOffset)
+        subtitleLabel.pinHorizontal(to: self)
     }
 }

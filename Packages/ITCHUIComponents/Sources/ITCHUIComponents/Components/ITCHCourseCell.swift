@@ -74,7 +74,7 @@ public final class ITCHCourseCell: UIView {
     private let teacherNameStack: UIStackView = UIStackView()
     
     // MARK: - Properties
-    public var content: ITCHCourseCellModel? {
+    public var content: ITCHCourseModel? {
         didSet {
             durationLabel.text = content?.duration
             roleLabel.text = Constant.Info.rolePrefix + (content?.role ?? "")

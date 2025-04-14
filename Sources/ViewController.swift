@@ -10,43 +10,33 @@ import ITCHUIComponents
 
 final class ViewController: UIViewController {
     // MARK: - Private fields
-    private let button: ITCHButton = ITCHButton(title: "Далее")
+//    private let button: ITCHButton = ITCHButton(title: "Далее")
+//    
+//    private let cell2: ITCHClassRecordCell = ITCHClassRecordCell(
+//        type: .teacher
+//    )
+//    
+//    private let cell3: ITCHCourseCell = ITCHCourseCell()
+    
+//    private let deadline: ITCHDeadlineView = ITCHDeadlineView()
+    
     private let row: ITCHNavigationRow = ITCHNavigationRow(title: "Чат курса", leftImage: ITCHImage.vk28.image)
+    
     private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
+    
     private let textField: ITCHTextField = ITCHTextField(
         title: "Номер телефона",
         placeholder: "Введите ваш номер",
         type: .password
     )
+    
     private let navBar: ITCHNavigationBar = ITCHNavigationBar(
         title: "Текущий курс",
         leftImage: ITCHImage.chevronLeft24.image,
         rightImage: ITCHImage.plus24.image
     )
     
-    private let cell2: ITCHClassRecordCell = ITCHClassRecordCell(
-        type: .teacher,
-        date: Date()
-    )
-    
-    private let cell3: ITCHCourseCell = ITCHCourseCell(
-        duration: "1 - 3 модуль",
-        role: "Преподаватель",
-        courseName: "НИС “Основы iOS разработки на UIKit”",
-        teacherName: "Сосновский Григорий Михайлович",
-        image: UIImage()
-    )
-    
-    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView(
-        title: "У вас пока нет курсов",
-        description: "Вы сможете присоединиться,\nкак только вас пригласят."
-    )
-    
-    private let deadline: ITCHDeadlineView = ITCHDeadlineView(
-        course: "НИС “Основы iOS разработки на UIKit”",
-        title: "Домашняя работа 5",
-        deadline: Date()
-    )
+    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView()
     
     private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
         image: ITCHImage.info32.image,
@@ -77,8 +67,11 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        view.addSubview(notification)
-        notification.pinCenterY(to: view)
-        notification.pinHorizontal(to: view, 16)
+        emptyState.title = "У вас пока нет курсов"
+        emptyState.subtitle = "Вы сможете присоединиться,\nкак только вас пригласят."
+        
+        view.addSubview(emptyState)
+        emptyState.pinCenterY(to: view)
+        emptyState.pinHorizontal(to: view, 16)
     }
 }

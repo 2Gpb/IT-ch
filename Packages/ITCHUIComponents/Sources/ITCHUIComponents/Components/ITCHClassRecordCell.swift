@@ -70,7 +70,6 @@ public final class ITCHClassRecordCell: UIView {
     // MARK: - Lifecycle
     public init(type: ITCHClassRecordCellType) {
         super.init(frame: .zero)
-        
         setUp(for: type)
     }
     

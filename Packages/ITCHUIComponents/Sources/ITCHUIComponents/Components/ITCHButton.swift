@@ -33,7 +33,6 @@ public final class ITCHButton: UIView {
     // MARK: - Lifecycle
     public init(title: String, type: ITCHButtonType = .primary) {
         super.init(frame: .zero)
-        
         setUp(title: title, type: type)
     }
     
