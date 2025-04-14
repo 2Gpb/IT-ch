@@ -12,9 +12,7 @@ final class ViewController: UIViewController {
     // MARK: - Private fields
 //    private let button: ITCHButton = ITCHButton(title: "Далее")
 //    
-//    private let cell2: ITCHClassRecordCell = ITCHClassRecordCell(
-//        type: .teacher
-//    )
+//    private let cell2: ITCHClassRecordCell = ITCHClassRecordCell(type: .teacher)
 //    
 //    private let cell3: ITCHCourseCell = ITCHCourseCell()
     
@@ -24,18 +22,17 @@ final class ViewController: UIViewController {
     
 //    private let row: ITCHNavigationRow = ITCHNavigationRow(leftImage: ITCHImage.vk28.image)
     
-    private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
+//    private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(type: .teacher)
+    
+    private let navBar: ITCHNavigationBar = ITCHNavigationBar(
+        leftImage: ITCHImage.chevronLeft24.image,
+        rightImage: ITCHImage.plus24.image
+    )
     
     private let textField: ITCHTextField = ITCHTextField(
         title: "Номер телефона",
         placeholder: "Введите ваш номер",
         type: .password
-    )
-    
-    private let navBar: ITCHNavigationBar = ITCHNavigationBar(
-        title: "Текущий курс",
-        leftImage: ITCHImage.chevronLeft24.image,
-        rightImage: ITCHImage.plus24.image
     )
     
     private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
@@ -65,10 +62,12 @@ final class ViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ITCHColor.backgroundDark.color
+        view.backgroundColor = ITCHColor.backgroundGray.color
         
-        view.addSubview(row)
-        row.pinCenterY(to: view)
-        row.pinHorizontal(to: view, 16)
+        navBar.title = "Задание"
+        
+        view.addSubview(navBar)
+        navBar.pinCenterY(to: view)
+        navBar.pinHorizontal(to: view)
     }
 }

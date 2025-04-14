@@ -23,7 +23,8 @@ public final class ITCHHomeWorkCell: UIView {
             static let textColor: UIColor = ITCHColor.base0.color
             static let font: UIFont = ITCHFont.bodyMMedium.font
             static let topOffset: CGFloat = 16
-            static let leadingOffset: CGFloat = 20
+            static let horizontalOffset: CGFloat = 20
+            static let numberOfLines: Int = 0
         }
         
         enum Date {
@@ -116,10 +117,12 @@ public final class ITCHHomeWorkCell: UIView {
     private func setUpTitleLabel() {
         titleLabel.textColor = Constant.Title.textColor
         titleLabel.font = Constant.Title.font
+        titleLabel.numberOfLines = Constant.Title.numberOfLines
         
         addSubview(titleLabel)
         titleLabel.pinTop(to: self, Constant.Title.topOffset)
-        titleLabel.pinLeft(to: self, Constant.Title.leadingOffset)
+        titleLabel.pinLeft(to: self, Constant.Title.horizontalOffset)
+        titleLabel.pinRight(to: self, Constant.Title.horizontalOffset)
     }
     
     private func setUpDateStack() {

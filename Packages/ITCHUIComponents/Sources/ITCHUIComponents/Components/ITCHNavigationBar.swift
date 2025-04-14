@@ -11,42 +11,43 @@ public final class ITCHNavigationBar: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
-            static let message = "init(coder:) has not been implemented"
+            static let message: String = "init(coder:) has not been implemented"
         }
         
         enum View {
             static let height: CGFloat = 56
         }
         
+        enum Title {
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let font: UIFont = ITCHFont.header5Medium.font
+            static let alignment: NSTextAlignment = .center
+        }
+        
         enum Buttons {
-            static let dimension: CGFloat = 50
-            static let leftOffset: CGFloat = 16
-            static let rightOffset: CGFloat = 16
+            static let leadingOffset: CGFloat = 16
+            static let trailingOffset: CGFloat = 16
         }
     }
     
     // MARK: - UI Components
     private let leftButton: ITCHCustomButton = ITCHCustomButton(type: .system)
-    private let title: UILabel = UILabel()
+    private let titleLabel: UILabel = UILabel()
     private let rightButton: ITCHCustomButton = ITCHCustomButton(type: .system)
     
     // MARK: - Properties
     public var leftAction: (() -> Void)?
     public var rightAction: (() -> Void)?
+    public var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
     
     // MARK: - lifecycle
-    public init(
-        title: String,
-        leftImage: UIImage? = nil,
-        rightImage: UIImage? = nil
-    ) {
+    public init(leftImage: UIImage? = nil, rightImage: UIImage? = nil) {
         super.init(frame: .zero)
-    
-        setUp(
-            title: title,
-            leftImage: leftImage,
-            rightImage: rightImage
-        )
+        setUp(leftImage: leftImage, rightImage: rightImage)
     }
     
     @available(*, unavailable)
@@ -55,49 +56,39 @@ public final class ITCHNavigationBar: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(
-        title: String,
-        leftImage: UIImage?,
-        rightImage: UIImage?
-    ) {
-        self.title.text = title
-        leftButton.setImage(leftImage, for: .normal)
-        rightButton.setImage(rightImage, for: .normal)
+    private func setUp(leftImage: UIImage?, rightImage: UIImage?) {
+        setUpTitleLabel()
+        setUpLeftButton(with: leftImage)
+        setUpRightButton(with: rightImage)
         setHeight(Constant.View.height)
-        
-        setUpTitle()
-        setUpLeftView()
-        setUpRightView()
     }
     
-    private func setUpTitle() {
-        title.textColor = ITCHColor.base0.color
-        title.font = ITCHFont.header5Medium.font
-        title.textAlignment = .center
+    private func setUpTitleLabel() {
+        titleLabel.textColor = Constant.Title.textColor
+        titleLabel.font = Constant.Title.font
+        titleLabel.textAlignment = Constant.Title.alignment
         
-        addSubview(title)
-        title.pinCenter(to: self)
+        addSubview(titleLabel)
+        titleLabel.pinCenter(to: self)
     }
     
-    private func setUpLeftView() {
-        guard leftButton.currentImage != nil else { return }
-        leftButton.backgroundColor = .clear
-        leftButton.tintColor = ITCHColor.blue60.color
+    private func setUpLeftButton(with image: UIImage?) {
+        guard image != nil else { return }
+        leftButton.setImage(image, for: .normal)
         leftButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
         
         addSubview(leftButton)
-        leftButton.pinLeft(to: self, Constant.Buttons.leftOffset)
+        leftButton.pinLeft(to: self, Constant.Buttons.leadingOffset)
         leftButton.pinCenterY(to: self)
     }
     
-    private func setUpRightView() {
-        guard rightButton.currentImage != nil else { return }
-        rightButton.backgroundColor = .clear
-        rightButton.tintColor = ITCHColor.blue60.color
+    private func setUpRightButton(with image: UIImage?) {
+        guard image != nil else { return }
+        rightButton.setImage(image, for: .normal)
         rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
         
         addSubview(rightButton)
-        rightButton.pinRight(to: self, Constant.Buttons.rightOffset)
+        rightButton.pinRight(to: self, Constant.Buttons.trailingOffset)
         rightButton.pinCenterY(to: self)
     }
     
