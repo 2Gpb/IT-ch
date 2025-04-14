@@ -57,13 +57,8 @@ public final class ITCHHomeWorkCell: UIView {
     private let dateLabel: UILabel = UILabel()
     private let dateImage: UIImageView = UIImageView()
     private let separator: UIView = UIView()
-    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow(
-        title: Constant.NavigationRows.teacherTitle
-    )
-    
-    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(
-        title: Constant.NavigationRows.teacherSecondTitle
-    )
+    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow()
+    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
     
     // MARK: - Properties
     public var firstAction: (() -> Void)? {
@@ -171,12 +166,16 @@ public final class ITCHHomeWorkCell: UIView {
     }
     
     private func setUpNavigationRow() {
+        navigationRow.title = Constant.NavigationRows.teacherTitle
+        
         addSubview(navigationRow)
         navigationRow.pinTop(to: separator.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
     }
     
     private func setUpSecondNavigationRow() {
+        secondNavigationRow.title = Constant.NavigationRows.teacherSecondTitle
+        
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)

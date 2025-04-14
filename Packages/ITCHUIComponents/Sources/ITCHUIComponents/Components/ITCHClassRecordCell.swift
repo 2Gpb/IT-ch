@@ -45,8 +45,8 @@ public final class ITCHClassRecordCell: UIView {
     // MARK: - UI Components
     private let dateLabel: UILabel = UILabel()
     private let separatorView: UIView = UIView()
-    private let navigationRow: ITCHNavigationRow = ITCHNavigationRow(title: Constant.NavigationRows.recordTitle)
-    private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(title: Constant.NavigationRows.editTitle)
+    private let navigationRow: ITCHNavigationRow = ITCHNavigationRow()
+    private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
     
     // MARK: - Properties
     public var date: Date? {
@@ -110,6 +110,8 @@ public final class ITCHClassRecordCell: UIView {
     }
     
     private func setUpNavigationRow(with type: ITCHClassRecordCellType) {
+        navigationRow.title = Constant.NavigationRows.recordTitle
+        
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
@@ -123,6 +125,8 @@ public final class ITCHClassRecordCell: UIView {
     }
     
     private func setUpSecondNavigationRow() {
+        secondNavigationRow.title = Constant.NavigationRows.editTitle
+        
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)

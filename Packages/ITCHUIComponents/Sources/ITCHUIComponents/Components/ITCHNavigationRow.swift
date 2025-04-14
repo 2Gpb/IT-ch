@@ -14,42 +14,40 @@ public final class ITCHNavigationRow: UIView {
             static let message = "init(coder:) has not been implemented"
         }
         
-        enum View {
-            static let height: CGFloat = 40
-        }
-        
-        enum LeftView {
+        enum LeftImage {
             static let dimension: CGFloat = 28
         }
         
-        enum Label {
+        enum TitleLabel {
+            static let font: UIFont = ITCHFont.bodyMMedium.font
+            static let textColor: UIColor = ITCHColor.base0.color
             static let leftOffset: CGFloat = 12
         }
         
         enum Chevron {
             static let image: UIImage? = ITCHImage.chevronRight16.image
             static let dimension: CGFloat = 18
+            static let verticalOffset: CGFloat = 12
         }
     }
     
     // MARK: - UI Components
-    private let leftView: UIImageView = UIImageView()
-    private let label: UILabel = UILabel()
-    private let chevron: UIImageView = UIImageView()
+    private let leftImageView: UIImageView = UIImageView()
+    private let titleLabel: UILabel = UILabel()
+    private let chevronImageView: UIImageView = UIImageView()
     
     // MARK: - Properties
     public var action: (() -> Void)?
-    var title: String? {
+    public var title: String? {
         didSet {
-            label.text = title
+            titleLabel.text = title
         }
     }
     
     // MARK: - Lifecycle
-    public init(title: String, leftImage: UIImage? = nil) {
+    public init(leftImage: UIImage? = nil) {
         super.init(frame: .zero)
-        
-        setUp(title: title, leftImage: leftImage)
+        setUp(leftImage: leftImage)
     }
     
     @available(*, unavailable)
@@ -58,50 +56,46 @@ public final class ITCHNavigationRow: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(title: String?, leftImage: UIImage?) {
-        label.text = title
-        leftView.image = leftImage
-        setHeight(Constant.View.height)
-        
-        setUpLeftView()
-        setUpLabel()
+    private func setUp(leftImage: UIImage?) {
+        setUpLeftImageView(with: leftImage)
+        setUpTitleLabel()
         setUpChevron()
         setUpGesture()
     }
     
-    private func setUpLeftView() {
-        guard leftView.image != nil else { return }
-        leftView.tintColor = ITCHColor.base50.color
+    private func setUpLeftImageView(with image: UIImage?) {
+        guard image != nil else { return }
+        leftImageView.image = image
         
-        addSubview(leftView)
-        leftView.pinLeft(to: self)
-        leftView.pinCenterY(to: self)
-        leftView.setHeight(Constant.LeftView.dimension)
-        leftView.setWidth(Constant.LeftView.dimension)
+        addSubview(leftImageView)
+        leftImageView.pinLeft(to: self)
+        leftImageView.pinCenterY(to: self)
+        leftImageView.setHeight(Constant.LeftImage.dimension)
+        leftImageView.setWidth(Constant.LeftImage.dimension)
     }
     
-    private func setUpLabel() {
-        label.font = ITCHFont.bodyMMedium.font
-        label.textColor = ITCHColor.base0.color
+    private func setUpTitleLabel() {
+        titleLabel.font = Constant.TitleLabel.font
+        titleLabel.textColor = Constant.TitleLabel.textColor
         
-        addSubview(label)
-        label.pinCenterY(to: self)
-        if leftView.image == nil {
-            label.pinLeft(to: self)
+        addSubview(titleLabel)
+        titleLabel.pinCenterY(to: self)
+        
+        if leftImageView.image == nil {
+            titleLabel.pinLeft(to: self)
         } else {
-            label.pinLeft(to: leftView.trailingAnchor, Constant.Label.leftOffset)
+            titleLabel.pinLeft(to: leftImageView.trailingAnchor, Constant.TitleLabel.leftOffset)
         }
     }
     
     private func setUpChevron() {
-        chevron.image = Constant.Chevron.image
-        chevron.tintColor = ITCHColor.base50.color
+        chevronImageView.image = Constant.Chevron.image
         
-        addSubview(chevron)
-        chevron.pinRight(to: self)
-        chevron.pinCenterY(to: self)
-        chevron.setHeight(Constant.Chevron.dimension)
-        chevron.setWidth(Constant.Chevron.dimension)
+        addSubview(chevronImageView)
+        chevronImageView.pinRight(to: self)
+        chevronImageView.pinVertical(to: self, Constant.Chevron.verticalOffset)
+        chevronImageView.setHeight(Constant.Chevron.dimension)
+        chevronImageView.setWidth(Constant.Chevron.dimension)
     }
     
     private func setUpGesture() {

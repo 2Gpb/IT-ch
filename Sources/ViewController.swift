@@ -20,7 +20,9 @@ final class ViewController: UIViewController {
     
 //    private let deadline: ITCHDeadlineView = ITCHDeadlineView()
     
-    private let row: ITCHNavigationRow = ITCHNavigationRow(title: "Чат курса", leftImage: ITCHImage.vk28.image)
+//    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView()
+    
+    private let row: ITCHNavigationRow = ITCHNavigationRow(leftImage: ITCHImage.vk28.image)
     
     private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
     
@@ -35,8 +37,6 @@ final class ViewController: UIViewController {
         leftImage: ITCHImage.chevronLeft24.image,
         rightImage: ITCHImage.plus24.image
     )
-    
-    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView()
     
     private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
         image: ITCHImage.info32.image,
@@ -67,11 +67,10 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        emptyState.title = "У вас пока нет курсов"
-        emptyState.subtitle = "Вы сможете присоединиться,\nкак только вас пригласят."
+        row.title = "Чат курса"
         
-        view.addSubview(emptyState)
-        emptyState.pinCenterY(to: view)
-        emptyState.pinHorizontal(to: view, 16)
+        view.addSubview(row)
+        row.pinCenterY(to: view)
+        row.pinHorizontal(to: view, 16)
     }
 }
