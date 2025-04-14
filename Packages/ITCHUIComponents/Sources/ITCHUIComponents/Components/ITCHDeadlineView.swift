@@ -16,54 +16,74 @@ public final class ITCHDeadlineView: UIView {
         
         enum CheckBox {
             static let size: CGFloat = 32
+            static let image: UIImage = ITCHImage.checkbox32.image
         }
         
         enum TextStack {
+            static let courseNameFont: UIFont = ITCHFont.captionRegular.font
+            static let courseNameTextColor: UIColor = ITCHColor.base40.color
+            static let titleFont: UIFont = ITCHFont.bodyMMedium.font
+            static let titleTextColor: UIColor = ITCHColor.base0.color
+            static let axis: NSLayoutConstraint.Axis = .vertical
             static let spacing: CGFloat = 4
         }
         
-        enum DeadlineStack {
+        enum Deadline {
             static let spacing: CGFloat = 4
+            static let axis: NSLayoutConstraint.Axis = .horizontal
+            static let textColor: UIColor = ITCHColor.red50.color
+            static let font: UIFont = ITCHFont.bodySRegular.font
+            static let image: UIImage = ITCHImage.time16.image
             static let timeImageSize: CGFloat = 16
             static let dateFormat: String = "d MMMM yyyy, H:mm"
         }
         
-        enum InfoStack {
+        enum Info {
+            static let axis: NSLayoutConstraint.Axis = .vertical
             static let spacing: CGFloat = 8
             static let topOffset: CGFloat = 8
-            static let trailingOffset: CGFloat = 8
+            static let trailingOffset: CGFloat = 12
             static let leadingOffset: CGFloat = 12
             static let bottomOffset: CGFloat = 8
         }
         
-        enum FireImage {
+        enum Fire {
             static let size: CGFloat = 24
+            static let image: UIImage = ITCHImage.fire24.image
             static let threeDaysInSeconds: TimeInterval = 60 * 60 * 24 * 3
         }
     }
     
     // MARK: - UI Components
-    private let checkBox: UIImageView = UIImageView()
-    private let courseName: UILabel = UILabel()
+    private let checkBoxImageView: UIImageView = UIImageView()
+    private let courseNameLabel: UILabel = UILabel()
     private let titleLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
-    private let timeImage: UIImageView = UIImageView()
+    private let timeImageView: UIImageView = UIImageView()
     private let deadlineLabel: UILabel = UILabel()
     private let deadlineStack: UIStackView = UIStackView()
     private let infoStack: UIStackView = UIStackView()
-    private let fireImage: UIImageView = UIImageView()
+    private let fireImageView: UIImageView = UIImageView()
     
     // MARK: - Properties
     public var isCheck = false {
         didSet {
-            checkBox.image = isCheck ? ITCHImage.checkboxFill32.image : ITCHImage.checkbox32.image
+            checkBoxImageView.image = isCheck ? ITCHImage.checkboxFill32.image : ITCHImage.checkbox32.image
+        }
+    }
+    
+    public var content: ITCHDeadlineModel? {
+        didSet {
+            courseNameLabel.text = content?.course
+            titleLabel.text = content?.text
+            deadlineLabel.text = content?.deadline.configure(to: Constant.Deadline.dateFormat)
         }
     }
     
     // MARK: - Lifecycle
-    public init(course: String, title: String, deadline: Date) {
+    public init() {
         super.init(frame: .zero)
-        setUp(courseName: course, titleText: title, deadlineDate: deadline)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -72,54 +92,61 @@ public final class ITCHDeadlineView: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(courseName: String, titleText: String, deadlineDate: Date) {
-        setUpFireImage(isHidden: !(deadlineDate.timeIntervalSinceNow <= Constant.FireImage.threeDaysInSeconds))
-        setUpCheckBox()
-        setUpTextStack(course: courseName, title: titleText)
-        setUpDeadlineStack(with: deadlineDate)
+    private func setUp() {
+        setUpCheckBoxImage()
+        setUpFireImage()
+        setUpTextStack()
+        setUpDeadlineStack()
         setUpInfoStack()
     }
     
-    private func setUpCheckBox() {
-        checkBox.image = ITCHImage.checkbox32.image
+    private func setUpCheckBoxImage() {
+        checkBoxImageView.image = Constant.CheckBox.image
         
-        addSubview(checkBox)
-        checkBox.pinCenterY(to: self)
-        checkBox.pinLeft(to: self)
-        checkBox.setWidth(Constant.CheckBox.size)
+        addSubview(checkBoxImageView)
+        checkBoxImageView.pinCenterY(to: self)
+        checkBoxImageView.pinLeft(to: self)
+        checkBoxImageView.setWidth(Constant.CheckBox.size)
     }
     
-    private func setUpTextStack(course: String, title: String) {
-        courseName.text = course
-        courseName.textColor = ITCHColor.base40.color
-        courseName.font = ITCHFont.captionRegular.font
+    private func setUpFireImage() {
+        fireImageView.image = Constant.Fire.image
+        fireImageView.isHidden = !(content?.deadline.timeIntervalSinceNow ?? 0 <= Constant.Fire.threeDaysInSeconds)
         
-        titleLabel.text = title
-        titleLabel.textColor = ITCHColor.base0.color
-        titleLabel.font = ITCHFont.bodyMMedium.font
+        addSubview(fireImageView)
+        fireImageView.pinCenterY(to: self)
+        fireImageView.pinRight(to: self)
+        fireImageView.setWidth(Constant.Fire.size)
+    }
+    
+    private func setUpTextStack() {
+        courseNameLabel.textColor = Constant.TextStack.courseNameTextColor
+        courseNameLabel.font = Constant.TextStack.titleFont
         
-        [courseName, titleLabel].forEach { element in
+        titleLabel.textColor = Constant.TextStack.titleTextColor
+        titleLabel.font = Constant.TextStack.titleFont
+        
+        [courseNameLabel, titleLabel].forEach { element in
             textStack.addArrangedSubview(element)
         }
         
-        textStack.axis = .vertical
+        textStack.axis = Constant.TextStack.axis
         textStack.spacing = Constant.TextStack.spacing
     }
     
-    private func setUpDeadlineStack(with deadline: Date) {
-        deadlineLabel.text = deadline.configure(to: Constant.DeadlineStack.dateFormat)
-        deadlineLabel.textColor = ITCHColor.red50.color
-        deadlineLabel.font = ITCHFont.bodySRegular.font
+    private func setUpDeadlineStack() {
+        deadlineLabel.textColor = Constant.Deadline.textColor
+        deadlineLabel.font = Constant.Deadline.font
         
-        timeImage.image = ITCHImage.time16.image
-        timeImage.setWidth(Constant.DeadlineStack.timeImageSize)
+        timeImageView.image = Constant.Deadline.image
+        timeImageView.setWidth(Constant.Deadline.timeImageSize)
         
-        [timeImage, deadlineLabel].forEach { element in
+        [timeImageView, deadlineLabel].forEach { element in
             deadlineStack.addArrangedSubview(element)
         }
         
-        deadlineStack.axis = .horizontal
-        deadlineStack.spacing = Constant.DeadlineStack.spacing
+        deadlineStack.axis = Constant.Deadline.axis
+        deadlineStack.spacing = Constant.Deadline.spacing
     }
     
     private func setUpInfoStack() {
@@ -127,23 +154,13 @@ public final class ITCHDeadlineView: UIView {
             infoStack.addArrangedSubview(element)
         }
         
-        infoStack.axis = .vertical
-        infoStack.spacing = Constant.InfoStack.spacing
+        infoStack.axis = Constant.Info.axis
+        infoStack.spacing = Constant.Info.spacing
         
         addSubview(infoStack)
-        infoStack.pinTop(to: self, Constant.InfoStack.topOffset)
-        infoStack.pinLeft(to: checkBox.trailingAnchor, Constant.InfoStack.leadingOffset)
-        infoStack.pinRight(to: fireImage.leadingAnchor, Constant.InfoStack.trailingOffset)
-        infoStack.pinBottom(to: self, Constant.InfoStack.bottomOffset)
-    }
-    
-    private func setUpFireImage(isHidden: Bool) {
-        fireImage.image = ITCHImage.fire24.image
-        fireImage.isHidden = isHidden
-        
-        addSubview(fireImage)
-        fireImage.pinCenterY(to: self)
-        fireImage.pinRight(to: self)
-        fireImage.setWidth(Constant.FireImage.size)
+        infoStack.pinTop(to: self, Constant.Info.topOffset)
+        infoStack.pinLeft(to: checkBoxImageView.trailingAnchor, Constant.Info.leadingOffset)
+        infoStack.pinRight(to: fireImageView.leadingAnchor, Constant.Info.trailingOffset)
+        infoStack.pinBottom(to: self, Constant.Info.bottomOffset)
     }
 }

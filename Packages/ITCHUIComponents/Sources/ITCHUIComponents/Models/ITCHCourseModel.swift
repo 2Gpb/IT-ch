@@ -7,7 +7,7 @@
 
 import UIKit
 
-public struct ITCHCourseCellModel {
+public struct ITCHCourseModel {
     let duration: String
     let role: String
     let courseName: String
