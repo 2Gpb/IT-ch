@@ -18,7 +18,7 @@ public final class ITCHNavigationRow: UIView {
             static let dimension: CGFloat = 28
         }
         
-        enum TitleLabel {
+        enum Title {
             static let font: UIFont = ITCHFont.bodyMMedium.font
             static let textColor: UIColor = ITCHColor.base0.color
             static let leftOffset: CGFloat = 12
@@ -75,8 +75,8 @@ public final class ITCHNavigationRow: UIView {
     }
     
     private func setUpTitleLabel() {
-        titleLabel.font = Constant.TitleLabel.font
-        titleLabel.textColor = Constant.TitleLabel.textColor
+        titleLabel.font = Constant.Title.font
+        titleLabel.textColor = Constant.Title.textColor
         
         addSubview(titleLabel)
         titleLabel.pinCenterY(to: self)
@@ -84,7 +84,7 @@ public final class ITCHNavigationRow: UIView {
         if leftImageView.image == nil {
             titleLabel.pinLeft(to: self)
         } else {
-            titleLabel.pinLeft(to: leftImageView.trailingAnchor, Constant.TitleLabel.leftOffset)
+            titleLabel.pinLeft(to: leftImageView.trailingAnchor, Constant.Title.leftOffset)
         }
     }
     

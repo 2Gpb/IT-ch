@@ -16,26 +16,29 @@ public final class ITCHHomeWorkCell: UIView {
         
         enum View {
             static let cornerRadius: CGFloat = 12
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
         }
         
         enum Title {
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let font: UIFont = ITCHFont.bodyMMedium.font
             static let topOffset: CGFloat = 16
             static let leadingOffset: CGFloat = 20
         }
         
-        enum DateImage {
+        enum Date {
             static let image: UIImage? = ITCHImage.time20.image
-            static let size: CGFloat = 20
-        }
-        
-        enum DateStack {
+            static let textColor: UIColor = ITCHColor.base30.color
+            static let font: UIFont = ITCHFont.bodySMedium.font
             static let dateFormat: String = "dd.MM.yy, HH:mm"
             static let spacing: CGFloat = 4
+            static let axis: NSLayoutConstraint.Axis = .horizontal
             static let topOffset: CGFloat = 8
             static let leadingOffset: CGFloat = 20
         }
         
         enum Separator {
+            static let backgroundColor: UIColor = ITCHColor.base70.color
             static let height: CGFloat = 1
             static let horizontalOffset: CGFloat = 20
             static let topOffset: CGFloat = 8
@@ -52,40 +55,43 @@ public final class ITCHHomeWorkCell: UIView {
     }
     
     // MARK: - UI Components
-    private let title: UILabel = UILabel()
+    private let titleLabel: UILabel = UILabel()
     private let dateStack: UIStackView = UIStackView()
     private let dateLabel: UILabel = UILabel()
-    private let dateImage: UIImageView = UIImageView()
-    private let separator: UIView = UIView()
+    private let dateImageView: UIImageView = UIImageView()
+    private let separatorView: UIView = UIView()
     private var navigationRow: ITCHNavigationRow = ITCHNavigationRow()
     private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
     
     // MARK: - Properties
-    public var firstAction: (() -> Void)? {
+    public var title: String? {
         didSet {
-            navigationRow.action = firstAction
+            titleLabel.text = title
         }
     }
     
-    public var secondAction: (() -> Void)? {
+    public var date: Date? {
         didSet {
-            secondNavigationRow.action = secondAction
+            dateLabel.text = date?.configure(to: Constant.Date.dateFormat)
+        }
+    }
+    
+    public var solutionsAction: (() -> Void)? {
+        didSet {
+            navigationRow.action = solutionsAction
+        }
+    }
+    
+    public var editAction: (() -> Void)? {
+        didSet {
+            secondNavigationRow.action = editAction
         }
     }
     
     // MARK: - Lifecycle
-    public init(
-        title: String,
-        date: Date,
-        type: ITCHHomeWorkCellType
-    ) {
+    public init(type: ITCHHomeWorkCellType) {
         super.init(frame: .zero)
-        
-        setUp(
-            title: title,
-            date: date,
-            type: type
-        )
+        setUp(type: type)
     }
     
     @available(*, unavailable)
@@ -94,27 +100,65 @@ public final class ITCHHomeWorkCell: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(
-        title: String,
-        date: Date,
-        type: ITCHHomeWorkCellType
-    ) {
-        backgroundColor = ITCHColor.backgroundGray.color
-        layer.cornerRadius = Constant.View.cornerRadius
-        self.title.text = title
-        self.dateLabel.text = date.configure(to: Constant.DateStack.dateFormat)
-        
-        setUpTitle()
-        setUpDateImage()
-        setUpDateLabel()
+    private func setUp(type: ITCHHomeWorkCellType) {
+        setUpView()
+        setUpTitleLabel()
         setUpDateStack()
-        setUpSeparator()
-        setUpNavigationRow()
+        setUpSeparatorView()
+        setUpNavigationRow(with: type)
+    }
+    
+    private func setUpView() {
+        backgroundColor = Constant.View.backgroundColor
+        layer.cornerRadius = Constant.View.cornerRadius
+    }
+    
+    private func setUpTitleLabel() {
+        titleLabel.textColor = Constant.Title.textColor
+        titleLabel.font = Constant.Title.font
+        
+        addSubview(titleLabel)
+        titleLabel.pinTop(to: self, Constant.Title.topOffset)
+        titleLabel.pinLeft(to: self, Constant.Title.leadingOffset)
+    }
+    
+    private func setUpDateStack() {
+        dateImageView.image = Constant.Date.image
+        
+        dateLabel.textColor = Constant.Date.textColor
+        dateLabel.font = Constant.Date.font
+        
+        [dateImageView, dateLabel].forEach { element in
+            dateStack.addArrangedSubview(element)
+        }
+         
+        dateStack.axis = Constant.Date.axis
+        dateStack.spacing = Constant.Date.spacing
+        
+        addSubview(dateStack)
+        dateStack.pinTop(to: titleLabel.bottomAnchor, Constant.Date.topOffset)
+        dateStack.pinLeft(to: self, Constant.Date.leadingOffset)
+    }
+    
+    private func setUpSeparatorView() {
+        separatorView.backgroundColor = Constant.Separator.backgroundColor
+        
+        addSubview(separatorView)
+        separatorView.pinTop(to: dateStack.bottomAnchor, Constant.Separator.topOffset)
+        separatorView.pinHorizontal(to: self, Constant.Separator.horizontalOffset)
+        separatorView.setHeight(Constant.Separator.height)
+    }
+    
+    private func setUpNavigationRow(with type: ITCHHomeWorkCellType) {
+        navigationRow.title = Constant.NavigationRows.teacherTitle
+        
+        addSubview(navigationRow)
+        navigationRow.pinTop(to: separatorView.bottomAnchor)
+        navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
         
         switch type {
         case .teacher:
             setUpSecondNavigationRow()
-            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
         case .student:
             navigationRow.title = Constant.NavigationRows.studentTitle
             navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
@@ -124,60 +168,12 @@ public final class ITCHHomeWorkCell: UIView {
         }
     }
     
-    private func setUpTitle() {
-        title.textColor = ITCHColor.base0.color
-        title.font = ITCHFont.bodyMMedium.font
-        
-        addSubview(title)
-        title.pinTop(to: self, Constant.Title.topOffset)
-        title.pinLeft(to: self, Constant.Title.leadingOffset)
-    }
-    
-    private func setUpDateImage() {
-        dateImage.image = Constant.DateImage.image
-        dateImage.tintColor = ITCHColor.red50.color
-        
-        dateStack.addArrangedSubview(dateImage)
-    }
-    
-    private func setUpDateLabel() {
-        dateLabel.textColor = ITCHColor.base30.color
-        dateLabel.font = ITCHFont.bodySMedium.font
-        
-        dateStack.addArrangedSubview(dateLabel)
-    }
-    
-    private func setUpDateStack() {
-        dateStack.axis = .horizontal
-        dateStack.spacing = Constant.DateStack.spacing
-        
-        addSubview(dateStack)
-        dateStack.pinTop(to: title.bottomAnchor, Constant.DateStack.topOffset)
-        dateStack.pinLeft(to: self, Constant.DateStack.leadingOffset)
-    }
-    
-    private func setUpSeparator() {
-        separator.backgroundColor = ITCHColor.base70.color
-        
-        addSubview(separator)
-        separator.pinTop(to: dateStack.bottomAnchor, Constant.Separator.topOffset)
-        separator.pinHorizontal(to: self, Constant.Separator.horizontalOffset)
-        separator.setHeight(Constant.Separator.height)
-    }
-    
-    private func setUpNavigationRow() {
-        navigationRow.title = Constant.NavigationRows.teacherTitle
-        
-        addSubview(navigationRow)
-        navigationRow.pinTop(to: separator.bottomAnchor)
-        navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-    }
-    
     private func setUpSecondNavigationRow() {
         secondNavigationRow.title = Constant.NavigationRows.teacherSecondTitle
         
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
     }
 }

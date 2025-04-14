@@ -22,7 +22,7 @@ final class ViewController: UIViewController {
     
 //    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView()
     
-    private let row: ITCHNavigationRow = ITCHNavigationRow(leftImage: ITCHImage.vk28.image)
+//    private let row: ITCHNavigationRow = ITCHNavigationRow(leftImage: ITCHImage.vk28.image)
     
     private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(title: "Домашнее задание 5", date: Date(), type: .teacher)
     
@@ -66,8 +66,6 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
-        
-        row.title = "Чат курса"
         
         view.addSubview(row)
         row.pinCenterY(to: view)
