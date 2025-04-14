@@ -121,7 +121,7 @@ public final class ITCHCourseCell: UIView {
         courseNameStack.addArrangedSubview(courseNameLabel)
         courseNameStack.addArrangedSubview(chevronImage)
         courseNameStack.axis = .horizontal
-        courseNameStack.distribution = .fill
+        courseNameStack.spacing = 20
         
         addSubview(courseNameStack)
         courseNameStack.pinTop(to: infoStack.bottomAnchor, Constant.CourseName.topOffset)

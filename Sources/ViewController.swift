@@ -65,13 +65,20 @@ final class ViewController: UIViewController {
         timeInterval: "18:10 - 19:30"
     )
     
+    private let notification: ITCHNotificationCell = ITCHNotificationCell(
+        courseName: "НИС “Основы iOS разработки на UIKit”",
+        notification: "Новое задание",
+        date: Date(),
+        isNewNotify: true
+    )
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        view.addSubview(schedule)
-        schedule.pinCenterY(to: view)
-        schedule.pinHorizontal(to: view, 36)
+        view.addSubview(notification)
+        notification.pinCenterY(to: view)
+        notification.pinHorizontal(to: view, 16)
     }
 }
