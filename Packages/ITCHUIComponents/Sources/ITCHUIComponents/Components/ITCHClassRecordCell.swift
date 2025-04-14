@@ -16,15 +16,19 @@ public final class ITCHClassRecordCell: UIView {
         
         enum View {
             static let cornerRadius: CGFloat = 12
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
         }
         
         enum Date {
+            static let textColor: UIColor = ITCHColor.base30.color
+            static let font: UIFont = ITCHFont.bodySMedium.font
             static let format: String = "EEEE, d MMMM"
             static let leadingOffset: CGFloat = 20
             static let topOffset: CGFloat = 16
         }
         
         enum Separator {
+            static let backgroundColor: UIColor = ITCHColor.base70.color
             static let height: CGFloat = 1
             static let horizontalOffset: CGFloat = 20
             static let topOffset: CGFloat = 8
@@ -34,40 +38,40 @@ public final class ITCHClassRecordCell: UIView {
             static let recordTitle: String = "Запись занятия"
             static let editTitle: String = "Редактировать"
             static let horizontalOffset: CGFloat = 20
-            static let bottomOffset: CGFloat = 16
+            static let bottomOffset: CGFloat = 8
         }
     }
     
     // MARK: - UI Components
     private let dateLabel: UILabel = UILabel()
-    private let separator: UIView = UIView()
+    private let separatorView: UIView = UIView()
     private let navigationRow: ITCHNavigationRow = ITCHNavigationRow(title: Constant.NavigationRows.recordTitle)
     private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(title: Constant.NavigationRows.editTitle)
     
     // MARK: - Properties
-    public var firstAction: (() -> Void)? {
+    public var date: Date? {
         didSet {
-            navigationRow.action = firstAction
+            dateLabel.text = date?.configure(to: Constant.Date.format).uppercased()
         }
     }
     
-    public var secondAction: (() -> Void)? {
+    public var openRecordAction: (() -> Void)? {
         didSet {
-            secondNavigationRow.action = secondAction
+            navigationRow.action = openRecordAction
+        }
+    }
+    
+    public var editAction: (() -> Void)? {
+        didSet {
+            secondNavigationRow.action = editAction
         }
     }
     
     // MARK: - Lifecycle
-    public init(
-        type: ITCHClassRecordCellType,
-        date: Date
-    ) {
+    public init(type: ITCHClassRecordCellType) {
         super.init(frame: .zero)
         
-        setUp(
-            for: type,
-            date: date
-        )
+        setUp(for: type)
     }
     
     @available(*, unavailable)
@@ -76,54 +80,53 @@ public final class ITCHClassRecordCell: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(
-        for type: ITCHClassRecordCellType,
-        date: Date
-    ) {
-        backgroundColor = ITCHColor.backgroundGray.color
-        layer.cornerRadius = Constant.View.cornerRadius
-        dateLabel.text = date.configure(to: Constant.Date.format).uppercased()
-        
+    private func setUp(for type: ITCHClassRecordCellType) {
+        setUpView()
         setUpDateTitle()
-        setUpSeparator()
-        setUpNavigationRow()
-        
-        switch type {
-        case .student:
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .teacher:
-            setUpSecondNavigationRow()
-            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        }
+        setUpSeparatorView()
+        setUpNavigationRow(with: type)
+    }
+    
+    private func setUpView() {
+        backgroundColor = Constant.View.backgroundColor
+        layer.cornerRadius = Constant.View.cornerRadius
     }
     
     private func setUpDateTitle() {
-        dateLabel.textColor = ITCHColor.base30.color
-        dateLabel.font = ITCHFont.bodySMedium.font
+        dateLabel.textColor = Constant.Date.textColor
+        dateLabel.font = Constant.Date.font
         
         addSubview(dateLabel)
         dateLabel.pinLeft(to: self, Constant.Date.leadingOffset)
         dateLabel.pinTop(to: self, Constant.Date.topOffset)
     }
     
-    private func setUpSeparator() {
-        separator.backgroundColor = ITCHColor.base70.color
+    private func setUpSeparatorView() {
+        separatorView.backgroundColor = Constant.Separator.backgroundColor
         
-        addSubview(separator)
-        separator.pinTop(to: dateLabel.bottomAnchor, Constant.Separator.topOffset)
-        separator.pinHorizontal(to: self, Constant.Separator.horizontalOffset)
-        separator.setHeight(Constant.Separator.height)
+        addSubview(separatorView)
+        separatorView.pinTop(to: dateLabel.bottomAnchor, Constant.Separator.topOffset)
+        separatorView.pinHorizontal(to: self, Constant.Separator.horizontalOffset)
+        separatorView.setHeight(Constant.Separator.height)
     }
     
-    private func setUpNavigationRow() {
+    private func setUpNavigationRow(with type: ITCHClassRecordCellType) {
         addSubview(navigationRow)
-        navigationRow.pinTop(to: separator.bottomAnchor)
+        navigationRow.pinTop(to: separatorView.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        
+        switch type {
+        case .student:
+            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        case .teacher:
+            setUpSecondNavigationRow()
+        }
     }
     
     private func setUpSecondNavigationRow() {
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
     }
 }
