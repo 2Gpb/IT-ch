@@ -54,15 +54,24 @@ final class ViewController: UIViewController {
         subtitle: "Самое важное"
     )
     
-    private let user: ITCHUserRow = ITCHUserRow(name: "Тюхменев Петр Вячеславович", info: "Бакалавриат 21 ПИ-3")
+    private let user: ITCHUserRow = ITCHUserRow(
+        name: "Тюхменев Петр Вячеславович",
+        info: "Бакалавриат 21 ПИ-3"
+    )
+    
+    private let schedule: ITCHScheduleCell = ITCHScheduleCell(
+        courseName: "НИС “Основы iOS разработки на UIKit”",
+        location: "N506, Покровский б-р, д. 11",
+        timeInterval: "18:10 - 19:30"
+    )
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        view.addSubview(user)
-        user.pinCenterY(to: view)
-        user.pinHorizontal(to: view, 16)
+        view.addSubview(schedule)
+        schedule.pinCenterY(to: view)
+        schedule.pinHorizontal(to: view, 36)
     }
 }
