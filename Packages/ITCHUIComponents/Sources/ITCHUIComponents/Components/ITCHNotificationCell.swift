@@ -16,21 +16,30 @@ public final class ITCHNotificationCell: UIView {
         
         enum View {
             static let cornerRadius: CGFloat = 12
+            static let backgroundColor: UIColor = ITCHColor.cellLightGray.color
         }
         
         enum CourseName {
+            static let textColor: UIColor = ITCHColor.base30.color
+            static let font: UIFont = ITCHFont.captionRegular.font
             static let topOffset: CGFloat = 16
             static let horizontalOffset: CGFloat = 20
         }
         
-        enum NotificationTextStack {
+        enum NotificationStack {
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let font: UIFont = ITCHFont.bodyMMedium.font
+            static let image: UIImage = ITCHImage.chevronRight16.image
+            static let axis: NSLayoutConstraint.Axis = .horizontal
             static let imageSize: CGFloat = 16
             static let spacing: CGFloat = 20
             static let topOffset: CGFloat = 8
             static let horizontalOffset: CGFloat = 20
         }
         
-        enum DateLabel {
+        enum Date {
+            static let textColor: UIColor = ITCHColor.base30.color
+            static let font: UIFont = ITCHFont.bodySMedium.font
             static let dateFormat: String = "dd.MM.yy 'в' HH:mm"
             static let topOffset: CGFloat = 12
             static let bottomOffset: CGFloat = 16
@@ -38,7 +47,9 @@ public final class ITCHNotificationCell: UIView {
             static let leadingOffsetWithView: CGFloat = 4
         }
         
-        enum NotificationImage {
+        enum NewNotification {
+            static let image: UIImage = ITCHImage.newNotification12.image
+            static let isHidden: Bool = true
             static let topOffset: CGFloat = 14.5
             static let leadingOffset: CGFloat = 20
         }
@@ -47,25 +58,32 @@ public final class ITCHNotificationCell: UIView {
     // MARK: - UI Components
     private let courseNameLabel: UILabel = UILabel()
     private let notificationTextLabel: UILabel = UILabel()
-    private let chevronImage: UIImageView = UIImageView()
+    private let chevronImageView: UIImageView = UIImageView()
     private let notificationTextStack: UIStackView = UIStackView()
-    private let newNotificationImage: UIImageView = UIImageView()
+    private let newNotificationImageView: UIImageView = UIImageView()
     private let dateLabel: UILabel = UILabel()
     
+    // MARK: - Private variables
+    private var dateLabelLeadingToLeftImage: NSLayoutConstraint?
+    private var dateLabelLeadingToSuperview: NSLayoutConstraint?
+
+    // MARK: - Properties
+    public var content: ITCHNotificationModel? {
+        didSet {
+            courseNameLabel.text = content?.courseName
+            notificationTextLabel.text = content?.notification
+            dateLabel.text = content?.date.configure(to: Constant.Date.dateFormat)
+            
+            dateLabelLeadingToSuperview?.isActive = !(content?.isNewNotify ?? true)
+            dateLabelLeadingToLeftImage?.isActive = content?.isNewNotify ?? false
+            newNotificationImageView.isHidden = !(content?.isNewNotify ?? true)
+        }
+    }
+    
     // MARK: - Lifecycle
-    public init(
-        courseName: String,
-        notification: String,
-        date: Date,
-        isNewNotify: Bool = false
-    ) {
+    public init() {
         super.init(frame: .zero)
-        setUp(
-            courseName: courseName,
-            notificationText: notification,
-            date: date,
-            isNewNotify: isNewNotify
-        )
+        setUp()
     }
     
     @available(*, unavailable)
@@ -74,73 +92,75 @@ public final class ITCHNotificationCell: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(
-        courseName: String,
-        notificationText: String,
-        date: Date,
-        isNewNotify: Bool
-    ) {
-        backgroundColor = ITCHColor.cellLightGray.color
-        layer.cornerRadius = Constant.View.cornerRadius
-        
-        setUpCourseNameLabel(with: courseName)
-        setUpNotificationTextStack(with: notificationText)
-        setUpDateLabel(with: date, isNewNotify: isNewNotify)
+    private func setUp() {
+        setUpView()
+        setUpCourseNameLabel()
+        setUpNotificationTextStack()
+        setUpDateLabel()
+        setUpNewNotificationImageView()
     }
     
-    private func setUpCourseNameLabel(with text: String) {
-        courseNameLabel.text = text
-        courseNameLabel.textColor = ITCHColor.base30.color
-        courseNameLabel.font = ITCHFont.captionRegular.font
+    private func setUpView() {
+        backgroundColor = Constant.View.backgroundColor
+        layer.cornerRadius = Constant.View.cornerRadius
+    }
+    
+    private func setUpCourseNameLabel() {
+        courseNameLabel.textColor = Constant.CourseName.textColor
+        courseNameLabel.font = Constant.CourseName.font
         
         addSubview(courseNameLabel)
         courseNameLabel.pinTop(to: self, Constant.CourseName.topOffset)
         courseNameLabel.pinHorizontal(to: self, Constant.CourseName.horizontalOffset)
     }
     
-    private func setUpNotificationTextStack(with text: String) {
-        notificationTextLabel.text = text
-        notificationTextLabel.textColor = ITCHColor.base0.color
-        notificationTextLabel.font = ITCHFont.bodyMMedium.font
+    private func setUpNotificationTextStack() {
+        notificationTextLabel.textColor = Constant.NotificationStack.textColor
+        notificationTextLabel.font = Constant.NotificationStack.font
         
-        chevronImage.image = ITCHImage.chevronRight16.image
-        chevronImage.setHeight(Constant.NotificationTextStack.imageSize)
-        chevronImage.setWidth(Constant.NotificationTextStack.imageSize)
+        chevronImageView.image = Constant.NotificationStack.image
+        chevronImageView.setHeight(Constant.NotificationStack.imageSize)
+        chevronImageView.setWidth(Constant.NotificationStack.imageSize)
         
-        [notificationTextLabel, chevronImage].forEach { element in
+        [notificationTextLabel, chevronImageView].forEach { element in
             notificationTextStack.addArrangedSubview(element)
         }
         
-        notificationTextStack.axis = .horizontal
-        notificationTextStack.spacing = Constant.NotificationTextStack.spacing
+        notificationTextStack.axis = Constant.NotificationStack.axis
+        notificationTextStack.spacing = Constant.NotificationStack.spacing
         
         addSubview(notificationTextStack)
-        notificationTextStack.pinTop(to: courseNameLabel.bottomAnchor, Constant.NotificationTextStack.topOffset)
-        notificationTextStack.pinHorizontal(to: self, Constant.NotificationTextStack.horizontalOffset)
+        notificationTextStack.pinTop(to: courseNameLabel.bottomAnchor, Constant.NotificationStack.topOffset)
+        notificationTextStack.pinHorizontal(to: self, Constant.NotificationStack.horizontalOffset)
     }
     
-    private func setUpDateLabel(with date: Date, isNewNotify: Bool) {
-        dateLabel.text = date.configure(to: Constant.DateLabel.dateFormat)
-        dateLabel.textColor = ITCHColor.base30.color
-        dateLabel.font = ITCHFont.bodySMedium.font
+    private func setUpDateLabel() {
+        dateLabel.textColor = Constant.Date.textColor
+        dateLabel.font = Constant.Date.font
         
         addSubview(dateLabel)
-        dateLabel.pinTop(to: notificationTextStack.bottomAnchor, Constant.DateLabel.topOffset)
-        dateLabel.pinBottom(to: self, Constant.DateLabel.bottomOffset)
+        dateLabel.pinTop(to: notificationTextStack.bottomAnchor, Constant.Date.topOffset)
+        dateLabel.pinBottom(to: self, Constant.Date.bottomOffset)
         
-        if isNewNotify {
-            setUpNewNotificationImage()
-            dateLabel.pinLeft(to: newNotificationImage.trailingAnchor, Constant.DateLabel.leadingOffsetWithView)
-        } else {
-            dateLabel.pinLeft(to: self, Constant.DateLabel.leadingOffset)
-        }
+        dateLabelLeadingToLeftImage = dateLabel.leadingAnchor.constraint(
+            equalTo: newNotificationImageView.trailingAnchor,
+            constant: Constant.Date.leadingOffsetWithView
+        )
+        
+        dateLabelLeadingToSuperview = dateLabel.leadingAnchor.constraint(
+            equalTo: self.leadingAnchor,
+            constant: Constant.Date.leadingOffset
+        )
+        
+        dateLabelLeadingToSuperview?.isActive = true
     }
     
-    private func setUpNewNotificationImage() {
-        newNotificationImage.image = ITCHImage.newNotification12.image
+    private func setUpNewNotificationImageView() {
+        newNotificationImageView.image = Constant.NewNotification.image
+        newNotificationImageView.isHidden = Constant.NewNotification.isHidden
         
-        addSubview(newNotificationImage)
-        newNotificationImage.pinTop(to: notificationTextStack.bottomAnchor, Constant.NotificationImage.topOffset)
-        newNotificationImage.pinLeft(to: self, Constant.NotificationImage.leadingOffset)
+        addSubview(newNotificationImageView)
+        newNotificationImageView.pinTop(to: notificationTextStack.bottomAnchor, Constant.NewNotification.topOffset)
+        newNotificationImageView.pinLeft(to: self, Constant.NewNotification.leadingOffset)
     }
 }

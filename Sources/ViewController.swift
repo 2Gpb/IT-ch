@@ -24,15 +24,17 @@ final class ViewController: UIViewController {
     
 //    private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(type: .teacher)
     
-    private let navBar: ITCHNavigationBar = ITCHNavigationBar(
-        leftImage: ITCHImage.chevronLeft24.image,
-        rightImage: ITCHImage.plus24.image
-    )
+//    private let navBar: ITCHNavigationBar = ITCHNavigationBar(
+//        leftImage: ITCHImage.chevronLeft24.image,
+//        rightImage: ITCHImage.plus24.image
+//    )
     
-    private let textField: ITCHTextField = ITCHTextField(
-        title: "Номер телефона",
-        placeholder: "Введите ваш номер",
-        type: .password
+    private let notification: ITCHNotificationCell = ITCHNotificationCell()
+    
+    private let schedule: ITCHScheduleCell = ITCHScheduleCell(
+        courseName: "НИС “Основы iOS разработки на UIKit”",
+        location: "N506, Покровский б-р, д. 11",
+        timeInterval: "18:10 - 19:30"
     )
     
     private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
@@ -41,33 +43,31 @@ final class ViewController: UIViewController {
         subtitle: "Самое важное"
     )
     
+    private let textField: ITCHTextField = ITCHTextField(
+        title: "Номер телефона",
+        placeholder: "Введите ваш номер",
+        type: .password
+    )
+    
     private let user: ITCHUserRow = ITCHUserRow(
         name: "Тюхменев Петр Вячеславович",
         info: "Бакалавриат 21 ПИ-3"
     )
     
-    private let schedule: ITCHScheduleCell = ITCHScheduleCell(
-        courseName: "НИС “Основы iOS разработки на UIKit”",
-        location: "N506, Покровский б-р, д. 11",
-        timeInterval: "18:10 - 19:30"
-    )
-    
-    private let notification: ITCHNotificationCell = ITCHNotificationCell(
-        courseName: "НИС “Основы iOS разработки на UIKit”",
-        notification: "Новое задание",
-        date: Date(),
-        isNewNotify: true
-    )
-    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.backgroundColor = ITCHColor.backgroundDark.color
         
-        navBar.title = "Задание"
+        notification.content = ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            notification: "Новое задание",
+            date: Date(),
+            isNewNotify: true
+        )
         
-        view.addSubview(navBar)
-        navBar.pinCenterY(to: view)
-        navBar.pinHorizontal(to: view)
+        view.addSubview(notification)
+        notification.pinCenterY(to: view)
+        notification.pinHorizontal(to: view, 16)
     }
 }
