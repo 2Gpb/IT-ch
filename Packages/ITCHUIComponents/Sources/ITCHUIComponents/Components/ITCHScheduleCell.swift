@@ -15,32 +15,46 @@ public final class ITCHScheduleCell: UIView {
         }
         
         enum CourseName {
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let font: UIFont = ITCHFont.bodyMMedium.font
             static let numberOfLines: Int = 0
         }
         
         enum Location {
+            static let image: UIImage = ITCHImage.location16.image
+            static let textColor: UIColor = ITCHColor.base30.color
+            static let font: UIFont = ITCHFont.captionMedium.font
             static let spacing: CGFloat = 4
+            static let axis: NSLayoutConstraint.Axis = .horizontal
             static let imageSize: CGFloat = 16
         }
         
         enum BottomStack {
             static let spacing: CGFloat = 24
+            static let axis: NSLayoutConstraint.Axis = .horizontal
             static let topOffset: CGFloat = 12
+            static let alignment: UIStackView.Alignment = .center
+            static let distribution: UIStackView.Distribution = .fill
+        }
+        
+        enum TimeInterval {
+            static let textColor: UIColor = ITCHColor.base30.color
+            static let font: UIFont = ITCHFont.captionMedium.font
         }
     }
     
     // MARK: - UI Components
     private let courseNameLabel: UILabel = UILabel()
-    private let locationImage: UIImageView = UIImageView()
-    private let locationText: UILabel = UILabel()
+    private let locationImageView: UIImageView = UIImageView()
+    private let locationLabel: UILabel = UILabel()
     private let locationStack: UIStackView = UIStackView()
     private let timeIntervalLabel: UILabel = UILabel()
     private let bottomStack: UIStackView = UIStackView()
     
     // MARK: - Lifecycle
-    public init(courseName: String, location: String, timeInterval: String) {
+    public init() {
         super.init(frame: .zero)
-        setUp(courseName: courseName, location: location, timeInterval: timeInterval)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -48,18 +62,23 @@ public final class ITCHScheduleCell: UIView {
         fatalError(Constant.Error.message)
     }
     
+    // MARK: - Methods
+    public func configure(with model: ITCHScheduleModel) {
+        courseNameLabel.text = model.courseName
+        locationLabel.text = model.location
+        timeIntervalLabel.text = model.timeInterval
+    }
+    
     // MARK: - SetUp
-    private func setUp(courseName: String, location: String, timeInterval: String) {
-        setUpCourseNameLabel(with: courseName)
-        setUpLocationStack(with: location)
-        setUpTimeIntervalLabel(with: timeInterval)
+    private func setUp() {
+        setUpCourseNameLabel()
+        setUpLocationStack()
         setUpBottomStack()
     }
     
-    private func setUpCourseNameLabel(with text: String) {
-        courseNameLabel.text = text
-        courseNameLabel.textColor = ITCHColor.base0.color
-        courseNameLabel.font = ITCHFont.bodyMMedium.font
+    private func setUpCourseNameLabel() {
+        courseNameLabel.textColor = Constant.CourseName.textColor
+        courseNameLabel.font = Constant.CourseName.font
         courseNameLabel.numberOfLines = Constant.CourseName.numberOfLines
         
         addSubview(courseNameLabel)
@@ -68,37 +87,33 @@ public final class ITCHScheduleCell: UIView {
         courseNameLabel.pinRight(to: self)
     }
     
-    private func setUpLocationStack(with text: String) {
-        locationImage.image = ITCHImage.location16.image
-        locationImage.setWidth(Constant.Location.imageSize)
+    private func setUpLocationStack() {
+        locationImageView.image = Constant.Location.image
+        locationImageView.setWidth(Constant.Location.imageSize)
         
-        locationText.text = text
-        locationText.textColor = ITCHColor.base30.color
-        locationText.font = ITCHFont.captionMedium.font
-        locationText.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        locationLabel.textColor = Constant.Location.textColor
+        locationLabel.font = Constant.Location.font
+        locationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
-        [locationImage, locationText].forEach { element in
+        [locationImageView, locationLabel].forEach { element in
             locationStack.addArrangedSubview(element)
         }
         
-        locationStack.axis = .horizontal
+        locationStack.axis = Constant.Location.axis
         locationStack.spacing = Constant.Location.spacing
     }
     
-    private func setUpTimeIntervalLabel(with text: String) {
-        timeIntervalLabel.text = text
-        timeIntervalLabel.textColor = ITCHColor.base30.color
-        timeIntervalLabel.font = ITCHFont.captionMedium.font
-    }
-    
     private func setUpBottomStack() {
+        timeIntervalLabel.textColor = Constant.TimeInterval.textColor
+        timeIntervalLabel.font = Constant.TimeInterval.font
+        
         [locationStack, timeIntervalLabel].forEach { element in
             bottomStack.addArrangedSubview(element)
         }
         
-        bottomStack.axis = .horizontal
-        bottomStack.distribution = .fill
-        bottomStack.alignment = .center
+        bottomStack.axis = Constant.BottomStack.axis
+        bottomStack.distribution = Constant.BottomStack.distribution
+        bottomStack.alignment = Constant.BottomStack.alignment
         bottomStack.spacing = Constant.BottomStack.spacing
         
         addSubview(bottomStack)

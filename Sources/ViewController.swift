@@ -20,19 +20,15 @@ final class ViewController: UIViewController {
     
 //    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView()
     
-    private let row: ITCHNavigationRow = ITCHNavigationRow()
+//    private let row: ITCHNavigationRow = ITCHNavigationRow()
     
 //    private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(type: .teacher)
     
 //    private let navBar: ITCHNavigationBar = ITCHNavigationBar()
     
-    private let notification: ITCHNotificationCell = ITCHNotificationCell()
+//    private let notification: ITCHNotificationCell = ITCHNotificationCell()
     
-    private let schedule: ITCHScheduleCell = ITCHScheduleCell(
-        courseName: "НИС “Основы iOS разработки на UIKit”",
-        location: "N506, Покровский б-р, д. 11",
-        timeInterval: "18:10 - 19:30"
-    )
+    private let schedule: ITCHScheduleCell = ITCHScheduleCell()
     
     private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
         image: ITCHImage.info32.image,
@@ -56,17 +52,16 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-//        notification.configure(
-//            with: ITCHNotificationModel(
-//                courseName: "НИС “Основы iOS разработки на UIKit”",
-//                notification: "Новое задание",
-//                date: Date(),
-//                isNewNotify: true
-//            )
-//        )
+        schedule.configure(
+            with: ITCHScheduleModel(
+                courseName: "НИС “Основы iOS разработки на UIKit”",
+                location: "N506, Покровский б-р, д. 11",
+                timeInterval: "18:10 - 19:30"
+            )
+        )
         
-        view.addSubview(row)
-        row.pinCenterY(to: view)
-        row.pinHorizontal(to: view, 16)
+        view.addSubview(schedule)
+        schedule.pinCenterY(to: view)
+        schedule.pinHorizontal(to: view, 16)
     }
 }
