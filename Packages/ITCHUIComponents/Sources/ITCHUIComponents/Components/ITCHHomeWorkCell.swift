@@ -65,18 +65,6 @@ public final class ITCHHomeWorkCell: UIView {
     private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
     
     // MARK: - Properties
-    public var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
-    public var date: Date? {
-        didSet {
-            dateLabel.text = date?.configure(to: Constant.Date.dateFormat)
-        }
-    }
-    
     public var solutionsAction: (() -> Void)? {
         didSet {
             navigationRow.action = solutionsAction
@@ -98,6 +86,12 @@ public final class ITCHHomeWorkCell: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Constant.Error.message)
+    }
+    
+    // MARK: - Methods
+    public func configure(title: String, date: Date) {
+        titleLabel.text = title
+        dateLabel.text = date.configure(to: Constant.Date.dateFormat)
     }
     
     // MARK: - SetUp
@@ -153,7 +147,7 @@ public final class ITCHHomeWorkCell: UIView {
     }
     
     private func setUpNavigationRow(with type: ITCHHomeWorkCellType) {
-        navigationRow.title = Constant.NavigationRows.teacherTitle
+        secondNavigationRow.configure(title: Constant.NavigationRows.teacherTitle)
         
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
@@ -163,16 +157,16 @@ public final class ITCHHomeWorkCell: UIView {
         case .teacher:
             setUpSecondNavigationRow()
         case .student:
-            navigationRow.title = Constant.NavigationRows.studentTitle
+            secondNavigationRow.configure(title: Constant.NavigationRows.studentTitle)
             navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
         case .assistant:
-            navigationRow.title = Constant.NavigationRows.assistantTitle
+            secondNavigationRow.configure(title: Constant.NavigationRows.assistantTitle)
             navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
         }
     }
     
     private func setUpSecondNavigationRow() {
-        secondNavigationRow.title = Constant.NavigationRows.teacherSecondTitle
+        secondNavigationRow.configure(title: Constant.NavigationRows.teacherSecondTitle)
         
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)

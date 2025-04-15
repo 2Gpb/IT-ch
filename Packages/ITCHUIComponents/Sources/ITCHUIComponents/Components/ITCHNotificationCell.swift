@@ -66,19 +66,6 @@ public final class ITCHNotificationCell: UIView {
     // MARK: - Private variables
     private var dateLabelLeadingToLeftImage: NSLayoutConstraint?
     private var dateLabelLeadingToSuperview: NSLayoutConstraint?
-
-    // MARK: - Properties
-    public var content: ITCHNotificationModel? {
-        didSet {
-            courseNameLabel.text = content?.courseName
-            notificationTextLabel.text = content?.notification
-            dateLabel.text = content?.date.configure(to: Constant.Date.dateFormat)
-            
-            dateLabelLeadingToSuperview?.isActive = !(content?.isNewNotify ?? true)
-            dateLabelLeadingToLeftImage?.isActive = content?.isNewNotify ?? false
-            newNotificationImageView.isHidden = !(content?.isNewNotify ?? true)
-        }
-    }
     
     // MARK: - Lifecycle
     public init() {
@@ -89,6 +76,17 @@ public final class ITCHNotificationCell: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Constant.Error.message)
+    }
+    
+    // MARK: - Methods
+    public func configure(with model: ITCHNotificationModel) {
+        courseNameLabel.text = model.courseName
+        notificationTextLabel.text = model.notification
+        dateLabel.text = model.date.configure(to: Constant.Date.dateFormat)
+        
+        dateLabelLeadingToSuperview?.isActive = !model.isNewNotify
+        dateLabelLeadingToLeftImage?.isActive = model.isNewNotify
+        newNotificationImageView.isHidden = !model.isNewNotify
     }
     
     // MARK: - SetUp

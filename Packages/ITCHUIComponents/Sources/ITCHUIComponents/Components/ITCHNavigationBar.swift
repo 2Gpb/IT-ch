@@ -38,16 +38,11 @@ public final class ITCHNavigationBar: UIView {
     // MARK: - Properties
     public var leftAction: (() -> Void)?
     public var rightAction: (() -> Void)?
-    public var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
     
     // MARK: - lifecycle
-    public init(leftImage: UIImage? = nil, rightImage: UIImage? = nil) {
+    public init() {
         super.init(frame: .zero)
-        setUp(leftImage: leftImage, rightImage: rightImage)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -55,11 +50,25 @@ public final class ITCHNavigationBar: UIView {
         fatalError(Constant.Error.message)
     }
     
+    // MARK: - Methods
+    public func configure(with model: ITCHNavigationBarModel) {
+        titleLabel.text = model.title
+        if let image = model.leftImage {
+            leftButton.setImage(image, for: .normal)
+            leftButton.isHidden = false
+        }
+        
+        if let image = model.rightImage {
+            rightButton.setImage(image, for: .normal)
+            rightButton.isHidden = false
+        }
+    }
+    
     // MARK: - SetUp
-    private func setUp(leftImage: UIImage?, rightImage: UIImage?) {
+    private func setUp() {
         setUpTitleLabel()
-        setUpLeftButton(with: leftImage)
-        setUpRightButton(with: rightImage)
+        setUpLeftButton()
+        setUpRightButton()
         setHeight(Constant.View.height)
     }
     
@@ -72,9 +81,8 @@ public final class ITCHNavigationBar: UIView {
         titleLabel.pinCenter(to: self)
     }
     
-    private func setUpLeftButton(with image: UIImage?) {
-        guard image != nil else { return }
-        leftButton.setImage(image, for: .normal)
+    private func setUpLeftButton() {
+        leftButton.isHidden = true
         leftButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
         
         addSubview(leftButton)
@@ -82,9 +90,8 @@ public final class ITCHNavigationBar: UIView {
         leftButton.pinCenterY(to: self)
     }
     
-    private func setUpRightButton(with image: UIImage?) {
-        guard image != nil else { return }
-        rightButton.setImage(image, for: .normal)
+    private func setUpRightButton() {
+        rightButton.isHidden = true
         rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
         
         addSubview(rightButton)

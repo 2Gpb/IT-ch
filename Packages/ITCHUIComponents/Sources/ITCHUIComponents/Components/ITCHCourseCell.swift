@@ -73,17 +73,6 @@ public final class ITCHCourseCell: UIView {
     private let teacherNameLabel: UILabel = UILabel()
     private let teacherNameStack: UIStackView = UIStackView()
     
-    // MARK: - Properties
-    public var content: ITCHCourseModel? {
-        didSet {
-            durationLabel.text = content?.duration
-            roleLabel.text = Constant.Info.rolePrefix + (content?.role ?? "")
-            courseNameLabel.text = content?.courseName
-            teacherNameLabel.text = content?.teacherName
-            avatarImageView.image = content?.avatar
-        }
-    }
-    
     // MARK: - Lifecycle
     public init() {
         super.init(frame: .zero)
@@ -93,6 +82,15 @@ public final class ITCHCourseCell: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Constant.Error.message)
+    }
+    
+    // MARK: - Methods
+    public func configure(with model: ITCHCourseModel) {
+        durationLabel.text = model.duration
+        roleLabel.text = Constant.Info.rolePrefix + model.role
+        courseNameLabel.text = model.courseName
+        teacherNameLabel.text = model.teacherName
+        avatarImageView.image = model.avatar
     }
     
     // MARK: - SetUp

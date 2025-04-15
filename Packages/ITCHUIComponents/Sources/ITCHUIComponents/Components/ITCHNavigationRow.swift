@@ -16,6 +16,7 @@ public final class ITCHNavigationRow: UIView {
         
         enum LeftImage {
             static let dimension: CGFloat = 28
+            static let isHidden: Bool = true
         }
         
         enum Title {
@@ -36,18 +37,17 @@ public final class ITCHNavigationRow: UIView {
     private let titleLabel: UILabel = UILabel()
     private let chevronImageView: UIImageView = UIImageView()
     
+    // MARK: - Private variables
+    private var titleLabelLeadingToLeftImage: NSLayoutConstraint?
+    private var titleLabelLeadingToSuperview: NSLayoutConstraint?
+    
     // MARK: - Properties
     public var action: (() -> Void)?
-    public var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
     
     // MARK: - Lifecycle
-    public init(leftImage: UIImage? = nil) {
+    public init() {
         super.init(frame: .zero)
-        setUp(leftImage: leftImage)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -55,17 +55,28 @@ public final class ITCHNavigationRow: UIView {
         fatalError(Constant.Error.message)
     }
     
+    // MARK: - Methods
+    public func configure(title: String, image: UIImage? = nil) {
+        titleLabel.text = title
+        leftImageView.image = image
+        
+        if image != nil {
+            titleLabelLeadingToLeftImage?.isActive = true
+            titleLabelLeadingToSuperview?.isActive = false
+            leftImageView.isHidden = false
+        }
+    }
+    
     // MARK: - SetUp
-    private func setUp(leftImage: UIImage?) {
-        setUpLeftImageView(with: leftImage)
+    private func setUp() {
+        setUpLeftImageView()
         setUpTitleLabel()
-        setUpChevron()
+        setUpChevronImageView()
         setUpGesture()
     }
     
-    private func setUpLeftImageView(with image: UIImage?) {
-        guard image != nil else { return }
-        leftImageView.image = image
+    private func setUpLeftImageView() {
+        leftImageView.isHidden = Constant.LeftImage.isHidden
         
         addSubview(leftImageView)
         leftImageView.pinLeft(to: self)
@@ -81,14 +92,19 @@ public final class ITCHNavigationRow: UIView {
         addSubview(titleLabel)
         titleLabel.pinCenterY(to: self)
         
-        if leftImageView.image == nil {
-            titleLabel.pinLeft(to: self)
-        } else {
-            titleLabel.pinLeft(to: leftImageView.trailingAnchor, Constant.Title.leftOffset)
-        }
+        titleLabelLeadingToLeftImage = titleLabel.leadingAnchor.constraint(
+            equalTo: leftImageView.trailingAnchor,
+            constant: Constant.Title.leftOffset
+        )
+        
+        titleLabelLeadingToSuperview = titleLabel.leadingAnchor.constraint(
+            equalTo: self.leadingAnchor
+        )
+        
+        titleLabelLeadingToSuperview?.isActive = true
     }
     
-    private func setUpChevron() {
+    private func setUpChevronImageView() {
         chevronImageView.image = Constant.Chevron.image
         
         addSubview(chevronImageView)

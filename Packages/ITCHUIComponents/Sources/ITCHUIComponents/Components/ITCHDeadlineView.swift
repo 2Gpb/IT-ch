@@ -72,14 +72,6 @@ public final class ITCHDeadlineView: UIView {
         }
     }
     
-    public var content: ITCHDeadlineModel? {
-        didSet {
-            courseNameLabel.text = content?.course
-            titleLabel.text = content?.text
-            deadlineLabel.text = content?.deadline.configure(to: Constant.Deadline.dateFormat)
-        }
-    }
-    
     // MARK: - Lifecycle
     public init() {
         super.init(frame: .zero)
@@ -89,6 +81,14 @@ public final class ITCHDeadlineView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Constant.Error.message)
+    }
+    
+    // MARK: - Methods
+    public func configure(with model: ITCHDeadlineModel) {
+        courseNameLabel.text = model.course
+        titleLabel.text = model.text
+        deadlineLabel.text = model.deadline.configure(to: Constant.Deadline.dateFormat)
+        fireImageView.isHidden = !(model.deadline.timeIntervalSinceNow <= Constant.Fire.threeDaysInSeconds)
     }
     
     // MARK: - SetUp
@@ -111,7 +111,6 @@ public final class ITCHDeadlineView: UIView {
     
     private func setUpFireImage() {
         fireImageView.image = Constant.Fire.image
-        fireImageView.isHidden = !(content?.deadline.timeIntervalSinceNow ?? 0 <= Constant.Fire.threeDaysInSeconds)
         
         addSubview(fireImageView)
         fireImageView.pinCenterY(to: self)

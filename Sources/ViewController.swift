@@ -20,14 +20,11 @@ final class ViewController: UIViewController {
     
 //    private let emptyState: ITCHEmptyStateView = ITCHEmptyStateView()
     
-//    private let row: ITCHNavigationRow = ITCHNavigationRow(leftImage: ITCHImage.vk28.image)
+    private let row: ITCHNavigationRow = ITCHNavigationRow()
     
 //    private let cell: ITCHHomeWorkCell = ITCHHomeWorkCell(type: .teacher)
     
-//    private let navBar: ITCHNavigationBar = ITCHNavigationBar(
-//        leftImage: ITCHImage.chevronLeft24.image,
-//        rightImage: ITCHImage.plus24.image
-//    )
+//    private let navBar: ITCHNavigationBar = ITCHNavigationBar()
     
     private let notification: ITCHNotificationCell = ITCHNotificationCell()
     
@@ -59,15 +56,17 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        notification.content = ITCHNotificationModel(
-            courseName: "НИС “Основы iOS разработки на UIKit”",
-            notification: "Новое задание",
-            date: Date(),
-            isNewNotify: true
-        )
+//        notification.configure(
+//            with: ITCHNotificationModel(
+//                courseName: "НИС “Основы iOS разработки на UIKit”",
+//                notification: "Новое задание",
+//                date: Date(),
+//                isNewNotify: true
+//            )
+//        )
         
-        view.addSubview(notification)
-        notification.pinCenterY(to: view)
-        notification.pinHorizontal(to: view, 16)
+        view.addSubview(row)
+        row.pinCenterY(to: view)
+        row.pinHorizontal(to: view, 16)
     }
 }

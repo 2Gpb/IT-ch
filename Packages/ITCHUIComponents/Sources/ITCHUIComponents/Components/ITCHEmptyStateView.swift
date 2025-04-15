@@ -44,17 +44,10 @@ public final class ITCHEmptyStateView: UIView {
         fatalError(Constant.Error.message)
     }
     
-    // MARK: - Properties
-    public var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-    
-    public var subtitle: String? {
-        didSet {
-            subtitleLabel.text = subtitle
-        }
+    // MARK: - Methods
+    public func configure(title: String, subtitle: String) {
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
     }
     
     // MARK: - SetUp
