@@ -30,13 +30,9 @@ final class ViewController: UIViewController {
     
 //    private let schedule: ITCHScheduleCell = ITCHScheduleCell()
     
-    private let settingRow: ITCHSettingsRow = ITCHSettingsRow()
+//    private let settingRow: ITCHSettingsRow = ITCHSettingsRow()
     
-    private let textField: ITCHTextField = ITCHTextField(
-        title: "Номер телефона",
-        placeholder: "Введите ваш номер",
-        type: .password
-    )
+    private let textField: ITCHTextField = ITCHTextField()
     
     private let user: ITCHUserRow = ITCHUserRow(
         name: "Тюхменев Петр Вячеславович",
@@ -48,16 +44,16 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        settingRow.configure(
-            with: ITCHSettingsModel(
-                leftImage: ITCHImage.info32.image,
-                titleText: "О приложении",
-                subtitleText: "Самое важное"
+        textField.configure(
+            with: ITCHTextFieldModel(
+                title: "Номер телефона",
+                placeholder: "Введите ваш номер",
+                type: .password
             )
         )
         
-        view.addSubview(settingRow)
-        settingRow.pinCenterY(to: view)
-        settingRow.pinHorizontal(to: view, 16)
+        view.addSubview(textField)
+        textField.pinCenterY(to: view)
+        textField.pinHorizontal(to: view, 16)
     }
 }

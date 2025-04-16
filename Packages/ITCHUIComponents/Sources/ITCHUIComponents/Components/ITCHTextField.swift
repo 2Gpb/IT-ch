@@ -14,8 +14,17 @@ public final class ITCHTextField: UIView {
             static let message: String = "init(coder:) has not been implemented"
         }
         
+        enum TitleLabel {
+            static let textColor: UIColor = ITCHColor.base60.color
+            static let font: UIFont = ITCHFont.bodySRegular.font
+        }
+        
         enum TextField {
-            static let borderwidth: CGFloat = 1
+            static let textColor: UIColor = ITCHColor.base10.color
+            static let font: UIFont = ITCHFont.bodyMRegular.font
+            static let borderWidth: CGFloat = 1
+            static let borderColor: CGColor = ITCHColor.cellLightGray.color.cgColor
+            static let rightLeftViewMode: UITextField.ViewMode = .always
             static let cornerRadius: CGFloat = 12
             static let topOffset: CGFloat = 8
             static let height: CGFloat = 48
@@ -26,13 +35,15 @@ public final class ITCHTextField: UIView {
             ]
         }
         
-        enum View {
-            static let height: CGFloat = 73
+        enum HideShowButton {
+            static let eyeImage: UIImage = ITCHImage.eye20.image
+            static let eyeOffImage: UIImage = ITCHImage.eyeOff20.image
+            static let trailingOffset: CGFloat = 16
         }
     }
 
     // MARK: - UI Components
-    private let label: UILabel = UILabel()
+    private let titleLabel: UILabel = UILabel()
     private let textField: UITextField = UITextField()
     private let leftView: UIView = UIView(frame: Constant.TextField.edgeViewsFrame)
     private let rightView: UIView = UIView(frame: Constant.TextField.edgeViewsFrame)
@@ -43,29 +54,26 @@ public final class ITCHTextField: UIView {
     public var returnAction: (() -> Void)?
     public var isError: Bool = false {
         didSet {
-            updateErrorState()
+            textField.layer.borderColor = isError ?
+            ITCHColor.red60.color.cgColor : ITCHColor.cellLightGray.color.cgColor
         }
     }
     
     public var keyboardState: ITCHKeyboardState = .close {
         didSet {
-            setKeyboard()
+            switch keyboardState {
+            case .open:
+                textField.becomeFirstResponder()
+            case .close:
+                textField.resignFirstResponder()
+            }
         }
     }
     
     // MARK: - Lifecycle
-    public init(
-        title: String,
-        placeholder: String,
-        type: ITCHTextFieldType = .normal
-    ) {
+    public init() {
         super.init(frame: .zero)
-        
-        setUp(
-            title: title,
-            placeholder: placeholder,
-            type: type
-        )
+        setUp()
     }
     
     @available(*, unavailable)
@@ -73,59 +81,56 @@ public final class ITCHTextField: UIView {
         fatalError(Constant.Error.message)
     }
     
-    // MARK: - SetUp
-    private func setUp(
-        title: String,
-        placeholder: String,
-        type: ITCHTextFieldType
-    ) {
-        label.text = title
+    // MARK: - Methods
+    public func configure(with model: ITCHTextFieldModel) {
+        titleLabel.text = model.title
         textField.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
+            string: model.placeholder,
             attributes: Constant.TextField.placeholderAttributes
         )
         
-        backgroundColor = .clear
-        setHeight(Constant.View.height)
-        
-        setUpLabel()
-        setUpTextField()
-        
-        if type == .password {
+        if model.type == .password {
             setUpHideShowButton()
         }
     }
     
-    private func setUpLabel() {
-        label.textColor = ITCHColor.base60.color
-        label.font = ITCHFont.bodySRegular.font
+    // MARK: - SetUp
+    private func setUp() {
+        setUpTitleLabel()
+        setUpTextField()
+    }
+    
+    private func setUpTitleLabel() {
+        titleLabel.textColor = Constant.TitleLabel.textColor
+        titleLabel.font = Constant.TitleLabel.font
         
-        addSubview(label)
-        label.pinTop(to: self)
-        label.pinLeft(to: self)
+        addSubview(titleLabel)
+        titleLabel.pinTop(to: self)
+        titleLabel.pinLeft(to: self)
     }
     
     private func setUpTextField() {
         textField.delegate = self
         textField.leftView = leftView
         textField.rightView = rightView
-        textField.leftViewMode = .always
-        textField.rightViewMode = .always
-        textField.textColor = ITCHColor.base10.color
-        textField.font = ITCHFont.bodyMRegular.font
+        textField.leftViewMode = Constant.TextField.rightLeftViewMode
+        textField.rightViewMode = Constant.TextField.rightLeftViewMode
+        textField.textColor = Constant.TextField.textColor
+        textField.font = Constant.TextField.font
         textField.layer.cornerRadius = Constant.TextField.cornerRadius
-        textField.layer.borderWidth = Constant.TextField.borderwidth
-        textField.layer.borderColor = ITCHColor.cellLightGray.color.cgColor
+        textField.layer.borderWidth = Constant.TextField.borderWidth
+        textField.layer.borderColor = Constant.TextField.borderColor
         
         addSubview(textField)
         textField.pinHorizontal(to: self)
-        textField.pinTop(to: label.bottomAnchor, Constant.TextField.topOffset)
+        textField.pinTop(to: titleLabel.bottomAnchor, Constant.TextField.topOffset)
+        textField.pinBottom(to: self)
         textField.setHeight(Constant.TextField.height)
     }
     
     private func setUpHideShowButton() {
-        eyeButton.setImage(ITCHImage.eye20.image, for: .normal)
-        eyeOffButton.setImage(ITCHImage.eyeOff20.image, for: .normal)
+        eyeButton.setImage(Constant.HideShowButton.eyeImage, for: .normal)
+        eyeOffButton.setImage(Constant.HideShowButton.eyeOffImage, for: .normal)
         eyeOffButton.isHidden = true
         
         [eyeButton, eyeOffButton].forEach { button in
@@ -133,42 +138,16 @@ public final class ITCHTextField: UIView {
             
             addSubview(button)
             button.pinCenterY(to: textField)
-            button.pinRight(to: textField, 16)
-        }
-    }
-    
-    // MARK: - Private methods
-    private func updateErrorState() {
-        if isError {
-            textField.layer.borderColor = ITCHColor.red60.color.cgColor
-        } else {
-            textField.layer.borderColor = ITCHColor.cellLightGray.color.cgColor
-        }
-    }
-    
-    private func setKeyboard() {
-        switch keyboardState {
-        case .open:
-            textField.becomeFirstResponder()
-        case .close:
-            textField.resignFirstResponder()
+            button.pinRight(to: textField, Constant.HideShowButton.trailingOffset)
         }
     }
     
     // MARK: - Actions
     @objc
     private func eyeButtonTapped() {
-        if eyeOffButton.isHidden {
-            eyeOffButton.isHidden = false
-            eyeButton.isHidden = true
-            
-            textField.isSecureTextEntry = false
-        } else {
-            eyeOffButton.isHidden = true
-            eyeButton.isHidden = false
-            
-            textField.isSecureTextEntry = true
-        }
+        eyeButton.isHidden = eyeOffButton.isHidden
+        textField.isSecureTextEntry = !eyeOffButton.isHidden
+        eyeOffButton.isHidden = !eyeOffButton.isHidden
     }
 }
 
