@@ -28,13 +28,9 @@ final class ViewController: UIViewController {
     
 //    private let notification: ITCHNotificationCell = ITCHNotificationCell()
     
-    private let schedule: ITCHScheduleCell = ITCHScheduleCell()
+//    private let schedule: ITCHScheduleCell = ITCHScheduleCell()
     
-    private let settingRow: ITCHSettingsRow = ITCHSettingsRow(
-        image: ITCHImage.info32.image,
-        title: "О приложении",
-        subtitle: "Самое важное"
-    )
+    private let settingRow: ITCHSettingsRow = ITCHSettingsRow()
     
     private let textField: ITCHTextField = ITCHTextField(
         title: "Номер телефона",
@@ -52,16 +48,16 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        schedule.configure(
-            with: ITCHScheduleModel(
-                courseName: "НИС “Основы iOS разработки на UIKit”",
-                location: "N506, Покровский б-р, д. 11",
-                timeInterval: "18:10 - 19:30"
+        settingRow.configure(
+            with: ITCHSettingsModel(
+                leftImage: ITCHImage.info32.image,
+                titleText: "О приложении",
+                subtitleText: "Самое важное"
             )
         )
         
-        view.addSubview(schedule)
-        schedule.pinCenterY(to: view)
-        schedule.pinHorizontal(to: view, 16)
+        view.addSubview(settingRow)
+        settingRow.pinCenterY(to: view)
+        settingRow.pinHorizontal(to: view, 16)
     }
 }

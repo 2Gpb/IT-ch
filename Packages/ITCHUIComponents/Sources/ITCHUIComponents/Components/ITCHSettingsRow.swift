@@ -20,9 +20,15 @@ public final class ITCHSettingsRow: UIView {
         
         enum Chevron {
             static let size: CGFloat = 16
+            static let image: UIImage = ITCHImage.chevronRight16.image
         }
         
         enum TextStack {
+            static let titleTextColor: UIColor = ITCHColor.base5.color
+            static let titleFont: UIFont = ITCHFont.bodyMMedium.font
+            static let subtitleTextColor: UIColor = ITCHColor.base50.color
+            static let subtitleFont: UIFont = ITCHFont.captionRegular.font
+            static let axis: NSLayoutConstraint.Axis = .vertical
             static let leadingOffset: CGFloat = 8
             static let verticalOffset: CGFloat = 3.5
             static let trailingOffset: CGFloat = 8
@@ -30,16 +36,16 @@ public final class ITCHSettingsRow: UIView {
     }
     
     // MARK: - UI Components
-    private let leftImage: UIImageView = UIImageView()
+    private let leftImageView: UIImageView = UIImageView()
     private let titleLabel: UILabel = UILabel()
     private let subtitleLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
-    private let chevronImage: UIImageView = UIImageView()
+    private let chevronImageView: UIImageView = UIImageView()
     
     // MARK: - Lifecycle
-    public init(image: UIImage, title: String, subtitle: String) {
+    public init() {
         super.init(frame: .zero)
-        setUp(leftImage: image, titleText: title, subtitleText: subtitle)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -47,53 +53,52 @@ public final class ITCHSettingsRow: UIView {
         fatalError(Constant.Error.message)
     }
     
+    // MARK: - Methods
+    public func configure(with model: ITCHSettingsModel) {
+        leftImageView.image = model.leftImage
+        titleLabel.text = model.titleText
+        subtitleLabel.text = model.subtitleText
+    }
+    
     // MARK: - SetUp
-    private func setUp(
-        leftImage: UIImage,
-        titleText: String,
-        subtitleText: String
-    ) {
-        setUpLeftImage(with: leftImage)
-        setUpChevronImage()
-        setUpTextStack(with: titleText, subtitle: subtitleText)
+    private func setUp() {
+        setUpLeftImageView()
+        setUpChevronImageView()
+        setUpTextStack()
     }
     
-    private func setUpLeftImage(with image: UIImage) {
-        leftImage.image = image
-        
-        addSubview(leftImage)
-        leftImage.pinLeft(to: self)
-        leftImage.pinCenterY(to: self)
-        leftImage.setWidth(Constant.LeftImage.size)
+    private func setUpLeftImageView() {
+        addSubview(leftImageView)
+        leftImageView.pinLeft(to: self)
+        leftImageView.pinCenterY(to: self)
+        leftImageView.setWidth(Constant.LeftImage.size)
     }
     
-    private func setUpChevronImage() {
-        chevronImage.image = ITCHImage.chevronRight16.image
+    private func setUpChevronImageView() {
+        chevronImageView.image = Constant.Chevron.image
         
-        addSubview(chevronImage)
-        chevronImage.pinCenterY(to: self)
-        chevronImage.pinRight(to: self)
-        chevronImage.setWidth(Constant.Chevron.size)
+        addSubview(chevronImageView)
+        chevronImageView.pinCenterY(to: self)
+        chevronImageView.pinRight(to: self)
+        chevronImageView.setWidth(Constant.Chevron.size)
     }
     
-    private func setUpTextStack(with title: String, subtitle: String) {
-        titleLabel.text = title
-        titleLabel.textColor = ITCHColor.base5.color
-        titleLabel.font = ITCHFont.bodyMMedium.font
-        
-        subtitleLabel.text = subtitle
-        subtitleLabel.textColor = ITCHColor.base50.color
-        subtitleLabel.font = ITCHFont.captionRegular.font
+    private func setUpTextStack() {
+        titleLabel.textColor = Constant.TextStack.titleTextColor
+        titleLabel.font = Constant.TextStack.titleFont
+    
+        subtitleLabel.textColor = Constant.TextStack.subtitleTextColor
+        subtitleLabel.font = Constant.TextStack.subtitleFont
         
         [titleLabel, subtitleLabel].forEach { element in
             textStack.addArrangedSubview(element)
         }
         
-        textStack.axis = .vertical
+        textStack.axis = Constant.TextStack.axis
         
         addSubview(textStack)
-        textStack.pinLeft(to: leftImage.trailingAnchor, Constant.TextStack.leadingOffset)
+        textStack.pinLeft(to: leftImageView.trailingAnchor, Constant.TextStack.leadingOffset)
         textStack.pinVertical(to: self, Constant.TextStack.verticalOffset)
-        textStack.pinRight(to: chevronImage.leadingAnchor, Constant.TextStack.trailingOffset)
+        textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
     }
 }
