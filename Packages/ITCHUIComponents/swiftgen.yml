@@ -1,0 +1,18 @@
+input_dir: Sources/ITCHUIComponents/Resources/Assets
+output_dir: ${DERIVED_SOURCES_DIR}
+
+xcassets:
+  - inputs: Colors.xcassets
+    outputs:
+      - templatePath: Sources/Templates/itchcustom.stencil
+        output: ITCHColor.swift
+        params:
+          enumName: ITCHColor
+          publicAccess: true
+  - inputs: Images.xcassets
+    outputs:
+      - templatePath: Sources/Templates/itchcustom.stencil
+        output: ITCHImage.swift
+        params:
+          enumName: ITCHImage
+          publicAccess: true

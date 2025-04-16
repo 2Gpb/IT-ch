@@ -6,27 +6,48 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D09029012D54C89D008001CE /* IT-ch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IT-ch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D09029132D54C89E008001CE /* Exceptions for "IT-ch" folder in "IT-ch" target */ = {
+		D084A7012DA18047004BEFA6 /* Exceptions for "Packages" folder in "IT-ch" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				ITCHUIComponents,
+			);
+			target = D09029002D54C89D008001CE /* IT-ch */;
+		};
+		D09029132D54C89E008001CE /* Exceptions for "Sources" folder in "IT-ch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: Beauty/LaunchScreen.storyboard",
 				Application/Info.plist,
+				Beauty/Assets.xcassets,
 			);
 			target = D09029002D54C89D008001CE /* IT-ch */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D09029032D54C89D008001CE /* IT-ch */ = {
+		D09029032D54C89D008001CE /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D09029132D54C89E008001CE /* Exceptions for "IT-ch" folder in "IT-ch" target */,
+				D09029132D54C89E008001CE /* Exceptions for "Sources" folder in "IT-ch" target */,
 			);
-			path = "IT-ch";
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D091B0CD2DA1591700960496 /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D084A7012DA18047004BEFA6 /* Exceptions for "Packages" folder in "IT-ch" target */,
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -36,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +67,8 @@
 		D09028F82D54C89D008001CE = {
 			isa = PBXGroup;
 			children = (
-				D09029032D54C89D008001CE /* IT-ch */,
+				D091B0CD2DA1591700960496 /* Packages */,
+				D09029032D54C89D008001CE /* Sources */,
 				D09029022D54C89D008001CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,16 +91,19 @@
 				D09028FD2D54C89D008001CE /* Sources */,
 				D09028FE2D54C89D008001CE /* Frameworks */,
 				D09028FF2D54C89D008001CE /* Resources */,
+				D0FADDDF2DA7AD2800EC4D63 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D09029032D54C89D008001CE /* IT-ch */,
+				D09029032D54C89D008001CE /* Sources */,
+				D091B0CD2DA1591700960496 /* Packages */,
 			);
 			name = "IT-ch";
 			packageProductDependencies = (
+				D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -107,6 +133,8 @@
 			);
 			mainGroup = D09028F82D54C89D008001CE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D09029022D54C89D008001CE /* Products */;
 			projectDirPath = "";
@@ -127,6 +155,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D0FADDDF2DA7AD2800EC4D63 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D09028FD2D54C89D008001CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -146,12 +195,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "IT-ch/Application/Info.plist";
+				INFOPLIST_FILE = Sources/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -173,12 +224,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "IT-ch/Application/Info.plist";
+				INFOPLIST_FILE = Sources/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -333,6 +386,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHUIComponents;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D09028F92D54C89D008001CE /* Project object */;
 }
