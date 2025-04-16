@@ -32,28 +32,25 @@ final class ViewController: UIViewController {
     
 //    private let settingRow: ITCHSettingsRow = ITCHSettingsRow()
     
-    private let textField: ITCHTextField = ITCHTextField()
+//    private let textField: ITCHTextField = ITCHTextField()
     
-    private let user: ITCHUserRow = ITCHUserRow(
-        name: "Тюхменев Петр Вячеславович",
-        info: "Бакалавриат 21 ПИ-3"
-    )
+    private let user: ITCHUserRow = ITCHUserRow()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ITCHColor.backgroundDark.color
         
-        textField.configure(
-            with: ITCHTextFieldModel(
-                title: "Номер телефона",
-                placeholder: "Введите ваш номер",
-                type: .password
+        user.configure(
+            with: ITCHUserModel(
+                image: nil,
+                name: "Тюхменев Петр Вячеславович",
+                info: "Бакалавриат 21 ПИ-3"
             )
         )
         
-        view.addSubview(textField)
-        textField.pinCenterY(to: view)
-        textField.pinHorizontal(to: view, 16)
+        view.addSubview(user)
+        user.pinCenterY(to: view)
+        user.pinHorizontal(to: view, 16)
     }
 }

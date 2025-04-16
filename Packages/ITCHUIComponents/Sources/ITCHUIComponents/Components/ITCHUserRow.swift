@@ -15,16 +15,30 @@ public final class ITCHUserRow: UIView {
         }
         
         enum Avatar {
+            static let backgroundColor: UIColor = ITCHColor.base80.color
+            static let contentMode: UIView.ContentMode = .scaleAspectFill
+            static let clipsToBounds: Bool = true
             static let size: CGFloat = 48
             static let cornerRadius: CGFloat = 24
             static let verticalOffset: CGFloat = 8
         }
         
+        enum AvatarLabel {
+            static let textColor: UIColor = ITCHColor.blue60.color
+            static let font: UIFont = ITCHFont.header5Medium.font
+        }
+        
         enum Chevron {
             static let size: CGFloat = 24
+            static let image: UIImage = ITCHImage.chevronRight24.image
         }
         
         enum TextStack {
+            static let nameTextColor: UIColor = ITCHColor.base0.color
+            static let nameFont: UIFont = ITCHFont.bodyMMedium.font
+            static let aboutTextColor: UIColor = ITCHColor.base40.color
+            static let aboutFont: UIFont = ITCHFont.bodySRegular.font
+            static let axis: NSLayoutConstraint.Axis = .vertical
             static let spacing: CGFloat = 4
             static let leadingOffset: CGFloat = 12
             static let trailingOffset: CGFloat = 8
@@ -32,17 +46,17 @@ public final class ITCHUserRow: UIView {
     }
     
     // MARK: - UI Components
-    private let avatarView: UIImageView = UIImageView()
+    private let avatarImageView: UIImageView = UIImageView()
     private let avatarLabel: UILabel = UILabel()
     private let nameLabel: UILabel = UILabel()
     private let aboutInfoLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
-    private let chevronImage: UIImageView = UIImageView()
+    private let chevronImageView: UIImageView = UIImageView()
     
     // MARK: - Lifecycle
-    public init(image: UIImage? = nil, name: String, info: String) {
+    public init() {
         super.init(frame: .zero)
-        setUp(name: name, info: info, image: image)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -50,71 +64,74 @@ public final class ITCHUserRow: UIView {
         fatalError(Constant.Error.message)
     }
     
-    // MARK: - SetUp
-    private func setUp(name: String, info: String, image: UIImage? = nil) {
-        setUpAvatarView(with: image)
-        setUpAvatarLabel(name: name)
-        setUpChevron()
-        setUpTextStack(with: name, aboutInfo: info)
-    }
-    
-    private func setUpAvatarView(with image: UIImage?) {
-        avatarView.image = image
-        avatarView.backgroundColor = ITCHColor.base80.color
-        avatarView.contentMode = .scaleAspectFill
-        avatarView.clipsToBounds = true
-        avatarView.layer.cornerRadius = Constant.Avatar.cornerRadius
-        
-        addSubview(avatarView)
-        avatarView.pinLeft(to: self)
-        avatarView.pinVertical(to: self, Constant.Avatar.verticalOffset)
-        avatarView.setWidth(Constant.Avatar.size)
-        avatarView.setHeight(Constant.Avatar.size)
-    }
-    
-    private func setUpAvatarLabel(name: String) {
-        if avatarView.image == nil {
-            avatarLabel.isHidden = false
-            avatarLabel.text = makeInitials(from: name)
-            avatarLabel.font = ITCHFont.header5Medium.font
-            avatarLabel.textColor = ITCHColor.blue60.color
+    // MARK: - Methods
+    public func configure(with model: ITCHUserModel) {
+        if let image = model.image {
+            avatarImageView.image = image
         } else {
-            avatarLabel.isHidden = true
+            setUpAvatarLabel(with: model.name)
         }
         
-        avatarView.addSubview(avatarLabel)
-        avatarLabel.pinCenter(to: avatarView)
+        nameLabel.text = model.name
+        aboutInfoLabel.text = model.info
     }
     
-    private func setUpChevron() {
-        chevronImage.image = ITCHImage.chevronRight24.image
-        
-        addSubview(chevronImage)
-        chevronImage.pinCenterY(to: self)
-        chevronImage.pinRight(to: self)
-        chevronImage.setWidth(Constant.Chevron.size)
+    // MARK: - SetUp
+    private func setUp() {
+        setUpAvatarImageView()
+        setUpChevronImageView()
+        setUpTextStack()
     }
     
-    private func setUpTextStack(with name: String, aboutInfo: String) {
-        nameLabel.text = name
-        nameLabel.textColor = ITCHColor.base0.color
-        nameLabel.font = ITCHFont.bodyMMedium.font
+    private func setUpAvatarImageView() {
+        avatarImageView.backgroundColor = Constant.Avatar.backgroundColor
+        avatarImageView.contentMode = Constant.Avatar.contentMode
+        avatarImageView.clipsToBounds = Constant.Avatar.clipsToBounds
+        avatarImageView.layer.cornerRadius = Constant.Avatar.cornerRadius
         
-        aboutInfoLabel.text = aboutInfo
-        aboutInfoLabel.textColor = ITCHColor.base40.color
-        aboutInfoLabel.font = ITCHFont.bodySRegular.font
+        addSubview(avatarImageView)
+        avatarImageView.pinLeft(to: self)
+        avatarImageView.pinVertical(to: self, Constant.Avatar.verticalOffset)
+        avatarImageView.setWidth(Constant.Avatar.size)
+        avatarImageView.setHeight(Constant.Avatar.size)
+    }
+    
+    private func setUpAvatarLabel(with name: String) {
+        avatarLabel.text = makeInitials(from: name)
+        avatarLabel.font = Constant.AvatarLabel.font
+        avatarLabel.textColor = Constant.AvatarLabel.textColor
+        
+        avatarImageView.addSubview(avatarLabel)
+        avatarLabel.pinCenter(to: avatarImageView)
+    }
+    
+    private func setUpChevronImageView() {
+        chevronImageView.image = Constant.Chevron.image
+        
+        addSubview(chevronImageView)
+        chevronImageView.pinCenterY(to: self)
+        chevronImageView.pinRight(to: self)
+        chevronImageView.setWidth(Constant.Chevron.size)
+    }
+    
+    private func setUpTextStack() {
+        nameLabel.textColor = Constant.TextStack.nameTextColor
+        nameLabel.font = Constant.TextStack.nameFont
+        
+        aboutInfoLabel.textColor = Constant.TextStack.aboutTextColor
+        aboutInfoLabel.font = Constant.TextStack.aboutFont
         
         [nameLabel, aboutInfoLabel].forEach { element in
             textStack.addArrangedSubview(element)
         }
         
-        textStack.axis = .vertical
+        textStack.axis = Constant.TextStack.axis
         textStack.spacing = Constant.TextStack.spacing
         
         addSubview(textStack)
-        textStack.pinLeft(to: avatarView.trailingAnchor, Constant.TextStack.leadingOffset)
+        textStack.pinLeft(to: avatarImageView.trailingAnchor, Constant.TextStack.leadingOffset)
         textStack.pinCenterY(to: self)
-        textStack.pinRight(to: chevronImage.leadingAnchor, Constant.TextStack.trailingOffset)
+        textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
     }
     
     // MARK: - Private methods
