@@ -22,6 +22,10 @@ final class ITCHWelcomeViewController: UIViewController {
             static let numberOfLines: Int = 2
         }
         
+        enum Enter {
+            static let title: String = "Войти через ЕЛК"
+        }
+        
         enum WelcomeStack {
             static let axis: NSLayoutConstraint.Axis = .vertical
             static let spacing: CGFloat = 40
@@ -49,7 +53,7 @@ final class ITCHWelcomeViewController: UIViewController {
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .image)
     private let titleLabel: UILabel = UILabel()
-    private let enterButton: ITCHButton = ITCHButton(title: "Войти через ЕЛК")
+    private let enterButton: ITCHButton = ITCHButton(title: Constant.Enter.title)
     private let welcomeStack: UIStackView = UIStackView()
     private let readMoreLabel: UILabel = UILabel()
     private let readMoreButton: UIButton = UIButton(type: .system)

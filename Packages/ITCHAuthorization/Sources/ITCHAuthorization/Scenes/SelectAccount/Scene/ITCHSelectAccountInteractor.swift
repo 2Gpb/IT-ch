@@ -70,7 +70,7 @@ extension ITCHSelectAccountInteractor: UITableViewDataSource {
             
             return cell
         case .addAccount:
-            cell.configure(with: ITCHAccountModel(name: "Добавить аккаунт"), type: .addAccount)
+            cell.configure(type: .addAccount)
             
             return cell
         }

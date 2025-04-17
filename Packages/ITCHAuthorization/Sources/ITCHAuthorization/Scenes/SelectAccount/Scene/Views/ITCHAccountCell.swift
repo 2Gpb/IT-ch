@@ -18,6 +18,11 @@ final class ITCHAccountCell: UITableViewCell {
         enum ReuseIdentifier {
             static let value: String = "ITCHAccountCell"
         }
+        
+        enum Buttons {
+            static let title: String = "Добавить аккаунт"
+            static let verticalOffset: CGFloat = 4
+        }
     }
     
     // MARK: - ReuseID
@@ -38,16 +43,12 @@ final class ITCHAccountCell: UITableViewCell {
         fatalError(Constant.Error.message)
     }
     
-    func configure(with model: ITCHAccountModel, type: ITCHAccountRowType) {
-        [accountRow, addAccountRow].forEach { element in
-            element.configure(
-                with: ITCHAccountModel(
-                    image: model.image,
-                    name: model.name,
-                    info: model.info
-                )
-            )
+    func configure(with model: ITCHAccountModel? = nil, type: ITCHAccountRowType) {
+        if let model {
+            accountRow.configure(with: model)
         }
+        
+        addAccountRow.configure(with: ITCHAccountModel(name: Constant.Buttons.title))
         
         switch type {
         case .account:
@@ -64,10 +65,10 @@ final class ITCHAccountCell: UITableViewCell {
         
         addSubview(accountRow)
         accountRow.pinHorizontal(to: self)
-        accountRow.pinVertical(to: self, 4)
+        accountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
         
         addSubview(addAccountRow)
         addAccountRow.pinHorizontal(to: self)
-        addAccountRow.pinVertical(to: self, 4)
+        addAccountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
     }
 }
