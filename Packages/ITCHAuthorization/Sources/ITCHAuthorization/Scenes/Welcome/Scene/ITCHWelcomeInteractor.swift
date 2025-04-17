@@ -13,4 +13,9 @@ final class ITCHWelcomeInteractor: ITCHWelcomeBusinessLogic {
     init(presenter: ITCHWelcomePresentationLogic & ITCHWelcomeRouterLogic) {
         self.presenter = presenter
     }
+    
+    // MARK: - Methods
+    func loadSelectAccount() {
+        presenter.routeToSelectAccount()
+    }
 }

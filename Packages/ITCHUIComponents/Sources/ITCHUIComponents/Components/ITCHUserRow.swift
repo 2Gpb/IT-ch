@@ -20,7 +20,7 @@ public final class ITCHUserRow: UIView {
             static let clipsToBounds: Bool = true
             static let size: CGFloat = 48
             static let cornerRadius: CGFloat = 24
-            static let verticalOffset: CGFloat = 8
+//            static let verticalOffset: CGFloat = 8
         }
         
         enum AvatarLabel {
@@ -91,7 +91,7 @@ public final class ITCHUserRow: UIView {
         
         addSubview(avatarImageView)
         avatarImageView.pinLeft(to: self)
-        avatarImageView.pinVertical(to: self, Constant.Avatar.verticalOffset)
+        avatarImageView.pinCenterY(to: self)
         avatarImageView.setWidth(Constant.Avatar.size)
         avatarImageView.setHeight(Constant.Avatar.size)
     }

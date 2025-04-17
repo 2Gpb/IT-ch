@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ITCHFont.registerFonts()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ITCHWelcomeAssembly.build()
+        window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
         window?.makeKeyAndVisible()
     }
 

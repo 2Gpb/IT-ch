@@ -82,6 +82,7 @@ final class ITCHWelcomeViewController: UIViewController {
     }
     
     private func setUpView() {
+        navigationController?.isNavigationBarHidden = true
         view.backgroundColor = ITCHColor.backgroundGray.color
     }
     
@@ -99,6 +100,10 @@ final class ITCHWelcomeViewController: UIViewController {
     }
     
     private func setUpWelcomeStack() {
+        enterButton.action = { [weak self] in
+            self?.interactor.loadSelectAccount()
+        }
+        
         welcomeStack.axis = Constant.WelcomeStack.axis
         welcomeStack.spacing = Constant.WelcomeStack.spacing
         welcomeStack.distribution = Constant.WelcomeStack.distribution
