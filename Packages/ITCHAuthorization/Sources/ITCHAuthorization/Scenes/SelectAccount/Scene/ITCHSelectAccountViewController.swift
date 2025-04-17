@@ -92,7 +92,7 @@ final class ITCHSelectAccountViewController: UIViewController {
         )
         
         accountsTableView.setWidth(view.frame.width - 32.0)
-        accountsTableView.setHeight(Double(interactor.accounts.count * 58))
+        accountsTableView.setHeight(Double(interactor.accounts.count * 58) + 58.0) 
     }
     
     private func setUpManageAccountsButton() {

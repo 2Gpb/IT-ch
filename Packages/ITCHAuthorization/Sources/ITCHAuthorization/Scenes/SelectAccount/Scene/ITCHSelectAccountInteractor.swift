@@ -18,11 +18,6 @@ final class ITCHSelectAccountInteractor: NSObject, ITCHSelectAccountBusinessLogi
             image: nil,
             name: "Тюхменев Петр Вячеславович",
             info: "Бакалавриат 21 ПИ-3"
-        ),
-        ITCHAccountModel(
-            image: nil,
-            name: "Тюхменев Петр Вячеславович",
-            info: "Бакалавриат 21 ПИ-3"
         )
     ]
     
@@ -39,25 +34,45 @@ final class ITCHSelectAccountInteractor: NSObject, ITCHSelectAccountBusinessLogi
 
 // MARK: - UICollectionViewDataSource
 extension ITCHSelectAccountInteractor: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        ITCHAccountsCollectionSection.allCases.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        accounts.count
+        let section = ITCHAccountsCollectionSection.allCases[section]
+        
+        switch section {
+        case .account:
+            return accounts.count
+        case .addAccount:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = ITCHAccountsCollectionSection.allCases[indexPath.section]
+        
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: ITCHAccountCell.reuseId
         ) as? ITCHAccountCell else {
             return UITableViewCell()
         }
         
-        cell.configure(
-            with: ITCHUserModel(
-                image: accounts[0].image,
-                name: accounts[0].name,
-                info: accounts[0].info
+        switch section {
+        case .account:
+            cell.configure(
+                with: ITCHAccountModel(
+                    image: accounts[indexPath.row].image,
+                    name: accounts[indexPath.row].name,
+                    info: accounts[indexPath.row].info
+                ), type: .account
             )
-        )
-        
-        return cell
+            
+            return cell
+        case .addAccount:
+            cell.configure(with: ITCHAccountModel(name: "Добавить аккаунт"), type: .addAccount)
+            
+            return cell
+        }
     }
 }

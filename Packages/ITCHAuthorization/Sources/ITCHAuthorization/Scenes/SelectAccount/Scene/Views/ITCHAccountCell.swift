@@ -24,7 +24,8 @@ final class ITCHAccountCell: UITableViewCell {
     static let reuseId: String = Constant.ReuseIdentifier.value
     
     // MARK: - UI Components
-    private let userRow: ITCHUserRow = ITCHUserRow()
+    private let accountRow: ITCHAccountRow = ITCHAccountRow(type: .account)
+    private let addAccountRow: ITCHAccountRow = ITCHAccountRow(type: .addAccount)
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,16 +38,36 @@ final class ITCHAccountCell: UITableViewCell {
         fatalError(Constant.Error.message)
     }
     
-    func configure(with model: ITCHUserModel) {
-        userRow.configure(with: model)
+    func configure(with model: ITCHAccountModel, type: ITCHAccountRowType) {
+        [accountRow, addAccountRow].forEach { element in
+            element.configure(
+                with: ITCHAccountModel(
+                    image: model.image,
+                    name: model.name,
+                    info: model.info
+                )
+            )
+        }
+        
+        switch type {
+        case .account:
+            addAccountRow.isHidden = true
+        case .addAccount:
+            accountRow.isHidden = true
+        }
     }
     
     // MARK: - SetUp
     private func setUp() {
+        selectionStyle = .none
         backgroundColor = .clear
         
-        addSubview(userRow)
-        userRow.pinHorizontal(to: self)
-        userRow.pinVertical(to: self, 4)
+        addSubview(accountRow)
+        accountRow.pinHorizontal(to: self)
+        accountRow.pinVertical(to: self, 4)
+        
+        addSubview(addAccountRow)
+        addAccountRow.pinHorizontal(to: self)
+        addAccountRow.pinVertical(to: self, 4)
     }
 }

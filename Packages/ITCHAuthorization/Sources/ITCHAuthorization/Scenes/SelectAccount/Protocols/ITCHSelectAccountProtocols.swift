@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUIComponents
 
 @MainActor
 protocol ITCHSelectAccountBusinessLogic: UITableViewDataSource {
