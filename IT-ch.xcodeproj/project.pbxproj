@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D06B45FA2DB0F98C002E2A7D /* ITCHAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = D06B45F92DB0F98C002E2A7D /* ITCHAuthorization */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
 /* End PBXBuildFile section */
 
@@ -18,6 +19,7 @@
 		D084A7012DA18047004BEFA6 /* Exceptions for "Packages" folder in "IT-ch" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				ITCHAuthorization,
 				ITCHUIComponents,
 			);
 			target = D09029002D54C89D008001CE /* IT-ch */;
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D06B45FA2DB0F98C002E2A7D /* ITCHAuthorization in Frameworks */,
 				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,11 +65,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D01047802DB0F742000A8A97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D09028F82D54C89D008001CE = {
 			isa = PBXGroup;
 			children = (
 				D091B0CD2DA1591700960496 /* Packages */,
 				D09029032D54C89D008001CE /* Sources */,
+				D01047802DB0F742000A8A97 /* Frameworks */,
 				D09029022D54C89D008001CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,6 +113,7 @@
 			name = "IT-ch";
 			packageProductDependencies = (
 				D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */,
+				D06B45F92DB0F98C002E2A7D /* ITCHAuthorization */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -386,6 +398,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D06B45F92DB0F98C002E2A7D /* ITCHAuthorization */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHAuthorization;
+		};
 		D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ITCHUIComponents;
