@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHAuthorization
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -21,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ITCHFont.registerFonts()
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ITCHSplashViewController()
+        window?.rootViewController = ITCHWelcomeAssembly.build()
         window?.makeKeyAndVisible()
     }
 

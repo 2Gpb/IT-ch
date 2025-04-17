@@ -22,9 +22,6 @@ let package = Package(
             name: "ITCHAuthorization",
             dependencies: [
                 "ITCHUIComponents"
-            ],
-            resources: [
-                .process("Resources")
             ]
         )
     ]

@@ -8,12 +8,12 @@
 import UIKit
 
 public struct ITCHNavigationBarModel {
-    public var title: String
+    public var title: String?
     public var leftImage: UIImage?
     public var rightImage: UIImage?
     
     public init(
-        title: String,
+        title: String? = nil,
         leftImage: UIImage? = nil,
         rightImage: UIImage? = nil
     ) {

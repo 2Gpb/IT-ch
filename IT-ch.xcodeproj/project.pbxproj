@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D06B45FA2DB0F98C002E2A7D /* ITCHAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = D06B45F92DB0F98C002E2A7D /* ITCHAuthorization */; };
+		D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = D0164B822DB128C700599BB3 /* ITCHAuthorization */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D06B45FA2DB0F98C002E2A7D /* ITCHAuthorization in Frameworks */,
+				D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */,
 				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,7 +113,7 @@
 			name = "IT-ch";
 			packageProductDependencies = (
 				D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */,
-				D06B45F92DB0F98C002E2A7D /* ITCHAuthorization */,
+				D0164B822DB128C700599BB3 /* ITCHAuthorization */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -398,7 +398,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D06B45F92DB0F98C002E2A7D /* ITCHAuthorization */ = {
+		D0164B822DB128C700599BB3 /* ITCHAuthorization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ITCHAuthorization;
 		};

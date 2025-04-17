@@ -18,6 +18,10 @@ public final class ITCHNavigationBar: UIView {
             static let height: CGFloat = 56
         }
         
+        enum CenterImage {
+            static let image: UIImage? = ITCHImage.logo40.image
+        }
+        
         enum Title {
             static let textColor: UIColor = ITCHColor.base0.color
             static let font: UIFont = ITCHFont.header5Medium.font
@@ -33,6 +37,7 @@ public final class ITCHNavigationBar: UIView {
     // MARK: - UI Components
     private let leftButton: ITCHCustomButton = ITCHCustomButton(type: .system)
     private let titleLabel: UILabel = UILabel()
+    private let centerImageView: UIImageView = UIImageView()
     private let rightButton: ITCHCustomButton = ITCHCustomButton(type: .system)
     
     // MARK: - Properties
@@ -40,9 +45,9 @@ public final class ITCHNavigationBar: UIView {
     public var rightAction: (() -> Void)?
     
     // MARK: - lifecycle
-    public init() {
+    public init(type: ITCHNavigationBarType) {
         super.init(frame: .zero)
-        setUp()
+        setUp(with: type)
     }
     
     @available(*, unavailable)
@@ -65,8 +70,14 @@ public final class ITCHNavigationBar: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
-        setUpTitleLabel()
+    private func setUp(with type: ITCHNavigationBarType) {
+        switch type {
+        case .image:
+            setUpCenterImageView()
+        case .title:
+            setUpTitleLabel()
+        }
+        
         setUpLeftButton()
         setUpRightButton()
         setHeight(Constant.View.height)
@@ -79,6 +90,13 @@ public final class ITCHNavigationBar: UIView {
         
         addSubview(titleLabel)
         titleLabel.pinCenter(to: self)
+    }
+    
+    private func setUpCenterImageView() {
+        centerImageView.image = Constant.CenterImage.image
+        
+        addSubview(centerImageView)
+        centerImageView.pinCenter(to: self)
     }
     
     private func setUpLeftButton() {

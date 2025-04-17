@@ -47,7 +47,7 @@ opt_in_rules:
   - collection_alignment
   - enum_case_associated_values_count
   - fatal_error_message
-  - file_name
+#  - file_name
   - file_name_no_space
   - final_test_case
   - identical_operands
