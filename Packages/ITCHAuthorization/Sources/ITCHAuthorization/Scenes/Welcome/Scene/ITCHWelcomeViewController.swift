@@ -14,6 +14,33 @@ final class ITCHWelcomeViewController: UIViewController {
         enum Error {
             static let message = "init(coder:) has not been implemented"
         }
+        
+        enum Title {
+            static let text: String = "Welcome\nto IT-ch"
+            static let font: UIFont = ITCHFont.header3.font
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let numberOfLines: Int = 2
+        }
+        
+        enum WelcomeStack {
+            static let axis: NSLayoutConstraint.Axis = .vertical
+            static let spacing: CGFloat = 40
+            static let distribution: UIStackView.Distribution = .fill
+            static let horizontalOffset: CGFloat = 16
+        }
+        
+        enum ReadMore {
+            static let title: String = "Не слышли о нас?"
+            static let titleFont: UIFont = ITCHFont.captionMedium.font
+            static let titleTextColor: UIColor = ITCHColor.base0.color
+            static let buttonTitle: String = "Узнать больше"
+            static let buttonFont: UIFont = ITCHFont.captionMedium.font
+            static let buttonTextColor: UIColor = ITCHColor.blue60.color
+            static let buttonHeight: CGFloat = 32
+            static let buttonWidth: CGFloat = 98
+            static let axis: NSLayoutConstraint.Axis = .horizontal
+            static let bottomOffset: CGFloat = 8
+        }
     }
     
     // MARK: - Private fields
@@ -21,7 +48,12 @@ final class ITCHWelcomeViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .image)
-    private let button: ITCHButton = ITCHButton(title: "Далее")
+    private let titleLabel: UILabel = UILabel()
+    private let enterButton: ITCHButton = ITCHButton(title: "Войти через ЕЛК")
+    private let welcomeStack: UIStackView = UIStackView()
+    private let readMoreLabel: UILabel = UILabel()
+    private let readMoreButton: UIButton = UIButton(type: .system)
+    private let readMoreStack: UIStackView = UIStackView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHWelcomeBusinessLogic) {
@@ -43,6 +75,10 @@ final class ITCHWelcomeViewController: UIViewController {
     private func setUp() {
         setUpView()
         setUpNavigationBar()
+        setUpTitleLabel()
+        setUpWelcomeStack()
+        setUpReadMoreStackContent()
+        setUpReadMoreStack()
     }
     
     private func setUpView() {
@@ -53,5 +89,50 @@ final class ITCHWelcomeViewController: UIViewController {
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpTitleLabel() {
+        titleLabel.text = Constant.Title.text
+        titleLabel.font = Constant.Title.font
+        titleLabel.textColor = Constant.Title.textColor
+        titleLabel.numberOfLines = Constant.Title.numberOfLines
+    }
+    
+    private func setUpWelcomeStack() {
+        welcomeStack.axis = Constant.WelcomeStack.axis
+        welcomeStack.spacing = Constant.WelcomeStack.spacing
+        welcomeStack.distribution = Constant.WelcomeStack.distribution
+        
+        [titleLabel, enterButton].forEach { element in
+            welcomeStack.addArrangedSubview(element)
+        }
+        
+        view.addSubview(welcomeStack)
+        welcomeStack.pinHorizontal(to: view, Constant.WelcomeStack.horizontalOffset)
+        welcomeStack.pinCenterY(to: view)
+    }
+    
+    private func setUpReadMoreStackContent() {
+        readMoreLabel.text = Constant.ReadMore.title
+        readMoreLabel.font = Constant.ReadMore.titleFont
+        readMoreLabel.textColor = Constant.ReadMore.titleTextColor
+        
+        readMoreButton.setTitle(Constant.ReadMore.buttonTitle, for: .normal)
+        readMoreButton.titleLabel?.font = Constant.ReadMore.buttonFont
+        readMoreButton.titleLabel?.textColor = Constant.ReadMore.buttonTextColor
+        readMoreButton.setHeight(Constant.ReadMore.buttonHeight)
+        readMoreButton.setWidth(Constant.ReadMore.buttonWidth)
+    }
+    
+    private func setUpReadMoreStack() {
+        readMoreStack.axis = Constant.ReadMore.axis
+        
+        [readMoreLabel, readMoreButton].forEach { element in
+            readMoreStack.addArrangedSubview(element)
+        }
+        
+        view.addSubview(readMoreStack)
+        readMoreStack.pinCenterX(to: view)
+        readMoreStack.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constant.ReadMore.bottomOffset)
     }
 }

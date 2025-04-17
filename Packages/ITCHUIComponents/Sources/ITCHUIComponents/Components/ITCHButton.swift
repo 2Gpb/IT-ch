@@ -21,6 +21,8 @@ public final class ITCHButton: UIView {
             static let font: UIFont = ITCHFont.bodyMMedium.font
             static let backgroundColor: UIColor = ITCHColor.blue60.color
             static let deleteBackgroundColor: UIColor = ITCHColor.red50.color
+            static let secondaryBackground: UIColor = .clear
+            static let blueTextColor: UIColor = ITCHColor.blue60.color
         }
     }
     
@@ -52,6 +54,9 @@ public final class ITCHButton: UIView {
         switch type {
         case .primary:
             button.backgroundColor = Constant.Button.backgroundColor
+        case .secondary:
+            button.backgroundColor = Constant.Button.secondaryBackground
+            button.tintColor = Constant.Button.blueTextColor
         case .delete:
             button.backgroundColor = Constant.Button.deleteBackgroundColor
         }

@@ -7,5 +7,6 @@
 
 public enum ITCHButtonType {
     case primary
+    case secondary
     case delete
 }
