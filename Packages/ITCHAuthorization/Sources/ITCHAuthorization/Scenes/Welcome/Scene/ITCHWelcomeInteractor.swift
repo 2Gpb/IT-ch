@@ -18,4 +18,8 @@ final class ITCHWelcomeInteractor: ITCHWelcomeBusinessLogic {
     func loadSelectAccount() {
         presenter.routeToSelectAccount()
     }
+    
+    func loadReadMore() {
+        presenter.routeToReadMore()
+    }
 }

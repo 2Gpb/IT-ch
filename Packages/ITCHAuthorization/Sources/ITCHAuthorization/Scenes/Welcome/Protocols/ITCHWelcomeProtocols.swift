@@ -8,6 +8,7 @@
 @MainActor
 protocol ITCHWelcomeBusinessLogic {
     func loadSelectAccount()
+    func loadReadMore()
 }
 
 protocol ITCHWelcomePresentationLogic { }
@@ -15,4 +16,5 @@ protocol ITCHWelcomePresentationLogic { }
 @MainActor
 protocol ITCHWelcomeRouterLogic {
     func routeToSelectAccount()
+    func routeToReadMore()
 }

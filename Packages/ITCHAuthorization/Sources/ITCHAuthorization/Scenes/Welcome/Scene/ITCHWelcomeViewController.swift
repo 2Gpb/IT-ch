@@ -131,6 +131,8 @@ final class ITCHWelcomeViewController: UIViewController {
         readMoreButton.titleLabel?.textColor = Constant.ReadMore.buttonTextColor
         readMoreButton.setHeight(Constant.ReadMore.buttonHeight)
         readMoreButton.setWidth(Constant.ReadMore.buttonWidth)
+        
+        readMoreButton.addTarget(self, action: #selector(readMoreaction), for: .touchUpInside)
     }
     
     private func setUpReadMoreStack() {
@@ -143,5 +145,11 @@ final class ITCHWelcomeViewController: UIViewController {
         view.addSubview(readMoreStack)
         readMoreStack.pinCenterX(to: view)
         readMoreStack.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constant.ReadMore.bottomOffset)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func readMoreaction() {
+        interactor.loadReadMore()
     }
 }
