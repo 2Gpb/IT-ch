@@ -40,7 +40,7 @@ final class ITCHSelectAccountInteractor: NSObject, ITCHSelectAccountBusinessLogi
     }
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - UITableViewDataSource
 extension ITCHSelectAccountInteractor: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         ITCHAccountsCollectionSection.allCases.count

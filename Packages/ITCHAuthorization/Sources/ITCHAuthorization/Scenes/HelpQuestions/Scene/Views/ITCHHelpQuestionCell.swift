@@ -1,5 +1,5 @@
 //
-//  ITCHManageAccountCell.swift
+//  ITCHHelpQuestionCell.swift
 //  ITCHAuthorization
 //
 //  Created by Peter on 19.04.2025.
@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHManageAccountCell: UITableViewCell {
+final class ITCHHelpQuestionCell: UITableViewCell {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -16,11 +16,11 @@ final class ITCHManageAccountCell: UITableViewCell {
         }
         
         enum ReuseIdentifier {
-            static let value: String = "ITCHManageAccountCell"
+            static let value: String = "ITCHHelpQuestionCell"
         }
         
-        enum Buttons {
-            static let verticalOffset: CGFloat = 4
+        enum HelpQuestion {
+            static let offsets: CGFloat = 16
         }
     }
     
@@ -28,7 +28,7 @@ final class ITCHManageAccountCell: UITableViewCell {
     static let reuseId: String = Constant.ReuseIdentifier.value
     
     // MARK: - UI Components
-    private let accountRow: ITCHAccountRow = ITCHAccountRow(type: .deleteAccount)
+    private let helpQuestionView: ITCHHelpQuestionsView = ITCHHelpQuestionsView()
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,8 +41,8 @@ final class ITCHManageAccountCell: UITableViewCell {
         fatalError(Constant.Error.message)
     }
     
-    func configure(with model: ITCHAccountModel) {
-        accountRow.configure(with: model)
+    func configure(with model: ITCHHelpQuestionViewModel) {
+        helpQuestionView.configure(with: model)
     }
     
     // MARK: - SetUp
@@ -50,8 +50,8 @@ final class ITCHManageAccountCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
         
-        addSubview(accountRow)
-        accountRow.pinHorizontal(to: self)
-        accountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
+        addSubview(helpQuestionView)
+        helpQuestionView.pinHorizontal(to: self, Constant.HelpQuestion.offsets)
+        helpQuestionView.pinVertical(to: self, Constant.HelpQuestion.offsets)
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHQuestionsView: UIView {
+public final class ITCHHelpQuestionsView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -44,9 +44,9 @@ public final class ITCHQuestionsView: UIView {
     }
     
     // MARK: - Methods
-    public func configure(question: String, answer: String) {
-        self.questionLabel.text = question
-        self.answerLabel.text = answer
+    public func configure(with model: ITCHHelpQuestionViewModel) {
+        self.questionLabel.text = model.question
+        self.answerLabel.text = model.answer
     }
     
     // MARK: - SetUp

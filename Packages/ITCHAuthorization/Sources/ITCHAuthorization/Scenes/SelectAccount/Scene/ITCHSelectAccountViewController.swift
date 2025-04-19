@@ -151,7 +151,7 @@ final class ITCHSelectAccountViewController: UIViewController {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UITableViewDelegate
 extension ITCHSelectAccountViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constant.AccountsTable.heightForRow

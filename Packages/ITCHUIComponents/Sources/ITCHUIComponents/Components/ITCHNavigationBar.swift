@@ -101,6 +101,7 @@ public final class ITCHNavigationBar: UIView {
     
     private func setUpLeftButton() {
         leftButton.isHidden = true
+        leftButton.tintColor = ITCHColor.blue60.color
         leftButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
         
         addSubview(leftButton)
@@ -110,6 +111,7 @@ public final class ITCHNavigationBar: UIView {
     
     private func setUpRightButton() {
         rightButton.isHidden = true
+        rightButton.tintColor = ITCHColor.blue60.color
         rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
         
         addSubview(rightButton)
