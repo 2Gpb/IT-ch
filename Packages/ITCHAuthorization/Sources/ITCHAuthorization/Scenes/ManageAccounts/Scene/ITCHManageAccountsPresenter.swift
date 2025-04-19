@@ -11,6 +11,4 @@ final class ITCHManageAccountsPresenter: ITCHManageAccountsPresentationLogic {
 }
 
 // MARK: - RouterLogic
-extension ITCHManageAccountsPresenter: ITCHManageAccountsRouterLogic {
-    
-}
+extension ITCHManageAccountsPresenter: ITCHManageAccountsRouterLogic { }

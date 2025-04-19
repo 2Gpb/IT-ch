@@ -22,4 +22,8 @@ extension ITCHSelectAccountPresenter: ITCHSelectAccountRouterLogic {
         bottomSheetVC.modalPresentationStyle = .pageSheet
         view?.present(bottomSheetVC, animated: true)
     }
+    
+    func routeToHelpQuestions() {
+        view?.navigationController?.pushViewController(ITCHHelpQuestionsAssembly.build(), animated: true)
+    }
 }

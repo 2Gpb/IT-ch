@@ -27,6 +27,7 @@ final class ITCHManageAccountsInteractor: NSObject, ITCHManageAccountsBusinessLo
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ITCHManageAccountsInteractor: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         accounts.count

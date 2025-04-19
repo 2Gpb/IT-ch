@@ -12,6 +12,7 @@ import ITCHUIComponents
 protocol ITCHSelectAccountBusinessLogic: UITableViewDataSource {
     func loadDismiss()
     func loadManageAccounts()
+    func loadHelpQuestions()
 }
 
 protocol ITCHSelectAccountPresentationLogic { }
@@ -20,6 +21,7 @@ protocol ITCHSelectAccountPresentationLogic { }
 protocol ITCHSelectAccountRouterLogic {
     func popViewController()
     func routeToManageAccounts()
+    func routeToHelpQuestions()
 }
 
 @MainActor

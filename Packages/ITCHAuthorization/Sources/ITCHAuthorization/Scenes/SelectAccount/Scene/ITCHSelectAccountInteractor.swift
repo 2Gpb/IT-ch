@@ -34,6 +34,10 @@ final class ITCHSelectAccountInteractor: NSObject, ITCHSelectAccountBusinessLogi
     func loadManageAccounts() {
         presenter.routeToManageAccounts()
     }
+    
+    func loadHelpQuestions() {
+        presenter.routeToHelpQuestions()
+    }
 }
 
 // MARK: - UICollectionViewDataSource

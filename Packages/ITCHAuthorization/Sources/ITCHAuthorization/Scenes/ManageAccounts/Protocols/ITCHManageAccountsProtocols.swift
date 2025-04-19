@@ -9,7 +9,9 @@ import UIKit
 import ITCHUIComponents
 
 protocol ITCHManageAccountsBusinessLogic: UITableViewDataSource { }
+
 protocol ITCHManageAccountsPresentationLogic { }
+
 protocol ITCHManageAccountsRouterLogic { }
 
 @MainActor

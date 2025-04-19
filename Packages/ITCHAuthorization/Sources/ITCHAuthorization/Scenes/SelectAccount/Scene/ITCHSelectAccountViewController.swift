@@ -102,7 +102,9 @@ final class ITCHSelectAccountViewController: UIViewController {
             self?.interactor.loadDismiss()
         }
         
-        navigationBar.rightAction = { }
+        navigationBar.rightAction = { [weak self] in
+            self?.interactor.loadHelpQuestions()
+        }
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
