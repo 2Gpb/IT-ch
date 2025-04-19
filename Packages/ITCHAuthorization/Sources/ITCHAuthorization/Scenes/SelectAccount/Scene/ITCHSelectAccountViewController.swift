@@ -121,10 +121,7 @@ final class ITCHSelectAccountViewController: UIViewController {
         accountsTableView.separatorStyle = Constant.AccountsCollection.separatorStyle
         accountsTableView.isScrollEnabled = Constant.AccountsCollection.isScrollEnabled
         accountsTableView.backgroundColor = Constant.AccountsCollection.backgroundColor
-        accountsTableView.register(
-            ITCHAccountCell.self,
-            forCellReuseIdentifier: ITCHAccountCell.reuseId
-        )
+        accountsTableView.register(ITCHAccountCell.self, forCellReuseIdentifier: ITCHAccountCell.reuseId)
         
         accountsTableView.setWidth(view.frame.width - Constant.AccountsCollection.horizontalOffset)
         accountsTableView.setHeight(CGFloat(interactor.accounts.count) * Constant.AccountsCollection.heightForRow +

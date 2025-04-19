@@ -55,6 +55,8 @@ final class ITCHAccountCell: UITableViewCell {
             addAccountRow.isHidden = true
         case .addAccount:
             accountRow.isHidden = true
+        case .deleteAccount:
+            return
         }
     }
     

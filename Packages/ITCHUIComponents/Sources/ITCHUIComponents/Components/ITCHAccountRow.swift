@@ -27,9 +27,10 @@ public final class ITCHAccountRow: UIView {
             static let font: UIFont = ITCHFont.header5Medium.font
         }
         
-        enum Chevron {
+        enum RightImage {
             static let size: CGFloat = 24
-            static let image: UIImage = ITCHImage.chevronRight24.image
+            static let chevronImage: UIImage = ITCHImage.chevronRight24.image
+            static let deleteImage: UIImage = ITCHImage.trash24.image
         }
         
         enum TextStack {
@@ -50,7 +51,7 @@ public final class ITCHAccountRow: UIView {
     private let nameLabel: UILabel = UILabel()
     private let aboutInfoLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
-    private let chevronImageView: UIImageView = UIImageView()
+    private let rightImageView: UIImageView = UIImageView()
     private let avatarPlusImageView: UIImageView = UIImageView()
     
     // MARK: - Lifecycle
@@ -75,16 +76,26 @@ public final class ITCHAccountRow: UIView {
     // MARK: - SetUp
     private func setUp(with type: ITCHAccountRowType) {
         setUpAvatarImageView()
-        setUpChevronImageView()
-        
+
         switch type {
-        case .account:
+        case .account, .deleteAccount:
             setUpAvatarLabel()
             setUpTextStack()
         case .addAccount:
             setUpAvatarPlusImageView()
             attachTitle()
         }
+
+        let image: UIImage = {
+            switch type {
+            case .account, .addAccount:
+                return Constant.RightImage.chevronImage
+            case .deleteAccount:
+                return Constant.RightImage.deleteImage
+            }
+        }()
+
+        setUpRightImageView(with: image)
     }
     
     private func setUpAvatarImageView() {
@@ -100,13 +111,13 @@ public final class ITCHAccountRow: UIView {
         avatarImageView.setHeight(Constant.Avatar.size)
     }
     
-    private func setUpChevronImageView() {
-        chevronImageView.image = Constant.Chevron.image
+    private func setUpRightImageView(with image: UIImage) {
+        rightImageView.image = image
         
-        addSubview(chevronImageView)
-        chevronImageView.pinCenterY(to: self)
-        chevronImageView.pinRight(to: self)
-        chevronImageView.setWidth(Constant.Chevron.size)
+        addSubview(rightImageView)
+        rightImageView.pinCenterY(to: self)
+        rightImageView.pinRight(to: self)
+        rightImageView.setWidth(Constant.RightImage.size)
     }
     
     private func setUpAvatarLabel() {
@@ -138,7 +149,7 @@ public final class ITCHAccountRow: UIView {
         addSubview(textStack)
         textStack.pinLeft(to: avatarImageView.trailingAnchor, Constant.TextStack.leadingOffset)
         textStack.pinCenterY(to: self)
-        textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
+        textStack.pinRight(to: rightImageView.leadingAnchor, Constant.TextStack.trailingOffset)
     }
     
     private func setUpAvatarPlusImageView() {
