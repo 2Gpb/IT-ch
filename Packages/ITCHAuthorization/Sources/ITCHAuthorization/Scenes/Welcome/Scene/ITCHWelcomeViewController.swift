@@ -53,7 +53,7 @@ final class ITCHWelcomeViewController: UIViewController {
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .image)
     private let titleLabel: UILabel = UILabel()
-    private let enterButton: ITCHButton = ITCHButton(title: Constant.Enter.title)
+    private let enterButton: ITCHButton = ITCHButton()
     private let welcomeStack: UIStackView = UIStackView()
     private let readMoreLabel: UILabel = UILabel()
     private let readMoreButton: UIButton = UIButton(type: .system)
@@ -104,6 +104,7 @@ final class ITCHWelcomeViewController: UIViewController {
     }
     
     private func setUpWelcomeStack() {
+        enterButton.configure(title: Constant.Enter.title)
         enterButton.action = { [weak self] in
             self?.interactor.loadSelectAccount()
         }
@@ -128,7 +129,7 @@ final class ITCHWelcomeViewController: UIViewController {
         
         readMoreButton.setTitle(Constant.ReadMore.buttonTitle, for: .normal)
         readMoreButton.titleLabel?.font = Constant.ReadMore.buttonFont
-        readMoreButton.titleLabel?.textColor = Constant.ReadMore.buttonTextColor
+        readMoreButton.tintColor = Constant.ReadMore.buttonTextColor
         readMoreButton.setHeight(Constant.ReadMore.buttonHeight)
         readMoreButton.setWidth(Constant.ReadMore.buttonWidth)
         

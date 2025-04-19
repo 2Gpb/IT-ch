@@ -52,10 +52,7 @@ final class ITCHSelectAccountViewController: UIViewController {
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .image)
     private let titleLabel: UILabel = UILabel()
     private let accountsTableView: UITableView = UITableView()
-    private let manageAccountsButton: ITCHButton = ITCHButton(
-        title: Constant.ManageAccountsButton.title,
-        type: .secondary
-    )
+    private let manageAccountsButton: ITCHButton = ITCHButton(type: .secondary)
     
     private let contentStack: UIStackView = UIStackView()
     
@@ -130,6 +127,7 @@ final class ITCHSelectAccountViewController: UIViewController {
     }
     
     private func setUpManageAccountsButton() {
+        manageAccountsButton.configure(title: Constant.ManageAccountsButton.title)
         manageAccountsButton.action = { [weak self] in
             self?.interactor.loadManageAccounts()
         }
