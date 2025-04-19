@@ -76,16 +76,7 @@ public final class ITCHAccountRow: UIView {
     // MARK: - SetUp
     private func setUp(with type: ITCHAccountRowType) {
         setUpAvatarImageView()
-
-        switch type {
-        case .account, .deleteAccount:
-            setUpAvatarLabel()
-            setUpTextStack()
-        case .addAccount:
-            setUpAvatarPlusImageView()
-            attachTitle()
-        }
-
+        
         let image: UIImage = {
             switch type {
             case .account, .addAccount:
@@ -96,6 +87,15 @@ public final class ITCHAccountRow: UIView {
         }()
 
         setUpRightImageView(with: image)
+
+        switch type {
+        case .account, .deleteAccount:
+            setUpAvatarLabel()
+            setUpTextStack()
+        case .addAccount:
+            setUpAvatarPlusImageView()
+            attachTitle()
+        }
     }
     
     private func setUpAvatarImageView() {

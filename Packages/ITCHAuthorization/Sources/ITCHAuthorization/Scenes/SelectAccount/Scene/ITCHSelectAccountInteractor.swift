@@ -30,6 +30,10 @@ final class ITCHSelectAccountInteractor: NSObject, ITCHSelectAccountBusinessLogi
     func loadDismiss() {
         presenter.popViewController()
     }
+    
+    func loadManageAccounts() {
+        presenter.routeToManageAccounts()
+    }
 }
 
 // MARK: - UICollectionViewDataSource

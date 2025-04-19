@@ -15,4 +15,11 @@ extension ITCHSelectAccountPresenter: ITCHSelectAccountRouterLogic {
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
     }
+    
+    func routeToManageAccounts() {
+        let bottomSheetVC = ITCHManageAccountsAssembly.build()
+        
+        bottomSheetVC.modalPresentationStyle = .pageSheet
+        view?.present(bottomSheetVC, animated: true)
+    }
 }

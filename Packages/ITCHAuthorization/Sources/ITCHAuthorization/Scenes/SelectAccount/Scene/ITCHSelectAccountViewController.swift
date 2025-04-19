@@ -26,7 +26,7 @@ final class ITCHSelectAccountViewController: UIViewController {
             static let textColor: UIColor = ITCHColor.base0.color
         }
         
-        enum AccountsCollection {
+        enum AccountsTable {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
             static let isScrollEnabled: Bool = false
@@ -81,7 +81,7 @@ final class ITCHSelectAccountViewController: UIViewController {
         setUpView()
         setUpNavigationBar()
         setUpTitleLabel()
-        setUpAccountsCollectionView()
+        setUpAccountsTableView()
         setUpManageAccountsButton()
         setUpContentStack()
     }
@@ -115,21 +115,23 @@ final class ITCHSelectAccountViewController: UIViewController {
         titleLabel.textColor = Constant.Title.textColor
     }
     
-    private func setUpAccountsCollectionView() {
+    private func setUpAccountsTableView() {
         accountsTableView.delegate = self
         accountsTableView.dataSource = interactor
-        accountsTableView.separatorStyle = Constant.AccountsCollection.separatorStyle
-        accountsTableView.isScrollEnabled = Constant.AccountsCollection.isScrollEnabled
-        accountsTableView.backgroundColor = Constant.AccountsCollection.backgroundColor
+        accountsTableView.separatorStyle = Constant.AccountsTable.separatorStyle
+        accountsTableView.isScrollEnabled = Constant.AccountsTable.isScrollEnabled
+        accountsTableView.backgroundColor = Constant.AccountsTable.backgroundColor
         accountsTableView.register(ITCHAccountCell.self, forCellReuseIdentifier: ITCHAccountCell.reuseId)
         
-        accountsTableView.setWidth(view.frame.width - Constant.AccountsCollection.horizontalOffset)
-        accountsTableView.setHeight(CGFloat(interactor.accounts.count) * Constant.AccountsCollection.heightForRow +
-                                    Constant.AccountsCollection.heightForRow)
+        accountsTableView.setWidth(view.frame.width - Constant.AccountsTable.horizontalOffset)
+        accountsTableView.setHeight(CGFloat(interactor.accounts.count) * Constant.AccountsTable.heightForRow +
+                                    Constant.AccountsTable.heightForRow)
     }
     
     private func setUpManageAccountsButton() {
-        manageAccountsButton.action = { }
+        manageAccountsButton.action = { [weak self] in
+            self?.interactor.loadManageAccounts()
+        }
         manageAccountsButton.setWidth(Constant.ManageAccountsButton.width)
     }
     
@@ -150,7 +152,7 @@ final class ITCHSelectAccountViewController: UIViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ITCHSelectAccountViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constant.AccountsCollection.heightForRow
+        return Constant.AccountsTable.heightForRow
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
