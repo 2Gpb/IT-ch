@@ -91,7 +91,7 @@ final class ITCHManageAccountsViewController: UIViewController {
         
         view.addSubview(accountsTableView)
         accountsTableView.pinTop(to: view, Constant.AccountsTable.topOffset)
-        accountsTableView.pinHorizontal(to: view, Constant.AccountsTable.horizontalOffset)
+        accountsTableView.pinHorizontal(to: view/*, Constant.AccountsTable.horizontalOffset*/)
         accountsTableView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constant.AccountsTable.bottomOffset)
     }
 }
@@ -100,5 +100,9 @@ final class ITCHManageAccountsViewController: UIViewController {
 extension ITCHManageAccountsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constant.AccountsTable.heightForRow
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

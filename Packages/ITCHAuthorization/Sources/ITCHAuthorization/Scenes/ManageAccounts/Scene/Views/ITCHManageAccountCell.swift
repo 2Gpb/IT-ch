@@ -47,11 +47,11 @@ final class ITCHManageAccountCell: UITableViewCell {
     
     // MARK: - SetUp
     private func setUp() {
-        selectionStyle = .none
+        selectionStyle = .default
         backgroundColor = .clear
         
         addSubview(accountRow)
-        accountRow.pinHorizontal(to: self)
+        accountRow.pinHorizontal(to: self, 16)
         accountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
     }
 }

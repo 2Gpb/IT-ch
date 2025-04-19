@@ -30,7 +30,6 @@ final class ITCHSelectAccountViewController: UIViewController {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
             static let isScrollEnabled: Bool = false
-            static let horizontalOffset: CGFloat = 32
             static let heightForRow: CGFloat = 58
         }
         
@@ -125,7 +124,7 @@ final class ITCHSelectAccountViewController: UIViewController {
         accountsTableView.backgroundColor = Constant.AccountsTable.backgroundColor
         accountsTableView.register(ITCHAccountCell.self, forCellReuseIdentifier: ITCHAccountCell.reuseId)
         
-        accountsTableView.setWidth(view.frame.width - Constant.AccountsTable.horizontalOffset)
+        accountsTableView.setWidth(view.frame.width)
         accountsTableView.setHeight(CGFloat(interactor.accounts.count) * Constant.AccountsTable.heightForRow +
                                     Constant.AccountsTable.heightForRow)
     }
@@ -159,5 +158,13 @@ extension ITCHSelectAccountViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let section = ITCHAccountsCollectionSection.allCases[indexPath.section]
+        
+        switch section {
+        case .account:
+            print(1)
+        case .addAccount:
+            interactor.loadLogin()
+        }
     }
 }

@@ -26,4 +26,8 @@ extension ITCHSelectAccountPresenter: ITCHSelectAccountRouterLogic {
     func routeToHelpQuestions() {
         view?.navigationController?.pushViewController(ITCHHelpQuestionsAssembly.build(), animated: true)
     }
+    
+    func routeToLogin() {
+        view?.navigationController?.pushViewController(ITCHLoginAssembly.build(), animated: true)
+    }
 }

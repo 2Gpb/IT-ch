@@ -38,6 +38,10 @@ final class ITCHSelectAccountInteractor: NSObject, ITCHSelectAccountBusinessLogi
     func loadHelpQuestions() {
         presenter.routeToHelpQuestions()
     }
+    
+    func loadLogin() {
+        presenter.routeToLogin()
+    }
 }
 
 // MARK: - UITableViewDataSource

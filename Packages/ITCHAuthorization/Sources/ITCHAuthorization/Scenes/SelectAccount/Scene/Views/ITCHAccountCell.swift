@@ -19,9 +19,10 @@ final class ITCHAccountCell: UITableViewCell {
             static let value: String = "ITCHAccountCell"
         }
         
-        enum Buttons {
+        enum Rows {
             static let title: String = "Добавить аккаунт"
             static let verticalOffset: CGFloat = 4
+            static let horizontalOffset: CGFloat = 16
         }
     }
     
@@ -48,7 +49,7 @@ final class ITCHAccountCell: UITableViewCell {
             accountRow.configure(with: model)
         }
         
-        addAccountRow.configure(with: ITCHAccountModel(name: Constant.Buttons.title))
+        addAccountRow.configure(with: ITCHAccountModel(name: Constant.Rows.title))
         
         switch type {
         case .account:
@@ -62,15 +63,15 @@ final class ITCHAccountCell: UITableViewCell {
     
     // MARK: - SetUp
     private func setUp() {
-        selectionStyle = .none
+        selectionStyle = .default
         backgroundColor = .clear
         
         addSubview(accountRow)
-        accountRow.pinHorizontal(to: self)
-        accountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
+        accountRow.pinHorizontal(to: self, Constant.Rows.horizontalOffset)
+        accountRow.pinVertical(to: self, Constant.Rows.verticalOffset)
         
         addSubview(addAccountRow)
-        addAccountRow.pinHorizontal(to: self)
-        addAccountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
+        addAccountRow.pinHorizontal(to: self, Constant.Rows.horizontalOffset)
+        addAccountRow.pinVertical(to: self, Constant.Rows.verticalOffset)
     }
 }

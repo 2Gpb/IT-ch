@@ -15,7 +15,7 @@ public final class ITCHAccountRow: UIView {
         }
         
         enum Avatar {
-            static let backgroundColor: UIColor = ITCHColor.base80.color
+            static let backgroundColor: UIColor = ITCHColor.cellGray.color
             static let contentMode: UIView.ContentMode = .scaleAspectFill
             static let clipsToBounds: Bool = true
             static let size: CGFloat = 48
