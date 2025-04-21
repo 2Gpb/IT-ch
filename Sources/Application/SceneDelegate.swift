@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ITCHFont.registerFonts()
 
         window = UIWindow(windowScene: windowScene)
+        window?.overrideUserInterfaceStyle = .dark
         window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
         window?.makeKeyAndVisible()
     }

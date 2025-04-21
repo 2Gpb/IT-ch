@@ -49,10 +49,24 @@ final class ITCHLoginViewController: UIViewController {
             static let topOffset: CGFloat = 32
             static let horizontalOffset: CGFloat = 16
         }
+        
+        enum ErrorView {
+            static let animationDuration: TimeInterval = 0.4
+            static let animationDelay: TimeInterval = 0
+            static let damping: CGFloat = 0.8
+            static let velocity: CGFloat = 0.4
+            static let initialAlpha: CGFloat = 1
+            static let finalAlpha: CGFloat = 0
+            static let initialYOffset: CGFloat = 0
+            static let visibleDuration: TimeInterval = 1.5
+            static let horizontalOffset: CGFloat = 16
+            static let bottomOffset: CGFloat = 16
+        }
     }
     
     // MARK: - Private fields
     private let interactor: ITCHLoginBusinessLogic
+    private var errorViewBottomConstraint: NSLayoutConstraint?
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
@@ -60,6 +74,7 @@ final class ITCHLoginViewController: UIViewController {
     private let passwordTextField: ITCHTextField = ITCHTextField()
     private let forgotPasswordButton: UIButton = UIButton(type: .system)
     private let enterButton: ITCHButton = ITCHButton()
+    private let errorView: ITCHErrorLoginView = ITCHErrorLoginView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHLoginBusinessLogic) {
@@ -77,9 +92,30 @@ final class ITCHLoginViewController: UIViewController {
         setUp()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         emailTextField.keyboardState = .open
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - SetUp
@@ -90,6 +126,7 @@ final class ITCHLoginViewController: UIViewController {
         setUpPasswordTextField()
         setUpForgotPasswordButton()
         setUpEnterButton()
+        setUpErrorView()
     }
     
     private func setUpView() {
@@ -147,6 +184,7 @@ final class ITCHLoginViewController: UIViewController {
         forgotPasswordButton.setTitle(Constant.ForgotPassword.title, for: Constant.ForgotPassword.state)
         forgotPasswordButton.titleLabel?.font = Constant.ForgotPassword.font
         forgotPasswordButton.tintColor = Constant.ForgotPassword.textColor
+        forgotPasswordButton.addTarget(self, action: #selector(openLinkPasswordRecovery), for: .touchUpInside)
         
         view.addSubview(forgotPasswordButton)
         forgotPasswordButton.pinTop(to: passwordTextField.bottomAnchor)
@@ -163,10 +201,117 @@ final class ITCHLoginViewController: UIViewController {
         enterButton.pinHorizontal(to: view, Constant.Enter.horizontalOffset)
     }
     
+    private func setUpErrorView() {
+        self.errorView.isHidden = true
+        
+        view.addSubview(errorView)
+        errorView.pinHorizontal(to: view, Constant.ErrorView.horizontalOffset)
+        
+        errorViewBottomConstraint = errorView.bottomAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+            constant: -Constant.ErrorView.bottomOffset
+        )
+        
+        errorViewBottomConstraint?.isActive = true
+    }
+    
+    // MARK: - Animations
+    private func showErrorAnimated() {
+        prepareErrorState()
+        animateErrorEntry()
+    }
+
+    private func prepareErrorState() {
+        errorView.transform = CGAffineTransform(
+            translationX: -view.bounds.width,
+            y: Constant.ErrorView.initialYOffset
+        )
+        
+        errorView.isHidden = false
+        errorView.alpha = Constant.ErrorView.initialAlpha
+        emailTextField.isError = true
+        passwordTextField.isError = true
+    }
+
+    private func animateErrorEntry() {
+        UIView.animate(
+            withDuration: Constant.ErrorView.animationDuration,
+            delay: Constant.ErrorView.animationDelay,
+            usingSpringWithDamping: Constant.ErrorView.damping,
+            initialSpringVelocity: Constant.ErrorView.velocity,
+            options: [.curveEaseOut],
+            animations: {
+                self.errorView.transform = .identity
+            },
+            completion: { _ in
+                self.animateErrorExit()
+            }
+        )
+    }
+
+    private func animateErrorExit() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.ErrorView.visibleDuration) {
+            UIView.animate(
+                withDuration: Constant.ErrorView.animationDuration,
+                animations: {
+                    self.errorView.transform = CGAffineTransform(
+                        translationX: self.view.bounds.width,
+                        y: Constant.ErrorView.initialYOffset
+                    )
+                    
+                    self.errorView.alpha = Constant.ErrorView.finalAlpha
+                },
+                completion: { _ in
+                    self.resetErrorState()
+                }
+            )
+        }
+    }
+
+    private func resetErrorState() {
+        errorView.isHidden = true
+        emailTextField.isError = false
+        passwordTextField.isError = false
+    }
+
     // MARK: - Actions
     @objc
     private func dismissKeyboard() {
         emailTextField.keyboardState = .close
         passwordTextField.keyboardState = .close
+    }
+    
+    @objc
+    private func openLinkPasswordRecovery() {
+        interactor.loadPasswordRecovery()
+    }
+    
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+
+        let keyboardHeight = keyboardFrame.height
+        let safeAreaBottom = view.safeAreaInsets.bottom
+        let shift = keyboardHeight - safeAreaBottom + Constant.ErrorView.bottomOffset
+
+        errorViewBottomConstraint?.constant = -shift
+
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+
+        errorViewBottomConstraint?.constant = -Constant.ErrorView.bottomOffset
+
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
     }
 }

@@ -18,4 +18,8 @@ final class ITCHLoginInteractor: ITCHLoginBusinessLogic {
     func loadDismiss() {
         presenter.popViewController()
     }
+    
+    func loadPasswordRecovery() {
+        presenter.routeToPasswordRecovery()
+    }
 }

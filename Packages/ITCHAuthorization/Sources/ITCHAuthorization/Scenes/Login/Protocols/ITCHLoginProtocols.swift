@@ -8,6 +8,7 @@
 @MainActor
 protocol ITCHLoginBusinessLogic {
     func loadDismiss()
+    func loadPasswordRecovery()
 }
 
 protocol ITCHLoginPresentationLogic {
@@ -17,4 +18,5 @@ protocol ITCHLoginPresentationLogic {
 @MainActor
 protocol ITCHLoginRouterLogic {
     func popViewController()
+    func routeToPasswordRecovery()
 }
