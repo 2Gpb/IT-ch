@@ -15,6 +15,10 @@ final class ITCHSelectAccountViewController: UIViewController {
             static let message = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+        }
+        
         enum NavigationBar {
             static let leftImage: UIImage = ITCHImage.chevronLeft24.image
             static let rightImage: UIImage = ITCHImage.info24.image
@@ -53,7 +57,6 @@ final class ITCHSelectAccountViewController: UIViewController {
     private let titleLabel: UILabel = UILabel()
     private let accountsTableView: UITableView = UITableView()
     private let manageAccountsButton: ITCHButton = ITCHButton(type: .secondary)
-    
     private let contentStack: UIStackView = UIStackView()
     
     // MARK: - Lifecycle
@@ -83,7 +86,7 @@ final class ITCHSelectAccountViewController: UIViewController {
     }
     
     private func setUpView() {
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.backgroundColor = Constant.View.backgroundColor
     }
     
     private func setUpNavigationBar() {
@@ -122,8 +125,10 @@ final class ITCHSelectAccountViewController: UIViewController {
         accountsTableView.register(ITCHAccountCell.self, forCellReuseIdentifier: ITCHAccountCell.reuseId)
         
         accountsTableView.setWidth(view.frame.width)
-        accountsTableView.setHeight(CGFloat(interactor.accounts.count) * Constant.AccountsTable.heightForRow +
-                                    Constant.AccountsTable.heightForRow)
+        accountsTableView.setHeight(
+            CGFloat(interactor.accounts.count) * Constant.AccountsTable.heightForRow
+            + Constant.AccountsTable.heightForRow
+        )
     }
     
     private func setUpManageAccountsButton() {
@@ -160,7 +165,7 @@ extension ITCHSelectAccountViewController: UITableViewDelegate {
         
         switch section {
         case .account:
-            print(1)
+            break
         case .addAccount:
             interactor.loadLogin()
         }

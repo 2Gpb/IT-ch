@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHManageAccountsInteractor: NSObject, ITCHManageAccountsBusinessLogic, ITCHManageAccountsStorage {
+final class ITCHManageAccountsInteractor: NSObject, ITCHManageAccountsBusinessLogic, ITCHAccountsStorage {
     // MARK: - Private fields
     private let presenter: ITCHManageAccountsPresentationLogic & ITCHManageAccountsRouterLogic
     
@@ -40,7 +40,13 @@ extension ITCHManageAccountsInteractor: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure(with: accounts[indexPath.row])
+        cell.configure(
+            with: ITCHAccountViewModel(
+                image: accounts[indexPath.row].image,
+                name: accounts[indexPath.row].name,
+                info: accounts[indexPath.row].info
+            )
+        )
         
         return cell
     }

@@ -9,22 +9,37 @@ import UIKit
 import ITCHUIComponents
 
 final class ITCHHelpQuestionsInteractor: NSObject, ITCHHelpQuestionsBusinessLogic, ITCHHelpQuestionsStorage {
+    // MARK: - Constants
+    private enum Constant {
+        enum Questions {
+            static let firstQuestion: String = "Кто может войти в приложение?"
+            static let secondQuestion: String = "Как войти в приложение?"
+            static let thirdQuestion: String = "Где я могу получить корпоративную электронную почту?"
+        }
+        
+        enum Answers {
+            static let firstAnswer: String = "Приложением могут пользоваться зачисленные студенты бакалавриата, магистратуры и аспирантуры, преподаватели и сотрудники НИУ ВШЭ. Если вы абитуриент или лицеист, войти в приложение не получится."
+            static let secondAnswer: String = "Для авторизации используйте свою корпоративную электронную почту (вида xxx@edu.hse.ru или yyy@hse.ru) и парольот нее. Это те же самые логин и пароль, которые используются для входа в LMS, SmartLMS и ЕЛК. Войти под личной почтой не получится."
+            static let thirdAnswer: String = "Созданием и отправкой информации о корпоративных электронных адресах занимаются сотрудники учебных офисов ваших образовательных программ. Более подробную информацию можно узнать по ссылке: https://www.hse.ru/studyspravka/corpemail/"
+        }
+    }
+    
     // MARK: - Private fields
     private let presenter: ITCHHelpQuestionsPresentationLogic & ITCHHelpQuestionsRouterLogic
     
     // MARK: - Variables
     var helpQuestions: [ITCHHelpQuestionModel] = [
         ITCHHelpQuestionModel(
-            question: "Кто может войти в приложение?",
-            answer: "Приложением могут пользоваться зачисленные студенты бакалавриата, магистратуры и аспирантуры, преподаватели и сотрудники НИУ ВШЭ. Если вы абитуриент или лицеист, войти в приложение не получится."
+            question: Constant.Questions.firstQuestion,
+            answer: Constant.Answers.firstAnswer
         ),
         ITCHHelpQuestionModel(
-            question: "Как войти в приложение?",
-            answer: "Для авторизации используйте свою корпоративную электронную почту (вида xxx@edu.hse.ru или yyy@hse.ru) и парольот нее. Это те же самые логин и пароль, которые используются для входа в LMS, SmartLMS и ЕЛК. Войти под личной почтой не получится."
+            question: Constant.Questions.secondQuestion,
+            answer: Constant.Answers.secondAnswer
         ),
         ITCHHelpQuestionModel(
-            question: "Где я могу получить корпоративную электронную почту?",
-            answer: "Созданием и отправкой информации о корпоративных электронных адресах занимаются сотрудники учебных офисов ваших образовательных программ. Более подробную информацию можно узнать по ссылке: https://www.hse.ru/studyspravka/corpemail/"
+            question: Constant.Questions.thirdQuestion,
+            answer: Constant.Answers.thirdAnswer
         )
     ]
     

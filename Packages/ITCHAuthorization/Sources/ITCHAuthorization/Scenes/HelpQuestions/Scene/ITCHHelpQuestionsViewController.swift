@@ -15,6 +15,10 @@ final class ITCHHelpQuestionsViewController: UIViewController {
             static let message = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+        }
+        
         enum NavigationBar {
             static let title: String = "F.A.Q."
             static let leftImage: UIImage = ITCHImage.chevronLeft24.image
@@ -59,7 +63,7 @@ final class ITCHHelpQuestionsViewController: UIViewController {
     }
     
     private func setUpView() {
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.backgroundColor = Constant.View.backgroundColor
     }
     
     private func setUpNavigationBar() {

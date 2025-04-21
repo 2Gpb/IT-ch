@@ -66,7 +66,7 @@ public final class ITCHAccountRow: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHAccountModel) {
+    public func configure(with model: ITCHAccountViewModel) {
         avatarImageView.image = model.image
         avatarLabel.text = makeInitials(from: model.name)
         nameLabel.text = model.name

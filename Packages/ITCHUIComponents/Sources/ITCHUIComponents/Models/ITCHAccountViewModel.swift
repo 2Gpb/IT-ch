@@ -7,7 +7,7 @@
 
 import UIKit
 
-public struct ITCHAccountModel {
+public struct ITCHAccountViewModel {
     public var image: UIImage?
     public var name: String
     public var info: String?

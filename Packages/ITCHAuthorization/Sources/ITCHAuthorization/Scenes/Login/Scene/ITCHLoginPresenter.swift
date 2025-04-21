@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 
 final class ITCHLoginPresenter: ITCHLoginPresentationLogic {
+    // MARK: - Constants
+    private enum Constant {
+        static let passwordRecoveryURLString = "https://lk.hse.ru/password_recovery"
+    }
+    
     // MARK: - Variables
     weak var view: ITCHLoginViewController?
 }
@@ -20,7 +25,7 @@ extension ITCHLoginPresenter: ITCHLoginRouterLogic {
     }
     
     func routeToPasswordRecovery() {
-        if let url = URL(string: "https://lk.hse.ru/password_recovery") {
+        if let url = URL(string: Constant.passwordRecoveryURLString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }

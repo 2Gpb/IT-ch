@@ -15,6 +15,11 @@ final class ITCHHelpQuestionCell: UITableViewCell {
             static let message: String = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let selectionStyle: UITableViewCell.SelectionStyle = .none
+            static let backgroundColor: UIColor = .clear
+        }
+        
         enum ReuseIdentifier {
             static let value: String = "ITCHHelpQuestionCell"
         }
@@ -47,8 +52,8 @@ final class ITCHHelpQuestionCell: UITableViewCell {
     
     // MARK: - SetUp
     private func setUp() {
-        selectionStyle = .none
-        backgroundColor = .clear
+        selectionStyle = Constant.View.selectionStyle
+        backgroundColor = Constant.View.backgroundColor
         
         addSubview(helpQuestionView)
         helpQuestionView.pinHorizontal(to: self, Constant.HelpQuestion.offsets)

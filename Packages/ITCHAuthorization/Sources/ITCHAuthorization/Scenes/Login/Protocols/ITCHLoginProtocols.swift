@@ -11,9 +11,7 @@ protocol ITCHLoginBusinessLogic {
     func loadPasswordRecovery()
 }
 
-protocol ITCHLoginPresentationLogic {
-    
-}
+protocol ITCHLoginPresentationLogic { }
 
 @MainActor
 protocol ITCHLoginRouterLogic {

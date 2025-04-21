@@ -15,6 +15,11 @@ final class ITCHAccountCell: UITableViewCell {
             static let message: String = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let selectionStyle: UITableViewCell.SelectionStyle = .none
+            static let backgroundColor: UIColor = .clear
+        }
+        
         enum ReuseIdentifier {
             static let value: String = "ITCHAccountCell"
         }
@@ -44,12 +49,19 @@ final class ITCHAccountCell: UITableViewCell {
         fatalError(Constant.Error.message)
     }
     
+    // MARK: - Methods
     func configure(with model: ITCHAccountModel? = nil, type: ITCHAccountRowType) {
         if let model {
-            accountRow.configure(with: model)
+            accountRow.configure(
+                with: ITCHAccountViewModel(
+                    image: model.image,
+                    name: model.name,
+                    info: model.info
+                )
+            )
         }
         
-        addAccountRow.configure(with: ITCHAccountModel(name: Constant.Rows.title))
+        addAccountRow.configure(with: ITCHAccountViewModel(name: Constant.Rows.title))
         
         switch type {
         case .account:
@@ -63,8 +75,8 @@ final class ITCHAccountCell: UITableViewCell {
     
     // MARK: - SetUp
     private func setUp() {
-        selectionStyle = .default
-        backgroundColor = .clear
+        selectionStyle = Constant.View.selectionStyle
+        backgroundColor = Constant.View.backgroundColor
         
         addSubview(accountRow)
         accountRow.pinHorizontal(to: self, Constant.Rows.horizontalOffset)

@@ -15,12 +15,18 @@ final class ITCHManageAccountCell: UITableViewCell {
             static let message: String = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let selectionStyle: UITableViewCell.SelectionStyle = .none
+            static let backgroundColor: UIColor = .clear
+        }
+        
         enum ReuseIdentifier {
             static let value: String = "ITCHManageAccountCell"
         }
         
-        enum Buttons {
+        enum Row {
             static let verticalOffset: CGFloat = 4
+            static let horizontalOffset: CGFloat = 16
         }
     }
     
@@ -41,17 +47,17 @@ final class ITCHManageAccountCell: UITableViewCell {
         fatalError(Constant.Error.message)
     }
     
-    func configure(with model: ITCHAccountModel) {
+    func configure(with model: ITCHAccountViewModel) {
         accountRow.configure(with: model)
     }
     
     // MARK: - SetUp
     private func setUp() {
-        selectionStyle = .default
-        backgroundColor = .clear
+        selectionStyle = Constant.View.selectionStyle
+        backgroundColor = Constant.View.backgroundColor
         
         addSubview(accountRow)
-        accountRow.pinHorizontal(to: self, 16)
-        accountRow.pinVertical(to: self, Constant.Buttons.verticalOffset)
+        accountRow.pinHorizontal(to: self, Constant.Row.horizontalOffset)
+        accountRow.pinVertical(to: self, Constant.Row.verticalOffset)
     }
 }

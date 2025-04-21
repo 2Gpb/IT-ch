@@ -15,6 +15,10 @@ final class ITCHLoginViewController: UIViewController {
             static let message = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+        }
+        
         enum NavigationBar {
             static let title = "Вход в аккаунт"
             static let leftImage: UIImage = ITCHImage.chevronLeft24.image
@@ -130,7 +134,7 @@ final class ITCHLoginViewController: UIViewController {
     }
     
     private func setUpView() {
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.backgroundColor = Constant.View.backgroundColor
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)

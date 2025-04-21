@@ -33,13 +33,13 @@ final class ITCHManageAccountsViewController: UIViewController {
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHManageAccountsBusinessLogic & ITCHManageAccountsStorage
+    private let interactor: ITCHManageAccountsBusinessLogic & ITCHAccountsStorage
     
     // MARK: - UI Components
     private let accountsTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
-    init(interactor: ITCHManageAccountsBusinessLogic & ITCHManageAccountsStorage) {
+    init(interactor: ITCHManageAccountsBusinessLogic & ITCHAccountsStorage) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }

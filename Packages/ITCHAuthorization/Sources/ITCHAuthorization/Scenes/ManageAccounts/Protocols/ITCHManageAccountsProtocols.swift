@@ -13,8 +13,3 @@ protocol ITCHManageAccountsBusinessLogic: UITableViewDataSource { }
 protocol ITCHManageAccountsPresentationLogic { }
 
 protocol ITCHManageAccountsRouterLogic { }
-
-@MainActor
-protocol ITCHManageAccountsStorage {
-    var accounts: [ITCHAccountModel] { get }
-}
