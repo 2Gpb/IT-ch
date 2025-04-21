@@ -21,6 +21,8 @@ public final class ITCHButton: UIView {
             static let font: UIFont = ITCHFont.bodyMMedium.font
             static let backgroundColor: UIColor = ITCHColor.blue60.color
             static let deleteBackgroundColor: UIColor = ITCHColor.red50.color
+            static let secondaryBackground: UIColor = .clear
+            static let blueTextColor: UIColor = ITCHColor.blue60.color
         }
     }
     
@@ -31,9 +33,9 @@ public final class ITCHButton: UIView {
     public var action: (() -> Void)?
     
     // MARK: - Lifecycle
-    public init(title: String, type: ITCHButtonType = .primary) {
+    public init(type: ITCHButtonType = .primary) {
         super.init(frame: .zero)
-        setUp(title: title, type: type)
+        setUp(type: type)
     }
     
     @available(*, unavailable)
@@ -41,9 +43,13 @@ public final class ITCHButton: UIView {
         fatalError(Constant.Error.message)
     }
     
-    // MARK: - SetUp
-    private func setUp(title: String, type: ITCHButtonType) {
+    // MARK: - Methods
+    public func configure(title: String) {
         button.setTitle(title, for: .normal)
+    }
+    
+    // MARK: - SetUp
+    private func setUp(type: ITCHButtonType) {
         button.tintColor = Constant.Button.textColor
         button.titleLabel?.font = Constant.Button.font
         button.layer.cornerRadius = Constant.Button.cornerRadius
@@ -52,6 +58,9 @@ public final class ITCHButton: UIView {
         switch type {
         case .primary:
             button.backgroundColor = Constant.Button.backgroundColor
+        case .secondary:
+            button.backgroundColor = Constant.Button.secondaryBackground
+            button.tintColor = Constant.Button.blueTextColor
         case .delete:
             button.backgroundColor = Constant.Button.deleteBackgroundColor
         }

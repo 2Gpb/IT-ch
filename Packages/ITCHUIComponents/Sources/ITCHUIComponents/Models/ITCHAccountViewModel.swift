@@ -7,15 +7,15 @@
 
 import UIKit
 
-public struct ITCHUserModel {
+public struct ITCHAccountViewModel {
     public var image: UIImage?
     public var name: String
-    public var info: String
+    public var info: String?
     
     public init(
         image: UIImage? = nil,
         name: String,
-        info: String
+        info: String? = nil
     ) {
         self.image = image
         self.name = name

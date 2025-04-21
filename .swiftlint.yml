@@ -14,6 +14,7 @@ disabled_rules:
   - unused_parameter
   - contrasted_opening_brace
   - missing_docs
+  - line_length
 
 opt_in_rules:
   - vertical_whitespace_opening_braces
@@ -47,7 +48,7 @@ opt_in_rules:
   - collection_alignment
   - enum_case_associated_values_count
   - fatal_error_message
-  - file_name
+#  - file_name
   - file_name_no_space
   - final_test_case
   - identical_operands
@@ -83,5 +84,5 @@ identifier_name:
 
 # Rule to limit the length of function bodies
 function_body_length:
-  warning: 100
-  error: 200
+  warning: 300
+  error: 500

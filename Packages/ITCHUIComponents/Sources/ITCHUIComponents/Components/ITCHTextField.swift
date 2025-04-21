@@ -89,8 +89,13 @@ public final class ITCHTextField: UIView {
             attributes: Constant.TextField.placeholderAttributes
         )
         
-        if model.type == .password {
+        switch model.type {
+        case .normal:
+            textField.keyboardType = .emailAddress
+        case .password:
             setUpHideShowButton()
+            textField.keyboardType = .asciiCapable
+            textField.autocorrectionType = .no
         }
     }
     

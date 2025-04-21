@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHUserRow: UIView {
+public final class ITCHAccountRow: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -15,12 +15,11 @@ public final class ITCHUserRow: UIView {
         }
         
         enum Avatar {
-            static let backgroundColor: UIColor = ITCHColor.base80.color
+            static let backgroundColor: UIColor = ITCHColor.cellGray.color
             static let contentMode: UIView.ContentMode = .scaleAspectFill
             static let clipsToBounds: Bool = true
             static let size: CGFloat = 48
             static let cornerRadius: CGFloat = 24
-            static let verticalOffset: CGFloat = 8
         }
         
         enum AvatarLabel {
@@ -28,9 +27,10 @@ public final class ITCHUserRow: UIView {
             static let font: UIFont = ITCHFont.header5Medium.font
         }
         
-        enum Chevron {
+        enum RightImage {
             static let size: CGFloat = 24
-            static let image: UIImage = ITCHImage.chevronRight24.image
+            static let chevronImage: UIImage = ITCHImage.chevronRight24.image
+            static let deleteImage: UIImage = ITCHImage.trash24.image
         }
         
         enum TextStack {
@@ -51,12 +51,13 @@ public final class ITCHUserRow: UIView {
     private let nameLabel: UILabel = UILabel()
     private let aboutInfoLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
-    private let chevronImageView: UIImageView = UIImageView()
+    private let rightImageView: UIImageView = UIImageView()
+    private let avatarPlusImageView: UIImageView = UIImageView()
     
     // MARK: - Lifecycle
-    public init() {
+    public init(type: ITCHAccountRowType) {
         super.init(frame: .zero)
-        setUp()
+        setUp(with: type)
     }
     
     @available(*, unavailable)
@@ -65,22 +66,36 @@ public final class ITCHUserRow: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHUserModel) {
-        if let image = model.image {
-            avatarImageView.image = image
-        } else {
-            setUpAvatarLabel(with: model.name)
-        }
-        
+    public func configure(with model: ITCHAccountViewModel) {
+        avatarImageView.image = model.image
+        avatarLabel.text = makeInitials(from: model.name)
         nameLabel.text = model.name
         aboutInfoLabel.text = model.info
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(with type: ITCHAccountRowType) {
         setUpAvatarImageView()
-        setUpChevronImageView()
-        setUpTextStack()
+        
+        let image: UIImage = {
+            switch type {
+            case .account, .addAccount:
+                return Constant.RightImage.chevronImage
+            case .deleteAccount:
+                return Constant.RightImage.deleteImage
+            }
+        }()
+
+        setUpRightImageView(with: image)
+
+        switch type {
+        case .account, .deleteAccount:
+            setUpAvatarLabel()
+            setUpTextStack()
+        case .addAccount:
+            setUpAvatarPlusImageView()
+            attachTitle()
+        }
     }
     
     private func setUpAvatarImageView() {
@@ -91,13 +106,21 @@ public final class ITCHUserRow: UIView {
         
         addSubview(avatarImageView)
         avatarImageView.pinLeft(to: self)
-        avatarImageView.pinVertical(to: self, Constant.Avatar.verticalOffset)
+        avatarImageView.pinCenterY(to: self)
         avatarImageView.setWidth(Constant.Avatar.size)
         avatarImageView.setHeight(Constant.Avatar.size)
     }
     
-    private func setUpAvatarLabel(with name: String) {
-        avatarLabel.text = makeInitials(from: name)
+    private func setUpRightImageView(with image: UIImage) {
+        rightImageView.image = image
+        
+        addSubview(rightImageView)
+        rightImageView.pinCenterY(to: self)
+        rightImageView.pinRight(to: self)
+        rightImageView.setWidth(Constant.RightImage.size)
+    }
+    
+    private func setUpAvatarLabel() {
         avatarLabel.font = Constant.AvatarLabel.font
         avatarLabel.textColor = Constant.AvatarLabel.textColor
         
@@ -105,18 +128,13 @@ public final class ITCHUserRow: UIView {
         avatarLabel.pinCenter(to: avatarImageView)
     }
     
-    private func setUpChevronImageView() {
-        chevronImageView.image = Constant.Chevron.image
-        
-        addSubview(chevronImageView)
-        chevronImageView.pinCenterY(to: self)
-        chevronImageView.pinRight(to: self)
-        chevronImageView.setWidth(Constant.Chevron.size)
+    private func setUpNameLabel() {
+        nameLabel.textColor = Constant.TextStack.nameTextColor
+        nameLabel.font = Constant.TextStack.nameFont
     }
     
     private func setUpTextStack() {
-        nameLabel.textColor = Constant.TextStack.nameTextColor
-        nameLabel.font = Constant.TextStack.nameFont
+        setUpNameLabel()
         
         aboutInfoLabel.textColor = Constant.TextStack.aboutTextColor
         aboutInfoLabel.font = Constant.TextStack.aboutFont
@@ -131,7 +149,22 @@ public final class ITCHUserRow: UIView {
         addSubview(textStack)
         textStack.pinLeft(to: avatarImageView.trailingAnchor, Constant.TextStack.leadingOffset)
         textStack.pinCenterY(to: self)
-        textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
+        textStack.pinRight(to: rightImageView.leadingAnchor, Constant.TextStack.trailingOffset)
+    }
+    
+    private func setUpAvatarPlusImageView() {
+        avatarPlusImageView.image = ITCHImage.plus32.image
+        
+        avatarImageView.addSubview(avatarPlusImageView)
+        avatarPlusImageView.pinCenter(to: avatarImageView)
+    }
+    
+    private func attachTitle() {
+        setUpNameLabel()
+        
+        addSubview(nameLabel)
+        nameLabel.pinLeft(to: avatarImageView.trailingAnchor, Constant.TextStack.leadingOffset)
+        nameLabel.pinCenterY(to: self)
     }
     
     // MARK: - Private methods
