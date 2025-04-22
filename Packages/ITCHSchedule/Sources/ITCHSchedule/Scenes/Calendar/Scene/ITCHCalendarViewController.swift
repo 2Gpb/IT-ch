@@ -38,21 +38,26 @@ final class ITCHCalendarViewController: UIViewController {
         enum EmptyState {
             static let horizontalOffset: CGFloat = 16
             static let calendarTitle: String = "У вас пока нет расписания"
-            static let deadlineTitle: String = "У вас пока нет дедлайнов"
+            static let deadlinesTitle: String = "У вас пока нет дедлайнов"
             static let calendarSubtitle: String = "Оно появится, как только вы\nполучите доступ к курсу."
-            static let deadlineSubtitle: String = "Они станут доступны, как только\nв курсе появится задание."
+            static let deadlinesSubtitle: String = "Они станут доступны, как только\nв курсе появится задание."
+        }
+        
+        enum Deadlines {
+            static let topOffset: CGFloat = 28
         }
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHCalendarBusinessLogic
+    private let interactor: ITCHCalendarBusinessLogic & ITCHDeadlinesStorage
     
     // MARK: - UI Components
     private let segmentedControl: UISegmentedControl = UISegmentedControl(items: Constant.Segmented.items)
     private let emptyStateView: ITCHEmptyStateView = ITCHEmptyStateView()
+    private let deadlinesTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
-    init(interactor: ITCHCalendarBusinessLogic) {
+    init(interactor: ITCHCalendarBusinessLogic & ITCHDeadlinesStorage) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -72,6 +77,7 @@ final class ITCHCalendarViewController: UIViewController {
         setUpView()
         setUpSegmentedControl()
         setUpEmptyStateView()
+        setUpDeadlinesTable()
     }
     
     private func setUpView() {
@@ -99,16 +105,49 @@ final class ITCHCalendarViewController: UIViewController {
         emptyStateView.pinHorizontal(to: view, Constant.EmptyState.horizontalOffset)
     }
     
+    private func setUpDeadlinesTable() {
+        deadlinesTableView.delegate = self
+        deadlinesTableView.dataSource = interactor
+        deadlinesTableView.separatorStyle = .none
+        deadlinesTableView.backgroundColor = .clear
+        deadlinesTableView.isHidden = true
+        deadlinesTableView.register(ITCHDeadlineCell.self, forCellReuseIdentifier: ITCHDeadlineCell.reuseId)
+        
+        view.addSubview(deadlinesTableView)
+        deadlinesTableView.pinTop(to: segmentedControl.bottomAnchor, Constant.Deadlines.topOffset)
+        deadlinesTableView.pinHorizontal(to: view)
+        deadlinesTableView.pinBottom(to: view)
+    }
+    
     // MARK: - Actions
     @objc
     private func changeColor(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             view.backgroundColor = Constant.View.calendarBackgroundColor
-            emptyStateView.configure(title: Constant.EmptyState.calendarTitle, subtitle: Constant.EmptyState.calendarSubtitle)
+            deadlinesTableView.isHidden = true
+            emptyStateView.isHidden = false
+            emptyStateView.configure(
+                title: Constant.EmptyState.calendarTitle,
+                subtitle: Constant.EmptyState.calendarSubtitle
+            )
         default:
             view.backgroundColor = Constant.View.deadlineBackgroundColor
-            emptyStateView.configure(title: Constant.EmptyState.deadlineTitle, subtitle: Constant.EmptyState.deadlineSubtitle)
+            deadlinesTableView.isHidden = false
+            emptyStateView.isHidden = !interactor.deadlines.isEmpty
+            emptyStateView.configure(
+                title: Constant.EmptyState.deadlinesTitle,
+                subtitle: Constant.EmptyState.deadlinesSubtitle
+            )
         }
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension ITCHCalendarViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as? ITCHDeadlineCell
+        cell?.isCheck.toggle()
     }
 }

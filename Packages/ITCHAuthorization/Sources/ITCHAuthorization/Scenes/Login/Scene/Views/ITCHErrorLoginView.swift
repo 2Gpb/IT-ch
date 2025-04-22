@@ -9,6 +9,31 @@ import UIKit
 import ITCHUIComponents
 
 final class ITCHErrorLoginView: UIView {
+    // MARK: - Constants
+    private enum Constant {
+        enum Error {
+            static let message: String = "init(coder:) has not been implemented"
+        }
+        
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.tabBar.color
+            static let cornerRadius: CGFloat = 12
+            static let height: CGFloat = 56
+        }
+        
+        enum Image {
+            static let image: UIImage = ITCHImage.error24.image
+            static let leadingOffset: CGFloat = 16
+        }
+        
+        enum Label {
+            static let text: String = "Неверный логин или пароль"
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let font: UIFont = ITCHFont.bodyMMedium.font
+            static let leadingOffset: CGFloat = 12
+        }
+    }
+    
     // MARK: - UI Components
     private let errorImageView: UIImageView = UIImageView()
     private let errorLabel: UILabel = UILabel()
@@ -21,7 +46,7 @@ final class ITCHErrorLoginView: UIView {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constant.Error.message)
     }
     
     // MARK: - SetUp
@@ -32,26 +57,26 @@ final class ITCHErrorLoginView: UIView {
     }
     
     private func setUpView() {
-        backgroundColor = ITCHColor.tabBar.color
-        layer.cornerRadius = 12
-        setHeight(56)
+        backgroundColor = Constant.View.backgroundColor
+        layer.cornerRadius = Constant.View.cornerRadius
+        setHeight(Constant.View.height)
     }
     
     private func setUpErrorImageView() {
-        errorImageView.image = ITCHImage.error24.image
+        errorImageView.image = Constant.Image.image
         
         addSubview(errorImageView)
-        errorImageView.pinLeft(to: self, 16)
+        errorImageView.pinLeft(to: self, Constant.Image.leadingOffset)
         errorImageView.pinCenterY(to: self)
     }
     
     private func setUpErrorLabel() {
-        errorLabel.text = "Неверный логин или пароль"
-        errorLabel.textColor = ITCHColor.base0.color
-        errorLabel.font = ITCHFont.bodyMMedium.font
+        errorLabel.text = Constant.Label.text
+        errorLabel.textColor = Constant.Label.textColor
+        errorLabel.font = Constant.Label.font
         
         addSubview(errorLabel)
-        errorLabel.pinLeft(to: errorImageView.trailingAnchor, 12)
+        errorLabel.pinLeft(to: errorImageView.trailingAnchor, Constant.Label.leadingOffset)
         errorLabel.pinCenterY(to: self)
     }
 }

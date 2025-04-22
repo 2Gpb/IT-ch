@@ -135,9 +135,7 @@ final class ITCHLoginViewController: UIViewController {
     
     private func setUpView() {
         view.backgroundColor = Constant.View.backgroundColor
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
     
     private func setUpNavigationBar() {
@@ -296,9 +294,7 @@ final class ITCHLoginViewController: UIViewController {
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
               let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
 
-        let keyboardHeight = keyboardFrame.height
-        let safeAreaBottom = view.safeAreaInsets.bottom
-        let shift = keyboardHeight - safeAreaBottom + Constant.ErrorView.bottomOffset
+        let shift = keyboardFrame.height - view.safeAreaInsets.bottom + Constant.ErrorView.bottomOffset
 
         errorViewBottomConstraint?.constant = -shift
 
