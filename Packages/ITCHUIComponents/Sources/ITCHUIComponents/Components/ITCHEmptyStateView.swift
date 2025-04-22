@@ -48,6 +48,7 @@ public final class ITCHEmptyStateView: UIView {
     public func configure(title: String, subtitle: String) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
+        setHeight(93)
     }
     
     // MARK: - SetUp
