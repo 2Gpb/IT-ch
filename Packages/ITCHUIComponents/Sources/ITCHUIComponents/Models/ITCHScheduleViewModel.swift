@@ -1,11 +1,11 @@
 //
-//  ITCHScheduleModel.swift
+//  ITCHScheduleViewModel.swift
 //  ITCHUIComponents
 //
 //  Created by Peter on 15.04.2025.
 //
 
-public struct ITCHScheduleModel {
+public struct ITCHScheduleViewModel {
     public var courseName: String
     public var location: String
     public var timeInterval: String

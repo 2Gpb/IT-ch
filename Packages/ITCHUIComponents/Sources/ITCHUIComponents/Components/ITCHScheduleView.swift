@@ -1,5 +1,5 @@
 //
-//  ITCHScheduleCell.swift
+//  ITCHScheduleView.swift
 //  ITCHUIComponents
 //
 //  Created by Peter on 14.04.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHScheduleCell: UIView {
+public final class ITCHScheduleView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -63,7 +63,7 @@ public final class ITCHScheduleCell: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHScheduleModel) {
+    public func configure(with model: ITCHScheduleViewModel) {
         courseNameLabel.text = model.courseName
         locationLabel.text = model.location
         timeIntervalLabel.text = model.timeInterval

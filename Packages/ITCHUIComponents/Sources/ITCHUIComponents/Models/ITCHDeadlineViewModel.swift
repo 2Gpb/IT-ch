@@ -1,5 +1,5 @@
 //
-//  ITCHDeadlineModel.swift
+//  ITCHDeadlineViewModel.swift
 //  ITCHUIComponents
 //
 //  Created by Peter on 14.04.2025.

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ITCHCalendarBusinessLogic: UITableViewDataSource { }
+protocol ITCHCalendarBusinessLogic: UITableViewDataSource, UICollectionViewDataSource { }
 
 protocol ITCHCalendarPresentationLogic { }
 
@@ -16,4 +16,9 @@ protocol ITCHCalendarRouterLogic { }
 @MainActor
 protocol ITCHDeadlinesStorage {
     var deadlines: [ITCHDeadlineModel] { get }
+}
+
+@MainActor
+protocol ITCHScheduleStorage {
+    var scheduleSections: [ScheduleSection] { get }
 }

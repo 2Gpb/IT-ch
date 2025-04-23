@@ -45,19 +45,33 @@ final class ITCHCalendarViewController: UIViewController {
         
         enum Deadlines {
             static let topOffset: CGFloat = 28
+            static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let backgroundColor: UIColor = .clear
+        }
+        
+        enum Schedule {
+            static let topOffset: CGFloat = 28
+            static let cellHeight: CGFloat = 79
+            static let headerHeight: CGFloat = 33
+            static let lineSpacing: CGFloat = 0
+            static let sectionInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 20, right: 16)
         }
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHCalendarBusinessLogic & ITCHDeadlinesStorage
+    private let interactor: ITCHCalendarBusinessLogic & ITCHDeadlinesStorage & ITCHScheduleStorage
     
     // MARK: - UI Components
     private let segmentedControl: UISegmentedControl = UISegmentedControl(items: Constant.Segmented.items)
     private let emptyStateView: ITCHEmptyStateView = ITCHEmptyStateView()
     private let deadlinesTableView: UITableView = UITableView()
+    private let scheduleCollectionView: UICollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout()
+    )
     
     // MARK: - Lifecycle
-    init(interactor: ITCHCalendarBusinessLogic & ITCHDeadlinesStorage) {
+    init(interactor: ITCHCalendarBusinessLogic & ITCHDeadlinesStorage & ITCHScheduleStorage) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -77,6 +91,7 @@ final class ITCHCalendarViewController: UIViewController {
         setUpView()
         setUpSegmentedControl()
         setUpEmptyStateView()
+        setUpCalendarCollectionView()
         setUpDeadlinesTable()
     }
     
@@ -90,7 +105,7 @@ final class ITCHCalendarViewController: UIViewController {
         segmentedControl.selectedSegmentIndex = Constant.Segmented.selectedIndex
         segmentedControl.selectedSegmentTintColor = Constant.Segmented.selectedColor
         segmentedControl.backgroundColor = Constant.Segmented.backgroundColor
-        segmentedControl.addTarget(self, action: #selector(changeColor), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(changePage), for: .valueChanged)
         
         view.addSubview(segmentedControl)
         segmentedControl.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constant.Segmented.topOffset)
@@ -98,6 +113,7 @@ final class ITCHCalendarViewController: UIViewController {
     }
     
     private func setUpEmptyStateView() {
+        emptyStateView.isHidden = !interactor.scheduleSections.isEmpty
         emptyStateView.configure(title: Constant.EmptyState.calendarTitle, subtitle: Constant.EmptyState.calendarSubtitle)
         
         view.addSubview(emptyStateView)
@@ -108,8 +124,8 @@ final class ITCHCalendarViewController: UIViewController {
     private func setUpDeadlinesTable() {
         deadlinesTableView.delegate = self
         deadlinesTableView.dataSource = interactor
-        deadlinesTableView.separatorStyle = .none
-        deadlinesTableView.backgroundColor = .clear
+        deadlinesTableView.separatorStyle = Constant.Deadlines.separatorStyle
+        deadlinesTableView.backgroundColor = Constant.Deadlines.backgroundColor
         deadlinesTableView.isHidden = true
         deadlinesTableView.register(ITCHDeadlineCell.self, forCellReuseIdentifier: ITCHDeadlineCell.reuseId)
         
@@ -119,26 +135,47 @@ final class ITCHCalendarViewController: UIViewController {
         deadlinesTableView.pinBottom(to: view)
     }
     
+    private func setUpCalendarCollectionView() {
+        scheduleCollectionView.delegate = self
+        scheduleCollectionView.dataSource = interactor
+        scheduleCollectionView.register(
+            ITCHScheduleHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: ITCHScheduleHeaderView.reuseId
+        )
+        
+        scheduleCollectionView.register(ITCHScheduleCell.self, forCellWithReuseIdentifier: ITCHScheduleCell.reuseId)
+        
+        view.addSubview(scheduleCollectionView)
+        scheduleCollectionView.pinTop(to: segmentedControl.bottomAnchor, Constant.Schedule.topOffset)
+        scheduleCollectionView.pinHorizontal(to: view)
+        scheduleCollectionView.pinBottom(to: view)
+    }
+    
     // MARK: - Actions
     @objc
-    private func changeColor(sender: UISegmentedControl) {
+    private func changePage(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             view.backgroundColor = Constant.View.calendarBackgroundColor
             deadlinesTableView.isHidden = true
-            emptyStateView.isHidden = false
+            scheduleCollectionView.isHidden = false
+            emptyStateView.isHidden = !interactor.scheduleSections.isEmpty
             emptyStateView.configure(
                 title: Constant.EmptyState.calendarTitle,
                 subtitle: Constant.EmptyState.calendarSubtitle
             )
-        default:
+        case 1:
             view.backgroundColor = Constant.View.deadlineBackgroundColor
             deadlinesTableView.isHidden = false
+            scheduleCollectionView.isHidden = true
             emptyStateView.isHidden = !interactor.deadlines.isEmpty
             emptyStateView.configure(
                 title: Constant.EmptyState.deadlinesTitle,
                 subtitle: Constant.EmptyState.deadlinesSubtitle
             )
+        default:
+            return
         }
     }
 }
@@ -149,5 +186,46 @@ extension ITCHCalendarViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = tableView.cellForRow(at: indexPath) as? ITCHDeadlineCell
         cell?.isCheck.toggle()
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension ITCHCalendarViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(
+            width: collectionView.bounds.width,
+            height: Constant.Schedule.cellHeight
+        )
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        return CGSize(
+            width: collectionView.bounds.width,
+            height: Constant.Schedule.headerHeight
+        )
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        Constant.Schedule.lineSpacing
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        Constant.Schedule.sectionInsets
     }
 }
