@@ -8,6 +8,7 @@
 import UIKit
 import ITCHUIComponents
 import ITCHAuthorization
+import ITCHSchedule
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -23,7 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         window?.overrideUserInterfaceStyle = .dark
-        window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
+//        window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
+        window?.rootViewController = ITCHCalendarAssembly.build()
         window?.makeKeyAndVisible()
     }
 

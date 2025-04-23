@@ -16,6 +16,7 @@ public final class ITCHDeadlineView: UIView {
         
         enum CheckBox {
             static let size: CGFloat = 32
+            static let imageFill: UIImage = ITCHImage.checkboxFill32.image
             static let image: UIImage = ITCHImage.checkbox32.image
         }
         
@@ -68,7 +69,7 @@ public final class ITCHDeadlineView: UIView {
     // MARK: - Properties
     public var isCheck = false {
         didSet {
-            checkBoxImageView.image = isCheck ? ITCHImage.checkboxFill32.image : ITCHImage.checkbox32.image
+            checkBoxImageView.image = isCheck ? Constant.CheckBox.imageFill : Constant.CheckBox.image
         }
     }
     
@@ -84,9 +85,10 @@ public final class ITCHDeadlineView: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHDeadlineModel) {
+    public func configure(with model: ITCHDeadlineViewModel) {
         courseNameLabel.text = model.course
         titleLabel.text = model.text
+        checkBoxImageView.image = model.isChecked ? Constant.CheckBox.imageFill : Constant.CheckBox.image
         deadlineLabel.text = model.deadline.configure(to: Constant.Deadline.dateFormat)
         fireImageView.isHidden = !(model.deadline.timeIntervalSinceNow <= Constant.Fire.threeDaysInSeconds)
     }
@@ -101,8 +103,6 @@ public final class ITCHDeadlineView: UIView {
     }
     
     private func setUpCheckBoxImage() {
-        checkBoxImageView.image = Constant.CheckBox.image
-        
         addSubview(checkBoxImageView)
         checkBoxImageView.pinCenterY(to: self)
         checkBoxImageView.pinLeft(to: self)

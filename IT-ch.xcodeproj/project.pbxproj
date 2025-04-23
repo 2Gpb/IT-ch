@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = D0164B822DB128C700599BB3 /* ITCHAuthorization */; };
+		D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */ = {isa = PBXBuildFile; productRef = D076E6B62DB6DED30015204F /* ITCHSchedule */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */,
 				D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */,
 				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
 			);
@@ -114,6 +116,7 @@
 			packageProductDependencies = (
 				D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */,
 				D0164B822DB128C700599BB3 /* ITCHAuthorization */,
+				D076E6B62DB6DED30015204F /* ITCHSchedule */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -401,6 +404,10 @@
 		D0164B822DB128C700599BB3 /* ITCHAuthorization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ITCHAuthorization;
+		};
+		D076E6B62DB6DED30015204F /* ITCHSchedule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHSchedule;
 		};
 		D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
