@@ -9,6 +9,7 @@ import UIKit
 import ITCHUIComponents
 import ITCHAuthorization
 import ITCHSchedule
+import ITCHNotifications
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -25,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.overrideUserInterfaceStyle = .dark
 //        window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
-        window?.rootViewController = ITCHCalendarAssembly.build()
+        window?.rootViewController = ITCHNotificationsAssembly.build()
         window?.makeKeyAndVisible()
     }
 
