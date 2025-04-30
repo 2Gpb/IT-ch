@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUIComponents
 
 final class ITCHNotificationsViewController: UIViewController {
     // MARK: - Constants
@@ -19,6 +20,8 @@ final class ITCHNotificationsViewController: UIViewController {
     private let interactor: ITCHNotificationsBusinessLogic
     
     // MARK: - UI Components
+    private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let emptyStateView: ITCHEmptyStateView = ITCHEmptyStateView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHNotificationsBusinessLogic) {
@@ -38,6 +41,24 @@ final class ITCHNotificationsViewController: UIViewController {
     
     // MARK: - SetUp
     private func setUp() {
-        view.backgroundColor = .red
+        view.backgroundColor = ITCHColor.backgroundDark.color
+        setUpNavigationBar()
+        setUpEmptyStateView()
+    }
+    
+    private func setUpNavigationBar() {
+        navigationBar.configure(with: ITCHNavigationBarModel(title: "Уведомления"))
+        
+        view.addSubview(navigationBar)
+        navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
+        navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpEmptyStateView() {
+        emptyStateView.configure(title: "У вас пока нет уведомлений", subtitle: "Мы обязательно дадим  вам знать,\nкогда они станут доступны.")
+        
+        view.addSubview(emptyStateView)
+        emptyStateView.pinCenterY(to: view.centerYAnchor)
+        emptyStateView.pinHorizontal(to: view)
     }
 }
