@@ -8,7 +8,6 @@
 import UIKit
 
 public final class ITCHNotificationsAssembly {
-    @MainActor
     public static func build() -> UIViewController {
         let presenter = ITCHNotificationsPresenter()
         let interactor = ITCHNotificationsInteractor(presenter: presenter)

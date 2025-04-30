@@ -8,7 +8,6 @@
 import UIKit
 
 final class ITCHHelpQuestionsAssembly {
-    @MainActor
     static func build() -> UIViewController {
         let presenter = ITCHHelpQuestionsPresenter()
         let interactor = ITCHHelpQuestionsInteractor(presenter: presenter)
