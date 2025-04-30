@@ -148,14 +148,17 @@ final class ITCHNotificationsViewController: UIViewController {
 extension ITCHNotificationsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let previous = selectedIndex
-        selectedIndex = indexPath
+        selectedIndex = selectedIndex == indexPath ? nil : indexPath
         
-        var indexPathsToReload = [indexPath]
-        if let previous, previous != indexPath {
-            indexPathsToReload.append(previous)
+        if let previousCell = previous, previousCell != indexPath {
+            if let cell = collectionView.cellForItem(at: previousCell) as? ITCHNotificationsFilterCell {
+                cell.wasSelected.toggle()
+            }
         }
         
-        collectionView.reloadItems(at: indexPathsToReload)
+        if let cell = collectionView.cellForItem(at: indexPath) as? ITCHNotificationsFilterCell {
+            cell.wasSelected.toggle()
+        }
     }
 }
 
@@ -173,7 +176,6 @@ extension ITCHNotificationsViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.wasSelected = indexPath == selectedIndex
         cell.configure(with: Constant.Filters.titles[indexPath.row])
         
         return cell
