@@ -7,11 +7,15 @@
 
 import UIKit
 
-protocol ITCHNotificationsBusinessLogic: UITableViewDataSource, UICollectionViewDataSource { }
+protocol ITCHNotificationsBusinessLogic: UITableViewDataSource, UICollectionViewDataSource {
+    func loadNotificationText()
+}
 
 protocol ITCHNotificationsPresentationLogic { }
 
-protocol ITCHNotificationsRouterLogic { }
+protocol ITCHNotificationsRouterLogic {
+    func routeToNotificationText()
+}
 
 protocol ITCHNotificationsStorage {
     var notifications: [ITCHNotificationModel] { get set }

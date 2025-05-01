@@ -93,6 +93,7 @@ final class ITCHNotificationsViewController: UIViewController {
     }
     
     private func setUpView() {
+        navigationController?.isNavigationBarHidden = true
         view.backgroundColor = Constant.View.backgroundColor
     }
     
@@ -186,6 +187,6 @@ extension ITCHNotificationsViewController: UICollectionViewDelegate {
 // MARK: - UITableViewDelegate
 extension ITCHNotificationsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(1)
+        interactor.loadNotificationText()
     }
 }

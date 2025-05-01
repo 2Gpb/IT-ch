@@ -33,6 +33,11 @@ final class ITCHNotificationsInteractor: NSObject, ITCHNotificationsBusinessLogi
     init(presenter: ITCHNotificationsPresentationLogic & ITCHNotificationsRouterLogic) {
         self.presenter = presenter
     }
+    
+    // MARK: - Methods
+    func loadNotificationText() {
+        presenter.routeToNotificationText()
+    }
 }
 
 // MARK: - UICollectionViewDataSource
