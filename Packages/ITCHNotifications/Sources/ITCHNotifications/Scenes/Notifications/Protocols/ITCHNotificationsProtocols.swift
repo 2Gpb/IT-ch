@@ -5,8 +5,14 @@
 //  Created by Peter on 30.04.2025.
 //
 
-protocol ITCHNotificationsBusinessLogic { }
+import UIKit
+
+protocol ITCHNotificationsBusinessLogic: UITableViewDataSource, UICollectionViewDataSource { }
 
 protocol ITCHNotificationsPresentationLogic { }
 
 protocol ITCHNotificationsRouterLogic { }
+
+protocol ITCHNotificationsStorage {
+    var notifications: [ITCHNotificationModel] { get set }
+}

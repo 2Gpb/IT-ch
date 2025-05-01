@@ -23,8 +23,12 @@ final class ITCHNotificationsViewController: UIViewController {
             static let title: String = "Уведомления"
         }
         
+        enum EmptyState {
+            static let title: String = "У вас пока нет уведомлений"
+            static let subTitle: String = "Мы обязательно дадим  вам знать,\nкогда они станут доступны."
+        }
+        
         enum Filters {
-            static let titles: [String] = ["Непрочитанные", "Новые записи", "Новые задания"]
             static let backgroundColor: UIColor = .clear
             static let scrollEnable: Bool = false
             static let collectionHeight: CGFloat = 57
@@ -43,26 +47,28 @@ final class ITCHNotificationsViewController: UIViewController {
             )
         }
         
-        enum EmptyState {
-            static let title: String = "У вас пока нет уведомлений"
-            static let subTitle: String = "Мы обязательно дадим  вам знать,\nкогда они станут доступны."
+        enum Notifications {
+            static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let backgroundColor: UIColor = .clear
+            static let topOffset: CGFloat = 12
         }
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHNotificationsBusinessLogic
+    private let interactor: ITCHNotificationsBusinessLogic & ITCHNotificationsStorage
     private var selectedIndex: IndexPath?
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
     private let emptyStateView: ITCHEmptyStateView = ITCHEmptyStateView()
-    private var filtersCollectionView: UICollectionView = UICollectionView(
+    private let notificationTableView: UITableView = UITableView()
+    private let filtersCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
     
     // MARK: - Lifecycle
-    init(interactor: ITCHNotificationsBusinessLogic) {
+    init(interactor: ITCHNotificationsBusinessLogic & ITCHNotificationsStorage) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -83,6 +89,7 @@ final class ITCHNotificationsViewController: UIViewController {
         setUpNavigationBar()
         setUpEmptyStateView()
         setUpFiltersCollectionView()
+        setUpNotificationsTableView()
     }
     
     private func setUpView() {
@@ -103,19 +110,17 @@ final class ITCHNotificationsViewController: UIViewController {
             subtitle: Constant.EmptyState.subTitle
         )
         
+        emptyStateView.isHidden = !interactor.notifications.isEmpty
+        
         view.addSubview(emptyStateView)
         emptyStateView.pinCenterY(to: view.centerYAnchor)
         emptyStateView.pinHorizontal(to: view)
     }
     
     private func setUpFiltersCollectionView() {
-        filtersCollectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: setUpFiltersCollectionLayout()
-        )
-        
         filtersCollectionView.delegate = self
-        filtersCollectionView.dataSource = self
+        filtersCollectionView.dataSource = interactor
+        filtersCollectionView.collectionViewLayout = setUpFiltersCollectionLayout()
         filtersCollectionView.backgroundColor = Constant.Filters.backgroundColor
         filtersCollectionView.isScrollEnabled = Constant.Filters.scrollEnable
         filtersCollectionView.register(
@@ -142,6 +147,22 @@ final class ITCHNotificationsViewController: UIViewController {
 
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
+    private func setUpNotificationsTableView() {
+        notificationTableView.delegate = self
+        notificationTableView.dataSource = interactor
+        notificationTableView.separatorStyle = Constant.Notifications.separatorStyle
+        notificationTableView.backgroundColor = Constant.Notifications.backgroundColor
+        notificationTableView.register(
+            ITCHNotificationCell.self,
+            forCellReuseIdentifier: ITCHNotificationCell.reuseId
+        )
+        
+        view.addSubview(notificationTableView)
+        notificationTableView.pinTop(to: filtersCollectionView.bottomAnchor, Constant.Notifications.topOffset)
+        notificationTableView.pinHorizontal(to: view)
+        notificationTableView.pinBottom(to: view.bottomAnchor)
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -162,22 +183,9 @@ extension ITCHNotificationsViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-extension ITCHNotificationsViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        Constant.Filters.titles.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ITCHNotificationsFilterCell.reuseId,
-            for: indexPath
-        ) as? ITCHNotificationsFilterCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.configure(with: Constant.Filters.titles[indexPath.row])
-        
-        return cell
+// MARK: - UITableViewDelegate
+extension ITCHNotificationsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(1)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ITCHNotificationModel {
+public struct ITCHNotificationViewModel {
     public var courseName: String
     public var notification: String
     public var date: Date
