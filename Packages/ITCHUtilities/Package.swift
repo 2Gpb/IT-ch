@@ -4,25 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "ITCHCore",
+    name: "ITCHUtilities",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "ITCHCore",
-            targets: ["ITCHCore"]
+            name: "ITCHUtilities",
+            targets: ["ITCHUtilities"]
         )
-    ],
-    dependencies: [
-        .package(path: "Packages/ITCHUIComponents")
     ],
     targets: [
         .target(
-            name: "ITCHCore",
-            dependencies: [
-                "ITCHUIComponents"
-            ]
+            name: "ITCHUtilities"
         )
     ],
     swiftLanguageModes: [.v5]

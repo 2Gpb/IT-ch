@@ -15,11 +15,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0")
+        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0"),
+        .package(path: "Packages/ITCHUtilities")
     ],
     targets: [
         .target(
             name: "ITCHUIComponents",
+            dependencies: ["ITCHUtilities"],
             exclude: [
                 "../../swiftgen.yml"
             ],
