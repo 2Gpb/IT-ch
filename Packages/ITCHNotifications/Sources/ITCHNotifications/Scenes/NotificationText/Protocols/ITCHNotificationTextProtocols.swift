@@ -6,10 +6,13 @@
 //
 
 protocol ITCHNotificationTextBusinessLogic {
+    func loadStart()
     func loadDismiss()
 }
 
-protocol ITCHNotificationTextPresentationLogic { }
+protocol ITCHNotificationTextPresentationLogic {
+    func presentStart(with model: ITCHNotificationTextModel)
+}
 
 protocol ITCHNotificationTextRouterLogic {
     func popViewController()

@@ -12,7 +12,17 @@ final class ITCHNotificationsPresenter: ITCHNotificationsPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHNotificationsPresenter: ITCHNotificationsRouterLogic {
-    func routeToNotificationText() {
-        view?.navigationController?.pushViewController(ITCHNotificationTextAssembly.build(), animated: true)
+    func routeToNotificationText(with model: ITCHNotificationModel) {
+        view?.navigationController?.pushViewController(
+            ITCHNotificationTextAssembly.build(
+                with: ITCHNotificationTextModel(
+                    title: model.title,
+                    date: model.date,
+                    text: model.text,
+                    type: model.type
+                )
+            ),
+            animated: true
+        )
     }
 }

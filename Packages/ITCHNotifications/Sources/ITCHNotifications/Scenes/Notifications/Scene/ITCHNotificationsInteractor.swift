@@ -17,14 +17,30 @@ final class ITCHNotificationsInteractor: NSObject, ITCHNotificationsBusinessLogi
     var notifications: [ITCHNotificationModel] = [
         ITCHNotificationModel(
             courseName: "НИС “Основы iOS разработки на UIKit”",
-            notification: "Новое задание",
+            title: "Новое задание",
             date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
             isNewNotify: true
         ),
         ITCHNotificationModel(
             courseName: "НИС “Основы iOS разработки на UIKit”",
-            notification: "Новое задание",
+            title: "Новая запись",
             date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлена новоая запись!
+            
+            Посмотрите занятие еще раз, если необходимо освежить знания.
+            """,
+            type: .record,
             isNewNotify: true
         )
     ]
@@ -35,8 +51,8 @@ final class ITCHNotificationsInteractor: NSObject, ITCHNotificationsBusinessLogi
     }
     
     // MARK: - Methods
-    func loadNotificationText() {
-        presenter.routeToNotificationText()
+    func loadNotificationText(for index: Int) {
+        presenter.routeToNotificationText(with: notifications[index])
     }
 }
 
@@ -77,7 +93,7 @@ extension ITCHNotificationsInteractor: UITableViewDataSource {
         let model = notifications[indexPath.row]
         let viewModel = ITCHNotificationViewModel(
             courseName: model.courseName,
-            notification: model.notification,
+            notification: model.title,
             date: model.date,
             isNewNotify: model.isNewNotify
         )

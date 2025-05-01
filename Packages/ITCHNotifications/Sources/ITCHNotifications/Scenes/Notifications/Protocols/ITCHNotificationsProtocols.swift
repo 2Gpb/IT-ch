@@ -8,13 +8,13 @@
 import UIKit
 
 protocol ITCHNotificationsBusinessLogic: UITableViewDataSource, UICollectionViewDataSource {
-    func loadNotificationText()
+    func loadNotificationText(for index: Int)
 }
 
 protocol ITCHNotificationsPresentationLogic { }
 
 protocol ITCHNotificationsRouterLogic {
-    func routeToNotificationText()
+    func routeToNotificationText(with model: ITCHNotificationModel)
 }
 
 protocol ITCHNotificationsStorage {

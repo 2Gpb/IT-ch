@@ -50,7 +50,6 @@ final class ITCHNotificationsViewController: UIViewController {
         enum Notifications {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
-            static let topOffset: CGFloat = 12
         }
     }
     
@@ -160,7 +159,7 @@ final class ITCHNotificationsViewController: UIViewController {
         )
         
         view.addSubview(notificationTableView)
-        notificationTableView.pinTop(to: filtersCollectionView.bottomAnchor, Constant.Notifications.topOffset)
+        notificationTableView.pinTop(to: filtersCollectionView.bottomAnchor)
         notificationTableView.pinHorizontal(to: view)
         notificationTableView.pinBottom(to: view.bottomAnchor)
     }
@@ -187,6 +186,6 @@ extension ITCHNotificationsViewController: UICollectionViewDelegate {
 // MARK: - UITableViewDelegate
 extension ITCHNotificationsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        interactor.loadNotificationText()
+        interactor.loadNotificationText(for: indexPath.row)
     }
 }

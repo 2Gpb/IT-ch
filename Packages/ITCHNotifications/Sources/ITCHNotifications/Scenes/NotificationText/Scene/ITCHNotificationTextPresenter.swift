@@ -8,6 +8,11 @@
 final class ITCHNotificationTextPresenter: ITCHNotificationTextPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHNotificationTextViewController?
+    
+    // MARK: - Methods
+    func presentStart(with model: ITCHNotificationTextModel) {
+        view?.displayStart(with: model)
+    }
 }
 
 // MARK: - RouterLogic

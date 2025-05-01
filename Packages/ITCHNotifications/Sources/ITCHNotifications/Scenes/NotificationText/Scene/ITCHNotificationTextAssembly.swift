@@ -8,9 +8,9 @@
 import UIKit
 
 final class ITCHNotificationTextAssembly {
-    static func build() -> UIViewController {
+    static func build(with model: ITCHNotificationTextModel) -> UIViewController {
         let presenter = ITCHNotificationTextPresenter()
-        let interactor = ITCHNotificationTextInteractor(presenter: presenter)
+        let interactor = ITCHNotificationTextInteractor(presenter: presenter, model: model)
         let view = ITCHNotificationTextViewController(interactor: interactor)
         
         presenter.view = view
