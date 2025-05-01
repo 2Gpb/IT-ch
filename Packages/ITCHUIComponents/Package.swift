@@ -30,5 +30,6 @@ let package = Package(
                 .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
             ]
         )
-    ]
+    ],
+    swiftLanguageModes: [.v5]
 )

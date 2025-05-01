@@ -10,6 +10,7 @@
 		D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = D0164B822DB128C700599BB3 /* ITCHAuthorization */; };
 		D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */ = {isa = PBXBuildFile; productRef = D076E6B62DB6DED30015204F /* ITCHSchedule */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
+		D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = D0A426832DC24F1100DF283E /* ITCHNotifications */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 				D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */,
 				D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */,
 				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
+				D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +119,7 @@
 				D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */,
 				D0164B822DB128C700599BB3 /* ITCHAuthorization */,
 				D076E6B62DB6DED30015204F /* ITCHSchedule */,
+				D0A426832DC24F1100DF283E /* ITCHNotifications */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -412,6 +415,10 @@
 		D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ITCHUIComponents;
+		};
+		D0A426832DC24F1100DF283E /* ITCHNotifications */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHNotifications;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

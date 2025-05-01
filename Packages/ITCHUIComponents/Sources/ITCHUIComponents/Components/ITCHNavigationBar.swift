@@ -69,6 +69,11 @@ public final class ITCHNavigationBar: UIView {
         }
     }
     
+    public func configureRightButtonMenu(items: [UIAction]) {
+        rightButton.menu = UIMenu(children: items)
+        rightButton.showsMenuAsPrimaryAction = true
+    }
+    
     // MARK: - SetUp
     private func setUp(with type: ITCHNavigationBarType) {
         switch type {

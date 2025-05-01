@@ -13,12 +13,10 @@ protocol ITCHCalendarPresentationLogic { }
 
 protocol ITCHCalendarRouterLogic { }
 
-@MainActor
 protocol ITCHDeadlinesStorage {
     var deadlines: [ITCHDeadlineModel] { get }
 }
 
-@MainActor
 protocol ITCHScheduleStorage {
     var scheduleSections: [ScheduleSection] { get }
 }

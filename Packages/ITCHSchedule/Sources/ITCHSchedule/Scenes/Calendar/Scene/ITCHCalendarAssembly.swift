@@ -8,7 +8,6 @@
 import UIKit
 
 public final class ITCHCalendarAssembly {
-    @MainActor
     public static func build() -> UIViewController {
         let presenter = ITCHCalendarPresenter()
         let interactor = ITCHCalendarInteractor(presenter: presenter)

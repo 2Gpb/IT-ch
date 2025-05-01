@@ -4,14 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "ITCHAuthorization",
+    name: "ITCHNotifications",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "ITCHAuthorization",
-            targets: ["ITCHAuthorization"]
+            name: "ITCHNotifications",
+            targets: ["ITCHNotifications"]
         )
     ],
     dependencies: [
@@ -19,7 +19,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ITCHAuthorization",
+            name: "ITCHNotifications",
             dependencies: [
                 "ITCHUIComponents"
             ]

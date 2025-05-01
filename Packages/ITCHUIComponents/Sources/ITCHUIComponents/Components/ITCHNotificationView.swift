@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHNotificationCell: UIView {
+public final class ITCHNotificationView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -79,7 +79,7 @@ public final class ITCHNotificationCell: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHNotificationModel) {
+    public func configure(with model: ITCHNotificationViewModel) {
         courseNameLabel.text = model.courseName
         notificationTextLabel.text = model.notification
         dateLabel.text = model.date.configure(to: Constant.Date.dateFormat)

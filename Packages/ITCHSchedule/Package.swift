@@ -24,5 +24,6 @@ let package = Package(
                 "ITCHUIComponents"
             ]
         )
-    ]
+    ],
+    swiftLanguageModes: [.v5]
 )
