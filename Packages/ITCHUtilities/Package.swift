@@ -4,25 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "ITCHAuthorization",
+    name: "ITCHUtilities",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "ITCHAuthorization",
-            targets: ["ITCHAuthorization"]
+            name: "ITCHUtilities",
+            targets: ["ITCHUtilities"]
         )
-    ],
-    dependencies: [
-        .package(path: "Packages/ITCHCore")
     ],
     targets: [
         .target(
-            name: "ITCHAuthorization",
-            dependencies: [
-                "ITCHCore"
-            ]
+            name: "ITCHUtilities"
         )
     ],
     swiftLanguageModes: [.v5]
