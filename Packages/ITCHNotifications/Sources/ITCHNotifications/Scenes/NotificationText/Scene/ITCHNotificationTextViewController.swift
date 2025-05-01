@@ -59,6 +59,12 @@ final class ITCHNotificationTextViewController: UIViewController {
             static let numberOfLines: Int = 0
             static let offset: CGFloat = 12
         }
+        
+        enum Delete {
+            static let title: String = "Удалить"
+            static let image: UIImage = ITCHImage.trash20.image
+            static let attributes: UIMenu.Attributes = [.destructive]
+        }
     }
     
     // MARK: - Private fields
@@ -123,6 +129,8 @@ final class ITCHNotificationTextViewController: UIViewController {
             self?.interactor.loadDismiss()
         }
         
+        navigationBar.configureRightButtonMenu(items: [deleteAction()])
+        
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
@@ -183,5 +191,16 @@ final class ITCHNotificationTextViewController: UIViewController {
         
         textWrapView.addSubview(textLabel)
         textLabel.pin(to: textWrapView, Constant.Text.offset)
+    }
+    
+    // MARK: - Actions
+    func deleteAction() -> UIAction {
+        UIAction(
+            title: Constant.Delete.title,
+            image: Constant.Delete.image,
+            attributes: Constant.Delete.attributes
+        ) { [weak self] _ in
+            self?.interactor.loadDismiss()
+        }
     }
 }
