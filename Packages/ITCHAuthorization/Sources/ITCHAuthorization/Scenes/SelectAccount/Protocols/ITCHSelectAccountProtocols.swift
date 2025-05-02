@@ -8,7 +8,6 @@
 import UIKit
 import ITCHUIComponents
 
-@MainActor
 protocol ITCHSelectAccountBusinessLogic: UITableViewDataSource {
     func loadDismiss()
     func loadManageAccounts()
@@ -18,7 +17,6 @@ protocol ITCHSelectAccountBusinessLogic: UITableViewDataSource {
 
 protocol ITCHSelectAccountPresentationLogic { }
 
-@MainActor
 protocol ITCHSelectAccountRouterLogic {
     func popViewController()
     func routeToManageAccounts()
@@ -26,7 +24,6 @@ protocol ITCHSelectAccountRouterLogic {
     func routeToLogin()
 }
 
-@MainActor
 protocol ITCHAccountsStorage {
     var accounts: [ITCHAccountModel] { get }
 }

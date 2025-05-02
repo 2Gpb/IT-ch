@@ -8,7 +8,6 @@
 import UIKit
 
 final class ITCHLoginAssembly {
-    @MainActor
     static func build() -> UIViewController {
         let presenter = ITCHLoginPresenter()
         let interactor = ITCHLoginInteractor(presenter: presenter)

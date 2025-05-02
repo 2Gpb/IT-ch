@@ -8,7 +8,6 @@
 import UIKit
 
 final class ITCHSelectAccountAssembly {
-    @MainActor
     static func build() -> UIViewController {
         let presenter = ITCHSelectAccountPresenter()
         let interactor = ITCHSelectAccountInteractor(presenter: presenter)

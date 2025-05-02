@@ -10,6 +10,7 @@ import ITCHUIComponents
 import ITCHAuthorization
 import ITCHSchedule
 import ITCHNotifications
+import ITCHProfile
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -25,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         window?.overrideUserInterfaceStyle = .dark
-        window?.rootViewController = UINavigationController(rootViewController: ITCHNotificationsAssembly.build())
+        window?.rootViewController = UINavigationController(rootViewController: ITCHProfileAssembly.build())
         window?.makeKeyAndVisible()
     }
 

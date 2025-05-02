@@ -25,7 +25,7 @@ final class ITCHManageAccountsViewController: UIViewController {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
             static let isScrollEnabled: Bool = false
-            static let heightForRow: CGFloat = 58
+            static let heightForRow: CGFloat = 60
             static let topOffset: CGFloat = 28
             static let horizontalOffset: CGFloat = 16
             static let bottomOffset: CGFloat = 16

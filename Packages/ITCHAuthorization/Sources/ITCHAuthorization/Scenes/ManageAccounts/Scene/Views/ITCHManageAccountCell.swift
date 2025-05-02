@@ -16,7 +16,7 @@ final class ITCHManageAccountCell: UITableViewCell {
         }
         
         enum View {
-            static let selectionStyle: UITableViewCell.SelectionStyle = .none
+            static let selectionStyle: UITableViewCell.SelectionStyle = .default
             static let backgroundColor: UIColor = .clear
         }
         
@@ -25,7 +25,7 @@ final class ITCHManageAccountCell: UITableViewCell {
         }
         
         enum Row {
-            static let verticalOffset: CGFloat = 4
+            static let verticalOffset: CGFloat = 6
             static let horizontalOffset: CGFloat = 16
         }
     }

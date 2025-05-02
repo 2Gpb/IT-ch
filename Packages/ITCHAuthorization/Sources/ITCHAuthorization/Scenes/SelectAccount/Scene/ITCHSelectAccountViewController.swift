@@ -34,7 +34,7 @@ final class ITCHSelectAccountViewController: UIViewController {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
             static let isScrollEnabled: Bool = false
-            static let heightForRow: CGFloat = 58
+            static let heightForRow: CGFloat = 60
         }
         
         enum ManageAccountsButton {
