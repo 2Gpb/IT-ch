@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         window?.overrideUserInterfaceStyle = .dark
-        window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
+        window?.rootViewController = UINavigationController(rootViewController: ITCHNotificationsAssembly.build())
         window?.makeKeyAndVisible()
     }
 
