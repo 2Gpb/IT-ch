@@ -28,8 +28,8 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
         )
     ]
     
-    var scheduleSections: [ScheduleSection] = [
-        ScheduleSection(
+    var scheduleSections: [ITCHScheduleSection] = [
+        ITCHScheduleSection(
             date: Date(),
             items: [
                 ITCHScheduleModel(
@@ -39,7 +39,7 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
                 )
             ]
         ),
-        ScheduleSection(
+        ITCHScheduleSection(
             date: Date(),
             items: [
                 ITCHScheduleModel(
@@ -54,7 +54,7 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
                 )
             ]
         ),
-        ScheduleSection(
+        ITCHScheduleSection(
             date: Date(),
             items: [
                 ITCHScheduleModel(

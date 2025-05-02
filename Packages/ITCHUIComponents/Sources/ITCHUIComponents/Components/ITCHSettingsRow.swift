@@ -34,7 +34,7 @@ public final class ITCHSettingsRow: UIView {
         
         enum TextStack {
             static let titleTextColor: UIColor = ITCHColor.base5.color
-            static let titleTextDestructiveColor: UIColor = ITCHColor.base5.color
+            static let titleTextDestructiveColor: UIColor = ITCHColor.red50.color
             static let titleFont: UIFont = ITCHFont.bodyMMedium.font
             static let subtitleTextColor: UIColor = ITCHColor.base50.color
             static let subtitleFont: UIFont = ITCHFont.captionRegular.font
@@ -53,6 +53,9 @@ public final class ITCHSettingsRow: UIView {
     private let chevronImageView: UIImageView = UIImageView()
     private let toggleSwitch: UISwitch = UISwitch()
     
+    // MARK: - Properties
+    public var switchAction: ((Bool) -> Void)?
+    
     // MARK: - Lifecycle
     public init() {
         super.init(frame: .zero)
@@ -67,8 +70,8 @@ public final class ITCHSettingsRow: UIView {
     // MARK: - Methods
     public func configure(with model: ITCHSettingsRowViewModel) {
         leftImageView.image = model.leftImage
-        titleLabel.text = model.titleText
-        subtitleLabel.text = model.subtitleText
+        titleLabel.text = model.title
+        subtitleLabel.text = model.subtitle
         
         switch model.type {
         case .standard:
@@ -113,6 +116,7 @@ public final class ITCHSettingsRow: UIView {
     private func setUpToggleSwitch() {
         toggleSwitch.isHidden = true
         toggleSwitch.transform = Constant.Toggle.transform
+        toggleSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         
         addSubview(toggleSwitch)
         toggleSwitch.pinCenterY(to: self)
@@ -135,5 +139,11 @@ public final class ITCHSettingsRow: UIView {
         addSubview(textStack)
         textStack.pinLeft(to: leftImageView.trailingAnchor, Constant.TextStack.leadingOffset)
         textStack.pinVertical(to: self, Constant.TextStack.verticalOffset)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func switchValueChanged() {
+        switchAction?(toggleSwitch.isOn)
     }
 }

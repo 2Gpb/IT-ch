@@ -8,9 +8,15 @@
 final class ITCHProfileInteractor: ITCHProfileBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHProfilePresentationLogic & ITCHProfileRouterLogic
+    private var account: ITCHAccountModel = ITCHAccountModel(name: "Тюхменев Петр Вячеславович", info: "Студент")
     
     // MARK: - Lifecycle
     init(presenter: ITCHProfilePresentationLogic & ITCHProfileRouterLogic) {
         self.presenter = presenter
+    }
+    
+    // MARK: - Methods
+    func loadStart() {
+        presenter.presentStart(with: account)
     }
 }

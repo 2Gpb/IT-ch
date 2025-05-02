@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScheduleSection {
+struct ITCHScheduleSection {
     let date: Date
     let items: [ITCHScheduleModel]
 }

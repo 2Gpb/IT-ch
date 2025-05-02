@@ -8,6 +8,11 @@
 final class ITCHProfilePresenter: ITCHProfilePresentationLogic {
     // MARK: - Variables
     weak var view: ITCHProfileViewController?
+    
+    // MARK: - Methods
+    func presentStart(with model: ITCHAccountModel) {
+        view?.dispayStart(with: model)
+    }
 }
 
 // MARK: - RouterLogic
