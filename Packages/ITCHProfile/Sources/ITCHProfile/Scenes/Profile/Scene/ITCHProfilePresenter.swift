@@ -21,7 +21,9 @@ extension ITCHProfilePresenter: ITCHProfileRouterLogic {
         view?.navigationController?.pushViewController(ITCHAppearanceAssembly.build(), animated: true)
     }
     
-    func routeToLanguage() { }
+    func routeToLanguage() {
+        view?.navigationController?.pushViewController(ITCHLanguageAssembly.build(), animated: true)
+    }
     
     func routeToAbout() { }
     
