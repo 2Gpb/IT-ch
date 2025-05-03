@@ -141,7 +141,7 @@ extension ITCHProfileViewController: UITableViewDelegate {
         case .language:
             interactor.loadLanguage()
         case .about:
-            interactor.loadAbout()
+            interactor.loadAboutApp()
         case .help:
             interactor.loadHelp()
         case .exit:

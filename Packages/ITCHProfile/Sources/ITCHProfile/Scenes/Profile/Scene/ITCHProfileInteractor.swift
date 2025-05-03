@@ -28,8 +28,8 @@ final class ITCHProfileInteractor: ITCHProfileBusinessLogic {
         presenter.routeToLanguage()
     }
     
-    func loadAbout() {
-        presenter.routeToAbout()
+    func loadAboutApp() {
+        presenter.routeToAboutApp()
     }
     
     func loadHelp() {
