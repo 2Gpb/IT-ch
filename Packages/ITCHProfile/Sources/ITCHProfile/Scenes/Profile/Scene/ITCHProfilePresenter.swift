@@ -16,4 +16,16 @@ final class ITCHProfilePresenter: ITCHProfilePresentationLogic {
 }
 
 // MARK: - RouterLogic
-extension ITCHProfilePresenter: ITCHProfileRouterLogic { }
+extension ITCHProfilePresenter: ITCHProfileRouterLogic {
+    func routeToAppearance() {
+        view?.navigationController?.pushViewController(ITCHAppearanceAssembly.build(), animated: true)
+    }
+    
+    func routeToLanguage() { }
+    
+    func routeToAbout() { }
+    
+    func routeToHelp() { }
+    
+    func routeToExit() { }
+}

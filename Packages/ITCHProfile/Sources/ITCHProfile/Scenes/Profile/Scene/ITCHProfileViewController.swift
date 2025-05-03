@@ -129,7 +129,22 @@ final class ITCHProfileViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension ITCHProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("----")
+        let model = settingsSections[indexPath.section].settings[indexPath.row]
+        
+        guard let action = model.action else { return }
+        
+        switch action {
+        case .appearance:
+            interactor.loadAppearance()
+        case .language:
+            interactor.loadLanguage()
+        case .about:
+            interactor.loadAbout()
+        case .help:
+            interactor.loadHelp()
+        case .exit:
+            interactor.loadExit()
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

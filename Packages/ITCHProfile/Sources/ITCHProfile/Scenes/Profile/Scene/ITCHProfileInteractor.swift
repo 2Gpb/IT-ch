@@ -19,4 +19,24 @@ final class ITCHProfileInteractor: ITCHProfileBusinessLogic {
     func loadStart() {
         presenter.presentStart(with: account)
     }
+    
+    func loadAppearance() {
+        presenter.routeToAppearance()
+    }
+    
+    func loadLanguage() {
+        presenter.routeToLanguage()
+    }
+    
+    func loadAbout() {
+        presenter.routeToAbout()
+    }
+    
+    func loadHelp() {
+        presenter.routeToHelp()
+    }
+    
+    func loadExit() {
+        presenter.routeToExit()
+    }
 }

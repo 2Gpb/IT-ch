@@ -13,4 +13,13 @@ struct ITCHSettingsModel {
     var title: String
     var subtitle: String
     var type: ITCHSettingsRowType
+    let action: Action?
+
+    enum Action {
+        case appearance
+        case language
+        case about
+        case help
+        case exit
+    }
 }

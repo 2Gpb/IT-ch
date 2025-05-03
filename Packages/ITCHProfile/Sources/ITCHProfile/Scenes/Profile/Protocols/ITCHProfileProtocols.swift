@@ -7,10 +7,21 @@
 
 protocol ITCHProfileBusinessLogic {
     func loadStart()
+    func loadAppearance()
+    func loadLanguage()
+    func loadAbout()
+    func loadHelp()
+    func loadExit()
 }
 
 protocol ITCHProfilePresentationLogic {
     func presentStart(with model: ITCHAccountModel)
 }
 
-protocol ITCHProfileRouterLogic { }
+protocol ITCHProfileRouterLogic {
+    func routeToAppearance()
+    func routeToLanguage()
+    func routeToAbout()
+    func routeToHelp()
+    func routeToExit()
+}
