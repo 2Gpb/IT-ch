@@ -32,6 +32,7 @@ final class ITCHProfileViewController: UIViewController {
             static let backgroundColor: UIColor = .clear
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let showsVerticalScrollIndicator: Bool = false
+            static let isScrollEnabled: Bool = false
             static let horizontalOffset: CGFloat = 16
             static let headerHeight: CGFloat = 52
             static let footerHeight: CGFloat = 16
@@ -117,6 +118,7 @@ final class ITCHProfileViewController: UIViewController {
         settingsTableView.backgroundColor = Constant.SettingsTable.backgroundColor
         settingsTableView.separatorStyle = Constant.SettingsTable.separatorStyle
         settingsTableView.showsVerticalScrollIndicator = Constant.SettingsTable.showsVerticalScrollIndicator
+        settingsTableView.isScrollEnabled = Constant.SettingsTable.isScrollEnabled
         settingsTableView.register(ITCHSettingsCell.self, forCellReuseIdentifier: ITCHSettingsCell.reuseId)
         
         view.addSubview(settingsTableView)

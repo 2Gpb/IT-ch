@@ -45,8 +45,8 @@ public final class ITCHClassRecordCell: UIView {
     // MARK: - UI Components
     private let dateLabel: UILabel = UILabel()
     private let separatorView: UIView = UIView()
-    private let navigationRow: ITCHNavigationRow = ITCHNavigationRow()
-    private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
+    private let navigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
+    private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
     // MARK: - Properties
     public var openRecordAction: (() -> Void)? {

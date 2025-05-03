@@ -30,12 +30,19 @@ public final class ITCHNavigationRow: UIView {
             static let dimension: CGFloat = 18
             static let verticalOffset: CGFloat = 12
         }
+        
+        enum Checkmark {
+            static let image: UIImage? = ITCHImage.tick16.image
+            static let dimension: CGFloat = 18
+            static let verticalOffset: CGFloat = 12
+        }
     }
     
     // MARK: - UI Components
     private let leftImageView: UIImageView = UIImageView()
     private let titleLabel: UILabel = UILabel()
     private let chevronImageView: UIImageView = UIImageView()
+    private let checkmarkImageView: UIImageView = UIImageView()
     
     // MARK: - Private variables
     private var titleLabelLeadingToLeftImage: NSLayoutConstraint?
@@ -43,11 +50,16 @@ public final class ITCHNavigationRow: UIView {
     
     // MARK: - Properties
     public var action: (() -> Void)?
+    public var isCheck = false {
+        didSet {
+            checkmarkImageView.isHidden = !isCheck
+        }
+    }
     
     // MARK: - Lifecycle
-    public init() {
+    public init(type: ITCHNavigationRowType) {
         super.init(frame: .zero)
-        setUp()
+        setUp(with: type)
     }
     
     @available(*, unavailable)
@@ -68,11 +80,19 @@ public final class ITCHNavigationRow: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(with type: ITCHNavigationRowType) {
         setUpLeftImageView()
         setUpTitleLabel()
         setUpChevronImageView()
-        setUpGesture()
+        setUpCheckmarkImageView()
+//        setUpGesture()
+        
+        switch type {
+        case .checkmark:
+            chevronImageView.isHidden = true
+        case .chevron:
+            checkmarkImageView.isHidden = true
+        }
     }
     
     private func setUpLeftImageView() {
@@ -114,8 +134,14 @@ public final class ITCHNavigationRow: UIView {
         chevronImageView.setWidth(Constant.Chevron.dimension)
     }
     
-    private func setUpGesture() {
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewAction)))
+    private func setUpCheckmarkImageView() {
+        checkmarkImageView.image = Constant.Checkmark.image
+        
+        addSubview(checkmarkImageView)
+        checkmarkImageView.pinRight(to: self)
+        checkmarkImageView.pinVertical(to: self, Constant.Checkmark.verticalOffset)
+        checkmarkImageView.setHeight(Constant.Checkmark.dimension)
+        checkmarkImageView.setWidth(Constant.Checkmark.dimension)
     }
     
     // MARK: - Actions

@@ -1,14 +1,14 @@
 //
-//  ITCHSettingsHeaderView.swift
+//  ITCHThemeHeaderView.swift
 //  ITCHProfile
 //
-//  Created by Peter on 02.05.2025.
+//  Created by Peter on 03.05.2025.
 //
 
 import UIKit
 import ITCHUIComponents
 
-final class ITCHSettingsHeaderView: UIView {
+final class ITCHThemeHeaderView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -16,16 +16,13 @@ final class ITCHSettingsHeaderView: UIView {
         }
         
         enum View {
-            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
-            static let cornerRadius: CGFloat = 12
-            static let maskedCorners: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            static let backgroundColor: UIColor = .clear
         }
 
         enum Label {
-            static let font: UIFont = ITCHFont.header5Medium.font
-            static let textColor: UIColor = ITCHColor.base5.color
+            static let font: UIFont = ITCHFont.bodyMMedium.font
+            static let textColor: UIColor = ITCHColor.base50.color
             static let horizontalOffset: CGFloat = 16
-            static let topOffset: CGFloat = 16
         }
     }
 
@@ -46,8 +43,6 @@ final class ITCHSettingsHeaderView: UIView {
     // MARK: - SetUp
     private func setUp(title: String) {
         backgroundColor = Constant.View.backgroundColor
-        layer.cornerRadius = Constant.View.cornerRadius
-        layer.maskedCorners = Constant.View.maskedCorners
         setUpTitleLabel(with: title)
     }
     
@@ -58,6 +53,6 @@ final class ITCHSettingsHeaderView: UIView {
         
         addSubview(titleLabel)
         titleLabel.pinHorizontal(to: self, Constant.Label.horizontalOffset)
-        titleLabel.pinTop(to: self, Constant.Label.topOffset)
+        titleLabel.pinTop(to: self)
     }
 }
