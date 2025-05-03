@@ -7,9 +7,10 @@
 
 import UIKit
 
-protocol ITCHAppearanceBusinessLogic: UITableViewDataSource {
+protocol ITCHAppearanceBusinessLogic: UITableViewDataSource, UICollectionViewDataSource {
     func loadDismiss()
     func loadChangeTheme(with index: Int)
+    func loadChangeIcon(with index: Int)
 }
 
 protocol ITCHAppearancePresentationLogic { }
@@ -20,4 +21,8 @@ protocol ITCHAppearanceRouterLogic {
 
 protocol ITCHThemeStorage: AnyObject {
     var currentThemeIndex: IndexPath { get set }
+}
+
+protocol ITCHIconStorage: AnyObject {
+    var currentIconIndex: IndexPath { get set }
 }
