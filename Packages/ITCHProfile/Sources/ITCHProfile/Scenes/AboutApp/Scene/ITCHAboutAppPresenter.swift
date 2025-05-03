@@ -16,9 +16,29 @@ extension ITCHAboutAppPresenter: ITCHAboutAppRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToFAQ() { }
+    func routeToFAQ() {
+        view?.navigationController?.pushViewController(
+            ITCHInfoAssembly.build(
+                with: ITCHInfoModel(
+                    title: ITCHFAQModel.title,
+                    body: ITCHFAQModel.text
+                )
+            ),
+            animated: true
+        )
+    }
     
-    func routeToPrivacyPolicy() { }
+    func routeToPrivacyPolicy() {
+        view?.navigationController?.pushViewController(
+            ITCHInfoAssembly.build(
+                with: ITCHInfoModel(
+                    title: ITCHPrivacyModel.title,
+                    body: ITCHPrivacyModel.text
+                )
+            ),
+            animated: true
+        )
+    }
     
     func routeToEvaluateApp() { }
 }
