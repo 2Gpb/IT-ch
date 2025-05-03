@@ -5,7 +5,6 @@
 //  Created by Peter on 19.04.2025.
 //
 
-@MainActor
 protocol ITCHLoginBusinessLogic {
     func loadDismiss()
     func loadPasswordRecovery()
@@ -13,7 +12,6 @@ protocol ITCHLoginBusinessLogic {
 
 protocol ITCHLoginPresentationLogic { }
 
-@MainActor
 protocol ITCHLoginRouterLogic {
     func popViewController()
     func routeToPasswordRecovery()

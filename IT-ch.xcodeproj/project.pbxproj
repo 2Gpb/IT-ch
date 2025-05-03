@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */ = {isa = PBXBuildFile; productRef = D0164B822DB128C700599BB3 /* ITCHAuthorization */; };
 		D051A2D12DC3C927003BE6F6 /* ITCHUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = D051A2D02DC3C927003BE6F6 /* ITCHUtilities */; };
+		D051A3812DC4CCBC003BE6F6 /* ITCHCore in Frameworks */ = {isa = PBXBuildFile; productRef = D051A3802DC4CCBC003BE6F6 /* ITCHCore */; };
+		D051A3832DC4CCC9003BE6F6 /* ITCHProfile in Frameworks */ = {isa = PBXBuildFile; productRef = D051A3822DC4CCC9003BE6F6 /* ITCHProfile */; };
 		D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */ = {isa = PBXBuildFile; productRef = D076E6B62DB6DED30015204F /* ITCHSchedule */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
 		D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = D0A426832DC24F1100DF283E /* ITCHNotifications */; };
@@ -61,6 +63,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */,
+				D051A3832DC4CCC9003BE6F6 /* ITCHProfile in Frameworks */,
+				D051A3812DC4CCBC003BE6F6 /* ITCHCore in Frameworks */,
 				D0164B832DB128C700599BB3 /* ITCHAuthorization in Frameworks */,
 				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
 				D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */,
@@ -123,6 +127,8 @@
 				D076E6B62DB6DED30015204F /* ITCHSchedule */,
 				D0A426832DC24F1100DF283E /* ITCHNotifications */,
 				D051A2D02DC3C927003BE6F6 /* ITCHUtilities */,
+				D051A3802DC4CCBC003BE6F6 /* ITCHCore */,
+				D051A3822DC4CCC9003BE6F6 /* ITCHProfile */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -422,6 +428,14 @@
 		D051A2D02DC3C927003BE6F6 /* ITCHUtilities */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ITCHUtilities;
+		};
+		D051A3802DC4CCBC003BE6F6 /* ITCHCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHCore;
+		};
+		D051A3822DC4CCC9003BE6F6 /* ITCHProfile */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHProfile;
 		};
 		D076E6B62DB6DED30015204F /* ITCHSchedule */ = {
 			isa = XCSwiftPackageProductDependency;

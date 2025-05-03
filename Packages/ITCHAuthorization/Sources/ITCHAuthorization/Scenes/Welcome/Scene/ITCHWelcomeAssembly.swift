@@ -8,7 +8,6 @@
 import UIKit
 
 public final class ITCHWelcomeAssembly {
-    @MainActor
     public static func build() -> UIViewController {
         let presenter = ITCHWelcomePresenter()
         let interactor = ITCHWelcomeInteractor(presenter: presenter)

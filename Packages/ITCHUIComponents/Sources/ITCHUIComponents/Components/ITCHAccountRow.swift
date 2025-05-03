@@ -14,6 +14,10 @@ public final class ITCHAccountRow: UIView {
             static let message: String = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let height: CGFloat = 48
+        }
+        
         enum Avatar {
             static let backgroundColor: UIColor = ITCHColor.cellGray.color
             static let contentMode: UIView.ContentMode = .scaleAspectFill
@@ -76,25 +80,28 @@ public final class ITCHAccountRow: UIView {
     // MARK: - SetUp
     private func setUp(with type: ITCHAccountRowType) {
         setUpAvatarImageView()
+        setHeight(Constant.View.height)
         
-        let image: UIImage = {
+        let image: UIImage? = {
             switch type {
             case .account, .addAccount:
                 return Constant.RightImage.chevronImage
             case .deleteAccount:
                 return Constant.RightImage.deleteImage
+            case .defaultAccount:
+                return nil
             }
         }()
 
         setUpRightImageView(with: image)
 
         switch type {
-        case .account, .deleteAccount:
-            setUpAvatarLabel()
-            setUpTextStack()
         case .addAccount:
             setUpAvatarPlusImageView()
             attachTitle()
+        default:
+            setUpAvatarLabel()
+            setUpTextStack()
         }
     }
     
@@ -111,7 +118,7 @@ public final class ITCHAccountRow: UIView {
         avatarImageView.setHeight(Constant.Avatar.size)
     }
     
-    private func setUpRightImageView(with image: UIImage) {
+    private func setUpRightImageView(with image: UIImage?) {
         rightImageView.image = image
         
         addSubview(rightImageView)

@@ -14,6 +14,10 @@ public final class ITCHSettingsRow: UIView {
             static let message: String = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let height: CGFloat = 40
+        }
+        
         enum LeftImage {
             static let size: CGFloat = 32
         }
@@ -23,8 +27,14 @@ public final class ITCHSettingsRow: UIView {
             static let image: UIImage = ITCHImage.chevronRight16.image
         }
         
+        enum Toggle {
+            static let transform: CGAffineTransform = CGAffineTransform(scaleX: 0.78, y: 0.77)
+            static let trailingOffsetMultiplier: CGFloat = 0.11
+        }
+        
         enum TextStack {
             static let titleTextColor: UIColor = ITCHColor.base5.color
+            static let titleTextDestructiveColor: UIColor = ITCHColor.red50.color
             static let titleFont: UIFont = ITCHFont.bodyMMedium.font
             static let subtitleTextColor: UIColor = ITCHColor.base50.color
             static let subtitleFont: UIFont = ITCHFont.captionRegular.font
@@ -41,6 +51,10 @@ public final class ITCHSettingsRow: UIView {
     private let subtitleLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
     private let chevronImageView: UIImageView = UIImageView()
+    private let toggleSwitch: UISwitch = UISwitch()
+    
+    // MARK: - Properties
+    public var switchAction: ((Bool) -> Void)?
     
     // MARK: - Lifecycle
     public init() {
@@ -54,16 +68,32 @@ public final class ITCHSettingsRow: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHSettingsModel) {
+    public func configure(with model: ITCHSettingsRowViewModel) {
         leftImageView.image = model.leftImage
-        titleLabel.text = model.titleText
-        subtitleLabel.text = model.subtitleText
+        titleLabel.text = model.title
+        subtitleLabel.text = model.subtitle
+        
+        switch model.type {
+        case .standard:
+            textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
+        case .destructive:
+            titleLabel.textColor = Constant.TextStack.titleTextDestructiveColor
+            textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
+        case .toggle(isOn: let isOn):
+            toggleSwitch.isOn = isOn
+            toggleSwitch.isHidden = false
+            chevronImageView.isHidden = true
+            textStack.pinRight(to: toggleSwitch.leadingAnchor, Constant.TextStack.trailingOffset)
+        }
     }
     
     // MARK: - SetUp
     private func setUp() {
+        setHeight(Constant.View.height)
+        
         setUpLeftImageView()
         setUpChevronImageView()
+        setUpToggleSwitch()
         setUpTextStack()
     }
     
@@ -83,6 +113,16 @@ public final class ITCHSettingsRow: UIView {
         chevronImageView.setWidth(Constant.Chevron.size)
     }
     
+    private func setUpToggleSwitch() {
+        toggleSwitch.isHidden = true
+        toggleSwitch.transform = Constant.Toggle.transform
+        toggleSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
+        
+        addSubview(toggleSwitch)
+        toggleSwitch.pinCenterY(to: self)
+        toggleSwitch.pinRight(to: self, -(toggleSwitch.frame.width * Constant.Toggle.trailingOffsetMultiplier))
+    }
+    
     private func setUpTextStack() {
         titleLabel.textColor = Constant.TextStack.titleTextColor
         titleLabel.font = Constant.TextStack.titleFont
@@ -99,6 +139,11 @@ public final class ITCHSettingsRow: UIView {
         addSubview(textStack)
         textStack.pinLeft(to: leftImageView.trailingAnchor, Constant.TextStack.leadingOffset)
         textStack.pinVertical(to: self, Constant.TextStack.verticalOffset)
-        textStack.pinRight(to: chevronImageView.leadingAnchor, Constant.TextStack.trailingOffset)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func switchValueChanged() {
+        switchAction?(toggleSwitch.isOn)
     }
 }

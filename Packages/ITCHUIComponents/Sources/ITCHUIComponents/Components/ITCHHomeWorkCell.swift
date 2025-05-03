@@ -61,8 +61,8 @@ public final class ITCHHomeWorkCell: UIView {
     private let dateLabel: UILabel = UILabel()
     private let dateImageView: UIImageView = UIImageView()
     private let separatorView: UIView = UIView()
-    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow()
-    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow()
+    private var navigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
+    private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
     // MARK: - Properties
     public var solutionsAction: (() -> Void)? {

@@ -118,6 +118,7 @@ final class ITCHNotificationsViewController: UIViewController {
     }
     
     private func setUpFiltersCollectionView() {
+        filtersCollectionView.isHidden = interactor.notifications.isEmpty
         filtersCollectionView.delegate = self
         filtersCollectionView.dataSource = interactor
         filtersCollectionView.collectionViewLayout = setUpFiltersCollectionLayout()

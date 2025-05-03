@@ -18,5 +18,5 @@ protocol ITCHDeadlinesStorage {
 }
 
 protocol ITCHScheduleStorage {
-    var scheduleSections: [ScheduleSection] { get }
+    var scheduleSections: [ITCHScheduleSection] { get }
 }
