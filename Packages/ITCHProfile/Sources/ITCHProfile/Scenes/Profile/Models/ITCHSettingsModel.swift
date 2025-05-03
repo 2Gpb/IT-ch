@@ -19,7 +19,7 @@ struct ITCHSettingsModel {
         case appearance
         case language
         case about
-        case help
+        case contacts
         case exit
     }
 }

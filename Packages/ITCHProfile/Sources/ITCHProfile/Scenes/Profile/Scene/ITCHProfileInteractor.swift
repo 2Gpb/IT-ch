@@ -32,11 +32,9 @@ final class ITCHProfileInteractor: ITCHProfileBusinessLogic {
         presenter.routeToAboutApp()
     }
     
-    func loadHelp() {
-        presenter.routeToHelp()
+    func loadContacts() {
+        presenter.routeToContacts()
     }
     
-    func loadExit() {
-        presenter.routeToExit()
-    }
+    func loadExit() { }
 }

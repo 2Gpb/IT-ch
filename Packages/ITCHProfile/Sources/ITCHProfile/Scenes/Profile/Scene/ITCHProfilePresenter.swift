@@ -29,7 +29,7 @@ extension ITCHProfilePresenter: ITCHProfileRouterLogic {
         view?.navigationController?.pushViewController(ITCHAboutAppAssembly.build(), animated: true)
     }
     
-    func routeToHelp() { }
-    
-    func routeToExit() { }
+    func routeToContacts() {
+        view?.navigationController?.pushViewController(ITCHContactsAssembly.build(), animated: true)
+    }
 }

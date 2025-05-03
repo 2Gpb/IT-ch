@@ -47,10 +47,10 @@ enum ITCHSettingsConfig {
                 ),
                 ITCHSettingsModel(
                     image: ITCHImage.help32.image,
-                    title: "Помощь",
+                    title: "Сообщить о проблеме",
                     subtitle: "Наши контакты",
                     type: .standard,
-                    action: .help
+                    action: .contacts
                 ),
                 ITCHSettingsModel(
                     image: ITCHImage.exit32.image,

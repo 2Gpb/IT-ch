@@ -72,10 +72,15 @@ public final class ITCHNavigationRow: UIView {
         titleLabel.text = title
         leftImageView.image = image
         
+        titleLabelLeadingToLeftImage?.isActive = false
+        titleLabelLeadingToSuperview?.isActive = false
+        
         if image != nil {
             titleLabelLeadingToLeftImage?.isActive = true
             titleLabelLeadingToSuperview?.isActive = false
             leftImageView.isHidden = false
+        } else {
+            titleLabelLeadingToSuperview?.isActive = true
         }
     }
     
@@ -85,7 +90,6 @@ public final class ITCHNavigationRow: UIView {
         setUpTitleLabel()
         setUpChevronImageView()
         setUpCheckmarkImageView()
-//        setUpGesture()
         
         switch type {
         case .checkmark:
@@ -142,11 +146,5 @@ public final class ITCHNavigationRow: UIView {
         checkmarkImageView.pinVertical(to: self, Constant.Checkmark.verticalOffset)
         checkmarkImageView.setHeight(Constant.Checkmark.dimension)
         checkmarkImageView.setWidth(Constant.Checkmark.dimension)
-    }
-    
-    // MARK: - Actions
-    @objc
-    private func viewAction() {
-        action?()
     }
 }

@@ -10,7 +10,7 @@ protocol ITCHProfileBusinessLogic {
     func loadAppearance()
     func loadLanguage()
     func loadAboutApp()
-    func loadHelp()
+    func loadContacts()
     func loadExit()
 }
 
@@ -22,6 +22,5 @@ protocol ITCHProfileRouterLogic {
     func routeToAppearance()
     func routeToLanguage()
     func routeToAboutApp()
-    func routeToHelp()
-    func routeToExit()
+    func routeToContacts()
 }
