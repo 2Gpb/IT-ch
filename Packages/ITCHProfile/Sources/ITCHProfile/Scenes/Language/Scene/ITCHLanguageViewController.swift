@@ -15,6 +15,10 @@ final class ITCHLanguageViewController: UIViewController {
             static let message = "init(coder:) has not been implemented"
         }
         
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+        }
+        
         enum NavigationBar {
             static let title = "Язык приложения"
             static let leftImage: UIImage = ITCHImage.chevronLeft24.image
@@ -23,6 +27,7 @@ final class ITCHLanguageViewController: UIViewController {
         enum LanguagesTable {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
+            static let isScrollEnabled: Bool = false
             static let topOffset: CGFloat = 20
             static let rowHeight: CGFloat = 44
         }
@@ -53,7 +58,7 @@ final class ITCHLanguageViewController: UIViewController {
     
     // MARK: - SetUp
     private func setUp() {
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.backgroundColor = Constant.View.backgroundColor
         setUpNavigationBar()
         setUpLanguagesTableView()
     }
@@ -80,6 +85,7 @@ final class ITCHLanguageViewController: UIViewController {
         languagesTableView.dataSource = interactor
         languagesTableView.separatorStyle = Constant.LanguagesTable.separatorStyle
         languagesTableView.backgroundColor = Constant.LanguagesTable.backgroundColor
+        languagesTableView.isScrollEnabled = Constant.LanguagesTable.isScrollEnabled
         languagesTableView.register(ITCHLanguageCell.self, forCellReuseIdentifier: ITCHLanguageCell.reuseId)
         
         view.addSubview(languagesTableView)

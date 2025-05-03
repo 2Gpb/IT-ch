@@ -15,4 +15,10 @@ extension ITCHAboutAppPresenter: ITCHAboutAppRouterLogic {
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
     }
+    
+    func routeToFAQ() { }
+    
+    func routeToPrivacyPolicy() { }
+    
+    func routeToEvaluateApp() { }
 }

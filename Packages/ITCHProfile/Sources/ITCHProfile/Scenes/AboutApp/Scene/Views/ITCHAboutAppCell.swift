@@ -1,5 +1,5 @@
 //
-//  ITCHLanguageCell.swift
+//  ITCHAboutAppCell.swift
 //  ITCHProfile
 //
 //  Created by Peter on 03.05.2025.
@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHLanguageCell: UITableViewCell {
+final class ITCHAboutAppCell: UITableViewCell {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -16,7 +16,7 @@ final class ITCHLanguageCell: UITableViewCell {
         }
         
         enum ReuseIdentifier {
-            static let value: String = "ITCHLanguageCell"
+            static let value: String = "ITCHAboutAppCell"
         }
         
         enum View {
@@ -31,15 +31,8 @@ final class ITCHLanguageCell: UITableViewCell {
     // MARK: - ReuseID
     static let reuseId: String = Constant.ReuseIdentifier.value
     
-    // MARK: - Properties
-    var isCheck: Bool = false {
-        didSet {
-            languageRow.isCheck = isCheck
-        }
-    }
-    
     // MARK: - UI Components
-    private let languageRow: ITCHNavigationRow = ITCHNavigationRow(type: .checkmark)
+    private let navigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,20 +46,19 @@ final class ITCHLanguageCell: UITableViewCell {
     }
     
     // MARK: - Methods
-    func configure(with title: String, isChecked: Bool) {
-        languageRow.configure(title: title)
-        languageRow.isCheck = isChecked
+    func configure(with title: String) {
+        navigationRow.configure(title: title)
     }
     
     // MARK: - SetUp
     private func setUp() {
         backgroundColor = Constant.View.backgroundColor
-        setUpLanguageRow()
+        setUpNavigationRow()
     }
     
-    private func setUpLanguageRow() {
-        contentView.addSubview(languageRow)
-        languageRow.pinCenterY(to: contentView)
-        languageRow.pinHorizontal(to: contentView, Constant.LanguageRow.horizontalOffset)
+    private func setUpNavigationRow() {
+        contentView.addSubview(navigationRow)
+        navigationRow.pinCenterY(to: contentView)
+        navigationRow.pinHorizontal(to: contentView, Constant.LanguageRow.horizontalOffset)
     }
 }
