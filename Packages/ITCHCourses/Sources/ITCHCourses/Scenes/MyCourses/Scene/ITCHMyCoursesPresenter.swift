@@ -5,15 +5,21 @@
 //  Created by Peter on 04.05.2025.
 //
 
+import ITCHUtilities
+
 final class ITCHMyCoursesPresenter: ITCHMyCoursesPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHMyCoursesViewController?
     
     // MARK: - Methods
-    func presentStart() {
-        view?.displayStart()
+    func presentStart(with role: ITCHUserRole?) {
+        view?.displayStart(with: role)
     }
 }
 
 // MARK: - RouterLogic
-extension ITCHMyCoursesPresenter: ITCHMyCoursesRouterLogic { }
+extension ITCHMyCoursesPresenter: ITCHMyCoursesRouterLogic {
+    func routeToCreateCourse() {
+        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(for: .create), animated: true)
+    }
+}

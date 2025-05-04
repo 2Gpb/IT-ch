@@ -5,8 +5,15 @@
 //  Created by Peter on 04.05.2025.
 //
 
-protocol ITCHCourseEditorBusinessLogic { }
+protocol ITCHCourseEditorBusinessLogic {
+    func loadStart()
+    func loadDismiss()
+}
 
-protocol ITCHCourseEditorPresentationLogic { }
+protocol ITCHCourseEditorPresentationLogic {
+    func presentStart(with mode: ITCHEditingMode)
+}
 
-protocol ITCHCourseEditorRouterLogic { }
+protocol ITCHCourseEditorRouterLogic {
+    func popViewController()
+}

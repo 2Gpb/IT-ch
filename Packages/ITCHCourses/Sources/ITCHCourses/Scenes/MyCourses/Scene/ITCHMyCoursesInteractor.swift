@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHCore
 
 final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHCoursesStorage {
     // MARK: - Private fields
@@ -30,7 +31,11 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
     
     // MARK: - Methods
     func loadStart() {
-        presenter.presentStart()
+        presenter.presentStart(with: ITCHUserRoleService().role)
+    }
+    
+    func loadCreateCourse() {
+        presenter.routeToCreateCourse()
     }
 }
 

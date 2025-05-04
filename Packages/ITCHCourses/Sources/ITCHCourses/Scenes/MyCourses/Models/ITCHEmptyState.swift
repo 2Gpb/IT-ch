@@ -5,6 +5,8 @@
 //  Created by Peter on 04.05.2025.
 //
 
+import ITCHUtilities
+
 enum ITCHEmptyState {
     case teacher, student, assistant
     

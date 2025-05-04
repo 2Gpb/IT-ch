@@ -1,11 +1,11 @@
 //
-//  ITCHCourseEditingMode.swift
+//  ITCHEditingMode.swift
 //  ITCHCourses
 //
 //  Created by Peter on 04.05.2025.
 //
 
-enum ITCHCourseEditingMode {
+enum ITCHEditingMode {
     case create
     case edit
 }

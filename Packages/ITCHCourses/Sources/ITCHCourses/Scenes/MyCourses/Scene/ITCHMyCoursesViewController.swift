@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHUtilities
 
 final class ITCHMyCoursesViewController: UIViewController {
     // MARK: - Constants
@@ -20,7 +21,7 @@ final class ITCHMyCoursesViewController: UIViewController {
         }
         
         enum NavigationBar {
-            static let title: String = "My courses"
+            static let title: String = "Мои курсы"
             static let rightImage: UIImage = ITCHImage.plus24.image
         }
     }
@@ -51,8 +52,15 @@ final class ITCHMyCoursesViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart() {
+    func displayStart(with role: ITCHUserRole?) {
         emptyStateView.isHidden = !interactor.courses.isEmpty
+        
+        navigationBar.configure(
+            with: ITCHNavigationBarModel(
+                title: Constant.NavigationBar.title,
+                rightImage: role == .teacher ? Constant.NavigationBar.rightImage : nil
+            )
+        )
     }
     
     // MARK: - SetUp
@@ -65,12 +73,9 @@ final class ITCHMyCoursesViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-        navigationBar.configure(
-            with: ITCHNavigationBarModel(
-                title: Constant.NavigationBar.title,
-                rightImage: Constant.NavigationBar.rightImage
-            )
-        )
+        navigationBar.rightAction = { [weak self] in
+            self?.interactor.loadCreateCourse()
+        }
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
