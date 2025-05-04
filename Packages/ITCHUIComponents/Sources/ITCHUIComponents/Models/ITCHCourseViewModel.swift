@@ -7,19 +7,19 @@
 
 import UIKit
 
-public struct ITCHCourseModel {
+public struct ITCHCourseViewModel {
     let duration: String
     let role: String
     let courseName: String
     let teacherName: String
-    let avatar: UIImage
+    let avatar: UIImage?
     
     public init(
         duration: String,
         role: String,
         courseName: String,
         teacherName: String,
-        avatar: UIImage
+        avatar: UIImage?
     ) {
         self.duration = duration
         self.role = role

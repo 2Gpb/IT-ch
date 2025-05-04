@@ -12,6 +12,7 @@
 		D051A3812DC4CCBC003BE6F6 /* ITCHCore in Frameworks */ = {isa = PBXBuildFile; productRef = D051A3802DC4CCBC003BE6F6 /* ITCHCore */; };
 		D051A3832DC4CCC9003BE6F6 /* ITCHProfile in Frameworks */ = {isa = PBXBuildFile; productRef = D051A3822DC4CCC9003BE6F6 /* ITCHProfile */; };
 		D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */ = {isa = PBXBuildFile; productRef = D076E6B62DB6DED30015204F /* ITCHSchedule */; };
+		D093D3ED2DC7706400DC48D1 /* ITCHCourses in Frameworks */ = {isa = PBXBuildFile; productRef = D093D3EC2DC7706400DC48D1 /* ITCHCourses */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
 		D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = D0A426832DC24F1100DF283E /* ITCHNotifications */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 				D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */,
 				D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */,
 				D051A2D12DC3C927003BE6F6 /* ITCHUtilities in Frameworks */,
+				D093D3ED2DC7706400DC48D1 /* ITCHCourses in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +131,7 @@
 				D051A2D02DC3C927003BE6F6 /* ITCHUtilities */,
 				D051A3802DC4CCBC003BE6F6 /* ITCHCore */,
 				D051A3822DC4CCC9003BE6F6 /* ITCHProfile */,
+				D093D3EC2DC7706400DC48D1 /* ITCHCourses */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -440,6 +443,10 @@
 		D076E6B62DB6DED30015204F /* ITCHSchedule */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ITCHSchedule;
+		};
+		D093D3EC2DC7706400DC48D1 /* ITCHCourses */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHCourses;
 		};
 		D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
