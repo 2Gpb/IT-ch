@@ -125,6 +125,7 @@ public final class ITCHTextField: UIView {
         textField.layer.cornerRadius = Constant.TextField.cornerRadius
         textField.layer.borderWidth = Constant.TextField.borderWidth
         textField.layer.borderColor = Constant.TextField.borderColor
+        textField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(textFieldTapped)))
         
         addSubview(textField)
         textField.pinHorizontal(to: self)
@@ -148,6 +149,11 @@ public final class ITCHTextField: UIView {
     }
     
     // MARK: - Actions
+    @objc
+    private func textFieldTapped() {
+        textField.becomeFirstResponder()
+    }
+    
     @objc
     private func eyeButtonTapped() {
         eyeButton.isHidden = eyeOffButton.isHidden

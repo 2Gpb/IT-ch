@@ -28,6 +28,8 @@ final class ITCHCourseEditorViewController: UIViewController {
     private let chatLinkTextField: ITCHTextField = ITCHTextField()
     private let gradesLinkTextField: ITCHTextField = ITCHTextField()
     private let contentStackView: UIStackView = UIStackView()
+    private let contentScrollView: UIScrollView = UIScrollView()
+    private let continueButton: ITCHButton = ITCHButton()
     
     // MARK: - Lifecycle
     init(
@@ -59,8 +61,10 @@ final class ITCHCourseEditorViewController: UIViewController {
         switch mode {
         case .create:
             title = "Создать курс"
+            continueButton.configure(title: "Далее")
         case .edit:
             title = "Изменить курс"
+            continueButton.configure(title: "Сохранить")
         }
         
         navigationBar.configure(
@@ -73,8 +77,10 @@ final class ITCHCourseEditorViewController: UIViewController {
     
     // MARK: - SetUp
     private func setUp() {
-        setUpView()
+        view.backgroundColor = ITCHColor.backgroundGray.color
         setUpNavigationBar()
+        setUpContinueButton()
+        setUpContentScrollView()
         setUpNameTextField()
         setUpLocationTextField()
         setUpDurationTextField()
@@ -84,12 +90,8 @@ final class ITCHCourseEditorViewController: UIViewController {
         setUpContentStackView()
     }
     
-    private func setUpView() {
-        view.backgroundColor = ITCHColor.backgroundGray.color
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
-    }
-    
     private func setUpNavigationBar() {
+        navigationBar.backgroundColor = ITCHColor.backgroundGray.color
         navigationBar.leftAction = { [weak self] in
             self?.interactor.loadDismiss()
         }
@@ -97,6 +99,19 @@ final class ITCHCourseEditorViewController: UIViewController {
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpContinueButton() {
+        view.addSubview(continueButton)
+        continueButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 20)
+        continueButton.pinHorizontal(to: view, 16)
+    }
+    
+    private func setUpContentScrollView() {
+        view.addSubview(contentScrollView)
+        contentScrollView.pinTop(to: navigationBar.bottomAnchor)
+        contentScrollView.pinHorizontal(to: view, 16)
+        contentScrollView.pinBottom(to: continueButton.topAnchor, 20)
     }
     
     private func setUpNameTextField() {
@@ -123,7 +138,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         durationTextField.configure(
             with: ITCHTextFieldModel(
                 title: "Время курса в модулях",
-                placeholder: "Выберете длительность",
+                placeholder: "Выберете модули",
                 type: .normal
             )
         )
@@ -133,6 +148,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         locationDurationStackView.axis = .horizontal
         locationDurationStackView.spacing = 20
         locationDurationStackView.distribution = .fillEqually
+        locationDurationStackView.setWidth(view.frame.width - 32.0)
         [locationTextField, durationTextField].forEach { element in
             locationDurationStackView.addArrangedSubview(element)
         }
@@ -165,18 +181,9 @@ final class ITCHCourseEditorViewController: UIViewController {
             contentStackView.addArrangedSubview(element)
         }
         
-        view.addSubview(contentStackView)
-        contentStackView.pinTop(to: navigationBar.bottomAnchor, 20)
-        contentStackView.pinHorizontal(to: view, 16)
-    }
-    
-    // MARK: - Actions
-    @objc
-    private func hideKeyboard() {
-        nameTextField.keyboardState = .close
-        locationTextField.keyboardState = .close
-        durationTextField.keyboardState = .close
-        chatLinkTextField.keyboardState = .close
-        gradesLinkTextField.keyboardState = .close
+        contentScrollView.addSubview(contentStackView)
+        contentStackView.pinTop(to: contentScrollView, 20)
+        contentStackView.pinLeft(to: contentScrollView)
+        contentStackView.pinRight(to: contentScrollView)
     }
 }
