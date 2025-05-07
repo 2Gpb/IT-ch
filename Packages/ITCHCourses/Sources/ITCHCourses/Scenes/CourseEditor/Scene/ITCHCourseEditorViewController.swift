@@ -21,6 +21,13 @@ final class ITCHCourseEditorViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let nameTextField: ITCHTextField = ITCHTextField()
+    private let locationTextField: ITCHTextField = ITCHTextField()
+    private let durationTextField: ITCHTextField = ITCHTextField()
+    private let locationDurationStackView: UIStackView = UIStackView()
+    private let chatLinkTextField: ITCHTextField = ITCHTextField()
+    private let gradesLinkTextField: ITCHTextField = ITCHTextField()
+    private let contentStackView: UIStackView = UIStackView()
     
     // MARK: - Lifecycle
     init(
@@ -39,6 +46,11 @@ final class ITCHCourseEditorViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         interactor.loadStart()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        nameTextField.keyboardState = .open
     }
     
     // MARK: - Methods
@@ -61,8 +73,20 @@ final class ITCHCourseEditorViewController: UIViewController {
     
     // MARK: - SetUp
     private func setUp() {
-        view.backgroundColor = ITCHColor.backgroundGray.color
+        setUpView()
         setUpNavigationBar()
+        setUpNameTextField()
+        setUpLocationTextField()
+        setUpDurationTextField()
+        setUpLocationDurationStackView()
+        setUpChatLinkTextField()
+        setUpGradesLinkTextField()
+        setUpContentStackView()
+    }
+    
+    private func setUpView() {
+        view.backgroundColor = ITCHColor.backgroundGray.color
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
     private func setUpNavigationBar() {
@@ -73,5 +97,86 @@ final class ITCHCourseEditorViewController: UIViewController {
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpNameTextField() {
+        nameTextField.configure(
+            with: ITCHTextFieldModel(
+                title: "Название",
+                placeholder: "Введите название курса",
+                type: .normal
+            )
+        )
+    }
+    
+    private func setUpLocationTextField() {
+        locationTextField.configure(
+            with: ITCHTextFieldModel(
+                title: "Место проведения",
+                placeholder: "Введите место",
+                type: .normal
+            )
+        )
+    }
+    
+    private func setUpDurationTextField() {
+        durationTextField.configure(
+            with: ITCHTextFieldModel(
+                title: "Время курса в модулях",
+                placeholder: "Выберете длительность",
+                type: .normal
+            )
+        )
+    }
+    
+    private func setUpLocationDurationStackView() {
+        locationDurationStackView.axis = .horizontal
+        locationDurationStackView.spacing = 20
+        locationDurationStackView.distribution = .fillEqually
+        [locationTextField, durationTextField].forEach { element in
+            locationDurationStackView.addArrangedSubview(element)
+        }
+    }
+    
+    private func setUpChatLinkTextField() {
+        chatLinkTextField.configure(
+            with: ITCHTextFieldModel(
+                title: "Ссылка на чат",
+                placeholder: "https://",
+                type: .normal
+            )
+        )
+    }
+    
+    private func setUpGradesLinkTextField() {
+        gradesLinkTextField.configure(
+            with: ITCHTextFieldModel(
+                title: "Ссылка на ведомость",
+                placeholder: "https://",
+                type: .normal
+            )
+        )
+    }
+    
+    private func setUpContentStackView() {
+        contentStackView.axis = .vertical
+        contentStackView.spacing = 20
+        [nameTextField, locationDurationStackView, chatLinkTextField, gradesLinkTextField].forEach { element in
+            contentStackView.addArrangedSubview(element)
+        }
+        
+        view.addSubview(contentStackView)
+        contentStackView.pinTop(to: navigationBar.bottomAnchor, 20)
+        contentStackView.pinHorizontal(to: view, 16)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func hideKeyboard() {
+        nameTextField.keyboardState = .close
+        locationTextField.keyboardState = .close
+        durationTextField.keyboardState = .close
+        chatLinkTextField.keyboardState = .close
+        gradesLinkTextField.keyboardState = .close
     }
 }
