@@ -1,18 +1,18 @@
 //
-//  ITCHCourseEditorInteractor.swift
+//  ITCHScheduleEditorInteractor.swift
 //  ITCHCourses
 //
-//  Created by Peter on 04.05.2025.
+//  Created by Peter on 07.05.2025.
 //
 
-final class ITCHCourseEditorInteractor: ITCHCourseEditorBusinessLogic {
+final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
     // MARK: - Private fields
-    private let presenter: ITCHCourseEditorPresentationLogic & ITCHCourseEditorRouterLogic
+    private let presenter: ITCHScheduleEditorPresentationLogic & ITCHScheduleEditorRouterLogic
     private let mode: ITCHEditingMode
     
     // MARK: - Lifecycle
     init(
-        presenter: ITCHCourseEditorPresentationLogic & ITCHCourseEditorRouterLogic,
+        presenter: ITCHScheduleEditorPresentationLogic & ITCHScheduleEditorRouterLogic,
         for mode: ITCHEditingMode
     ) {
         self.presenter = presenter
@@ -26,9 +26,5 @@ final class ITCHCourseEditorInteractor: ITCHCourseEditorBusinessLogic {
     
     func loadDismiss() {
         presenter.popViewController()
-    }
-    
-    func loadCreateSchedule() {
-        presenter.routeToCreateSchedule(with: mode)
     }
 }

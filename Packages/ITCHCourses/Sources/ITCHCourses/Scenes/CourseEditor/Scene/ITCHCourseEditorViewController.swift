@@ -49,7 +49,7 @@ final class ITCHCourseEditorViewController: UIViewController {
             static let confirmButtonTitle: String = "Готово"
             static let cancelButtonTitle: String = "Отмена"
             static let numberOfColumns: Int = 2
-            static let textSuffix: String = "Модуль"
+            static let textSuffix: String = " Модуль"
         }
         
         enum LocationDurationStack {
@@ -117,7 +117,7 @@ final class ITCHCourseEditorViewController: UIViewController {
             title = Constant.NavigationBar.createTitle
             continueButton.configure(title: Constant.ContinueButton.continueTitle)
             continueButton.action = { [weak self] in
-                self?.interactor.loadDismiss()
+                self?.interactor.loadCreateSchedule()
             }
             
         case .edit:

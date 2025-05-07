@@ -20,4 +20,8 @@ extension ITCHCourseEditorPresenter: ITCHCourseEditorRouterLogic {
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
     }
+    
+    func routeToCreateSchedule(with mode: ITCHEditingMode) {
+        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(for: mode), animated: true)
+    }
 }
