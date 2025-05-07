@@ -17,6 +17,10 @@ final class ITCHScheduleEditorPresenter: ITCHScheduleEditorPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHScheduleEditorPresenter: ITCHScheduleEditorRouterLogic {
+    func routeToCourses() {
+        view?.navigationController?.popToRootViewController(animated: true)
+    }
+    
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
     }

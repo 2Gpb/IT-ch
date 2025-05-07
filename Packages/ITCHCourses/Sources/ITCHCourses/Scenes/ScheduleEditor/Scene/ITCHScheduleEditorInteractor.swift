@@ -24,6 +24,10 @@ final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
         presenter.presentStart(with: mode)
     }
     
+    func loadCourses() {
+        presenter.routeToCourses()
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }

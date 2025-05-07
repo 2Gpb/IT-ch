@@ -201,8 +201,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         
         contentScrollView.addSubview(contentStackView)
         contentStackView.pinTop(to: contentScrollView, Constant.ContentStack.topOffset)
-        contentStackView.pinLeft(to: contentScrollView)
-        contentStackView.pinRight(to: contentScrollView)
+        contentStackView.pinHorizontal(to: contentScrollView)
     }
     
     private func setUpDurationPickerView() {

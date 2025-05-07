@@ -7,6 +7,7 @@
 
 protocol ITCHScheduleEditorBusinessLogic {
     func loadStart()
+    func loadCourses()
     func loadDismiss()
 }
 
@@ -15,5 +16,6 @@ protocol ITCHScheduleEditorPresentationLogic {
 }
 
 protocol ITCHScheduleEditorRouterLogic {
+    func routeToCourses()
     func popViewController()
 }
