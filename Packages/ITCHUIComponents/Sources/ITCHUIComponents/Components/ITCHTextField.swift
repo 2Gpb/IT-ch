@@ -52,6 +52,13 @@ public final class ITCHTextField: UIView {
     
     // MARK: - Properties
     public var returnAction: (() -> Void)?
+    public var beforeOpenKeyboardAction: (() -> Void)?
+    public var text: String? {
+        didSet {
+            textField.text = text
+        }
+    }
+    
     public var isError: Bool = false {
         didSet {
             textField.layer.borderColor = isError ?
@@ -82,7 +89,7 @@ public final class ITCHTextField: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHTextFieldModel) {
+    public func configure(with model: ITCHTextFieldViewModel) {
         titleLabel.text = model.title
         textField.attributedPlaceholder = NSAttributedString(
             string: model.placeholder,
@@ -91,7 +98,7 @@ public final class ITCHTextField: UIView {
         
         switch model.type {
         case .normal:
-            textField.keyboardType = .emailAddress
+            textField.keyboardType = model.keyboardType
         case .password:
             setUpHideShowButton()
             textField.keyboardType = .asciiCapable
@@ -168,5 +175,10 @@ extension ITCHTextField: UITextFieldDelegate {
         textField.resignFirstResponder()
         returnAction?()
         return true
+    }
+    
+    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        beforeOpenKeyboardAction?()
+        return beforeOpenKeyboardAction != nil ? false : true
     }
 }
