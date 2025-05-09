@@ -34,6 +34,10 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
         presenter.presentStart(with: ITCHUserRoleService().role)
     }
     
+    func loadCourse() {
+        presenter.roteToCourse()
+    }
+    
     func loadCreateCourse() {
         presenter.routeToCreateCourse()
     }

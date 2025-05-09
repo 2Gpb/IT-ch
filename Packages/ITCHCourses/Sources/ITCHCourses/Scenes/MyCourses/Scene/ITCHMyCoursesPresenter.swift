@@ -19,6 +19,10 @@ final class ITCHMyCoursesPresenter: ITCHMyCoursesPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHMyCoursesPresenter: ITCHMyCoursesRouterLogic {
+    func roteToCourse() {
+        view?.navigationController?.pushViewController(ITCHCourseAssembly.build(), animated: true)
+    }
+    
     func routeToCreateCourse() {
         view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(for: .create), animated: true)
     }

@@ -108,4 +108,8 @@ final class ITCHMyCoursesViewController: UIViewController {
 }
 
 // MARK: - UITableViewDelegate
-extension ITCHMyCoursesViewController: UITableViewDelegate { }
+extension ITCHMyCoursesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        interactor.loadCourse()
+    }
+}

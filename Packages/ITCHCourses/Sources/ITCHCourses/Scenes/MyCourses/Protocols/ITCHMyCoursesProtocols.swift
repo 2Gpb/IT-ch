@@ -10,6 +10,7 @@ import ITCHUtilities
 
 protocol ITCHMyCoursesBusinessLogic: UITableViewDataSource {
     func loadStart()
+    func loadCourse()
     func loadCreateCourse()
 }
 
@@ -18,6 +19,7 @@ protocol ITCHMyCoursesPresentationLogic {
 }
 
 protocol ITCHMyCoursesRouterLogic {
+    func roteToCourse()
     func routeToCreateCourse()
 }
 
