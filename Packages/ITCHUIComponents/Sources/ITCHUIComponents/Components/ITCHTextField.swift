@@ -91,6 +91,7 @@ public final class ITCHTextField: UIView {
     // MARK: - Methods
     public func configure(with model: ITCHTextFieldViewModel) {
         titleLabel.text = model.title
+        textField.textAlignment = model.alignment
         textField.attributedPlaceholder = NSAttributedString(
             string: model.placeholder,
             attributes: Constant.TextField.placeholderAttributes

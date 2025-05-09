@@ -12,16 +12,19 @@ public struct ITCHTextFieldViewModel {
     public var placeholder: String
     public var type: ITCHTextFieldType
     public var keyboardType: UIKeyboardType
+    public var alignment: NSTextAlignment
     
     public init(
         title: String,
         placeholder: String,
         type: ITCHTextFieldType = .normal,
-        keyboardType: UIKeyboardType = .default
+        keyboardType: UIKeyboardType = .default,
+        alignment: NSTextAlignment = .left
     ) {
         self.title = title
         self.placeholder = placeholder
         self.type = type
         self.keyboardType = keyboardType
+        self.alignment = alignment
     }
 }

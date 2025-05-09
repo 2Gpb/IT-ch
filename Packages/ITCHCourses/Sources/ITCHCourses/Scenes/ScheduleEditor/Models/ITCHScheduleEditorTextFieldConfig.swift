@@ -11,28 +11,33 @@ enum ITCHScheduleEditorTextFieldConfig {
     static func day() -> ITCHTextFieldViewModel {
         ITCHTextFieldViewModel(
             title: "День недели",
-            placeholder: "Выберите день"
+            placeholder: "Выберите день",
+            alignment: .center
         )
     }
     
     static func numberOfHours() -> ITCHTextFieldViewModel {
         ITCHTextFieldViewModel(
             title: "Академические часы",
-            placeholder: "Введите количество"
+            placeholder: "Введите цифру",
+            keyboardType: .numberPad,
+            alignment: .center
         )
     }
     
     static func startTime() -> ITCHTextFieldViewModel {
         ITCHTextFieldViewModel(
             title: "Время начала первой пары",
-            placeholder: "Выберите время"
+            placeholder: "Выберите время",
+            alignment: .center
         )
     }
     
     static func frequency() -> ITCHTextFieldViewModel {
         ITCHTextFieldViewModel(
             title: "Частота",
-            placeholder: "Выберите частоту"
+            placeholder: "Выберите частоту",
+            alignment: .center
         )
     }
 }
