@@ -24,6 +24,13 @@ final class ITCHCourseHeaderView: UIView {
             static let textColor: UIColor = ITCHColor.base50.color
             static let horizontalOffset: CGFloat = 16
         }
+        
+        enum Separator {
+            static let backgroundColor: UIColor = ITCHColor.base70.color
+            static let height: CGFloat = 1
+            static let verticalOffset: CGFloat = 8
+            static let horizontalOffset: CGFloat = 16
+        }
     }
 
     // MARK: - UI Components
@@ -62,12 +69,12 @@ final class ITCHCourseHeaderView: UIView {
     }
     
     private func setUpSeparator() {
-        separatorView.backgroundColor = ITCHColor.base70.color
+        separatorView.backgroundColor = Constant.Separator.backgroundColor
         
         addSubview(separatorView)
-        separatorView.setHeight(1)
-        separatorView.pinTop(to: self, -8)
-        separatorView.pinBottom(to: self, 8)
-        separatorView.pinHorizontal(to: self, 16)
+        separatorView.setHeight(Constant.Separator.height)
+        separatorView.pinTop(to: self, -Constant.Separator.verticalOffset)
+        separatorView.pinBottom(to: self, Constant.Separator.verticalOffset)
+        separatorView.pinHorizontal(to: self, Constant.Separator.horizontalOffset)
     }
 }

@@ -24,8 +24,8 @@ final class ITCHNavigationRowCell: UITableViewCell {
             static let selectionStyle: UITableViewCell.SelectionStyle = .default
         }
         
-        enum Title {
-            static let topOffset: CGFloat = 12
+        enum NavigationRow {
+            static let verticalOffset: CGFloat = 2
             static let horizontalOffset: CGFloat = 16
         }
     }
@@ -61,7 +61,7 @@ final class ITCHNavigationRowCell: UITableViewCell {
     
     private func setNavigationRow() {
         addSubview(navigationRow)
-        navigationRow.pinHorizontal(to: self, 16)
-        navigationRow.pinVertical(to: self, 2)
+        navigationRow.pinHorizontal(to: self, Constant.NavigationRow.horizontalOffset)
+        navigationRow.pinVertical(to: self, Constant.NavigationRow.verticalOffset)
     }
 }

@@ -14,6 +14,26 @@ final class ITCHCourseViewController: UIViewController {
         enum Error {
             static let message = "init(coder:) has not been implemented"
         }
+        
+        enum NavigationBar {
+            static let title: String = "Текущий курс"
+            static let leftImage: UIImage = ITCHImage.chevronLeft24.image
+            static let rightImage: UIImage = ITCHImage.options24.image
+        }
+        
+        enum TableView {
+            static let backgroundColor: UIColor = .clear
+            static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+        }
+        
+        enum ContextActions {
+            static let changeCourseTitle: String = "Изменить курс"
+            static let changeCourseImage: UIImage = ITCHImage.pen20.image
+            static let changeScheduleTitle: String = "Изменить расписание"
+            static let changeScheduleImage: UIImage = ITCHImage.calendar20.image
+            static let deleteTitle: String = "Удалить"
+            static let deleteImage: UIImage = ITCHImage.trash20.image
+        }
     }
     
     // MARK: - Private fields
@@ -60,9 +80,9 @@ final class ITCHCourseViewController: UIViewController {
     private func setUpNavigationBar() {
         navigationBar.configure(
             with: ITCHNavigationBarModel(
-                title: "Текущий курс",
-                leftImage: ITCHImage.chevronLeft24.image,
-                rightImage: ITCHImage.options24.image
+                title: Constant.NavigationBar.title,
+                leftImage: Constant.NavigationBar.leftImage,
+                rightImage: Constant.NavigationBar.rightImage
             )
         )
         
@@ -86,8 +106,8 @@ final class ITCHCourseViewController: UIViewController {
     private func setUpInfoTableView() {
         infoTableView.delegate = self
         infoTableView.dataSource = interactor
-        infoTableView.backgroundColor = .clear
-        infoTableView.separatorStyle = .none
+        infoTableView.backgroundColor = Constant.TableView.backgroundColor
+        infoTableView.separatorStyle = Constant.TableView.separatorStyle
         infoTableView.register(ITCHTitleCell.self, forCellReuseIdentifier: ITCHTitleCell.reuseId)
         infoTableView.register(ITCHTeacherCell.self, forCellReuseIdentifier: ITCHTeacherCell.reuseId)
         infoTableView.register(ITCHNavigationRowCell.self, forCellReuseIdentifier: ITCHNavigationRowCell.reuseId)
@@ -100,47 +120,56 @@ final class ITCHCourseViewController: UIViewController {
     
     // MARK: - Actions
     func changeCourseAction() -> UIAction {
-        UIAction(title: "Изменить курс", image: ITCHImage.pen20.image) { [weak self] _ in
+        UIAction(
+            title: Constant.ContextActions.changeCourseTitle,
+            image: Constant.ContextActions.changeCourseImage
+        ) { [weak self] _ in
             self?.interactor.loadChengeCourse()
         }
     }
     
     func changeScheduleAction() -> UIAction {
-        UIAction(title: "Изменить расписание", image: ITCHImage.calendar20.image) { [weak self] _ in
+        UIAction(
+            title: Constant.ContextActions.changeScheduleTitle,
+            image: Constant.ContextActions.changeScheduleImage
+        ) { [weak self] _ in
             self?.interactor.loadChangeSchedule()
         }
     }
     
     func deleteAction() -> UIAction {
         UIAction(
-            title: "Удалить",
-            image: ITCHImage.trash20.image,
+            title: Constant.ContextActions.deleteTitle,
+            image: Constant.ContextActions.deleteImage,
             attributes: .destructive
         ) { [weak self] _ in
             self?.interactor.loadDismiss()
         }
     }
-    
-    var arr = ["Чат курса", "Оценки", "Участники", "Записи", "Домашние задания"]
 }
 
+// MARK: - UITableViewDelegate
 extension ITCHCourseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 4 else { return }
+        guard let section = ITCHCurrentCourseSection(rawValue: indexPath.section), section == .actions else { return }
         
-        switch indexPath.row {
-        case 0:
-            interactor.loadChat()
-        case 1:
-            interactor.loadGrades()
-        default:
-            break
+        if let row = ITCHCurrentCourseActions(rawValue: indexPath.row) {
+            switch row {
+            case .chat:
+                interactor.loadChat()
+            case .grades:
+                interactor.loadGrades()
+            case .homework, .members, .recordings:
+                break
+            }
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        section == 4 ? ITCHCourseHeaderView() : ITCHCourseHeaderView(with: interactor.titles[section])
+        guard let type = ITCHCurrentCourseSection(rawValue: section) else { return nil }
+        
+        return type == .actions ? ITCHCourseHeaderView() : ITCHCourseHeaderView(with: titles[section])
     }
 }

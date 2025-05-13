@@ -10,25 +10,20 @@ import UIKit
 final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
-    var actionRowTitles = ["Чат курса", "Оценки", "Участники", "Записи", "Домашние задания"]
-    var titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
-    private let course: ITCHCurrentCourseModel
+    private let actionRowTitles = ["Чат курса", "Оценки", "Участники", "Записи", "Домашние задания"]
+    private let course: ITCHCurrentCourseModel = ITCHCurrentCourseModel(
+        courseName: "НИС “Основы iOS разработки на UIKit”",
+        teacherName: "Сосновский Григорий Михайлович",
+        avatar: nil,
+        generalInfo: ["•  1, 2, 3 модули", "•  D106, Покровский б-р, д.11"],
+        role: "Преподаватель",
+        chatLink: "https://t.me/slyrack",
+        gradesLink: "https://t.me/slyrack"
+    )
     
     // MARK: - Lifecycle
-    init(
-        presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic,
-        model: ITCHCourseModel
-    ) {
+    init(presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic) {
         self.presenter = presenter
-        self.course = ITCHCurrentCourseModel(
-            courseName: model.courseName,
-            teacherName: model.teacherName,
-            avatar: model.avatar,
-            generalInfo: [model.duration, model.location],
-            role: model.role,
-            chatLink: model.chatLink,
-            gradesLink: model.gradesLink
-        )
     }
     
     // MARK: - Methods
@@ -60,59 +55,58 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
 // MARK: - UITableViewDataSource
 extension ITCHCourseInteractor: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        5
+        ITCHCurrentCourseSection.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let section = ITCHCurrentCourseSection(
+            rawValue: section
+        ) else {
+            return 0
+        }
+        
         switch section {
-        case 0, 1, 3:
-            return 1
-        case 2:
-            return 2
-        case 4:
+        case .info:
+            return course.generalInfo.count
+        case .actions:
             return actionRowTitles.count
         default:
-            return 0
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = dequeueCell(ofType: ITCHTitleCell.self, for: tableView, at: indexPath)
+        guard let section = ITCHCurrentCourseSection(
+            rawValue: indexPath.section
+        ) else {
+            return UITableViewCell()
+        }
+        
+        switch section {
+        case .course:
+            let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
             cell.configure(with: course.courseName)
             return cell
             
-        case 1:
-            let cell = dequeueCell(ofType: ITCHTeacherCell.self, for: tableView, at: indexPath)
+        case .teacher:
+            let cell: ITCHTeacherCell = tableView.dequeueCell(for: indexPath)
             cell.configure(with: course.teacherName, image: course.avatar)
             return cell
             
-        case 2:
-            let cell = dequeueCell(ofType: ITCHTitleCell.self, for: tableView, at: indexPath)
+        case .info:
+            let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
             cell.configure(with: course.generalInfo[indexPath.row])
             return cell
             
-        case 3:
-            let cell = dequeueCell(ofType: ITCHTitleCell.self, for: tableView, at: indexPath)
+        case .role:
+            let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
             cell.configure(with: course.role)
             return cell
             
-        case 4:
-            let cell = dequeueCell(ofType: ITCHNavigationRowCell.self, for: tableView, at: indexPath)
+        case .actions:
+            let cell: ITCHNavigationRowCell = tableView.dequeueCell(for: indexPath)
             cell.configure(with: actionRowTitles[indexPath.row])
             return cell
-            
-        default:
-            return UITableViewCell()
         }
-    }
-    
-    func dequeueCell<T: UITableViewCell>(
-        ofType type: T.Type,
-        for tableView: UITableView,
-        at indexPath: IndexPath
-    ) -> T {
-        return tableView.dequeueReusableCell(withIdentifier: type.reuseId, for: indexPath) as! T
     }
 }

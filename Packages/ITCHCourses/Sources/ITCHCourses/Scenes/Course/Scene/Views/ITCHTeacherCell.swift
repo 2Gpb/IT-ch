@@ -24,9 +24,21 @@ final class ITCHTeacherCell: UITableViewCell {
             static let selectionStyle: UITableViewCell.SelectionStyle = .none
         }
         
-        enum Title {
+        enum Avatar {
+            static let backgroundColor: UIColor = ITCHColor.cellGray.color
+            static let clipsToBounds: Bool = true
+            static let contentMode: UIView.ContentMode = .scaleAspectFill
+            static let cornerRadius: CGFloat = 16
+            static let leadingOffset: CGFloat = 16
             static let topOffset: CGFloat = 12
-            static let horizontalOffset: CGFloat = 16
+            static let size: CGFloat = 32
+        }
+        
+        enum Title {
+            static let font: UIFont = ITCHFont.bodyMMedium.font
+            static let textColor: UIColor = ITCHColor.base0.color
+            static let leadingOffset: CGFloat = 12
+            static let trailingOffset: CGFloat = 16
         }
     }
     
@@ -63,25 +75,25 @@ final class ITCHTeacherCell: UITableViewCell {
     }
     
     private func setUpAvatarImageView() {
-        avatarImageView.backgroundColor = ITCHColor.cellGray.color
-        avatarImageView.clipsToBounds = true
-        avatarImageView.contentMode = .scaleAspectFill
-        avatarImageView.layer.cornerRadius = 16
+        avatarImageView.backgroundColor = Constant.Avatar.backgroundColor
+        avatarImageView.clipsToBounds = Constant.Avatar.clipsToBounds
+        avatarImageView.contentMode = Constant.Avatar.contentMode
+        avatarImageView.layer.cornerRadius = Constant.Avatar.cornerRadius
         
         addSubview(avatarImageView)
-        avatarImageView.pinLeft(to: self, 16)
-        avatarImageView.pinTop(to: self, 12)
-        avatarImageView.setHeight(32)
-        avatarImageView.setWidth(32)
+        avatarImageView.pinLeft(to: self, Constant.Avatar.leadingOffset)
+        avatarImageView.pinTop(to: self, Constant.Avatar.topOffset)
+        avatarImageView.setHeight(Constant.Avatar.size)
+        avatarImageView.setWidth(Constant.Avatar.size)
     }
     
     private func setTitleLabel() {
-        titleLabel.font = ITCHFont.bodyMMedium.font
-        titleLabel.textColor = ITCHColor.base0.color
+        titleLabel.font = Constant.Title.font
+        titleLabel.textColor = Constant.Title.textColor
         
         addSubview(titleLabel)
         titleLabel.pinCenterY(to: avatarImageView)
-        titleLabel.pinLeft(to: avatarImageView.trailingAnchor, 8)
-        titleLabel.pinRight(to: self, 16)
+        titleLabel.pinLeft(to: avatarImageView.trailingAnchor, Constant.Title.leadingOffset)
+        titleLabel.pinRight(to: self, Constant.Title.trailingOffset)
     }
 }

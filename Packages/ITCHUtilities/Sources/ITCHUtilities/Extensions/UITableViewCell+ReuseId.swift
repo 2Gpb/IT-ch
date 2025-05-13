@@ -1,5 +1,5 @@
 //
-//  UITableView+ReuseId.swift
+//  UITableViewCell+ReuseId.swift
 //  ITCHUtilities
 //
 //  Created by Peter on 13.05.2025.

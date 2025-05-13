@@ -8,8 +8,6 @@
 import UIKit
 
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
-    var titles: [String] { get }
-    
     func loadStart()
     func loadDismiss()
     func loadChengeCourse()

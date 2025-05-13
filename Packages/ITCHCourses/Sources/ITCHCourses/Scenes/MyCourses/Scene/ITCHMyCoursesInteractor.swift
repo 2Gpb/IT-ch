@@ -20,10 +20,7 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
             role: "Преподаватель",
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
-            avatar: nil,
-            location: "D106, Покровский б-р, д.11",
-            chatLink: "https://vk.com/tuhmenev",
-            gradesLink: "https://vk.com/tuhmenev"
+            avatar: nil
         )
     ]
     
