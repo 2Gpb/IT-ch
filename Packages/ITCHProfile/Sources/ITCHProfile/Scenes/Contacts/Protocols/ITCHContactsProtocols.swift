@@ -16,7 +16,7 @@ protocol ITCHContactsPresentationLogic { }
 
 protocol ITCHContactsRouterLogic {
     func popViewController()
-    func routetoVK()
-    func routetoTelegram()
-    func routetoEmail()
+    func routeToVK()
+    func routeToTelegram()
+    func routeToEmail()
 }

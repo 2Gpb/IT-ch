@@ -20,7 +20,10 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
             role: "Преподаватель",
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
-            avatar: nil
+            avatar: nil,
+            location: "D106, Покровский б-р, д.11",
+            chatLink: "https://vk.com/tuhmenev",
+            gradesLink: "https://vk.com/tuhmenev"
         )
     ]
     
@@ -34,8 +37,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
         presenter.presentStart(with: ITCHUserRoleService().role)
     }
     
-    func loadCourse() {
-        presenter.roteToCourse()
+    func loadCourse(for index: Int) {
+        presenter.roteToCourse(with: courses[index])
     }
     
     func loadCreateCourse() {

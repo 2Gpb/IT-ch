@@ -13,4 +13,7 @@ struct ITCHCourseModel {
     let courseName: String
     let teacherName: String
     let avatar: UIImage?
+    let location: String
+    let chatLink: String?
+    let gradesLink: String?
 }

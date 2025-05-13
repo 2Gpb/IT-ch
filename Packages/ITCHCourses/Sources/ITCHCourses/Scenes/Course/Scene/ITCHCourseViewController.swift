@@ -18,9 +18,11 @@ final class ITCHCourseViewController: UIViewController {
     
     // MARK: - Private fields
     private let interactor: ITCHCourseBusinessLogic
+    private let titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let infoTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHCourseBusinessLogic) {
@@ -36,12 +38,23 @@ final class ITCHCourseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        interactor.loadStart()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        infoTableView.isScrollEnabled = infoTableView.contentSize.height > infoTableView.frame.height
+    }
+    
+    // MARK: - Methods
+    func displayStart() { }
     
     // MARK: - SetUp
     private func setUp() {
         view.backgroundColor = ITCHColor.backgroundGray.color
         setUpNavigationBar()
+        setUpInfoTableView()
     }
     
     private func setUpNavigationBar() {
@@ -57,11 +70,32 @@ final class ITCHCourseViewController: UIViewController {
             self?.interactor.loadDismiss()
         }
         
-        navigationBar.configureRightButtonMenu(items: [changeCourseAction(), changeScheduleAction(), deleteAction()])
+        navigationBar.configureRightButtonMenu(
+            items: [
+                changeCourseAction(),
+                changeScheduleAction(),
+                deleteAction()
+            ]
+        )
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpInfoTableView() {
+        infoTableView.delegate = self
+        infoTableView.dataSource = interactor
+        infoTableView.backgroundColor = .clear
+        infoTableView.separatorStyle = .none
+        infoTableView.register(ITCHTitleCell.self, forCellReuseIdentifier: ITCHTitleCell.reuseId)
+        infoTableView.register(ITCHTeacherCell.self, forCellReuseIdentifier: ITCHTeacherCell.reuseId)
+        infoTableView.register(ITCHNavigationRowCell.self, forCellReuseIdentifier: ITCHNavigationRowCell.reuseId)
+        
+        view.addSubview(infoTableView)
+        infoTableView.pinTop(to: navigationBar.bottomAnchor)
+        infoTableView.pinHorizontal(to: view)
+        infoTableView.pinBottom(to: view)
     }
     
     // MARK: - Actions
@@ -85,5 +119,28 @@ final class ITCHCourseViewController: UIViewController {
         ) { [weak self] _ in
             self?.interactor.loadDismiss()
         }
+    }
+    
+    var arr = ["Чат курса", "Оценки", "Участники", "Записи", "Домашние задания"]
+}
+
+extension ITCHCourseViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == 4 else { return }
+        
+        switch indexPath.row {
+        case 0:
+            interactor.loadChat()
+        case 1:
+            interactor.loadGrades()
+        default:
+            break
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        section == 4 ? ITCHCourseHeaderView() : ITCHCourseHeaderView(with: interactor.titles[section])
     }
 }

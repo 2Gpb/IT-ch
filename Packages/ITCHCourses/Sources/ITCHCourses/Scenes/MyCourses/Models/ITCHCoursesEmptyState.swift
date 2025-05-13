@@ -1,5 +1,5 @@
 //
-//  ITCHEmptyStates.swift
+//  ITCHCoursesEmptyState.swift
 //  ITCHCourses
 //
 //  Created by Peter on 04.05.2025.
@@ -7,7 +7,7 @@
 
 import ITCHUtilities
 
-enum ITCHEmptyState {
+enum ITCHCoursesEmptyState {
     case teacher, student, assistant
     
     var title: String {
@@ -23,7 +23,7 @@ enum ITCHEmptyState {
         }
     }
     
-    static func from(role: ITCHUserRole) -> ITCHEmptyState {
+    static func from(role: ITCHUserRole) -> ITCHCoursesEmptyState {
         switch role {
         case .teacher: return .teacher
         case .student: return .student

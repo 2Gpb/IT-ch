@@ -19,15 +19,15 @@ extension ITCHContactsPresenter: ITCHContactsRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routetoVK() {
+    func routeToVK() {
         ITCHContactsLinks.vk.openURL()
     }
     
-    func routetoTelegram() {
+    func routeToTelegram() {
         ITCHContactsLinks.telegram.openURL()
     }
     
-    func routetoEmail() {
+    func routeToEmail() {
         ITCHContactsLinks.email.openURL()
     }
 }
