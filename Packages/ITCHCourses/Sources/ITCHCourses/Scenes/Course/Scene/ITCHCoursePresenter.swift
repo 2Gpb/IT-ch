@@ -36,4 +36,8 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
     func routeToGrades(for link: String?) {
         link?.openURL()
     }
+    
+    func routeToMembers() {
+        view?.navigationController?.pushViewController(ITCHMembersAssembly.build(), animated: true)
+    }
 }

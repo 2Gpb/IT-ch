@@ -56,7 +56,11 @@ public final class ITCHAccountRow: UIView {
     private let aboutInfoLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
     private let rightImageView: UIImageView = UIImageView()
+    private let rightButton: ITCHCustomButton = ITCHCustomButton(type: .system)
     private let avatarPlusImageView: UIImageView = UIImageView()
+    
+    // MARK: - Properties
+    public var rightAction: (() -> Void)?
     
     // MARK: - Lifecycle
     public init(type: ITCHAccountRowType) {
@@ -82,18 +86,23 @@ public final class ITCHAccountRow: UIView {
         setUpAvatarImageView()
         setHeight(Constant.View.height)
         
-        let image: UIImage? = {
-            switch type {
-            case .account, .addAccount:
-                return Constant.RightImage.chevronImage
-            case .deleteAccount:
-                return Constant.RightImage.deleteImage
-            case .defaultAccount:
-                return nil
-            }
-        }()
-
-        setUpRightImageView(with: image)
+        switch type {
+        case .account, .addAccount:
+            rightImageView.image = Constant.RightImage.chevronImage
+        case .deleteAccount:
+            rightImageView.isHidden = true
+            rightButton.isHidden = false
+            rightButton.setImage(Constant.RightImage.deleteImage, for: .normal)
+        case .options:
+            rightImageView.isHidden = true
+            rightButton.isHidden = false
+            rightButton.setImage(Constant.RightImage.deleteImage, for: .normal)
+        case .defaultAccount:
+            rightImageView.image = nil
+        }
+        
+        setUpRightImageView()
+        setUpRightButton()
 
         switch type {
         case .addAccount:
@@ -118,13 +127,21 @@ public final class ITCHAccountRow: UIView {
         avatarImageView.setHeight(Constant.Avatar.size)
     }
     
-    private func setUpRightImageView(with image: UIImage?) {
-        rightImageView.image = image
-        
+    private func setUpRightImageView() {
         addSubview(rightImageView)
         rightImageView.pinCenterY(to: self)
         rightImageView.pinRight(to: self)
         rightImageView.setWidth(Constant.RightImage.size)
+    }
+    
+    private func setUpRightButton() {
+        rightButton.isHidden = true
+        rightButton.tintColor = ITCHColor.blue60.color
+        rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
+        
+        addSubview(rightButton)
+        rightButton.pinRight(to: self)
+        rightButton.pinCenterY(to: self)
     }
     
     private func setUpAvatarLabel() {
@@ -186,5 +203,11 @@ public final class ITCHAccountRow: UIView {
         let secondInitial = second.first.map { String($0) } ?? ""
 
         return firstInitial + secondInitial
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func rightButtonAction() {
+        rightAction?()
     }
 }

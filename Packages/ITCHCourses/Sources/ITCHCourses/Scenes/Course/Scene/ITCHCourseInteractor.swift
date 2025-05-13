@@ -50,6 +50,10 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     func loadGrades() {
         presenter.routeToGrades(for: course.gradesLink)
     }
+    
+    func loadMembers() {
+        presenter.routeToMembers()
+    }
 }
 
 // MARK: - UITableViewDataSource

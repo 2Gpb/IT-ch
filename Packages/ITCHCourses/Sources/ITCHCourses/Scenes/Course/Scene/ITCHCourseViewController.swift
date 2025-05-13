@@ -159,7 +159,9 @@ extension ITCHCourseViewController: UITableViewDelegate {
                 interactor.loadChat()
             case .grades:
                 interactor.loadGrades()
-            case .homework, .members, .recordings:
+            case .members:
+                interactor.loadMembers()
+            case .homework, .recordings:
                 break
             }
         }

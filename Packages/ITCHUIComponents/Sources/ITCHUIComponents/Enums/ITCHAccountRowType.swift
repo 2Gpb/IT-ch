@@ -9,5 +9,6 @@ public enum ITCHAccountRowType {
     case account
     case addAccount
     case deleteAccount
+    case options
     case defaultAccount
 }
