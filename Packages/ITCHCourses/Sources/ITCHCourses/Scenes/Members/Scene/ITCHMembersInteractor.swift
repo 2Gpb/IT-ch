@@ -25,6 +25,10 @@ final class ITCHMembersInteractor: NSObject, ITCHMembersBusinessLogic {
     }
     
     // MARK: - Methods
+    func loadAddMembers() {
+        presenter.routeToAddMembers()
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }

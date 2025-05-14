@@ -8,6 +8,7 @@
 import UIKit
 
 protocol ITCHMembersBusinessLogic: UITableViewDataSource {
+    func loadAddMembers()
     func loadDismiss()
 }
 
@@ -16,5 +17,6 @@ protocol ITCHMembersPresentationLogic {
 }
 
 protocol ITCHMembersRouterLogic {
+    func routeToAddMembers()
     func popViewController()
 }
