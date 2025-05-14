@@ -11,7 +11,7 @@ protocol ITCHRecordEditorBusinessLogic {
 }
 
 protocol ITCHRecordEditorPresentationLogic {
-    func presentStart(with mode: ITCHEditingMode)
+    func presentStart(for mode: ITCHEditingMode, with model: ITCHRecordModel?)
 }
 
 protocol ITCHRecordEditorRouterLogic {

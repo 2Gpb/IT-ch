@@ -9,20 +9,23 @@ final class ITCHRecordEditorInteractor: ITCHRecordEditorBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHRecordEditorPresentationLogic & ITCHRecordEditorRouterLogic
     private let mode: ITCHEditingMode
+    private let record: ITCHRecordModel?
     
     // MARK: - Lifecycle
     init(
         presenter: ITCHRecordEditorPresentationLogic & ITCHRecordEditorRouterLogic,
-        for mode: ITCHEditingMode
+        for mode: ITCHEditingMode,
+        with model: ITCHRecordModel? = nil
     ) {
         self.presenter = presenter
         self.mode = mode
+        self.record = model
     }
     
     // MARK: - Methods
     
     func loadStart() {
-        presenter.presentStart(with: mode)
+        presenter.presentStart(for: mode, with: record)
     }
     
     func loadDismiss() {

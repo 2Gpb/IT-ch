@@ -8,9 +8,9 @@
 import UIKit
 
 final class ITCHRecordEditorAssembly {
-    static func build(for mode: ITCHEditingMode) -> UIViewController {
+    static func build(for mode: ITCHEditingMode, with model: ITCHRecordModel? = nil) -> UIViewController {
         let presenter = ITCHRecordEditorPresenter()
-        let interactor = ITCHRecordEditorInteractor(presenter: presenter, for: mode)
+        let interactor = ITCHRecordEditorInteractor(presenter: presenter, for: mode, with: model)
         let view = ITCHRecordEditorViewController(interactor: interactor)
         
         presenter.view = view

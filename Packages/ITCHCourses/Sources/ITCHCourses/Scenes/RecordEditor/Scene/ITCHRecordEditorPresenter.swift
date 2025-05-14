@@ -10,8 +10,8 @@ final class ITCHRecordEditorPresenter: ITCHRecordEditorPresentationLogic {
     weak var view: ITCHRecordEditorViewController?
     
     // MARK: - Methods
-    func presentStart(with mode: ITCHEditingMode) {
-        view?.displayStart(with: mode)
+    func presentStart(for mode: ITCHEditingMode, with model: ITCHRecordModel?) {
+        view?.displayStart(for: mode, with: model)
     }
 }
 

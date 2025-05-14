@@ -44,7 +44,7 @@ extension ITCHRecordsInteractor: UITableViewDataSource {
         cell.configure(
             for: records[indexPath.row].date,
             openAction: { [weak self] in self?.records[indexPath.row].link.openURL() },
-            editAction: { [weak self] in self?.presenter.routeToEditRecord() }
+            editAction: { [weak self] in self?.presenter.routeToEditRecord(with: self?.records[indexPath.row]) }
         )
         
         return cell

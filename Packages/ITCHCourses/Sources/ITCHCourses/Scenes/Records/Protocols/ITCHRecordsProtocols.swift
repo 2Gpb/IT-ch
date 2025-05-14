@@ -16,6 +16,6 @@ protocol ITCHRecordsPresentationLogic { }
 
 protocol ITCHRecordsRouterLogic {
     func routeToAddRecord()
-    func routeToEditRecord()
+    func routeToEditRecord(with model: ITCHRecordModel?)
     func popViewController()
 }

@@ -16,8 +16,8 @@ extension ITCHRecordsPresenter: ITCHRecordsRouterLogic {
         view?.present(ITCHRecordEditorAssembly.build(for: .create), animated: true)
     }
     
-    func routeToEditRecord() {
-        view?.present(ITCHRecordEditorAssembly.build(for: .edit), animated: true)
+    func routeToEditRecord(with model: ITCHRecordModel?) {
+        view?.present(ITCHRecordEditorAssembly.build(for: .edit, with: model), animated: true)
     }
     
     func popViewController() {
