@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 public final class ITCHHomeWorkView: UIView {
     // MARK: - Constants
@@ -63,22 +64,29 @@ public final class ITCHHomeWorkView: UIView {
     private let separatorView: UIView = UIView()
     private var navigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
+    private var thirdNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
     // MARK: - Properties
+    public var openAction: (() -> Void)? {
+        didSet {
+            navigationRow.action = openAction
+        }
+    }
+    
     public var solutionsAction: (() -> Void)? {
         didSet {
-            navigationRow.action = solutionsAction
+            secondNavigationRow.action = solutionsAction
         }
     }
     
     public var editAction: (() -> Void)? {
         didSet {
-            secondNavigationRow.action = editAction
+            thirdNavigationRow.action = editAction
         }
     }
     
     // MARK: - Lifecycle
-    public init(type: ITCHHomeWorkCellType) {
+    public init(type: ITCHUserRole) {
         super.init(frame: .zero)
         setUp(type: type)
     }
@@ -95,12 +103,24 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(type: ITCHHomeWorkCellType) {
+    private func setUp(type: ITCHUserRole) {
         setUpView()
         setUpTitleLabel()
         setUpDateStack()
         setUpSeparatorView()
-        setUpNavigationRow(with: type)
+        setUpNavigationRow()
+        setUpSecondNavigationRow()
+        
+        switch type {
+        case .teacher:
+            setUpThirdNavigationRow()
+        case .student:
+            secondNavigationRow.configure(title: Constant.NavigationRows.studentTitle)
+            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        case .assistant:
+            secondNavigationRow.configure(title: Constant.NavigationRows.assistantTitle)
+            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        }
     }
     
     private func setUpView() {
@@ -146,31 +166,28 @@ public final class ITCHHomeWorkView: UIView {
         separatorView.setHeight(Constant.Separator.height)
     }
     
-    private func setUpNavigationRow(with type: ITCHHomeWorkCellType) {
-        navigationRow.configure(title: Constant.NavigationRows.teacherTitle)
+    private func setUpNavigationRow() {
+        navigationRow.configure(title: "Открыть")
         
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-        
-        switch type {
-        case .teacher:
-            setUpSecondNavigationRow()
-        case .student:
-            secondNavigationRow.configure(title: Constant.NavigationRows.studentTitle)
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .assistant:
-            secondNavigationRow.configure(title: Constant.NavigationRows.assistantTitle)
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        }
     }
     
     private func setUpSecondNavigationRow() {
-        secondNavigationRow.configure(title: Constant.NavigationRows.teacherSecondTitle)
+        secondNavigationRow.configure(title: Constant.NavigationRows.teacherTitle)
         
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-        secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+    }
+    
+    private func setUpThirdNavigationRow() {
+        thirdNavigationRow.configure(title: "Редактировать")
+        
+        addSubview(thirdNavigationRow)
+        thirdNavigationRow.pinTop(to: secondNavigationRow.bottomAnchor)
+        thirdNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        thirdNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
     }
 }

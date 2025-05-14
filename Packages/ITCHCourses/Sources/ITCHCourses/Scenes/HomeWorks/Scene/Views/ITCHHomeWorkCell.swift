@@ -59,7 +59,7 @@ final class ITCHHomeWorkCell: UITableViewCell {
         editAction: (() -> Void)?
     ) {
         homeWorkView.configure(title: title, date: date)
-        homeWorkView.solutionsAction = openAction
+        homeWorkView.openAction = openAction
         homeWorkView.editAction = editAction
     }
     
