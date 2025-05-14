@@ -11,4 +11,8 @@ final class ITCHAddMembersPresenter: ITCHAddMembersPresentationLogic {
 }
 
 // MARK: - RouterLogic
-extension ITCHAddMembersPresenter: ITCHAddMembersRouterLogic { }
+extension ITCHAddMembersPresenter: ITCHAddMembersRouterLogic {
+    func popViewController() {
+        view?.dismiss(animated: true)
+    }
+}

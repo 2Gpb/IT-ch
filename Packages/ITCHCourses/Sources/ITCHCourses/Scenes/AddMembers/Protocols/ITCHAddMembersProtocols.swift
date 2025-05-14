@@ -5,8 +5,14 @@
 //  Created by Peter on 14.05.2025.
 //
 
-protocol ITCHAddMembersBusinessLogic { }
+import UIKit
+
+protocol ITCHAddMembersBusinessLogic: UITableViewDataSource {
+    func loadDismiss()
+}
 
 protocol ITCHAddMembersPresentationLogic { }
 
-protocol ITCHAddMembersRouterLogic { }
+protocol ITCHAddMembersRouterLogic {
+    func popViewController()
+}
