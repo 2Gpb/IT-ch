@@ -20,6 +20,11 @@ final class ITCHHomeWorksViewController: UIViewController {
             static let leftImage: UIImage = ITCHImage.chevronLeft24.image
             static let rightImage: UIImage = ITCHImage.plus24.image
         }
+        
+        enum HomeWorksTable {
+            static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let backgroundColor: UIColor = .clear
+        }
     }
     
     // MARK: - Private fields
@@ -27,6 +32,7 @@ final class ITCHHomeWorksViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let homeWorksTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHHomeWorksBusinessLogic) {
@@ -48,6 +54,7 @@ final class ITCHHomeWorksViewController: UIViewController {
     private func setUp() {
         view.backgroundColor = ITCHColor.backgroundDark.color
         setUpNavigationBar()
+        setUpHomeWorksTableView()
     }
     
     private func setUpNavigationBar() {
@@ -67,4 +74,20 @@ final class ITCHHomeWorksViewController: UIViewController {
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
     }
+    
+    private func setUpHomeWorksTableView() {
+        homeWorksTableView.dataSource = interactor
+        homeWorksTableView.delegate = self
+        homeWorksTableView.separatorStyle = Constant.HomeWorksTable.separatorStyle
+        homeWorksTableView.backgroundColor = Constant.HomeWorksTable.backgroundColor
+        homeWorksTableView.register(ITCHHomeWorkCell.self, forCellReuseIdentifier: ITCHHomeWorkCell.reuseId)
+        
+        view.addSubview(homeWorksTableView)
+        homeWorksTableView.pinTop(to: navigationBar.bottomAnchor)
+        homeWorksTableView.pinHorizontal(to: view)
+        homeWorksTableView.pinBottom(to: view)
+    }
 }
+
+// MARK: - UITableViewDelegate
+extension ITCHHomeWorksViewController: UITableViewDelegate { }

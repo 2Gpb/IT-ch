@@ -1,5 +1,5 @@
 //
-//  PrimaryHomeWorkCell.swift
+//  ITCHHomeWorkView.swift
 //  DesignSystem-IT-ch
 //
 //  Created by Peter on 02.04.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHHomeWorkCell: UIView {
+public final class ITCHHomeWorkView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -147,7 +147,7 @@ public final class ITCHHomeWorkCell: UIView {
     }
     
     private func setUpNavigationRow(with type: ITCHHomeWorkCellType) {
-        secondNavigationRow.configure(title: Constant.NavigationRows.teacherTitle)
+        navigationRow.configure(title: Constant.NavigationRows.teacherTitle)
         
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)

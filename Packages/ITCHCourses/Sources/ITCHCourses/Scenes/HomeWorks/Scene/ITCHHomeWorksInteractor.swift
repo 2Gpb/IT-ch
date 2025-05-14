@@ -5,9 +5,18 @@
 //  Created by Peter on 14.05.2025.
 //
 
-final class ITCHHomeWorksInteractor: ITCHHomeWorksBusinessLogic {
+import UIKit
+
+final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHHomeWorksPresentationLogic & ITCHHomeWorksRouterLogic
+    private let homeWorks: [ITCHHomeWorkModel] = [
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            link: "https://github.com/IT-CH-app"
+        )
+    ]
     
     // MARK: - Lifecycle
     init(presenter: ITCHHomeWorksPresentationLogic & ITCHHomeWorksRouterLogic) {
@@ -17,5 +26,25 @@ final class ITCHHomeWorksInteractor: ITCHHomeWorksBusinessLogic {
     // MARK: - Methods
     func loadDismiss() {
         presenter.popViewController()
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension ITCHHomeWorksInteractor: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        homeWorks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath)
+        
+        cell.configure(
+            with: homeWorks[indexPath.row].name,
+            date: homeWorks[indexPath.row].date,
+            openAction: { [weak self] in self?.homeWorks[indexPath.row].link.openURL() },
+            editAction: { }
+        )
+        
+        return cell
     }
 }

@@ -5,7 +5,9 @@
 //  Created by Peter on 14.05.2025.
 //
 
-protocol ITCHHomeWorksBusinessLogic {
+import UIKit
+
+protocol ITCHHomeWorksBusinessLogic: UITableViewDataSource {
     func loadDismiss()
 }
 
