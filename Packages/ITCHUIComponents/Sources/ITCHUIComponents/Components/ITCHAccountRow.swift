@@ -35,6 +35,7 @@ public final class ITCHAccountRow: UIView {
             static let size: CGFloat = 24
             static let chevronImage: UIImage = ITCHImage.chevronRight24.image
             static let deleteImage: UIImage = ITCHImage.trash24.image
+            static let optionsImage: UIImage = ITCHImage.options24.image
         }
         
         enum TextStack {
@@ -81,10 +82,17 @@ public final class ITCHAccountRow: UIView {
         aboutInfoLabel.text = model.info
     }
     
+    public func configureRightButtonMenu(items: [UIAction]) {
+        rightButton.menu = UIMenu(children: items)
+        rightButton.showsMenuAsPrimaryAction = true
+    }
+    
     // MARK: - SetUp
     private func setUp(with type: ITCHAccountRowType) {
-        setUpAvatarImageView()
         setHeight(Constant.View.height)
+        setUpAvatarImageView()
+        setUpRightImageView()
+        setUpRightButton()
         
         switch type {
         case .account, .addAccount:
@@ -96,13 +104,10 @@ public final class ITCHAccountRow: UIView {
         case .options:
             rightImageView.isHidden = true
             rightButton.isHidden = false
-            rightButton.setImage(Constant.RightImage.deleteImage, for: .normal)
+            rightButton.setImage(Constant.RightImage.optionsImage, for: .normal)
         case .defaultAccount:
             rightImageView.image = nil
         }
-        
-        setUpRightImageView()
-        setUpRightButton()
 
         switch type {
         case .addAccount:

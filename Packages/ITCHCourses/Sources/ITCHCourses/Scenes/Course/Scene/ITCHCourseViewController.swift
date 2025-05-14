@@ -12,7 +12,7 @@ final class ITCHCourseViewController: UIViewController {
     // MARK: - Constants
     private enum Constant {
         enum Error {
-            static let message = "init(coder:) has not been implemented"
+            static let message: String = "init(coder:) has not been implemented"
         }
         
         enum NavigationBar {
@@ -119,7 +119,7 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     // MARK: - Actions
-    func changeCourseAction() -> UIAction {
+    private func changeCourseAction() -> UIAction {
         UIAction(
             title: Constant.ContextActions.changeCourseTitle,
             image: Constant.ContextActions.changeCourseImage
@@ -128,7 +128,7 @@ final class ITCHCourseViewController: UIViewController {
         }
     }
     
-    func changeScheduleAction() -> UIAction {
+    private func changeScheduleAction() -> UIAction {
         UIAction(
             title: Constant.ContextActions.changeScheduleTitle,
             image: Constant.ContextActions.changeScheduleImage
@@ -137,7 +137,7 @@ final class ITCHCourseViewController: UIViewController {
         }
     }
     
-    func deleteAction() -> UIAction {
+    private func deleteAction() -> UIAction {
         UIAction(
             title: Constant.ContextActions.deleteTitle,
             image: Constant.ContextActions.deleteImage,

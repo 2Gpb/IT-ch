@@ -5,11 +5,15 @@
 //  Created by Peter on 13.05.2025.
 //
 
-protocol ITCHMembersBusinessLogic {
+import UIKit
+
+protocol ITCHMembersBusinessLogic: UITableViewDataSource {
     func loadDismiss()
 }
 
-protocol ITCHMembersPresentationLogic { }
+protocol ITCHMembersPresentationLogic {
+    func presentChangeRoleAlert()
+}
 
 protocol ITCHMembersRouterLogic {
     func popViewController()

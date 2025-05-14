@@ -8,6 +8,11 @@
 final class ITCHMembersPresenter: ITCHMembersPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHMembersViewController?
+    
+    // MARK: - Methods
+    func presentChangeRoleAlert() {
+        view?.displayRoleChangeAlert()
+    }
 }
 
 // MARK: - RouterLogic
