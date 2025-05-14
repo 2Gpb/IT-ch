@@ -16,6 +16,7 @@ protocol ITCHCourseBusinessLogic: UITableViewDataSource {
     func loadChat()
     func loadGrades()
     func loadMembers()
+    func loadRecords()
 }
 
 protocol ITCHCoursePresentationLogic {
@@ -30,4 +31,5 @@ protocol ITCHCourseRouterLogic {
     func routeToChat(for link: String?)
     func routeToGrades(for link: String?)
     func routeToMembers()
+    func routeToRecords()
 }

@@ -54,6 +54,10 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     func loadMembers() {
         presenter.routeToMembers()
     }
+    
+    func loadRecords() {
+        presenter.routeToRecords()
+    }
 }
 
 // MARK: - UITableViewDataSource

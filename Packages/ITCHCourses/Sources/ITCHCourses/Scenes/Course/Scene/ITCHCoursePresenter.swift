@@ -40,4 +40,8 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
     func routeToMembers() {
         view?.navigationController?.pushViewController(ITCHMembersAssembly.build(), animated: true)
     }
+    
+    func routeToRecords() {
+        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(), animated: true)
+    }
 }

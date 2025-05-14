@@ -161,7 +161,9 @@ extension ITCHCourseViewController: UITableViewDelegate {
                 interactor.loadGrades()
             case .members:
                 interactor.loadMembers()
-            case .homework, .recordings:
+            case .recordings:
+                interactor.loadRecords()
+            case .homework:
                 break
             }
         }
