@@ -14,6 +14,21 @@ final class ITCHRecordsViewController: UIViewController {
         enum Error {
             static let message = "init(coder:) has not been implemented"
         }
+        
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.backgroundDark.color
+        }
+        
+        enum NavigationBar {
+            static let title = "Записи"
+            static let leftImage: UIImage = ITCHImage.chevronLeft24.image
+            static let rightImage: UIImage = ITCHImage.plus24.image
+        }
+        
+        enum RecordsTable {
+            static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let backgroundColor: UIColor = .clear
+        }
     }
     
     // MARK: - Private fields
@@ -21,6 +36,7 @@ final class ITCHRecordsViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let recordsTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHRecordsBusinessLogic) {
@@ -40,16 +56,17 @@ final class ITCHRecordsViewController: UIViewController {
     
     // MARK: - SetUp
     private func setUp() {
-        view.backgroundColor = ITCHColor.backgroundDark.color
+        view.backgroundColor = Constant.View.backgroundColor
         setUpNavigationBar()
+        setUpRecordsTableView()
     }
     
     private func setUpNavigationBar() {
         navigationBar.configure(
             with: ITCHNavigationBarModel(
-                title: "Записи",
-                leftImage: ITCHImage.chevronLeft24.image,
-                rightImage: ITCHImage.plus24.image
+                title: Constant.NavigationBar.title,
+                leftImage: Constant.NavigationBar.leftImage,
+                rightImage: Constant.NavigationBar.rightImage
             )
         )
         
@@ -61,4 +78,20 @@ final class ITCHRecordsViewController: UIViewController {
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
     }
+    
+    private func setUpRecordsTableView() {
+        recordsTableView.dataSource = interactor
+        recordsTableView.delegate = self
+        recordsTableView.separatorStyle = Constant.RecordsTable.separatorStyle
+        recordsTableView.backgroundColor = Constant.RecordsTable.backgroundColor
+        recordsTableView.register(ITCHRecordCell.self, forCellReuseIdentifier: ITCHRecordCell.reuseId)
+        
+        view.addSubview(recordsTableView)
+        recordsTableView.pinTop(to: navigationBar.bottomAnchor)
+        recordsTableView.pinHorizontal(to: view)
+        recordsTableView.pinBottom(to: view)
+    }
 }
+
+// MARK: - UITableViewDelegate
+extension ITCHRecordsViewController: UITableViewDelegate { }

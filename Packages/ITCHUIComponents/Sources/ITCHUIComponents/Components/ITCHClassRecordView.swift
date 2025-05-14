@@ -1,5 +1,5 @@
 //
-//  ITCHClassRecordCell.swift
+//  ITCHClassRecordView.swift
 //  ITCHUIComponents
 //
 //  Created by Peter on 10.04.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHClassRecordCell: UIView {
+public final class ITCHClassRecordView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
