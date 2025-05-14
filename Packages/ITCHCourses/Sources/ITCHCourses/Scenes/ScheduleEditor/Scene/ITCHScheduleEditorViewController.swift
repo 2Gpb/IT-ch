@@ -157,7 +157,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
     
     private func setUpTextFields() {
         dayTextField.configure(with: ITCHScheduleEditorTextFieldConfig.day())
-        dayTextField.beforeOpenKeyboardAction = { [weak self] in
+        dayTextField.insteadKeyboardAction = { [weak self] in
             guard let self else { return }
             self.dayAlert.present(on: self)
         }
@@ -165,13 +165,13 @@ final class ITCHScheduleEditorViewController: UIViewController {
         numberOfHoursTextField.configure(with: ITCHScheduleEditorTextFieldConfig.numberOfHours())
         
         startTimeTextField.configure(with: ITCHScheduleEditorTextFieldConfig.startTime())
-        startTimeTextField.beforeOpenKeyboardAction = { [weak self] in
+        startTimeTextField.insteadKeyboardAction = { [weak self] in
             guard let self else { return }
             self.timeAlert.present(on: self)
         }
         
         frequencyTextField.configure(with: ITCHScheduleEditorTextFieldConfig.frequency())
-        frequencyTextField.beforeOpenKeyboardAction = { [weak self] in
+        frequencyTextField.insteadKeyboardAction = { [weak self] in
             guard let self else { return }
             self.frequencyAlert.present(on: self)
         }

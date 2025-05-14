@@ -47,8 +47,9 @@ public final class ITCHHomeWorkView: UIView {
         }
         
         enum NavigationRows {
+            static let openTitle: String = "Открыть"
             static let teacherTitle: String = "Посмотреть решения"
-            static let teacherSecondTitle: String = "Редактировать"
+            static let editTitle: String = "Редактировать"
             static let studentTitle: String = "Добавить решение"
             static let assistantTitle: String = "Проверить решения"
             static let horizontalOffset: CGFloat = 20
@@ -167,7 +168,7 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     private func setUpNavigationRow() {
-        navigationRow.configure(title: "Открыть")
+        navigationRow.configure(title: Constant.NavigationRows.openTitle)
         
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
@@ -183,7 +184,7 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     private func setUpThirdNavigationRow() {
-        thirdNavigationRow.configure(title: "Редактировать")
+        thirdNavigationRow.configure(title: Constant.NavigationRows.editTitle)
         
         addSubview(thirdNavigationRow)
         thirdNavigationRow.pinTop(to: secondNavigationRow.bottomAnchor)

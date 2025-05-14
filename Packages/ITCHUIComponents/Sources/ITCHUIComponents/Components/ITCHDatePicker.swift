@@ -32,7 +32,6 @@ public final class ITCHDatePicker: UIView {
         }
         
         enum DatePicker {
-            static let mode: UIDatePicker.Mode = .date
             static let style: UIDatePickerStyle = .inline
             static let locale: Locale = Locale(identifier: "ru_RU")
             static let themeStyle: UIUserInterfaceStyle = .dark
@@ -54,9 +53,9 @@ public final class ITCHDatePicker: UIView {
     private let datePicker: UIDatePicker = UIDatePicker()
     
     // MARK: - Lifecycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setUp()
+    public init(mode: UIDatePicker.Mode) {
+        super.init(frame: .zero)
+        setUp(with: mode)
     }
     
     @available(*, unavailable)
@@ -70,13 +69,13 @@ public final class ITCHDatePicker: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
+    private func setUp(with mode: UIDatePicker.Mode) {
         backgroundColor = ITCHColor.backgroundDark.color
         
         setUpButtons()
         setUpDoneButton()
         setUpCancelButton()
-        setUpDatePicker()
+        setUpDatePicker(with: mode)
     }
     
     private func setUpButtons() {
@@ -109,8 +108,8 @@ public final class ITCHDatePicker: UIView {
         cancelButton.setWidth(Constants.Buttons.width)
     }
     
-    private func setUpDatePicker() {
-        datePicker.datePickerMode = Constants.DatePicker.mode
+    private func setUpDatePicker(with mode: UIDatePicker.Mode) {
+        datePicker.datePickerMode = mode
         datePicker.preferredDatePickerStyle = Constants.DatePicker.style
         datePicker.locale = Constants.DatePicker.locale
         datePicker.overrideUserInterfaceStyle = Constants.DatePicker.themeStyle

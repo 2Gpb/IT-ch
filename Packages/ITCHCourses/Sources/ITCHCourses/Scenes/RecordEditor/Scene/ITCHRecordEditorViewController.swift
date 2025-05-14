@@ -59,7 +59,7 @@ final class ITCHRecordEditorViewController: UIViewController {
     // MARK: - UI Components
     private let navigationBar: ITCHPresentNavigationBar = ITCHPresentNavigationBar()
     private let dateTextField: ITCHTextField = ITCHTextField()
-    private let datePicker: ITCHDatePicker = ITCHDatePicker()
+    private let datePicker: ITCHDatePicker = ITCHDatePicker(mode: .date)
     private let linkTextField: ITCHTextField = ITCHTextField()
     private let deleteButton: ITCHButton = ITCHButton(type: .delete)
     

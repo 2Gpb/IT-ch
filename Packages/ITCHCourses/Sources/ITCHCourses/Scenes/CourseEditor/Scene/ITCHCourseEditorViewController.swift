@@ -174,7 +174,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         nameTextField.configure(with: ITCHCourseEditorTextFieldConfig.name())
         locationTextField.configure(with: ITCHCourseEditorTextFieldConfig.location())
         durationTextField.configure(with: ITCHCourseEditorTextFieldConfig.duration())
-        durationTextField.beforeOpenKeyboardAction = { [weak self] in
+        durationTextField.insteadKeyboardAction = { [weak self] in
             self?.setUpDurationPickerView()
         }
     

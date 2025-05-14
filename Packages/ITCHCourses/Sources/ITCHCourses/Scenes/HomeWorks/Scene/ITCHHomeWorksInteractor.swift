@@ -14,7 +14,9 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
         ITCHHomeWorkModel(
             name: "Домашняя работа 1",
             date: Date(),
-            link: "https://github.com/IT-CH-app"
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
         )
     ]
     
@@ -45,7 +47,7 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
         cell.configure(
             with: homeWorks[indexPath.row].name,
             date: homeWorks[indexPath.row].date,
-            openAction: { [weak self] in self?.homeWorks[indexPath.row].link.openURL() },
+            openAction: { [weak self] in self?.homeWorks[indexPath.row].linkOnTask.openURL() },
             editAction: { [weak self] in self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row]) }
         )
         

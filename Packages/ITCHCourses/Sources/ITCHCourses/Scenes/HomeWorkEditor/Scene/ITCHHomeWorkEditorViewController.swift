@@ -7,6 +7,8 @@
 
 import UIKit
 import ITCHUIComponents
+import IQKeyboardManagerSwift
+import IQKeyboardToolbarManager
 
 final class ITCHHomeWorkEditorViewController: UIViewController {
     // MARK: - Constants
@@ -24,6 +26,37 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
             static let editTitle: String = "Редактирование"
             static let topOffset: CGFloat = 14
         }
+        
+        enum DeleteButton {
+            static let title: String = "Удалить задание"
+            static let bottomOffset: CGFloat = 20
+            static let horizontalOffset: CGFloat = 16
+        }
+        
+        enum ContentScroll {
+            static let bottomOffset: CGFloat = 20
+            static let horizontalOffset: CGFloat = 16
+        }
+        
+        enum DatePicker {
+            static let x: CGFloat = 0
+            static let y: CGFloat = 0
+            static let height: CGFloat = 520
+            static let dateFormat: String = "d MMMM yyyy'г.,' H:mm"
+        }
+        
+        enum LinksStack {
+            static let axis: NSLayoutConstraint.Axis = .horizontal
+            static let spacing: CGFloat = 20
+            static let distribution: UIStackView.Distribution = .fillEqually
+            static let horizontalOffsets: CGFloat = 32
+        }
+        
+        enum ContentStack {
+            static let axis: NSLayoutConstraint.Axis = .vertical
+            static let spacing: CGFloat = 12
+            static let topOffset: CGFloat = 20
+        }
     }
     
     // MARK: - Private fields
@@ -33,6 +66,7 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     private let navigationBar: ITCHPresentNavigationBar = ITCHPresentNavigationBar()
     private let nameTextField: ITCHTextField = ITCHTextField()
     private let dateTextField: ITCHTextField = ITCHTextField()
+    private let datePicker: ITCHDatePicker = ITCHDatePicker(mode: .dateAndTime)
     private let linkForLoadTextField: ITCHTextField = ITCHTextField()
     private let linkForCheckTextField: ITCHTextField = ITCHTextField()
     private let linksStackView: UIStackView = UIStackView()
@@ -67,6 +101,14 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
             navigationBar.configure(with: Constant.NavigationBar.editTitle)
             setUpDeleteButton()
         }
+        
+        if let model {
+            nameTextField.text = model.name
+            dateTextField.text = model.date.configure(to: Constant.DatePicker.dateFormat)
+            linkForLoadTextField.text = model.linkForLoad
+            linkForCheckTextField.text = model.linkForCheck
+            linkOnTaskTextField.text = model.linkOnTask
+        }
     }
     
     // MARK: - SetUp
@@ -75,7 +117,8 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
         setUpNavigationBar()
         setUpContentScrollView()
         setUpTextFields()
-        setUplinksStackView()
+        setUpDatePicker()
+        setUpLinksStackView()
         setUpContentStackView()
     }
     
@@ -89,21 +132,21 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     }
     
     private func setUpDeleteButton() {
-        deleteButton.configure(title: "Удалить задание")
+        deleteButton.configure(title: Constant.DeleteButton.title)
         deleteButton.action = { [weak self] in
             self?.interactor.loadDismiss()
         }
         
         view.addSubview(deleteButton)
-        deleteButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 20)
-        deleteButton.pinHorizontal(to: view, 16)
+        deleteButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constant.DeleteButton.bottomOffset)
+        deleteButton.pinHorizontal(to: view, Constant.DeleteButton.horizontalOffset)
     }
     
     private func setUpContentScrollView() {
         view.addSubview(contentScrollView)
         contentScrollView.pinTop(to: navigationBar.bottomAnchor)
-        contentScrollView.pinHorizontal(to: view, 16)
-        contentScrollView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 20)
+        contentScrollView.pinHorizontal(to: view, Constant.ContentScroll.horizontalOffset)
+        contentScrollView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constant.ContentScroll.bottomOffset)
     }
     
     private func setUpTextFields() {
@@ -114,25 +157,54 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
         linkOnTaskTextField.configure(with: ITCHHomeWorkEditorTextFieldConfig.linkOnTask())
     }
     
-    private func setUplinksStackView() {
-        linksStackView.axis = .horizontal
-        linksStackView.spacing = 20
-        linksStackView.distribution = .fillEqually
-        linksStackView.setWidth(view.frame.width - 32.0)
+    private func setUpDatePicker() {
+        datePicker.frame = CGRect(
+            x: Constant.DatePicker.x,
+            y: Constant.DatePicker.y,
+            width: view.frame.width,
+            height: Constant.DatePicker.height
+        )
+        
+        datePicker.cancelAction = { [weak self] in
+            self?.dateTextField.keyboardState = .close
+        }
+        
+        datePicker.doneAction = { [weak self] in
+            self?.dateTextField.text = self?.datePicker.date?.configure(to: Constant.DatePicker.dateFormat)
+            self?.dateTextField.keyboardState = .close
+        }
+        
+        dateTextField.setInputView(datePicker)
+        dateTextField.beforeOpenKeyboardAction = { 
+            IQKeyboardManager.shared.isEnabled = false
+            IQKeyboardToolbarManager.shared.isEnabled = false
+        }
+        
+        dateTextField.afterCloseKeyboardAction = {
+            IQKeyboardManager.shared.isEnabled = true
+            IQKeyboardToolbarManager.shared.isEnabled = true
+        }
+    }
+    
+    private func setUpLinksStackView() {
+        linksStackView.axis = Constant.LinksStack.axis
+        linksStackView.spacing = Constant.LinksStack.spacing
+        linksStackView.distribution = Constant.LinksStack.distribution
+        linksStackView.setWidth(view.frame.width - Constant.LinksStack.horizontalOffsets)
         [linkForLoadTextField, linkForCheckTextField].forEach { element in
             linksStackView.addArrangedSubview(element)
         }
     }
     
     private func setUpContentStackView() {
-        contentStackView.axis = .vertical
-        contentStackView.spacing = 12
+        contentStackView.axis = Constant.ContentStack.axis
+        contentStackView.spacing = Constant.ContentStack.spacing
         [nameTextField, dateTextField, linksStackView, linkOnTaskTextField].forEach { element in
             contentStackView.addArrangedSubview(element)
         }
         
         contentScrollView.addSubview(contentStackView)
-        contentStackView.pinTop(to: contentScrollView, 20)
+        contentStackView.pinTop(to: contentScrollView, Constant.ContentStack.topOffset)
         contentStackView.pinHorizontal(to: contentScrollView)
     }
 }

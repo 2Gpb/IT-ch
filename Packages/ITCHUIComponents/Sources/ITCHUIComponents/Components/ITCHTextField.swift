@@ -52,7 +52,9 @@ public final class ITCHTextField: UIView {
     
     // MARK: - Properties
     public var returnAction: (() -> Void)?
+    public var insteadKeyboardAction: (() -> Void)?
     public var beforeOpenKeyboardAction: (() -> Void)?
+    public var afterCloseKeyboardAction: (() -> Void)?
     public var text: String? {
         didSet {
             textField.text = text
@@ -184,6 +186,11 @@ extension ITCHTextField: UITextFieldDelegate {
     
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         beforeOpenKeyboardAction?()
-        return beforeOpenKeyboardAction != nil ? false : true
+        insteadKeyboardAction?()
+        return insteadKeyboardAction != nil ? false : true
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        afterCloseKeyboardAction?()
     }
 }

@@ -10,5 +10,7 @@ import Foundation
 struct ITCHHomeWorkModel {
     var name: String
     var date: Date
-    var link: String
+    var linkForLoad: String
+    var linkForCheck: String
+    var linkOnTask: String
 }
