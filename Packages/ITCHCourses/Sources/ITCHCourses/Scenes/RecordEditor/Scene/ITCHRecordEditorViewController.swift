@@ -7,6 +7,8 @@
 
 import UIKit
 import ITCHUIComponents
+import IQKeyboardManagerSwift
+import IQKeyboardToolbarManager
 
 final class ITCHRecordEditorViewController: UIViewController {
     // MARK: - Constants
@@ -23,11 +25,17 @@ final class ITCHRecordEditorViewController: UIViewController {
         
         enum DateTextField {
             static let title: String = "Дата"
-            static let placeholder: String = "Дата"
+            static let placeholder: String = "Выберите дату"
             static let alignment: NSTextAlignment = .center
             static let dateFormat: String = "d MMMM yyyy'г.'"
             static let topOffset: CGFloat = 20
             static let horizontalOffset: CGFloat = 16
+        }
+        
+        enum DatePicker {
+            static let x: CGFloat = 0
+            static let y: CGFloat = 0
+            static let height: CGFloat = 500
         }
         
         enum LinkTextField {
@@ -51,6 +59,7 @@ final class ITCHRecordEditorViewController: UIViewController {
     // MARK: - UI Components
     private let navigationBar: ITCHPresentNavigationBar = ITCHPresentNavigationBar()
     private let dateTextField: ITCHTextField = ITCHTextField()
+    private let datePicker: ITCHDatePicker = ITCHDatePicker()
     private let linkTextField: ITCHTextField = ITCHTextField()
     private let deleteButton: ITCHButton = ITCHButton(type: .delete)
     
@@ -71,6 +80,18 @@ final class ITCHRecordEditorViewController: UIViewController {
         interactor.loadStart()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        IQKeyboardManager.shared.isEnabled = false
+        IQKeyboardToolbarManager.shared.isEnabled = false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        IQKeyboardManager.shared.isEnabled = true
+        IQKeyboardToolbarManager.shared.isEnabled = true
+    }
+    
     // MARK: - Methods
     func displayStart(for mode: ITCHEditingMode, with model: ITCHRecordModel?) {
         switch mode {
@@ -83,6 +104,7 @@ final class ITCHRecordEditorViewController: UIViewController {
         
         if let model {
             dateTextField.text = model.date.configure(to: Constant.DateTextField.dateFormat)
+            datePicker.configure(with: model.date)
             linkTextField.text = model.link
         }
     }
@@ -92,11 +114,13 @@ final class ITCHRecordEditorViewController: UIViewController {
         view.backgroundColor = ITCHColor.backgroundGray.color
         setUpNavigationBar()
         setUpDateTextField()
+        setUpDatePicker()
         setUpLinkTextField()
     }
     
     private func setUpNavigationBar() {
         navigationBar.leftAction = { [weak self] in self?.interactor.loadDismiss() }
+        navigationBar.rightAction = { [weak self] in self?.interactor.loadDismiss() }
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.topAnchor, Constant.NavigationBar.topOffset)
@@ -117,11 +141,32 @@ final class ITCHRecordEditorViewController: UIViewController {
         dateTextField.pinHorizontal(to: view, Constant.DateTextField.horizontalOffset)
     }
     
+    private func setUpDatePicker() {
+        datePicker.frame = CGRect(
+            x: Constant.DatePicker.x,
+            y: Constant.DatePicker.y,
+            width: view.frame.width,
+            height: Constant.DatePicker.height
+        )
+        
+        datePicker.cancelAction = { [weak self] in
+            self?.dateTextField.keyboardState = .close
+        }
+        
+        datePicker.doneAction = { [weak self] in
+            self?.dateTextField.text = self?.datePicker.date?.configure(to: Constant.DateTextField.dateFormat)
+            self?.dateTextField.keyboardState = .close
+        }
+        
+        dateTextField.setInputView(datePicker)
+    }
+    
     private func setUpLinkTextField() {
         linkTextField.configure(
             with: ITCHTextFieldViewModel(
                 title: Constant.LinkTextField.title,
                 placeholder: Constant.LinkTextField.placeholder,
+                keyboardType: .URL,
                 alignment: Constant.LinkTextField.alignment
             )
         )

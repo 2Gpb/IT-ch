@@ -27,7 +27,7 @@ public final class ITCHPresentNavigationBar: UIView {
         enum Buttons {
             static let leftTitle: String = "Отмена"
             static let rightTitle: String = "Готово"
-            static let font: UIFont = ITCHFont.navBarRegular.font
+            static let font: UIFont = ITCHFont.navBarMedium.font
             static let tintColor: UIColor = ITCHColor.blue60.color
             static let leadingOffset: CGFloat = 16
             static let trailingOffset: CGFloat = 16

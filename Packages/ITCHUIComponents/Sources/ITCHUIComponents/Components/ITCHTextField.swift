@@ -107,6 +107,10 @@ public final class ITCHTextField: UIView {
         }
     }
     
+    public func setInputView(_ inputView: UIView?) {
+        textField.inputView = inputView
+    }
+    
     // MARK: - SetUp
     private func setUp() {
         setUpTitleLabel()
