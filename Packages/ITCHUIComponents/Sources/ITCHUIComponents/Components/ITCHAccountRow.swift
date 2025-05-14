@@ -36,6 +36,8 @@ public final class ITCHAccountRow: UIView {
             static let chevronImage: UIImage = ITCHImage.chevronRight24.image
             static let deleteImage: UIImage = ITCHImage.trash24.image
             static let optionsImage: UIImage = ITCHImage.options24.image
+            static let chekBoxImage: UIImage = ITCHImage.checkbox28.image
+            static let chekBoxFillImage: UIImage = ITCHImage.checkboxFill28.image
         }
         
         enum TextStack {
@@ -61,6 +63,11 @@ public final class ITCHAccountRow: UIView {
     private let avatarPlusImageView: UIImageView = UIImageView()
     
     // MARK: - Properties
+    public var isCheck: Bool = false {
+        didSet {
+            rightImageView.image = isCheck ? Constant.RightImage.chekBoxFillImage : Constant.RightImage.chekBoxImage
+        }
+    }
     public var rightAction: (() -> Void)?
     
     // MARK: - Lifecycle
@@ -92,11 +99,14 @@ public final class ITCHAccountRow: UIView {
         setHeight(Constant.View.height)
         setUpAvatarImageView()
         setUpRightImageView()
+        rightImageView.setWidth(type == .checkBox ? 28 : Constant.RightImage.size)
         setUpRightButton()
         
         switch type {
         case .account, .addAccount:
             rightImageView.image = Constant.RightImage.chevronImage
+        case .checkBox:
+            rightImageView.image = Constant.RightImage.chekBoxImage
         case .deleteAccount:
             rightImageView.isHidden = true
             rightButton.isHidden = false
@@ -136,7 +146,6 @@ public final class ITCHAccountRow: UIView {
         addSubview(rightImageView)
         rightImageView.pinCenterY(to: self)
         rightImageView.pinRight(to: self)
-        rightImageView.setWidth(Constant.RightImage.size)
     }
     
     private func setUpRightButton() {
