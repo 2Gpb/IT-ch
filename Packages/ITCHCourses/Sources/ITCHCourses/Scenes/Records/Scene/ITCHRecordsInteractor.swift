@@ -23,6 +23,10 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     }
     
     // MARK: - Methods
+    func loadAddRecord() {
+        presenter.routeToAddRecord()
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }
@@ -40,7 +44,7 @@ extension ITCHRecordsInteractor: UITableViewDataSource {
         cell.configure(
             for: records[indexPath.row].date,
             openAction: { [weak self] in self?.records[indexPath.row].link.openURL() },
-            editAction: { }
+            editAction: { [weak self] in self?.presenter.routeToEditRecord() }
         )
         
         return cell
