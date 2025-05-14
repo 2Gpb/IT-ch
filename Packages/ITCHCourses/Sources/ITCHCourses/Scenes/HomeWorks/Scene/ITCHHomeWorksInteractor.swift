@@ -23,7 +23,11 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
         self.presenter = presenter
     }
     
-    // MARK: - Methods
+    // MARK: - Methods    
+    func loadAddHomeWork() {
+        presenter.routeToAddHomeWork()
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }
@@ -42,7 +46,7 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
             with: homeWorks[indexPath.row].name,
             date: homeWorks[indexPath.row].date,
             openAction: { [weak self] in self?.homeWorks[indexPath.row].link.openURL() },
-            editAction: { }
+            editAction: { [weak self] in self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row]) }
         )
         
         return cell

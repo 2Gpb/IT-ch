@@ -70,6 +70,10 @@ final class ITCHHomeWorksViewController: UIViewController {
             self?.interactor.loadDismiss()
         }
         
+        navigationBar.rightAction = { [weak self] in
+            self?.interactor.loadAddHomeWork()
+        }
+        
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)

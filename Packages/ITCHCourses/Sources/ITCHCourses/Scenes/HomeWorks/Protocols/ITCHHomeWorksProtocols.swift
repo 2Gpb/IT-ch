@@ -8,11 +8,14 @@
 import UIKit
 
 protocol ITCHHomeWorksBusinessLogic: UITableViewDataSource {
+    func loadAddHomeWork()
     func loadDismiss()
 }
 
 protocol ITCHHomeWorksPresentationLogic { }
 
 protocol ITCHHomeWorksRouterLogic {
+    func routeToAddHomeWork()
+    func routeToEditHomeWork(with model: ITCHHomeWorkModel?)
     func popViewController()
 }
