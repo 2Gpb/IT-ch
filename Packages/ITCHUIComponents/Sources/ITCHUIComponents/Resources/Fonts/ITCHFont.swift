@@ -36,6 +36,10 @@ public enum ITCHFont {
     case header5Medium
     case header5SemiBold
     
+    /// NavBar
+    case navBarRegular
+    case navBarMedium
+    
     /// Body M: 16px
     case bodyMRegular
     case bodyMMedium
@@ -94,6 +98,10 @@ extension ITCHFont {
             return FontDescription(font: .medium, size: 20)
         case .header5SemiBold:
             return FontDescription(font: .semiBold, size: 20)
+        case .navBarRegular:
+            return FontDescription(font: .regular, size: 17)
+        case .navBarMedium:
+            return FontDescription(font: .medium, size: 17)
         case .bodyMRegular:
             return FontDescription(font: .regular, size: 16)
         case .bodyMMedium:
