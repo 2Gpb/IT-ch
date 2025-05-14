@@ -31,7 +31,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
         presenter.presentStart()
     }
     
-    func loadChengeCourse() {
+    func loadChangeCourse() {
         presenter.routeToChangeCourse()
     }
     
@@ -57,6 +57,10 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     
     func loadRecords() {
         presenter.routeToRecords()
+    }
+    
+    func loadHomeWorks() {
+        presenter.routeToHomeWorks()
     }
 }
 

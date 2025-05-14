@@ -10,13 +10,14 @@ import UIKit
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
     func loadStart()
     func loadDismiss()
-    func loadChengeCourse()
+    func loadChangeCourse()
     func loadChangeSchedule()
     
     func loadChat()
     func loadGrades()
     func loadMembers()
     func loadRecords()
+    func loadHomeWorks()
 }
 
 protocol ITCHCoursePresentationLogic {
@@ -32,4 +33,5 @@ protocol ITCHCourseRouterLogic {
     func routeToGrades(for link: String?)
     func routeToMembers()
     func routeToRecords()
+    func routeToHomeWorks()
 }

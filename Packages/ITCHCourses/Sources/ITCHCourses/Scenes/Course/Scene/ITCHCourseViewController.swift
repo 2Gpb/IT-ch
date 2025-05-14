@@ -124,7 +124,7 @@ final class ITCHCourseViewController: UIViewController {
             title: Constant.ContextActions.changeCourseTitle,
             image: Constant.ContextActions.changeCourseImage
         ) { [weak self] _ in
-            self?.interactor.loadChengeCourse()
+            self?.interactor.loadChangeCourse()
         }
     }
     
@@ -164,7 +164,7 @@ extension ITCHCourseViewController: UITableViewDelegate {
             case .recordings:
                 interactor.loadRecords()
             case .homework:
-                break
+                interactor.loadHomeWorks()
             }
         }
         
