@@ -58,6 +58,9 @@ final class ITCHMyCoursesViewController: UIViewController {
     
     // MARK: - Methods
     func displayStart(with role: ITCHUserRole?) {
+        let emptyState: ITCHCoursesEmptyState = role == .teacher ? .teacher : .student
+        
+        emptyStateView.configure(title: emptyState.title, subtitle: emptyState.subTitle)
         emptyStateView.isHidden = !interactor.courses.isEmpty
         
         navigationBar.configure(

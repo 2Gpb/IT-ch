@@ -68,7 +68,15 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart() { }
+    func displayStart() {
+        navigationBar.configure(
+            with: ITCHNavigationBarModel(
+                title: Constant.NavigationBar.title,
+                leftImage: Constant.NavigationBar.leftImage,
+                rightImage: interactor.role == .teacher ? Constant.NavigationBar.rightImage : nil
+            )
+        )
+    }
     
     // MARK: - SetUp
     private func setUp() {
@@ -78,14 +86,6 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-        navigationBar.configure(
-            with: ITCHNavigationBarModel(
-                title: Constant.NavigationBar.title,
-                leftImage: Constant.NavigationBar.leftImage,
-                rightImage: Constant.NavigationBar.rightImage
-            )
-        )
-        
         navigationBar.leftAction = { [weak self] in
             self?.interactor.loadDismiss()
         }
@@ -152,20 +152,19 @@ final class ITCHCourseViewController: UIViewController {
 extension ITCHCourseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = ITCHCurrentCourseSection(rawValue: indexPath.section), section == .actions else { return }
+        guard let action = ITCHCurrentCourseAction.action(for: indexPath, role: interactor.role) else { return }
         
-        if let row = ITCHCurrentCourseActions(rawValue: indexPath.row) {
-            switch row {
-            case .chat:
-                interactor.loadChat()
-            case .grades:
-                interactor.loadGrades()
-            case .members:
-                interactor.loadMembers()
-            case .recordings:
-                interactor.loadRecords()
-            case .homework:
-                interactor.loadHomeWorks()
-            }
+        switch action {
+        case .chat:
+            interactor.loadChat()
+        case .grades:
+            interactor.loadGrades()
+        case .members:
+            interactor.loadMembers()
+        case .recordings:
+            interactor.loadRecords()
+        case .homework:
+            interactor.loadHomeWorks()
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

@@ -19,7 +19,7 @@ protocol ITCHMyCoursesPresentationLogic {
 }
 
 protocol ITCHMyCoursesRouterLogic {
-    func roteToCourse(with model: ITCHCourseModel)
+    func roteToCourse(for role: ITCHCourseUserRole, with model: ITCHCourseModel)
     func routeToCreateCourse()
 }
 

@@ -8,7 +8,7 @@
 import ITCHUtilities
 
 enum ITCHCoursesEmptyState {
-    case teacher, student, assistant
+    case teacher, student
     
     var title: String {
         return "У вас пока нет курсов"
@@ -18,16 +18,17 @@ enum ITCHCoursesEmptyState {
         switch self {
         case .teacher:
             return "Создайте свой первый курс, нажав\nна плюс в правом верхнем углу."
-        case .student, .assistant:
+        case .student:
             return "Вы сможете присоединиться,\nкак только вас пригласят."
         }
     }
     
     static func from(role: ITCHUserRole) -> ITCHCoursesEmptyState {
         switch role {
-        case .teacher: return .teacher
-        case .student: return .student
-        case .assistant: return .assistant
+        case .teacher:
+            return .teacher
+        case .student:
+            return .student
         }
     }
 }

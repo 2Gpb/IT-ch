@@ -6,18 +6,16 @@
 //
 
 public enum ITCHUserRole: String {
-    case teacher, student, assistant
+    case teacher, student
     
-    public init?(rawValue: String) {
-        switch rawValue.lowercased() {
-        case "teacher":
-            self = .teacher
-        case "student":
-            self = .student
-        case "assistant":
-            self = .assistant
-        default:
-            return nil
-        }
-    }
+//    public init?(rawValue: String) {
+//        switch rawValue.lowercased() {
+//        case "teacher":
+//            self = .teacher
+//        case "student":
+//            self = .student
+//        default:
+//            return nil
+//        }
+//    }
 }

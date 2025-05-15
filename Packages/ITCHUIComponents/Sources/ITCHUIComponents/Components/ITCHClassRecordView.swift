@@ -63,7 +63,7 @@ public final class ITCHClassRecordView: UIView {
     }
     
     // MARK: - Lifecycle
-    public init(type: ITCHUserRole) {
+    public init(type: ITCHCourseUserRole) {
         super.init(frame: .zero)
         setUp(for: type)
     }
@@ -79,7 +79,7 @@ public final class ITCHClassRecordView: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(for type: ITCHUserRole) {
+    private func setUp(for type: ITCHCourseUserRole) {
         setUpView()
         setUpDateTitle()
         setUpSeparatorView()
@@ -109,7 +109,7 @@ public final class ITCHClassRecordView: UIView {
         separatorView.setHeight(Constant.Separator.height)
     }
     
-    private func setUpNavigationRow(with type: ITCHUserRole) {
+    private func setUpNavigationRow(with type: ITCHCourseUserRole) {
         navigationRow.configure(title: Constant.NavigationRows.recordTitle)
         
         addSubview(navigationRow)
@@ -121,7 +121,7 @@ public final class ITCHClassRecordView: UIView {
             navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
         case .teacher:
             setUpSecondNavigationRow()
-        case .assistant:
+        default:
             break
         }
     }

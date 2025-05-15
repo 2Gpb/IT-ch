@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
+    var role: ITCHCourseUserRole { get }
+    
     func loadStart()
     func loadDismiss()
     func loadChangeCourse()

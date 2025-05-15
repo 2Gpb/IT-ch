@@ -6,20 +6,27 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
-    private let actionRowTitles = ["Чат курса", "Оценки", "Участники", "Записи", "Домашние задания"]
+    private let actionRowTitles: [String]
     private let course: ITCHCurrentCourseModel
+    
+    // MARK: - Variables
+    var role: ITCHCourseUserRole
     
     // MARK: - Lifecycle
     init(
         presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic,
+        for role: ITCHCourseUserRole,
         with model: ITCHCurrentCourseModel
     ) {
         self.presenter = presenter
+        self.role = role
         self.course = model
+        actionRowTitles = ITCHCurrentCourseAction.titleActions(for: role)
     }
     
     // MARK: - Methods
@@ -82,11 +89,7 @@ extension ITCHCourseInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = ITCHCurrentCourseSection(
-            rawValue: section
-        ) else {
-            return 0
-        }
+        guard let section = ITCHCurrentCourseSection(rawValue: section) else { return 0 }
         
         switch section {
         case .info:
@@ -99,9 +102,7 @@ extension ITCHCourseInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let section = ITCHCurrentCourseSection(
-            rawValue: indexPath.section
-        ) else {
+        guard let section = ITCHCurrentCourseSection(rawValue: indexPath.section ) else {
             return UITableViewCell()
         }
         
@@ -123,7 +124,7 @@ extension ITCHCourseInteractor: UITableViewDataSource {
             
         case .role:
             let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: course.role)
+            cell.configure(with: ITCHCourseUserRole(rawValue: course.role)?.text ?? "")
             return cell
             
         case .actions:

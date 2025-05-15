@@ -87,7 +87,7 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     // MARK: - Lifecycle
-    public init(type: ITCHUserRole) {
+    public init(type: ITCHCourseUserRole) {
         super.init(frame: .zero)
         setUp(type: type)
     }
@@ -104,7 +104,7 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp(type: ITCHUserRole) {
+    private func setUp(type: ITCHCourseUserRole) {
         setUpView()
         setUpTitleLabel()
         setUpDateStack()
@@ -121,6 +121,8 @@ public final class ITCHHomeWorkView: UIView {
         case .assistant:
             secondNavigationRow.configure(title: Constant.NavigationRows.assistantTitle)
             secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        case .none:
+            break
         }
     }
     
