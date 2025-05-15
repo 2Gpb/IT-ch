@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHUtilities
 
 final class ITCHHomeWorkCell: UITableViewCell {
     // MARK: - Constants
@@ -34,7 +35,7 @@ final class ITCHHomeWorkCell: UITableViewCell {
     static let reuseId: String = Constant.ReuseIdentifier.value
     
     // MARK: - UI Components
-    private let homeWorkView: ITCHHomeWorkView = ITCHHomeWorkView(type: .teacher)
+    private let homeWorkView: ITCHHomeWorkView = ITCHHomeWorkView()
     
     // MARK: - Properties
     private var changeRole: (() -> Void)?
@@ -53,13 +54,16 @@ final class ITCHHomeWorkCell: UITableViewCell {
     
     // MARK: - Methods
     func configure(
-        with title: String,
+        for role: ITCHCourseUserRole,
+        title: String,
         date: Date,
         openAction: (() -> Void)?,
+        solutionsAction: (() -> Void)?,
         editAction: (() -> Void)?
     ) {
-        homeWorkView.configure(title: title, date: date)
+        homeWorkView.configure(for: role, title: title, date: date)
         homeWorkView.openAction = openAction
+        homeWorkView.solutionsAction = solutionsAction
         homeWorkView.editAction = editAction
     }
     

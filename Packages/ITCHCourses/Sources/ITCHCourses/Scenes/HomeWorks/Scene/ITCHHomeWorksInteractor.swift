@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHHomeWorksPresentationLogic & ITCHHomeWorksRouterLogic
+    private let role: ITCHCourseUserRole
     
     // MARK: - Variables
     private var homeWorks: [ITCHHomeWorkModel] = [
@@ -23,8 +25,12 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     ]
     
     // MARK: - Lifecycle
-    init(presenter: ITCHHomeWorksPresentationLogic & ITCHHomeWorksRouterLogic) {
+    init(
+        presenter: ITCHHomeWorksPresentationLogic & ITCHHomeWorksRouterLogic,
+        for role: ITCHCourseUserRole
+    ) {
         self.presenter = presenter
+        self.role = role
     }
     
     // MARK: - Methods    
@@ -37,7 +43,7 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     }
     
     func loadStart() {
-        presenter.presentStart(isEmpty: homeWorks.isEmpty)
+        presenter.presentStart(for: role, isEmpty: homeWorks.isEmpty)
     }
 }
 
@@ -51,10 +57,18 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
         let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath)
         
         cell.configure(
-            with: homeWorks[indexPath.row].name,
+            for: role,
+            title: homeWorks[indexPath.row].name,
             date: homeWorks[indexPath.row].date,
-            openAction: { [weak self] in self?.homeWorks[indexPath.row].linkOnTask.openURL() },
-            editAction: { [weak self] in self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row]) }
+            openAction: { [weak self] in
+                self?.presenter.routeToOpen(with: self?.homeWorks[indexPath.row].linkOnTask)
+            },
+            solutionsAction: { [weak self] in
+                self?.presenter.routeToSolutions(with: self?.homeWorks[indexPath.row].linkForCheck)
+            },
+            editAction: { [weak self] in
+                self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row])
+            }
         )
         
         return cell

@@ -67,6 +67,10 @@ public final class ITCHHomeWorkView: UIView {
     private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     private var thirdNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
+    // MARK: - Variables
+    private var secondRowBottomConstraint: NSLayoutConstraint?
+    private var thirdRowBottomConstraint: NSLayoutConstraint?
+    
     // MARK: - Properties
     public var openAction: (() -> Void)? {
         didSet {
@@ -87,9 +91,9 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     // MARK: - Lifecycle
-    public init(type: ITCHCourseUserRole) {
+    public init() {
         super.init(frame: .zero)
-        setUp(type: type)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -98,32 +102,38 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     // MARK: - Methods
-    public func configure(title: String, date: Date) {
+    public func configure(for role: ITCHCourseUserRole, title: String, date: Date) {
         titleLabel.text = title
         dateLabel.text = date.configure(to: Constant.Date.dateFormat)
+        
+        switch role {
+        case .teacher:
+            secondRowBottomConstraint?.isActive = false
+            thirdRowBottomConstraint?.isActive = true
+        case .student, .assistant:
+            secondNavigationRow.configure(
+                title: role == .student ?
+                Constant.NavigationRows.studentTitle :
+                Constant.NavigationRows.assistantTitle
+            )
+            
+            thirdNavigationRow.removeFromSuperview()
+            secondRowBottomConstraint?.isActive = true
+            thirdRowBottomConstraint?.isActive = false
+        case .none:
+            break
+        }
     }
     
     // MARK: - SetUp
-    private func setUp(type: ITCHCourseUserRole) {
+    private func setUp() {
         setUpView()
         setUpTitleLabel()
         setUpDateStack()
         setUpSeparatorView()
         setUpNavigationRow()
         setUpSecondNavigationRow()
-        
-        switch type {
-        case .teacher:
-            setUpThirdNavigationRow()
-        case .student:
-            secondNavigationRow.configure(title: Constant.NavigationRows.studentTitle)
-            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .assistant:
-            secondNavigationRow.configure(title: Constant.NavigationRows.assistantTitle)
-            secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .none:
-            break
-        }
+        setUpThirdNavigationRow()
     }
     
     private func setUpView() {
@@ -183,6 +193,12 @@ public final class ITCHHomeWorkView: UIView {
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        secondRowBottomConstraint = secondNavigationRow.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -Constant.NavigationRows.bottomOffset
+        )
+        
+        secondRowBottomConstraint?.isActive = false
     }
     
     private func setUpThirdNavigationRow() {
@@ -191,6 +207,11 @@ public final class ITCHHomeWorkView: UIView {
         addSubview(thirdNavigationRow)
         thirdNavigationRow.pinTop(to: secondNavigationRow.bottomAnchor)
         thirdNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-        thirdNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        thirdRowBottomConstraint = thirdNavigationRow.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -Constant.NavigationRows.bottomOffset
+        )
+        
+        thirdRowBottomConstraint?.isActive = false
     }
 }

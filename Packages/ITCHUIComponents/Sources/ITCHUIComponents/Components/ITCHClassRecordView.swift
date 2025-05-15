@@ -50,8 +50,8 @@ public final class ITCHClassRecordView: UIView {
     private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
     // MARK: - Variables
-    private var studentBottomConstraint: NSLayoutConstraint?
-    private var teacherBottomConstraint: NSLayoutConstraint?
+    private var firstRowBottomConstraint: NSLayoutConstraint?
+    private var secondRowBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Properties
     public var openRecordAction: (() -> Void)? {
@@ -80,15 +80,16 @@ public final class ITCHClassRecordView: UIView {
     // MARK: - Methods
     public func configure(for type: ITCHCourseUserRole, with date: Date) {
         dateLabel.text = date.configure(to: Constant.Date.format).uppercased()
+        
         switch type {
         case .student:
             secondNavigationRow.removeFromSuperview()
-            studentBottomConstraint?.isActive = true
-            teacherBottomConstraint?.isActive = false
+            firstRowBottomConstraint?.isActive = true
+            secondRowBottomConstraint?.isActive = false
 
         case .teacher:
-            studentBottomConstraint?.isActive = false
-            teacherBottomConstraint?.isActive = true
+            firstRowBottomConstraint?.isActive = false
+            secondRowBottomConstraint?.isActive = true
         default:
             break
         }
@@ -132,12 +133,12 @@ public final class ITCHClassRecordView: UIView {
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-        studentBottomConstraint = navigationRow.bottomAnchor.constraint(
+        firstRowBottomConstraint = navigationRow.bottomAnchor.constraint(
             equalTo: bottomAnchor,
             constant: -Constant.NavigationRows.bottomOffset
         )
         
-        studentBottomConstraint?.isActive = false
+        firstRowBottomConstraint?.isActive = false
     }
     
     private func setUpSecondNavigationRow() {
@@ -147,11 +148,11 @@ public final class ITCHClassRecordView: UIView {
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
         secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        teacherBottomConstraint = secondNavigationRow.bottomAnchor.constraint(
+        secondRowBottomConstraint = secondNavigationRow.bottomAnchor.constraint(
             equalTo: bottomAnchor,
             constant: -Constant.NavigationRows.bottomOffset
         )
         
-        teacherBottomConstraint?.isActive = false
+        secondRowBottomConstraint?.isActive = false
     }
 }

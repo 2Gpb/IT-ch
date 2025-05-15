@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHUtilities
 
 final class ITCHHomeWorksViewController: UIViewController {
     // MARK: - Constants
@@ -58,8 +59,16 @@ final class ITCHHomeWorksViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(isEmpty: Bool) {
+    func displayStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
         emptyStateView.isHidden = !isEmpty
+        
+        navigationBar.configure(
+            with: ITCHNavigationBarModel(
+                title: Constant.NavigationBar.title,
+                leftImage: Constant.NavigationBar.leftImage,
+                rightImage: role == .teacher ? Constant.NavigationBar.rightImage : nil
+            )
+        )
     }
     
     // MARK: - SetUp
@@ -71,14 +80,6 @@ final class ITCHHomeWorksViewController: UIViewController {
     }
     
     private func setUpNavigationBar() {
-        navigationBar.configure(
-            with: ITCHNavigationBarModel(
-                title: Constant.NavigationBar.title,
-                leftImage: Constant.NavigationBar.leftImage,
-                rightImage: Constant.NavigationBar.rightImage
-            )
-        )
-        
         navigationBar.leftAction = { [weak self] in
             self?.interactor.loadDismiss()
         }

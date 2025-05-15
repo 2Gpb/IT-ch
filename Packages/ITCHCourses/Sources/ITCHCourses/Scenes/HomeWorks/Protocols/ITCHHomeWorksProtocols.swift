@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 protocol ITCHHomeWorksBusinessLogic: UITableViewDataSource {
     func loadAddHomeWork()
@@ -14,11 +15,13 @@ protocol ITCHHomeWorksBusinessLogic: UITableViewDataSource {
 }
 
 protocol ITCHHomeWorksPresentationLogic {
-    func presentStart(isEmpty: Bool)
+    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool)
 }
 
 protocol ITCHHomeWorksRouterLogic {
     func routeToAddHomeWork()
+    func routeToOpen(with link: String?)
+    func routeToSolutions(with link: String?)
     func routeToEditHomeWork(with model: ITCHHomeWorkModel?)
     func popViewController()
 }
