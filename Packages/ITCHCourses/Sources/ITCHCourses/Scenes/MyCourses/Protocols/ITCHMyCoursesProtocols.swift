@@ -15,14 +15,10 @@ protocol ITCHMyCoursesBusinessLogic: UITableViewDataSource {
 }
 
 protocol ITCHMyCoursesPresentationLogic {
-    func presentStart(with role: ITCHUserRole?)
+    func presentStart(with role: ITCHUserRole?, isEmpty: Bool)
 }
 
 protocol ITCHMyCoursesRouterLogic {
-    func roteToCourse(for role: ITCHCourseUserRole, with model: ITCHCourseModel)
+    func roteToCourse(with model: ITCHCourseModel)
     func routeToCreateCourse()
-}
-
-protocol ITCHCoursesStorage {
-    var courses: [ITCHCourseModel] { get set }
 }

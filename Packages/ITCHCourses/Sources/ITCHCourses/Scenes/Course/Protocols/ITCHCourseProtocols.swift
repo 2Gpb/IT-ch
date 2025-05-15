@@ -9,8 +9,6 @@ import UIKit
 import ITCHUtilities
 
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
-    var role: ITCHCourseUserRole { get }
-    
     func loadStart()
     func loadDismiss()
     func loadChangeCourse()
@@ -37,4 +35,8 @@ protocol ITCHCourseRouterLogic {
     func routeToMembers()
     func routeToRecords()
     func routeToHomeWorks()
+}
+
+protocol ITCHCourseRoleStorage {
+    var role: ITCHCourseUserRole { get }
 }

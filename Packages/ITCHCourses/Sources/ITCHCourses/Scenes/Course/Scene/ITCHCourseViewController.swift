@@ -37,7 +37,7 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHCourseBusinessLogic
+    private let interactor: ITCHCourseBusinessLogic & ITCHCourseRoleStorage
     private let titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
     
     // MARK: - UI Components
@@ -45,7 +45,7 @@ final class ITCHCourseViewController: UIViewController {
     private let infoTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
-    init(interactor: ITCHCourseBusinessLogic) {
+    init(interactor: ITCHCourseBusinessLogic & ITCHCourseRoleStorage) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }

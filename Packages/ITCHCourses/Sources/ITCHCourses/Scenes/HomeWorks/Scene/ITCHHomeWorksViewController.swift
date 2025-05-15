@@ -58,8 +58,8 @@ final class ITCHHomeWorksViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart() {
-        emptyStateView.isHidden = !interactor.homeWorks.isEmpty
+    func displayStart(isEmpty: Bool) {
+        emptyStateView.isHidden = !isEmpty
     }
     
     // MARK: - SetUp

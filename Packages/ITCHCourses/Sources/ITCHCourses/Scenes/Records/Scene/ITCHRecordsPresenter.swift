@@ -10,8 +10,8 @@ final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
     weak var view: ITCHRecordsViewController?
     
     // MARK: - Methods
-    func presentStart() {
-        view?.displayStart()
+    func presentStart(isEmpty: Bool) {
+        view?.displayStart(isEmpty: isEmpty)
     }
 }
 

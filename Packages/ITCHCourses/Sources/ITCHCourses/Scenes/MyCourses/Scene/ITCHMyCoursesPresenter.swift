@@ -12,17 +12,16 @@ final class ITCHMyCoursesPresenter: ITCHMyCoursesPresentationLogic {
     weak var view: ITCHMyCoursesViewController?
     
     // MARK: - Methods
-    func presentStart(with role: ITCHUserRole?) {
-        view?.displayStart(with: role)
+    func presentStart(with role: ITCHUserRole?, isEmpty: Bool) {
+        view?.displayStart(with: role, isEmpty: isEmpty)
     }
 }
 
 // MARK: - RouterLogic
 extension ITCHMyCoursesPresenter: ITCHMyCoursesRouterLogic {
-    func roteToCourse(for role: ITCHCourseUserRole, with model: ITCHCourseModel) {
+    func roteToCourse(with model: ITCHCourseModel) {
         view?.navigationController?.pushViewController(
             ITCHCourseAssembly.build(
-                for: role,
                 with: ITCHCurrentCourseModel(
                     courseName: model.courseName,
                     teacherName: model.teacherName,

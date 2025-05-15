@@ -10,8 +10,8 @@ final class ITCHHomeWorksPresenter: ITCHHomeWorksPresentationLogic {
     weak var view: ITCHHomeWorksViewController?
         
     // MARK: - Methods
-    func presentStart() {
-        view?.displayStart()
+    func presentStart(isEmpty: Bool) {
+        view?.displayStart(isEmpty: isEmpty)
     }
 }
 

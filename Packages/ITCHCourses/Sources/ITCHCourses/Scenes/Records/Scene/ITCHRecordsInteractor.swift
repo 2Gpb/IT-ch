@@ -10,7 +10,9 @@ import UIKit
 final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHRecordsPresentationLogic & ITCHRecordsRouterLogic
-    var records: [ITCHRecordModel] = [
+    
+    // MARK: - Variables
+    private var records: [ITCHRecordModel] = [
         ITCHRecordModel(
             date: Date(),
             link: "https://habr.com/ru/articles/133559/"
@@ -32,7 +34,7 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     }
     
     func loadStart() {
-        presenter.presentStart()
+        presenter.presentStart(isEmpty: records.isEmpty)
     }
 }
 

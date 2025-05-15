@@ -32,7 +32,7 @@ final class ITCHMyCoursesViewController: UIViewController {
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHMyCoursesBusinessLogic & ITCHCoursesStorage
+    private let interactor: ITCHMyCoursesBusinessLogic
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
@@ -40,7 +40,7 @@ final class ITCHMyCoursesViewController: UIViewController {
     private let coursesTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
-    init(interactor: ITCHMyCoursesBusinessLogic & ITCHCoursesStorage) {
+    init(interactor: ITCHMyCoursesBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -57,11 +57,11 @@ final class ITCHMyCoursesViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with role: ITCHUserRole?) {
+    func displayStart(with role: ITCHUserRole?, isEmpty: Bool) {
         let emptyState: ITCHCoursesEmptyState = role == .teacher ? .teacher : .student
         
         emptyStateView.configure(title: emptyState.title, subtitle: emptyState.subTitle)
-        emptyStateView.isHidden = !interactor.courses.isEmpty
+        emptyStateView.isHidden = !isEmpty
         
         navigationBar.configure(
             with: ITCHNavigationBarModel(

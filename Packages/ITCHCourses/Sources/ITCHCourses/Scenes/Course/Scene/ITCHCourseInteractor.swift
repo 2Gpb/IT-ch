@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUtilities
 
-final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
+final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseRoleStorage {
     // MARK: - Private fields
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
     private let actionRowTitles: [String]
@@ -20,13 +20,12 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Lifecycle
     init(
         presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic,
-        for role: ITCHCourseUserRole,
         with model: ITCHCurrentCourseModel
     ) {
         self.presenter = presenter
-        self.role = role
+        self.role = ITCHCourseUserRole(rawValue: model.role) ?? .none
         self.course = model
-        actionRowTitles = ITCHCurrentCourseAction.titleActions(for: role)
+        actionRowTitles = ITCHCurrentCourseAction.titleActions(for: self.role)
     }
     
     // MARK: - Methods

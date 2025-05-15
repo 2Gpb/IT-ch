@@ -10,12 +10,12 @@ import ITCHUIComponents
 import ITCHCore
 import ITCHUtilities
 
-final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHCoursesStorage {    
+final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHMyCoursesPresentationLogic & ITCHMyCoursesRouterLogic
     
     // MARK: - Variables
-    var courses: [ITCHCourseModel] = [
+    private var courses: [ITCHCourseModel] = [
         ITCHCourseModel(
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
@@ -67,11 +67,11 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
     
     // MARK: - Methods
     func loadStart() {
-        presenter.presentStart(with: ITCHUserRoleService().role)
+        presenter.presentStart(with: ITCHUserRoleService().role, isEmpty: courses.isEmpty)
     }
     
     func loadCourse(for index: Int) {
-        presenter.roteToCourse(for: ITCHCourseUserRole(rawValue: courses[index].role) ?? .none, with: courses[index])
+        presenter.roteToCourse(with: courses[index])
     }
     
     func loadCreateCourse() {

@@ -8,15 +8,13 @@
 import UIKit
 
 protocol ITCHHomeWorksBusinessLogic: UITableViewDataSource {
-    var homeWorks: [ITCHHomeWorkModel] { get }
-    
     func loadAddHomeWork()
     func loadDismiss()
     func loadStart()
 }
 
 protocol ITCHHomeWorksPresentationLogic {
-    func presentStart()
+    func presentStart(isEmpty: Bool)
 }
 
 protocol ITCHHomeWorksRouterLogic {

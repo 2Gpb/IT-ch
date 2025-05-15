@@ -10,7 +10,9 @@ import UIKit
 final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHHomeWorksPresentationLogic & ITCHHomeWorksRouterLogic
-    var homeWorks: [ITCHHomeWorkModel] = [
+    
+    // MARK: - Variables
+    private var homeWorks: [ITCHHomeWorkModel] = [
         ITCHHomeWorkModel(
             name: "Домашняя работа 1",
             date: Date(),
@@ -35,7 +37,7 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     }
     
     func loadStart() {
-        presenter.presentStart()
+        presenter.presentStart(isEmpty: homeWorks.isEmpty)
     }
 }
 
