@@ -253,6 +253,10 @@ final class ITCHScheduleEditorViewController: UIViewController {
         pickerConfigs.forEach { config in
             config.alert.configure(with: config.viewModel)
         }
+        
+        selectedDay = pickerConfigs[0].items[0]
+        selectedTime = pickerConfigs[1].items[0]
+        selectedFrequency = pickerConfigs[2].items[0]
     }
 }
 
