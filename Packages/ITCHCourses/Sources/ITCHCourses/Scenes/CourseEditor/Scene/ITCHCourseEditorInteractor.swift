@@ -8,7 +8,9 @@
 final class ITCHCourseEditorInteractor: ITCHCourseEditorBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCourseEditorPresentationLogic & ITCHCourseEditorRouterLogic
-    private let course: ITCHCourseEditorModel?
+    
+    // MARK: - Variables
+    private var course: ITCHCourseEditorModel?
     
     // MARK: - Lifecycle
     init(
@@ -24,11 +26,15 @@ final class ITCHCourseEditorInteractor: ITCHCourseEditorBusinessLogic {
         presenter.presentStart(with: course)
     }
     
+    func loadChangeCourse(with model: ITCHCourseEditorModel) {
+        course = model
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }
     
-    func loadCreateSchedule() {
-        presenter.routeToCreateSchedule()
+    func loadCreateSchedule(with model: ITCHCourseEditorModel) {
+        presenter.routeToCreateSchedule(with: model)
     }
 }

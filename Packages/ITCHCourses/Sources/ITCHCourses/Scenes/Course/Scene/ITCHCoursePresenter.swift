@@ -28,7 +28,7 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
     }
     
     func routeToChangeSchedule(with model: ITCHScheduleEditorModel?) {
-        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(with: model), animated: true)
+        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(editWith: model), animated: true)
     }
     
     func routeToChat(for link: String?) {

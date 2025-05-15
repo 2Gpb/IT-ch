@@ -118,10 +118,21 @@ final class ITCHCourseEditorViewController: UIViewController {
     func displayStart(with model: ITCHCourseEditorModel?) {
         let title: String
         
+        let courseModel = { [weak self] in
+            return ITCHCourseEditorModel(
+                name: self?.nameTextField.text ?? "",
+                location: self?.locationTextField.text ?? "",
+                duration: self?.durationTextField.text ?? "",
+                chatLink: self?.chatLinkTextField.text ?? "",
+                gradesLink: self?.gradesLinkTextField.text ?? ""
+            )
+        }
+        
         if let model {
             title = Constant.NavigationBar.changeTitle
             continueButton.configure(title: Constant.ContinueButton.saveTitle)
             continueButton.action = { [weak self] in
+                self?.interactor.loadChangeCourse(with: courseModel())
                 self?.interactor.loadDismiss()
             }
             
@@ -130,7 +141,7 @@ final class ITCHCourseEditorViewController: UIViewController {
             title = Constant.NavigationBar.createTitle
             continueButton.configure(title: Constant.ContinueButton.continueTitle)
             continueButton.action = { [weak self] in
-                self?.interactor.loadCreateSchedule()
+                self?.interactor.loadCreateSchedule(with: courseModel())
             }
         }
         
@@ -181,15 +192,6 @@ final class ITCHCourseEditorViewController: UIViewController {
         nameTextField.configure(with: ITCHCourseEditorTextFieldConfig.name())
         locationTextField.configure(with: ITCHCourseEditorTextFieldConfig.location())
         durationTextField.configure(with: ITCHCourseEditorTextFieldConfig.duration())
-        durationTextField.beforeOpenKeyboardAction = {
-            IQKeyboardManager.shared.isEnabled = false
-            IQKeyboardToolbarManager.shared.isEnabled = false
-        }
-        
-        durationTextField.afterCloseKeyboardAction = {
-            IQKeyboardManager.shared.isEnabled = true
-            IQKeyboardToolbarManager.shared.isEnabled = true
-        }
         
         durationTextField.insteadKeyboardAction = { [weak self] in
             guard let self else { return }

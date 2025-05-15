@@ -21,7 +21,27 @@ extension ITCHCourseEditorPresenter: ITCHCourseEditorRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToCreateSchedule() {
-        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(), animated: true)
+    func routeToCreateSchedule(with model: ITCHCourseEditorModel?) {
+        guard let model else { return }
+        
+        /// A separate model may be required
+        view?.navigationController?.pushViewController(
+            ITCHScheduleEditorAssembly.build(
+                createWith: ITCHCurrentCourseModel(
+                    courseName: model.name,
+                    teacherName: "Сосновский Григорий Михайлович",
+                    avatar: nil,
+                    locationDuration: [model.duration, model.location],
+                    role: "TEACHER",
+                    chatLink: model.chatLink,
+                    gradesLink: model.gradesLink,
+                    dayOfWeek: "",
+                    numberOfHours: 0,
+                    time: "",
+                    frequency: ""
+                )
+            ),
+            animated: true
+        )
     }
 }

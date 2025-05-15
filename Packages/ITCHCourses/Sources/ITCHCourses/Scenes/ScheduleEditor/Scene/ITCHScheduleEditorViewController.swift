@@ -97,10 +97,21 @@ final class ITCHScheduleEditorViewController: UIViewController {
     // MARK: - Methods
     func displayStart(with model: ITCHScheduleEditorModel?) {
         let title: String
+        
+        let scheduleModel = { [weak self] in
+            return ITCHScheduleEditorModel(
+                dayOfWeek: self?.dayTextField.text ?? "",
+                numberOfHours: Int(self?.numberOfHoursTextField.text ?? "") ?? 0,
+                time: self?.startTimeTextField.text ?? "",
+                frequency: self?.frequencyTextField.text ?? ""
+            )
+        }
+        
         if let model {
             title = Constant.NavigationBar.changeTitle
             saveButton.configure(title: Constant.SaveButton.saveTitle)
             saveButton.action = { [weak self] in
+                self?.interactor.loadChangeSchedule(with: scheduleModel())
                 self?.interactor.loadDismiss()
             }
             
@@ -109,6 +120,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
             title = Constant.NavigationBar.createTitle
             saveButton.configure(title: Constant.SaveButton.createTitle)
             saveButton.action = { [weak self] in
+                self?.interactor.loadCreate(with: scheduleModel())
                 self?.interactor.loadCourses()
             }
         }

@@ -56,8 +56,10 @@ public final class ITCHTextField: UIView {
     public var beforeOpenKeyboardAction: (() -> Void)?
     public var afterCloseKeyboardAction: (() -> Void)?
     public var text: String? {
-        didSet {
-            textField.text = text
+        get {
+            textField.text
+        } set {
+            textField.text = newValue
         }
     }
     

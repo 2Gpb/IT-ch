@@ -8,6 +8,8 @@
 protocol ITCHScheduleEditorBusinessLogic {
     func loadStart()
     func loadCourses()
+    func loadChangeSchedule(with model: ITCHScheduleEditorModel)
+    func loadCreate(with model: ITCHScheduleEditorModel)
     func loadDismiss()
 }
 
