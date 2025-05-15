@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 final class ITCHRecordsAssembly {
-    static func build() -> UIViewController {
+    static func build(for role: ITCHCourseUserRole) -> UIViewController {
         let presenter = ITCHRecordsPresenter()
-        let interactor = ITCHRecordsInteractor(presenter: presenter)
+        let interactor = ITCHRecordsInteractor(presenter: presenter, for: role)
         let view = ITCHRecordsViewController(interactor: interactor)
         
         presenter.view = view

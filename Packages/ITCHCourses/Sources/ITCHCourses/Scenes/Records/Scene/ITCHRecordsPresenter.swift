@@ -5,13 +5,15 @@
 //  Created by Peter on 14.05.2025.
 //
 
+import ITCHUtilities
+
 final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHRecordsViewController?
     
     // MARK: - Methods
-    func presentStart(isEmpty: Bool) {
-        view?.displayStart(isEmpty: isEmpty)
+    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
+        view?.displayStart(for: role, isEmpty: isEmpty)
     }
 }
 
@@ -19,6 +21,10 @@ final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
 extension ITCHRecordsPresenter: ITCHRecordsRouterLogic {
     func routeToAddRecord() {
         view?.present(ITCHRecordEditorAssembly.build(), animated: true)
+    }
+    
+    func routeToOpenRecord(with link: String?) {
+        link?.openURL()
     }
     
     func routeToEditRecord(with model: ITCHRecordModel?) {

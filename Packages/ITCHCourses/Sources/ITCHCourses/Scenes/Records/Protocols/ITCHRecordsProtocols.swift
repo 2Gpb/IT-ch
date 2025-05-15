@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 protocol ITCHRecordsBusinessLogic: UITableViewDataSource {
     func loadAddRecord()
@@ -14,11 +15,12 @@ protocol ITCHRecordsBusinessLogic: UITableViewDataSource {
 }
 
 protocol ITCHRecordsPresentationLogic {
-    func presentStart(isEmpty: Bool)
+    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool)
 }
 
 protocol ITCHRecordsRouterLogic {
     func routeToAddRecord()
+    func routeToOpenRecord(with link: String?)
     func routeToEditRecord(with model: ITCHRecordModel?)
     func popViewController()
 }

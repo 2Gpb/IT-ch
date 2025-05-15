@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import ITCHUtilities
 
 final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHRecordsPresentationLogic & ITCHRecordsRouterLogic
+    private let role: ITCHCourseUserRole
     
     // MARK: - Variables
     private var records: [ITCHRecordModel] = [
@@ -20,8 +22,12 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     ]
     
     // MARK: - Lifecycle
-    init(presenter: ITCHRecordsPresentationLogic & ITCHRecordsRouterLogic) {
+    init(
+        presenter: ITCHRecordsPresentationLogic & ITCHRecordsRouterLogic,
+        for role: ITCHCourseUserRole
+    ) {
         self.presenter = presenter
+        self.role = role
     }
     
     // MARK: - Methods
@@ -34,7 +40,7 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     }
     
     func loadStart() {
-        presenter.presentStart(isEmpty: records.isEmpty)
+        presenter.presentStart(for: role, isEmpty: records.isEmpty)
     }
 }
 
@@ -48,9 +54,14 @@ extension ITCHRecordsInteractor: UITableViewDataSource {
         let cell: ITCHRecordCell = tableView.dequeueCell(for: indexPath)
         
         cell.configure(
-            for: records[indexPath.row].date,
-            openAction: { [weak self] in self?.records[indexPath.row].link.openURL() },
-            editAction: { [weak self] in self?.presenter.routeToEditRecord(with: self?.records[indexPath.row]) }
+            for: role,
+            with: records[indexPath.row].date,
+            openAction: { [weak self] in
+                self?.presenter.routeToOpenRecord(with: self?.records[indexPath.row].link)
+            },
+            editAction: { [weak self] in
+                self?.presenter.routeToEditRecord(with: self?.records[indexPath.row])
+            }
         )
         
         return cell

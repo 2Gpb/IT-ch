@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHUtilities
 
 final class ITCHRecordCell: UITableViewCell {
     // MARK: - Constants
@@ -34,7 +35,7 @@ final class ITCHRecordCell: UITableViewCell {
     static let reuseId: String = Constant.ReuseIdentifier.value
     
     // MARK: - UI Components
-    private let classRecordView: ITCHClassRecordView = ITCHClassRecordView(type: .teacher)
+    private let classRecordView: ITCHClassRecordView = ITCHClassRecordView()
     
     // MARK: - Properties
     private var changeRole: (() -> Void)?
@@ -52,8 +53,13 @@ final class ITCHRecordCell: UITableViewCell {
     }
     
     // MARK: - Methods
-    func configure(for date: Date, openAction: (() -> Void)?, editAction: (() -> Void)?) {
-        classRecordView.configure(with: date)
+    func configure(
+        for role: ITCHCourseUserRole,
+        with date: Date,
+        openAction: (() -> Void)?,
+        editAction: (() -> Void)?
+    ) {
+        classRecordView.configure(for: role, with: date)
         classRecordView.openRecordAction = openAction
         classRecordView.editAction = editAction
     }

@@ -5,6 +5,8 @@
 //  Created by Peter on 09.05.2025.
 //
 
+import ITCHUtilities
+
 final class ITCHCoursePresenter: ITCHCoursePresentationLogic {
     // MARK: - Variables
     weak var view: ITCHCourseViewController?
@@ -41,11 +43,11 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
         view?.navigationController?.pushViewController(ITCHMembersAssembly.build(), animated: true)
     }
     
-    func routeToRecords() {
-        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(), animated: true)
+    func routeToRecords(with role: ITCHCourseUserRole) {
+        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(for: role), animated: true)
     }
     
-    func routeToHomeWorks() {
-        view?.navigationController?.pushViewController(ITCHHomeWorksAssembly.build(), animated: true)
+    func routeToHomeWorks(with role: ITCHCourseUserRole) {
+        view?.navigationController?.pushViewController(ITCHHomeWorksAssembly.build(for: role), animated: true)
     }
 }

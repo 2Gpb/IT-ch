@@ -73,11 +73,11 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseR
     }
     
     func loadRecords() {
-        presenter.routeToRecords()
+        presenter.routeToRecords(with: role)
     }
     
     func loadHomeWorks() {
-        presenter.routeToHomeWorks()
+        presenter.routeToHomeWorks(with: role)
     }
 }
 
