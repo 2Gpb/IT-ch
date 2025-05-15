@@ -21,6 +21,11 @@ final class ITCHHomeWorksViewController: UIViewController {
             static let rightImage: UIImage = ITCHImage.plus24.image
         }
         
+        enum EmptyState {
+            static let title: String = "На курсе пока нет заданий"
+            static let subtitle: String = "Добавьте первое задание, нажав на плюс\nв правом верхнем углу."
+        }
+        
         enum HomeWorksTable {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
@@ -32,6 +37,7 @@ final class ITCHHomeWorksViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let emptyStateView: ITCHEmptyStateView = ITCHEmptyStateView()
     private let homeWorksTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
@@ -48,12 +54,19 @@ final class ITCHHomeWorksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        interactor.loadStart()
+    }
+    
+    // MARK: - Methods
+    func displayStart() {
+        emptyStateView.isHidden = !interactor.homeWorks.isEmpty
     }
     
     // MARK: - SetUp
     private func setUp() {
         view.backgroundColor = ITCHColor.backgroundDark.color
         setUpNavigationBar()
+        setUpEmptyStateView()
         setUpHomeWorksTableView()
     }
     
@@ -77,6 +90,17 @@ final class ITCHHomeWorksViewController: UIViewController {
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpEmptyStateView() {
+        emptyStateView.configure(
+            title: Constant.EmptyState.title,
+            subtitle: Constant.EmptyState.subtitle
+        )
+        
+        view.addSubview(emptyStateView)
+        emptyStateView.pinCenterY(to: view.centerYAnchor)
+        emptyStateView.pinHorizontal(to: view)
     }
     
     private func setUpHomeWorksTableView() {
