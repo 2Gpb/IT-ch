@@ -13,11 +13,11 @@ final class ITCHHomeWorksPresenter: ITCHHomeWorksPresentationLogic {
 // MARK: - RouterLogic
 extension ITCHHomeWorksPresenter: ITCHHomeWorksRouterLogic {
     func routeToAddHomeWork() {
-        view?.present(ITCHHomeWorkEditorAssembly.build(for: .create), animated: true)
+        view?.present(ITCHHomeWorkEditorAssembly.build(), animated: true)
     }
     
     func routeToEditHomeWork(with model: ITCHHomeWorkModel?) {
-        view?.present(ITCHHomeWorkEditorAssembly.build(for: .edit, with: model), animated: true)
+        view?.present(ITCHHomeWorkEditorAssembly.build(with: model), animated: true)
     }
     
     func popViewController() {

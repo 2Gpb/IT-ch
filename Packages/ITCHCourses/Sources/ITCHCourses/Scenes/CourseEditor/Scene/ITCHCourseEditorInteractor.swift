@@ -8,20 +8,20 @@
 final class ITCHCourseEditorInteractor: ITCHCourseEditorBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCourseEditorPresentationLogic & ITCHCourseEditorRouterLogic
-    private let mode: ITCHEditingMode
+    private let course: ITCHCourseEditorModel?
     
     // MARK: - Lifecycle
     init(
         presenter: ITCHCourseEditorPresentationLogic & ITCHCourseEditorRouterLogic,
-        for mode: ITCHEditingMode
+        with model: ITCHCourseEditorModel?
     ) {
         self.presenter = presenter
-        self.mode = mode
+        self.course = model
     }
     
     // MARK: - Methods
     func loadStart() {
-        presenter.presentStart(with: mode)
+        presenter.presentStart(with: course)
     }
     
     func loadDismiss() {
@@ -29,6 +29,6 @@ final class ITCHCourseEditorInteractor: ITCHCourseEditorBusinessLogic {
     }
     
     func loadCreateSchedule() {
-        presenter.routeToCreateSchedule(with: mode)
+        presenter.routeToCreateSchedule()
     }
 }

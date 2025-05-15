@@ -13,11 +13,11 @@ final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
 // MARK: - RouterLogic
 extension ITCHRecordsPresenter: ITCHRecordsRouterLogic {
     func routeToAddRecord() {
-        view?.present(ITCHRecordEditorAssembly.build(for: .create), animated: true)
+        view?.present(ITCHRecordEditorAssembly.build(), animated: true)
     }
     
     func routeToEditRecord(with model: ITCHRecordModel?) {
-        view?.present(ITCHRecordEditorAssembly.build(for: .edit, with: model), animated: true)
+        view?.present(ITCHRecordEditorAssembly.build(with: model), animated: true)
     }
     
     func popViewController() {

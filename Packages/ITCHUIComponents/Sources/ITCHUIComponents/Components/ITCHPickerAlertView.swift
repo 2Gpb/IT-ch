@@ -61,6 +61,10 @@ public final class ITCHPickerAlertView {
         viewController.present(alertController, animated: true)
     }
     
+    public func selectRow(at row: Int) {
+        pickerView.selectRow(row, inComponent: 0, animated: true)
+    }
+    
     // MARK: - Private methods
     private func setUpWrapView(height: CGFloat) {
         alertController.view.addSubview(wrapView)

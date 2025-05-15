@@ -8,9 +8,9 @@
 import UIKit
 
 final class ITCHScheduleEditorAssembly {
-    static func build(for mode: ITCHEditingMode) -> UIViewController {
+    static func build(with model: ITCHScheduleEditorModel? = nil) -> UIViewController {
         let presenter = ITCHScheduleEditorPresenter()
-        let interactor = ITCHScheduleEditorInteractor(presenter: presenter, for: mode)
+        let interactor = ITCHScheduleEditorInteractor(presenter: presenter, with: model)
         let view = ITCHScheduleEditorViewController(interactor: interactor)
         
         presenter.view = view

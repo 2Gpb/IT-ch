@@ -11,19 +11,15 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
     private let actionRowTitles = ["Чат курса", "Оценки", "Участники", "Записи", "Домашние задания"]
-    private let course: ITCHCurrentCourseModel = ITCHCurrentCourseModel(
-        courseName: "НИС “Основы iOS разработки на UIKit”",
-        teacherName: "Сосновский Григорий Михайлович",
-        avatar: nil,
-        generalInfo: ["•  1, 2, 3 модули", "•  D106, Покровский б-р, д.11"],
-        role: "Преподаватель",
-        chatLink: "https://t.me/slyrack",
-        gradesLink: "https://t.me/slyrack"
-    )
+    private let course: ITCHCurrentCourseModel
     
     // MARK: - Lifecycle
-    init(presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic) {
+    init(
+        presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic,
+        with model: ITCHCurrentCourseModel
+    ) {
         self.presenter = presenter
+        self.course = model
     }
     
     // MARK: - Methods
@@ -32,11 +28,26 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadChangeCourse() {
-        presenter.routeToChangeCourse()
+        presenter.routeToChangeCourse(
+            with: ITCHCourseEditorModel(
+                name: course.courseName,
+                location: course.locationDuration[1],
+                duration: course.locationDuration[0],
+                chatLink: course.chatLink,
+                gradesLink: course.gradesLink
+            )
+        )
     }
     
     func loadChangeSchedule() {
-        presenter.routeToChangeSchedule()
+        presenter.routeToChangeSchedule(
+            with: ITCHScheduleEditorModel(
+                dayOfWeek: course.dayOfWeek,
+                numberOfHours: course.numberOfHours,
+                time: course.time,
+                frequency: course.frequency
+            )
+        )
     }
     
     func loadDismiss() {
@@ -79,7 +90,7 @@ extension ITCHCourseInteractor: UITableViewDataSource {
         
         switch section {
         case .info:
-            return course.generalInfo.count
+            return course.locationDuration.count
         case .actions:
             return actionRowTitles.count
         default:
@@ -107,7 +118,7 @@ extension ITCHCourseInteractor: UITableViewDataSource {
             
         case .info:
             let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: course.generalInfo[indexPath.row])
+            cell.configure(with: "•  " + course.locationDuration[indexPath.row] + (indexPath.row == 0 ? " модули" : ""))
             return cell
             
         case .role:

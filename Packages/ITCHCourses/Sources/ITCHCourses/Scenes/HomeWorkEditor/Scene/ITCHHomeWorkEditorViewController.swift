@@ -93,21 +93,18 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(for mode: ITCHEditingMode, with model: ITCHHomeWorkModel?) {
-        switch mode {
-        case .create:
-            navigationBar.configure(with: Constant.NavigationBar.createTitle)
-        case .edit:
+    func displayStart(with model: ITCHHomeWorkModel?) {
+        if let model {
             navigationBar.configure(with: Constant.NavigationBar.editTitle)
             setUpDeleteButton()
-        }
-        
-        if let model {
+            
             nameTextField.text = model.name
             dateTextField.text = model.date.configure(to: Constant.DatePicker.dateFormat)
             linkForLoadTextField.text = model.linkForLoad
             linkForCheckTextField.text = model.linkForCheck
             linkOnTaskTextField.text = model.linkOnTask
+        } else {
+            navigationBar.configure(with: Constant.NavigationBar.createTitle)
         }
     }
     

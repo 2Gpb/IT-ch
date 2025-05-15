@@ -8,9 +8,9 @@
 import UIKit
 
 final class ITCHCourseAssembly {
-    static func build() -> UIViewController {
+    static func build(with model: ITCHCurrentCourseModel) -> UIViewController {
         let presenter = ITCHCoursePresenter()
-        let interactor = ITCHCourseInteractor(presenter: presenter)
+        let interactor = ITCHCourseInteractor(presenter: presenter, with: model)
         let view = ITCHCourseViewController(interactor: interactor)
         
         presenter.view = view

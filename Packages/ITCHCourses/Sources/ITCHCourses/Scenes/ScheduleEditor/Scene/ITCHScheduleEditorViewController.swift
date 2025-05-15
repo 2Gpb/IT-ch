@@ -95,20 +95,21 @@ final class ITCHScheduleEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with mode: ITCHEditingMode) {
+    func displayStart(with model: ITCHScheduleEditorModel?) {
         let title: String
-        switch mode {
-        case .create:
-            title = Constant.NavigationBar.createTitle
-            saveButton.configure(title: Constant.SaveButton.createTitle)
-            saveButton.action = { [weak self] in
-                self?.interactor.loadCourses()
-            }
-        case .edit:
+        if let model {
             title = Constant.NavigationBar.changeTitle
             saveButton.configure(title: Constant.SaveButton.saveTitle)
             saveButton.action = { [weak self] in
                 self?.interactor.loadDismiss()
+            }
+            
+            setUpTextFields(with: model)
+        } else {
+            title = Constant.NavigationBar.createTitle
+            saveButton.configure(title: Constant.SaveButton.createTitle)
+            saveButton.action = { [weak self] in
+                self?.interactor.loadCourses()
             }
         }
         
@@ -175,6 +176,16 @@ final class ITCHScheduleEditorViewController: UIViewController {
             guard let self else { return }
             self.frequencyAlert.present(on: self)
         }
+    }
+    
+    private func setUpTextFields(with model: ITCHScheduleEditorModel) {
+        dayTextField.text = model.dayOfWeek
+        dayAlert.selectRow(at: pickerConfigs[0].items.firstIndex(of: model.dayOfWeek) ?? 0)
+        numberOfHoursTextField.text = "\(model.numberOfHours)"
+        startTimeTextField.text = model.time
+        timeAlert.selectRow(at: pickerConfigs[1].items.firstIndex(of: model.time) ?? 0)
+        frequencyTextField.text = model.frequency
+        frequencyAlert.selectRow(at: pickerConfigs[2].items.firstIndex(of: model.frequency) ?? 0)
     }
     
     private func setUpTimeStackView() {

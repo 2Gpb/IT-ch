@@ -25,8 +25,8 @@ protocol ITCHCoursePresentationLogic {
 }
 
 protocol ITCHCourseRouterLogic {
-    func routeToChangeCourse()
-    func routeToChangeSchedule()
+    func routeToChangeCourse(with model: ITCHCourseEditorModel?)
+    func routeToChangeSchedule(with model: ITCHScheduleEditorModel?)
     func popViewController()
     
     func routeToChat(for link: String?)

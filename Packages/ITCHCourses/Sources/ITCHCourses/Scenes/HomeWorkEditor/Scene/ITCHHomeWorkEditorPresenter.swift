@@ -10,8 +10,8 @@ final class ITCHHomeWorkEditorPresenter: ITCHHomeWorkEditorPresentationLogic {
     weak var view: ITCHHomeWorkEditorViewController?
     
     // MARK: - Methods
-    func presentStart(for mode: ITCHEditingMode, with model: ITCHHomeWorkModel?) {
-        view?.displayStart(for: mode, with: model)
+    func presentStart(with model: ITCHHomeWorkModel?) {
+        view?.displayStart(with: model)
     }
 }
 

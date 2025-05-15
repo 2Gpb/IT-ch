@@ -20,6 +20,11 @@ final class ITCHMyCoursesViewController: UIViewController {
             static let backgroundColor: UIColor = ITCHColor.backgroundDark.color
         }
         
+        enum EmptyState {
+            static let title: String = "У вас пока нет курсов"
+            static let subtitle: String = "Создайте свой первый курс, нажав\nна плюс в правом верхнем углу."
+        }
+        
         enum NavigationBar {
             static let title: String = "Мои курсы"
             static let rightImage: UIImage = ITCHImage.plus24.image
@@ -84,8 +89,8 @@ final class ITCHMyCoursesViewController: UIViewController {
     
     private func setUpEmptyStateView() {
         emptyStateView.configure(
-            title: "У вас пока нет курсов",
-            subtitle: "Создайте свой первый курс, нажав\nна плюс в правом верхнем углу."
+            title: Constant.EmptyState.title,
+            subtitle: Constant.EmptyState.subtitle
         )
         
         view.addSubview(emptyStateView)

@@ -1,17 +1,18 @@
 //
-//  ITCHCurrentCourseViewModel.swift
+//  ITCHCourseModel.swift
 //  ITCHCourses
 //
-//  Created by Peter on 13.05.2025.
+//  Created by Peter on 04.05.2025.
 //
 
 import UIKit
 
-struct ITCHCurrentCourseModel {
+struct ITCHCourseModel {
     let courseName: String
     let teacherName: String
     let avatar: UIImage?
-    let locationDuration: [String]
+    let duration: String
+    let location: String
     let role: String
     let chatLink: String?
     let gradesLink: String?

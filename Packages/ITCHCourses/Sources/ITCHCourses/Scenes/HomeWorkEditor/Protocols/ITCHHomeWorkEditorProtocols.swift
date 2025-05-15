@@ -11,7 +11,7 @@ protocol ITCHHomeWorkEditorBusinessLogic {
 }
 
 protocol ITCHHomeWorkEditorPresentationLogic {
-    func presentStart(for mode: ITCHEditingMode, with model: ITCHHomeWorkModel?)
+    func presentStart(with model: ITCHHomeWorkModel?)
 }
 
 protocol ITCHHomeWorkEditorRouterLogic {

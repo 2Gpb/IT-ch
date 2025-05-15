@@ -10,8 +10,8 @@ final class ITCHScheduleEditorPresenter: ITCHScheduleEditorPresentationLogic {
     weak var view: ITCHScheduleEditorViewController?
     
     // MARK: - Methods
-    func presentStart(with mode: ITCHEditingMode) {
-        view?.displayStart(with: mode)
+    func presentStart(with model: ITCHScheduleEditorModel?) {
+        view?.displayStart(with: model)
     }
 }
 

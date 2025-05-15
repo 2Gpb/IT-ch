@@ -17,16 +17,16 @@ final class ITCHCoursePresenter: ITCHCoursePresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHCoursePresenter: ITCHCourseRouterLogic {
-    func routeToChangeCourse() {
-        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(for: .edit), animated: true)
-    }
-    
-    func routeToChangeSchedule() {
-        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(for: .edit), animated: true)
-    }
-    
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
+    }
+    
+    func routeToChangeCourse(with model: ITCHCourseEditorModel?) {
+        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(with: model), animated: true)
+    }
+    
+    func routeToChangeSchedule(with model: ITCHScheduleEditorModel?) {
+        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(with: model), animated: true)
     }
     
     func routeToChat(for link: String?) {

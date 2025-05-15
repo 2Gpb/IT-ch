@@ -93,19 +93,16 @@ final class ITCHRecordEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(for mode: ITCHEditingMode, with model: ITCHRecordModel?) {
-        switch mode {
-        case .create:
-            navigationBar.configure(with: Constant.NavigationBar.createTitle)
-        case .edit:
+    func displayStart(with model: ITCHRecordModel?) {
+        if let model {
             navigationBar.configure(with: Constant.NavigationBar.editTitle)
             setUpDeleteButton()
-        }
-        
-        if let model {
+            
             dateTextField.text = model.date.configure(to: Constant.DateTextField.dateFormat)
             datePicker.configure(with: model.date)
             linkTextField.text = model.link
+        } else {
+            navigationBar.configure(with: Constant.NavigationBar.createTitle)
         }
     }
     

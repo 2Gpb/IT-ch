@@ -7,6 +7,8 @@
 
 import UIKit
 import ITCHUIComponents
+import IQKeyboardManagerSwift
+import IQKeyboardToolbarManager
 
 final class ITCHCourseEditorViewController: UIViewController {
     // MARK: - Constants
@@ -78,6 +80,11 @@ final class ITCHCourseEditorViewController: UIViewController {
     private let locationTextField: ITCHTextField = ITCHTextField()
     private let durationTextField: ITCHTextField = ITCHTextField()
     private let durationPickerView: UIPickerView = UIPickerView()
+    private let durationAlertController: UIAlertController = UIAlertController(
+        title: Constant.DurationPicker.alertTitle,
+        message: Constant.DurationPicker.alertMessage,
+        preferredStyle: Constant.DurationPicker.style
+    )
     private let locationDurationStackView: UIStackView = UIStackView()
     private let chatLinkTextField: ITCHTextField = ITCHTextField()
     private let gradesLinkTextField: ITCHTextField = ITCHTextField()
@@ -86,9 +93,7 @@ final class ITCHCourseEditorViewController: UIViewController {
     private let continueButton: ITCHButton = ITCHButton()
     
     // MARK: - Lifecycle
-    init(
-        interactor: ITCHCourseEditorBusinessLogic
-    ) {
+    init(interactor: ITCHCourseEditorBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -110,21 +115,22 @@ final class ITCHCourseEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with mode: ITCHEditingMode) {
+    func displayStart(with model: ITCHCourseEditorModel?) {
         let title: String
-        switch mode {
-        case .create:
-            title = Constant.NavigationBar.createTitle
-            continueButton.configure(title: Constant.ContinueButton.continueTitle)
-            continueButton.action = { [weak self] in
-                self?.interactor.loadCreateSchedule()
-            }
-            
-        case .edit:
+        
+        if let model {
             title = Constant.NavigationBar.changeTitle
             continueButton.configure(title: Constant.ContinueButton.saveTitle)
             continueButton.action = { [weak self] in
                 self?.interactor.loadDismiss()
+            }
+            
+            setUpTextFields(with: model)
+        } else {
+            title = Constant.NavigationBar.createTitle
+            continueButton.configure(title: Constant.ContinueButton.continueTitle)
+            continueButton.action = { [weak self] in
+                self?.interactor.loadCreateSchedule()
             }
         }
         
@@ -143,6 +149,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         setUpContinueButton()
         setUpContentScrollView()
         setUpTextFields()
+        setUpDurationPickerView()
         setUpLocationDurationStackView()
         setUpContentStackView()
     }
@@ -174,8 +181,19 @@ final class ITCHCourseEditorViewController: UIViewController {
         nameTextField.configure(with: ITCHCourseEditorTextFieldConfig.name())
         locationTextField.configure(with: ITCHCourseEditorTextFieldConfig.location())
         durationTextField.configure(with: ITCHCourseEditorTextFieldConfig.duration())
+        durationTextField.beforeOpenKeyboardAction = {
+            IQKeyboardManager.shared.isEnabled = false
+            IQKeyboardToolbarManager.shared.isEnabled = false
+        }
+        
+        durationTextField.afterCloseKeyboardAction = {
+            IQKeyboardManager.shared.isEnabled = true
+            IQKeyboardToolbarManager.shared.isEnabled = true
+        }
+        
         durationTextField.insteadKeyboardAction = { [weak self] in
-            self?.setUpDurationPickerView()
+            guard let self else { return }
+            present(self.durationAlertController, animated: true)
         }
     
         chatLinkTextField.configure(with: ITCHCourseEditorTextFieldConfig.chatLink())
@@ -192,6 +210,35 @@ final class ITCHCourseEditorViewController: UIViewController {
         }
     }
     
+    private func setUpTextFields(with model: ITCHCourseEditorModel) {
+        nameTextField.text = model.name
+        locationTextField.text = model.location
+        chatLinkTextField.text = model.chatLink
+        gradesLinkTextField.text = model.gradesLink
+        durationTextField.text = model.duration
+        durationTextField.setInputView(nil)
+        
+        let numbers = model.duration
+            .components(separatedBy: ", ")
+            .compactMap { Int($0) }
+
+        selectedStart = numbers[0] - 1
+        selectedEnd = numbers.count - 1
+        
+        safeSelectRow(selectedStart, in: .start)
+        safeSelectRow(selectedEnd, in: .end)
+    }
+    
+    private func safeSelectRow(_ row: Int, in component: ITCHDurationPickerComponent) {
+        let componentIndex = component.rawValue
+        let rowCount = durationPickerView.numberOfRows(inComponent: componentIndex)
+        
+        guard rowCount > 0 else { return }
+        
+        let safeRow = min(max(0, row), rowCount - 1)
+        durationPickerView.selectRow(safeRow, inComponent: componentIndex, animated: true)
+    }
+    
     private func setUpContentStackView() {
         contentStackView.axis = Constant.ContentStack.axis
         contentStackView.spacing = Constant.ContentStack.spacing
@@ -205,42 +252,33 @@ final class ITCHCourseEditorViewController: UIViewController {
     }
     
     private func setUpDurationPickerView() {
-        let alert = UIAlertController(
-            title: Constant.DurationPicker.alertTitle,
-            message: Constant.DurationPicker.alertMessage,
-            preferredStyle: Constant.DurationPicker.style
-        )
-        
         let wrapView = UIView()
         
-        alert.view.addSubview(wrapView)
-        wrapView.pinTop(to: alert.view, Constant.DurationPicker.topOffset)
-        wrapView.pinCenterX(to: alert.view)
+        durationAlertController.view.addSubview(wrapView)
+        wrapView.pinTop(to: durationAlertController.view, Constant.DurationPicker.topOffset)
+        wrapView.pinCenterX(to: durationAlertController.view)
         wrapView.setWidth(view.bounds.width - Constant.DurationPicker.horizontalPadding)
         wrapView.setHeight(Constant.DurationPicker.height)
         
-        let picker = makeDurationPicker()
-        wrapView.addSubview(picker)
+        setUpDurationPicker()
+        wrapView.addSubview(durationPickerView)
         
         let confirmAction = makeConfirmAction()
         
-        alert.addAction(confirmAction)
-        alert.addAction(UIAlertAction(title: Constant.DurationPicker.cancelButtonTitle, style: .cancel))
-        
-        present(alert, animated: true)
+        durationAlertController.addAction(confirmAction)
+        durationAlertController.addAction(UIAlertAction(title: Constant.DurationPicker.cancelButtonTitle, style: .cancel))
     }
     
-    private func makeDurationPicker() -> UIPickerView {
-        let picker = UIPickerView(frame: CGRect(
+    private func setUpDurationPicker() {
+        durationPickerView.frame = CGRect(
             x: Constant.DurationPicker.x,
             y: Constant.DurationPicker.y,
             width: view.frame.width - Constant.DurationPicker.horizontalPadding,
             height: Constant.DurationPicker.height
-        ))
+        )
 
-        picker.dataSource = self
-        picker.delegate = self
-        return picker
+        durationPickerView.dataSource = self
+        durationPickerView.delegate = self
     }
     
     // MARK: - Actions
@@ -248,9 +286,12 @@ final class ITCHCourseEditorViewController: UIViewController {
         return UIAlertAction(title: Constant.DurationPicker.confirmButtonTitle, style: .default) { [weak self] _ in
             guard let self else { return }
             
-            self.durationTextField.text = self.selectedStart == self.selectedEnd
-            ? "\(self.selectedStart)" + Constant.DurationPicker.textSuffix
-            : "\(self.selectedStart) – \(self.selectedEnd)" + Constant.DurationPicker.textSuffix
+            var text = ""
+            for module in selectedStart...selectedEnd {
+                text += "\(module)" + (module == selectedEnd ? "" : ", ")
+            }
+            
+            self.durationTextField.text = text
         }
     }
 }

@@ -12,7 +12,7 @@ protocol ITCHScheduleEditorBusinessLogic {
 }
 
 protocol ITCHScheduleEditorPresentationLogic {
-    func presentStart(with mode: ITCHEditingMode)
+    func presentStart(with model: ITCHScheduleEditorModel?)
 }
 
 protocol ITCHScheduleEditorRouterLogic {

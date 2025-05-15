@@ -16,12 +16,19 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic, ITCHC
     // MARK: - Variables
     var courses: [ITCHCourseModel] = [
         ITCHCourseModel(
-            duration: "1 - 3 модуль",
-            role: "Преподаватель",
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
-            avatar: nil
-        )
+            avatar: nil,
+            duration: "1, 2, 3",
+            location: "D106, Покровский б-р, д.11",
+            role: "Преподаватель",
+            chatLink: "https://t.me/slyrack",
+            gradesLink: "https://t.me/slyrack",
+            dayOfWeek: "Вторник",
+            numberOfHours: 1,
+            time: "18:10",
+            frequency: "1 раз в неделю"
+        )        
     ]
     
     // MARK: - Lifecycle
@@ -59,7 +66,7 @@ extension ITCHMyCoursesInteractor: UITableViewDataSource {
         let model = courses[indexPath.row]
         cell.configure(
             with: ITCHCourseViewModel(
-                duration: model.duration,
+                duration: model.duration + " модули",
                 role: model.role,
                 courseName: model.courseName,
                 teacherName: model.teacherName,

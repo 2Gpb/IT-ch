@@ -12,10 +12,10 @@ protocol ITCHCourseEditorBusinessLogic {
 }
 
 protocol ITCHCourseEditorPresentationLogic {
-    func presentStart(with mode: ITCHEditingMode)
+    func presentStart(with model: ITCHCourseEditorModel?)
 }
 
 protocol ITCHCourseEditorRouterLogic {
     func popViewController()
-    func routeToCreateSchedule(with mode: ITCHEditingMode)
+    func routeToCreateSchedule()
 }

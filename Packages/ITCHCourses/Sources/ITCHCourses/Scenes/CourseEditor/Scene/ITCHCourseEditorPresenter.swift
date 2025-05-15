@@ -10,8 +10,8 @@ final class ITCHCourseEditorPresenter: ITCHCourseEditorPresentationLogic {
     weak var view: ITCHCourseEditorViewController?
     
     // MARK: - Methods
-    func presentStart(with mode: ITCHEditingMode) {
-        view?.displayStart(with: mode)
+    func presentStart(with model: ITCHCourseEditorModel?) {
+        view?.displayStart(with: model)
     }
 }
 
@@ -21,7 +21,7 @@ extension ITCHCourseEditorPresenter: ITCHCourseEditorRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToCreateSchedule(with mode: ITCHEditingMode) {
-        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(for: mode), animated: true)
+    func routeToCreateSchedule() {
+        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(), animated: true)
     }
 }

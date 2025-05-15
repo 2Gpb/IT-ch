@@ -25,7 +25,8 @@ enum ITCHCourseEditorTextFieldConfig {
     static func duration() -> ITCHTextFieldViewModel {
         ITCHTextFieldViewModel(
             title: "Время курса в модулях",
-            placeholder: "Выберите модули"
+            placeholder: "Выберите модули",
+            alignment: .center
         )
     }
     
