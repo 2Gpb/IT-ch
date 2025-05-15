@@ -8,6 +8,11 @@
 final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHRecordsViewController?
+    
+    // MARK: - Methods
+    func presentStart() {
+        view?.displayStart()
+    }
 }
 
 // MARK: - RouterLogic

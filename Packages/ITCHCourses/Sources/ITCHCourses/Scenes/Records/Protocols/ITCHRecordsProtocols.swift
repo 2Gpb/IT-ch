@@ -8,11 +8,16 @@
 import UIKit
 
 protocol ITCHRecordsBusinessLogic: UITableViewDataSource {
+    var records: [ITCHRecordModel] { get }
+    
     func loadAddRecord()
     func loadDismiss()
+    func loadStart()
 }
 
-protocol ITCHRecordsPresentationLogic { }
+protocol ITCHRecordsPresentationLogic {
+    func presentStart()
+}
 
 protocol ITCHRecordsRouterLogic {
     func routeToAddRecord()

@@ -25,6 +25,11 @@ final class ITCHRecordsViewController: UIViewController {
             static let rightImage: UIImage = ITCHImage.plus24.image
         }
         
+        enum EmptyState {
+            static let title: String = "На курсе пока нет записей"
+            static let subtitle: String = "Добавьте первую запись, нажав на плюс\nв правом верхнем углу."
+        }
+        
         enum RecordsTable {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
@@ -36,6 +41,7 @@ final class ITCHRecordsViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
+    private let emptyStateView: ITCHEmptyStateView = ITCHEmptyStateView()
     private let recordsTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
@@ -52,12 +58,19 @@ final class ITCHRecordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+        interactor.loadStart()
+    }
+    
+    // MARK: - Methods
+    func displayStart() {
+        emptyStateView.isHidden = !interactor.records.isEmpty
     }
     
     // MARK: - SetUp
     private func setUp() {
         view.backgroundColor = Constant.View.backgroundColor
         setUpNavigationBar()
+        setUpEmptyStateView()
         setUpRecordsTableView()
     }
     
@@ -81,6 +94,17 @@ final class ITCHRecordsViewController: UIViewController {
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor)
         navigationBar.pinHorizontal(to: view)
+    }
+    
+    private func setUpEmptyStateView() {
+        emptyStateView.configure(
+            title: Constant.EmptyState.title,
+            subtitle: Constant.EmptyState.subtitle
+        )
+        
+        view.addSubview(emptyStateView)
+        emptyStateView.pinCenterY(to: view.centerYAnchor)
+        emptyStateView.pinHorizontal(to: view)
     }
     
     private func setUpRecordsTableView() {
