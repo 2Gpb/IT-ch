@@ -1,13 +1,14 @@
 //
-//  PrimaryHomeWorkCell.swift
+//  ITCHHomeWorkView.swift
 //  DesignSystem-IT-ch
 //
 //  Created by Peter on 02.04.2025.
 //
 
 import UIKit
+import ITCHUtilities
 
-public final class ITCHHomeWorkCell: UIView {
+public final class ITCHHomeWorkView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -46,8 +47,9 @@ public final class ITCHHomeWorkCell: UIView {
         }
         
         enum NavigationRows {
+            static let openTitle: String = "Открыть"
             static let teacherTitle: String = "Посмотреть решения"
-            static let teacherSecondTitle: String = "Редактировать"
+            static let editTitle: String = "Редактировать"
             static let studentTitle: String = "Добавить решение"
             static let assistantTitle: String = "Проверить решения"
             static let horizontalOffset: CGFloat = 20
@@ -63,24 +65,35 @@ public final class ITCHHomeWorkCell: UIView {
     private let separatorView: UIView = UIView()
     private var navigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     private var secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
+    private var thirdNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
+    
+    // MARK: - Variables
+    private var secondRowBottomConstraint: NSLayoutConstraint?
+    private var thirdRowBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Properties
+    public var openAction: (() -> Void)? {
+        didSet {
+            navigationRow.action = openAction
+        }
+    }
+    
     public var solutionsAction: (() -> Void)? {
         didSet {
-            navigationRow.action = solutionsAction
+            secondNavigationRow.action = solutionsAction
         }
     }
     
     public var editAction: (() -> Void)? {
         didSet {
-            secondNavigationRow.action = editAction
+            thirdNavigationRow.action = editAction
         }
     }
     
     // MARK: - Lifecycle
-    public init(type: ITCHHomeWorkCellType) {
+    public init() {
         super.init(frame: .zero)
-        setUp(type: type)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -89,18 +102,38 @@ public final class ITCHHomeWorkCell: UIView {
     }
     
     // MARK: - Methods
-    public func configure(title: String, date: Date) {
+    public func configure(for role: ITCHCourseUserRole, title: String, date: Date) {
         titleLabel.text = title
         dateLabel.text = date.configure(to: Constant.Date.dateFormat)
+        
+        switch role {
+        case .teacher:
+            secondRowBottomConstraint?.isActive = false
+            thirdRowBottomConstraint?.isActive = true
+        case .student, .assistant:
+            secondNavigationRow.configure(
+                title: role == .student ?
+                Constant.NavigationRows.studentTitle :
+                Constant.NavigationRows.assistantTitle
+            )
+            
+            thirdNavigationRow.removeFromSuperview()
+            secondRowBottomConstraint?.isActive = true
+            thirdRowBottomConstraint?.isActive = false
+        case .none:
+            break
+        }
     }
     
     // MARK: - SetUp
-    private func setUp(type: ITCHHomeWorkCellType) {
+    private func setUp() {
         setUpView()
         setUpTitleLabel()
         setUpDateStack()
         setUpSeparatorView()
-        setUpNavigationRow(with: type)
+        setUpNavigationRow()
+        setUpSecondNavigationRow()
+        setUpThirdNavigationRow()
     }
     
     private func setUpView() {
@@ -146,31 +179,39 @@ public final class ITCHHomeWorkCell: UIView {
         separatorView.setHeight(Constant.Separator.height)
     }
     
-    private func setUpNavigationRow(with type: ITCHHomeWorkCellType) {
-        secondNavigationRow.configure(title: Constant.NavigationRows.teacherTitle)
+    private func setUpNavigationRow() {
+        navigationRow.configure(title: Constant.NavigationRows.openTitle)
         
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-        
-        switch type {
-        case .teacher:
-            setUpSecondNavigationRow()
-        case .student:
-            secondNavigationRow.configure(title: Constant.NavigationRows.studentTitle)
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .assistant:
-            secondNavigationRow.configure(title: Constant.NavigationRows.assistantTitle)
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        }
     }
     
     private func setUpSecondNavigationRow() {
-        secondNavigationRow.configure(title: Constant.NavigationRows.teacherSecondTitle)
+        secondNavigationRow.configure(title: Constant.NavigationRows.teacherTitle)
         
         addSubview(secondNavigationRow)
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
-        secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        secondRowBottomConstraint = secondNavigationRow.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -Constant.NavigationRows.bottomOffset
+        )
+        
+        secondRowBottomConstraint?.isActive = false
+    }
+    
+    private func setUpThirdNavigationRow() {
+        thirdNavigationRow.configure(title: Constant.NavigationRows.editTitle)
+        
+        addSubview(thirdNavigationRow)
+        thirdNavigationRow.pinTop(to: secondNavigationRow.bottomAnchor)
+        thirdNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        thirdRowBottomConstraint = thirdNavigationRow.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -Constant.NavigationRows.bottomOffset
+        )
+        
+        thirdRowBottomConstraint?.isActive = false
     }
 }

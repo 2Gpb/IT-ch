@@ -157,7 +157,7 @@ final class ITCHLoginViewController: UIViewController {
     
     private func setUpEmailTextField() {
         emailTextField.configure(
-            with: ITCHTextFieldModel(
+            with: ITCHTextFieldViewModel(
                 title: Constant.Email.title,
                 placeholder: Constant.Email.placeholder
             )
@@ -170,7 +170,7 @@ final class ITCHLoginViewController: UIViewController {
     
     private func setUpPasswordTextField() {
         passwordTextField.configure(
-            with: ITCHTextFieldModel(
+            with: ITCHTextFieldViewModel(
                 title: Constant.Password.title,
                 placeholder: Constant.Password.placeholder,
                 type: .password

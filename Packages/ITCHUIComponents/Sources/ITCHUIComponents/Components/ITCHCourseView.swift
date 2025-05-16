@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ITCHCourseCell: UIView {
+public final class ITCHCourseView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -57,7 +57,7 @@ public final class ITCHCourseCell: UIView {
         enum Avatar {
             static let size: CGFloat = 32
             static let cornerRadius: CGFloat = 16
-            static let backgroundColor = ITCHColor.backgroundDark.color
+            static let backgroundColor = ITCHColor.cellGray.color
             static let clipToBounds: Bool = true
             static let contentMode: UIView.ContentMode = .scaleAspectFill
         }
@@ -85,7 +85,7 @@ public final class ITCHCourseCell: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHCourseModel) {
+    public func configure(with model: ITCHCourseViewModel) {
         durationLabel.text = model.duration
         roleLabel.text = Constant.Info.rolePrefix + model.role
         courseNameLabel.text = model.courseName

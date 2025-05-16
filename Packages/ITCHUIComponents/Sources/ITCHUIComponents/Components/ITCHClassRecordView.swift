@@ -1,13 +1,14 @@
 //
-//  ITCHClassRecordCell.swift
+//  ITCHClassRecordView.swift
 //  ITCHUIComponents
 //
 //  Created by Peter on 10.04.2025.
 //
 
 import UIKit
+import ITCHUtilities
 
-public final class ITCHClassRecordCell: UIView {
+public final class ITCHClassRecordView: UIView {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -48,6 +49,10 @@ public final class ITCHClassRecordCell: UIView {
     private let navigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     private let secondNavigationRow: ITCHNavigationRow = ITCHNavigationRow(type: .chevron)
     
+    // MARK: - Variables
+    private var firstRowBottomConstraint: NSLayoutConstraint?
+    private var secondRowBottomConstraint: NSLayoutConstraint?
+    
     // MARK: - Properties
     public var openRecordAction: (() -> Void)? {
         didSet {
@@ -62,9 +67,9 @@ public final class ITCHClassRecordCell: UIView {
     }
     
     // MARK: - Lifecycle
-    public init(type: ITCHClassRecordCellType) {
+    public init() {
         super.init(frame: .zero)
-        setUp(for: type)
+        setUp()
     }
     
     @available(*, unavailable)
@@ -73,16 +78,30 @@ public final class ITCHClassRecordCell: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with date: Date) {
+    public func configure(for type: ITCHCourseUserRole, with date: Date) {
         dateLabel.text = date.configure(to: Constant.Date.format).uppercased()
+        
+        switch type {
+        case .student:
+            secondNavigationRow.removeFromSuperview()
+            firstRowBottomConstraint?.isActive = true
+            secondRowBottomConstraint?.isActive = false
+
+        case .teacher:
+            firstRowBottomConstraint?.isActive = false
+            secondRowBottomConstraint?.isActive = true
+        default:
+            break
+        }
     }
     
     // MARK: - SetUp
-    private func setUp(for type: ITCHClassRecordCellType) {
+    private func setUp() {
         setUpView()
         setUpDateTitle()
         setUpSeparatorView()
-        setUpNavigationRow(with: type)
+        setUpNavigationRow()
+        setUpSecondNavigationRow()
     }
     
     private func setUpView() {
@@ -108,19 +127,18 @@ public final class ITCHClassRecordCell: UIView {
         separatorView.setHeight(Constant.Separator.height)
     }
     
-    private func setUpNavigationRow(with type: ITCHClassRecordCellType) {
+    private func setUpNavigationRow() {
         navigationRow.configure(title: Constant.NavigationRows.recordTitle)
         
         addSubview(navigationRow)
         navigationRow.pinTop(to: separatorView.bottomAnchor)
         navigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
+        firstRowBottomConstraint = navigationRow.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -Constant.NavigationRows.bottomOffset
+        )
         
-        switch type {
-        case .student:
-            navigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
-        case .teacher:
-            setUpSecondNavigationRow()
-        }
+        firstRowBottomConstraint?.isActive = false
     }
     
     private func setUpSecondNavigationRow() {
@@ -130,5 +148,11 @@ public final class ITCHClassRecordCell: UIView {
         secondNavigationRow.pinTop(to: navigationRow.bottomAnchor)
         secondNavigationRow.pinHorizontal(to: self, Constant.NavigationRows.horizontalOffset)
         secondNavigationRow.pinBottom(to: self, Constant.NavigationRows.bottomOffset)
+        secondRowBottomConstraint = secondNavigationRow.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -Constant.NavigationRows.bottomOffset
+        )
+        
+        secondRowBottomConstraint?.isActive = false
     }
 }

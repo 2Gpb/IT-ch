@@ -26,11 +26,11 @@ final class ITCHContactsInteractor: NSObject, ITCHContactsBusinessLogic {
         let social = contacts[index]
         switch social {
         case .vk:
-            presenter.routetoVK()
+            presenter.routeToVK()
         case .telegram:
-            presenter.routetoTelegram()
+            presenter.routeToTelegram()
         case .email:
-            presenter.routetoEmail()
+            presenter.routeToEmail()
         }
     }
 }

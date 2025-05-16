@@ -49,7 +49,12 @@ public final class ITCHNavigationRow: UIView {
     private var titleLabelLeadingToSuperview: NSLayoutConstraint?
     
     // MARK: - Properties
-    public var action: (() -> Void)?
+    public var action: (() -> Void)? {
+        didSet {
+            self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+        }
+    }
+    
     public var isCheck = false {
         didSet {
             checkmarkImageView.isHidden = !isCheck
@@ -146,5 +151,11 @@ public final class ITCHNavigationRow: UIView {
         checkmarkImageView.pinVertical(to: self, Constant.Checkmark.verticalOffset)
         checkmarkImageView.setHeight(Constant.Checkmark.dimension)
         checkmarkImageView.setWidth(Constant.Checkmark.dimension)
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func handleTap() {
+        action?()
     }
 }

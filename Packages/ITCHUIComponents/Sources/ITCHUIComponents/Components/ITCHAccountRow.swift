@@ -35,6 +35,9 @@ public final class ITCHAccountRow: UIView {
             static let size: CGFloat = 24
             static let chevronImage: UIImage = ITCHImage.chevronRight24.image
             static let deleteImage: UIImage = ITCHImage.trash24.image
+            static let optionsImage: UIImage = ITCHImage.options24.image
+            static let chekBoxImage: UIImage = ITCHImage.checkbox28.image
+            static let chekBoxFillImage: UIImage = ITCHImage.checkboxFill28.image
         }
         
         enum TextStack {
@@ -56,7 +59,16 @@ public final class ITCHAccountRow: UIView {
     private let aboutInfoLabel: UILabel = UILabel()
     private let textStack: UIStackView = UIStackView()
     private let rightImageView: UIImageView = UIImageView()
+    private let rightButton: ITCHCustomButton = ITCHCustomButton(type: .system)
     private let avatarPlusImageView: UIImageView = UIImageView()
+    
+    // MARK: - Properties
+    public var isCheck: Bool = false {
+        didSet {
+            rightImageView.image = isCheck ? Constant.RightImage.chekBoxFillImage : Constant.RightImage.chekBoxImage
+        }
+    }
+    public var rightAction: (() -> Void)?
     
     // MARK: - Lifecycle
     public init(type: ITCHAccountRowType) {
@@ -77,23 +89,35 @@ public final class ITCHAccountRow: UIView {
         aboutInfoLabel.text = model.info
     }
     
+    public func configureRightButtonMenu(items: [UIAction]) {
+        rightButton.menu = UIMenu(children: items)
+        rightButton.showsMenuAsPrimaryAction = true
+    }
+    
     // MARK: - SetUp
     private func setUp(with type: ITCHAccountRowType) {
-        setUpAvatarImageView()
         setHeight(Constant.View.height)
+        setUpAvatarImageView()
+        setUpRightImageView()
+        rightImageView.setWidth(type == .checkBox ? 28 : Constant.RightImage.size)
+        setUpRightButton()
         
-        let image: UIImage? = {
-            switch type {
-            case .account, .addAccount:
-                return Constant.RightImage.chevronImage
-            case .deleteAccount:
-                return Constant.RightImage.deleteImage
-            case .defaultAccount:
-                return nil
-            }
-        }()
-
-        setUpRightImageView(with: image)
+        switch type {
+        case .account, .addAccount:
+            rightImageView.image = Constant.RightImage.chevronImage
+        case .checkBox:
+            rightImageView.image = Constant.RightImage.chekBoxImage
+        case .deleteAccount:
+            rightImageView.isHidden = true
+            rightButton.isHidden = false
+            rightButton.setImage(Constant.RightImage.deleteImage, for: .normal)
+        case .options:
+            rightImageView.isHidden = true
+            rightButton.isHidden = false
+            rightButton.setImage(Constant.RightImage.optionsImage, for: .normal)
+        case .defaultAccount:
+            rightImageView.image = nil
+        }
 
         switch type {
         case .addAccount:
@@ -118,13 +142,20 @@ public final class ITCHAccountRow: UIView {
         avatarImageView.setHeight(Constant.Avatar.size)
     }
     
-    private func setUpRightImageView(with image: UIImage?) {
-        rightImageView.image = image
-        
+    private func setUpRightImageView() {
         addSubview(rightImageView)
         rightImageView.pinCenterY(to: self)
         rightImageView.pinRight(to: self)
-        rightImageView.setWidth(Constant.RightImage.size)
+    }
+    
+    private func setUpRightButton() {
+        rightButton.isHidden = true
+        rightButton.tintColor = ITCHColor.blue60.color
+        rightButton.addTarget(self, action: #selector(rightButtonAction), for: .touchUpInside)
+        
+        addSubview(rightButton)
+        rightButton.pinRight(to: self)
+        rightButton.pinCenterY(to: self)
     }
     
     private func setUpAvatarLabel() {
@@ -186,5 +217,11 @@ public final class ITCHAccountRow: UIView {
         let secondInitial = second.first.map { String($0) } ?? ""
 
         return firstInitial + secondInitial
+    }
+    
+    // MARK: - Actions
+    @objc
+    private func rightButtonAction() {
+        rightAction?()
     }
 }

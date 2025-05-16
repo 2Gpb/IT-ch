@@ -52,6 +52,17 @@ public final class ITCHTextField: UIView {
     
     // MARK: - Properties
     public var returnAction: (() -> Void)?
+    public var insteadKeyboardAction: (() -> Void)?
+    public var beforeOpenKeyboardAction: (() -> Void)?
+    public var afterCloseKeyboardAction: (() -> Void)?
+    public var text: String? {
+        get {
+            textField.text
+        } set {
+            textField.text = newValue
+        }
+    }
+    
     public var isError: Bool = false {
         didSet {
             textField.layer.borderColor = isError ?
@@ -82,8 +93,9 @@ public final class ITCHTextField: UIView {
     }
     
     // MARK: - Methods
-    public func configure(with model: ITCHTextFieldModel) {
+    public func configure(with model: ITCHTextFieldViewModel) {
         titleLabel.text = model.title
+        textField.textAlignment = model.alignment
         textField.attributedPlaceholder = NSAttributedString(
             string: model.placeholder,
             attributes: Constant.TextField.placeholderAttributes
@@ -91,12 +103,16 @@ public final class ITCHTextField: UIView {
         
         switch model.type {
         case .normal:
-            textField.keyboardType = .emailAddress
+            textField.keyboardType = model.keyboardType
         case .password:
             setUpHideShowButton()
             textField.keyboardType = .asciiCapable
             textField.autocorrectionType = .no
         }
+    }
+    
+    public func setInputView(_ inputView: UIView?) {
+        textField.inputView = inputView
     }
     
     // MARK: - SetUp
@@ -125,6 +141,7 @@ public final class ITCHTextField: UIView {
         textField.layer.cornerRadius = Constant.TextField.cornerRadius
         textField.layer.borderWidth = Constant.TextField.borderWidth
         textField.layer.borderColor = Constant.TextField.borderColor
+        textField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(textFieldTapped)))
         
         addSubview(textField)
         textField.pinHorizontal(to: self)
@@ -149,6 +166,11 @@ public final class ITCHTextField: UIView {
     
     // MARK: - Actions
     @objc
+    private func textFieldTapped() {
+        textField.becomeFirstResponder()
+    }
+    
+    @objc
     private func eyeButtonTapped() {
         eyeButton.isHidden = eyeOffButton.isHidden
         textField.isSecureTextEntry = !eyeOffButton.isHidden
@@ -162,5 +184,15 @@ extension ITCHTextField: UITextFieldDelegate {
         textField.resignFirstResponder()
         returnAction?()
         return true
+    }
+    
+    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        beforeOpenKeyboardAction?()
+        insteadKeyboardAction?()
+        return insteadKeyboardAction != nil ? false : true
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        afterCloseKeyboardAction?()
     }
 }
