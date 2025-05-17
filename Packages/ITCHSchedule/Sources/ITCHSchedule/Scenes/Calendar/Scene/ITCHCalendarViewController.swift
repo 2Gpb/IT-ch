@@ -96,6 +96,7 @@ final class ITCHCalendarViewController: UIViewController {
     }
     
     private func setUpView() {
+        navigationController?.isNavigationBarHidden = true
         view.backgroundColor = Constant.View.calendarBackgroundColor
     }
     
