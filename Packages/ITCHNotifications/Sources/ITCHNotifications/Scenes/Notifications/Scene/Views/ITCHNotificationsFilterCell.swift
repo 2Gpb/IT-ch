@@ -70,7 +70,6 @@ final class ITCHNotificationsFilterCell: UICollectionViewCell {
     private func setUpView() {
         contentView.backgroundColor = Constant.View.backgroundColor
         contentView.layer.cornerRadius = Constant.View.cornerRadius
-        contentView.heightAnchor.constraint(equalToConstant: Constant.View.height).isActive = true
     }
     
     private func setUpTitleLabel() {

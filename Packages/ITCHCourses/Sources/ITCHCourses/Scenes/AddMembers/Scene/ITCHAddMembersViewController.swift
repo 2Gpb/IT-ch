@@ -35,7 +35,9 @@ final class ITCHAddMembersViewController: UIViewController {
         enum MembersTable {
             static let separationStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
-            static let topOffset: CGFloat = 4
+            static let topOffset: CGFloat = 8
+            static let topInset: CGFloat = 14
+            static let bottomInset: CGFloat = 20
         }
     }
     
@@ -103,10 +105,13 @@ final class ITCHAddMembersViewController: UIViewController {
     }
     
     private func setUpMembersTableView() {
-        membersTableView.backgroundColor = Constant.MembersTable.backgroundColor
-        membersTableView.separatorStyle = Constant.MembersTable.separationStyle
         membersTableView.delegate = self
         membersTableView.dataSource = interactor
+        membersTableView.contentInset.bottom = 20
+        membersTableView.contentInset.top = 14
+        membersTableView.showsVerticalScrollIndicator = false
+        membersTableView.backgroundColor = Constant.MembersTable.backgroundColor
+        membersTableView.separatorStyle = Constant.MembersTable.separationStyle
         membersTableView.register(ITCHMemberToAddCell.self, forCellReuseIdentifier: ITCHMemberToAddCell.reuseId)
         
         view.addSubview(membersTableView)

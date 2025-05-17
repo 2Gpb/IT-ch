@@ -18,6 +18,42 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
         ITCHRecordModel(
             date: Date(),
             link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
+        ),
+        ITCHRecordModel(
+            date: Date(),
+            link: "https://habr.com/ru/articles/133559/"
         )
     ]
     
@@ -51,7 +87,9 @@ extension ITCHRecordsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ITCHRecordCell = tableView.dequeueCell(for: indexPath)
+        guard let cell: ITCHRecordCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
         
         cell.configure(
             for: role,

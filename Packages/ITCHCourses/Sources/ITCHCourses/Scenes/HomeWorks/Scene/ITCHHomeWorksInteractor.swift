@@ -21,6 +21,48 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
             linkForLoad: "https://github.com/IT-CH-app",
             linkForCheck: "https://github.com/IT-CH-app",
             linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
         )
     ]
     
@@ -54,7 +96,9 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath)
+        guard let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
         
         cell.configure(
             for: role,

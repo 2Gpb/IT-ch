@@ -34,6 +34,7 @@ final class ITCHRecordsViewController: UIViewController {
         enum RecordsTable {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
+            static let bottomInset: CGFloat = 20
         }
     }
     
@@ -113,6 +114,8 @@ final class ITCHRecordsViewController: UIViewController {
         recordsTableView.delegate = self
         recordsTableView.separatorStyle = Constant.RecordsTable.separatorStyle
         recordsTableView.backgroundColor = Constant.RecordsTable.backgroundColor
+        recordsTableView.showsVerticalScrollIndicator = false
+        recordsTableView.contentInset.bottom = Constant.RecordsTable.bottomInset
         recordsTableView.register(ITCHRecordCell.self, forCellReuseIdentifier: ITCHRecordCell.reuseId)
         
         view.addSubview(recordsTableView)

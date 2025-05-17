@@ -29,6 +29,12 @@ final class ITCHMyCoursesViewController: UIViewController {
             static let title: String = "Мои курсы"
             static let rightImage: UIImage = ITCHImage.plus24.image
         }
+        
+        enum Courses {
+            static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let backgroundColor: UIColor = .clear
+            static let bottomInset: CGFloat = 20
+        }
     }
     
     // MARK: - Private fields
@@ -104,8 +110,10 @@ final class ITCHMyCoursesViewController: UIViewController {
     private func setUpCoursesTableView() {
         coursesTableView.delegate = self
         coursesTableView.dataSource = interactor
-        coursesTableView.backgroundColor = .clear
-        coursesTableView.separatorStyle = .none
+        coursesTableView.backgroundColor = Constant.Courses.backgroundColor
+        coursesTableView.separatorStyle = Constant.Courses.separatorStyle
+        coursesTableView.showsVerticalScrollIndicator = false
+        coursesTableView.contentInset.bottom = Constant.Courses.bottomInset
         coursesTableView.register(ITCHCourseCell.self, forCellReuseIdentifier: ITCHCourseCell.reuseId)
         
         view.addSubview(coursesTableView)

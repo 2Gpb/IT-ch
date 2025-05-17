@@ -57,6 +57,34 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             numberOfHours: 1,
             time: "18:10",
             frequency: "1 раз в неделю"
+        ),
+        ITCHCourseModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            teacherName: "Сосновский Григорий Михайлович",
+            avatar: nil,
+            duration: "1, 2, 3",
+            location: "D106, Покровский б-р, д.11",
+            role: "ASSISTANT",
+            chatLink: "https://t.me/slyrack",
+            gradesLink: "https://t.me/slyrack",
+            dayOfWeek: "Вторник",
+            numberOfHours: 1,
+            time: "18:10",
+            frequency: "1 раз в неделю"
+        ),
+        ITCHCourseModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            teacherName: "Сосновский Григорий Михайлович",
+            avatar: nil,
+            duration: "1, 2, 3",
+            location: "D106, Покровский б-р, д.11",
+            role: "ASSISTANT",
+            chatLink: "https://t.me/slyrack",
+            gradesLink: "https://t.me/slyrack",
+            dayOfWeek: "Вторник",
+            numberOfHours: 1,
+            time: "18:10",
+            frequency: "1 раз в неделю"
         )
     ]
     

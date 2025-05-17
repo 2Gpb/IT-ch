@@ -25,6 +25,8 @@ final class ITCHMembersViewController: UIViewController {
         enum MembersTable {
             static let backgroundColor: UIColor = .clear
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let topInset: CGFloat = 8
+            static let bottomInset: CGFloat = 20
         }
         
         enum RoleAlert {
@@ -123,6 +125,9 @@ final class ITCHMembersViewController: UIViewController {
         membersTableView.dataSource = interactor
         membersTableView.backgroundColor = Constant.MembersTable.backgroundColor
         membersTableView.separatorStyle = Constant.MembersTable.separatorStyle
+        membersTableView.showsVerticalScrollIndicator = false
+        membersTableView.contentInset.top = Constant.MembersTable.topInset
+        membersTableView.contentInset.bottom = Constant.MembersTable.bottomInset
         membersTableView.register(ITCHMemberCell.self, forCellReuseIdentifier: ITCHMemberCell.reuseId)
         
         view.addSubview(membersTableView)

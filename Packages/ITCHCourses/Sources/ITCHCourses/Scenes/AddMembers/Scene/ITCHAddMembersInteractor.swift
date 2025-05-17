@@ -16,6 +16,71 @@ final class ITCHAddMembersInteractor: NSObject, ITCHAddMembersBusinessLogic {
             name: "Тюхменев Петр Вячеславович",
             avatar: nil,
             role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
+        ),
+        ITCHMemberModel(
+            name: "Тюхменев Петр Вячеславович",
+            avatar: nil,
+            role: "Студент"
         )
     ]
     
@@ -37,7 +102,9 @@ extension ITCHAddMembersInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ITCHMemberToAddCell = tableView.dequeueCell(for: indexPath)
+        guard let cell: ITCHMemberToAddCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
         
         cell.configure(
             with: ITCHAccountViewModel(

@@ -21,9 +21,10 @@ final class ITCHCourseViewController: UIViewController {
             static let rightImage: UIImage = ITCHImage.options24.image
         }
         
-        enum TableView {
+        enum CourseTable {
             static let backgroundColor: UIColor = .clear
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
+            static let bottomInset: CGFloat = 8
         }
         
         enum ContextActions {
@@ -42,7 +43,7 @@ final class ITCHCourseViewController: UIViewController {
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
-    private let infoTableView: UITableView = UITableView()
+    private let courseTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
     init(interactor: ITCHCourseBusinessLogic & ITCHCourseRoleStorage) {
@@ -64,7 +65,7 @@ final class ITCHCourseViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        infoTableView.isScrollEnabled = infoTableView.contentSize.height > infoTableView.frame.height
+        courseTableView.isScrollEnabled = courseTableView.contentSize.height > courseTableView.frame.height
     }
     
     // MARK: - Methods
@@ -104,18 +105,20 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     private func setUpInfoTableView() {
-        infoTableView.delegate = self
-        infoTableView.dataSource = interactor
-        infoTableView.backgroundColor = Constant.TableView.backgroundColor
-        infoTableView.separatorStyle = Constant.TableView.separatorStyle
-        infoTableView.register(ITCHTitleCell.self, forCellReuseIdentifier: ITCHTitleCell.reuseId)
-        infoTableView.register(ITCHTeacherCell.self, forCellReuseIdentifier: ITCHTeacherCell.reuseId)
-        infoTableView.register(ITCHNavigationRowCell.self, forCellReuseIdentifier: ITCHNavigationRowCell.reuseId)
+        courseTableView.delegate = self
+        courseTableView.dataSource = interactor
+        courseTableView.showsVerticalScrollIndicator = false
+        courseTableView.backgroundColor = Constant.CourseTable.backgroundColor
+        courseTableView.separatorStyle = Constant.CourseTable.separatorStyle
+        courseTableView.contentInset.bottom = Constant.CourseTable.bottomInset
+        courseTableView.register(ITCHTitleCell.self, forCellReuseIdentifier: ITCHTitleCell.reuseId)
+        courseTableView.register(ITCHTeacherCell.self, forCellReuseIdentifier: ITCHTeacherCell.reuseId)
+        courseTableView.register(ITCHNavigationRowCell.self, forCellReuseIdentifier: ITCHNavigationRowCell.reuseId)
         
-        view.addSubview(infoTableView)
-        infoTableView.pinTop(to: navigationBar.bottomAnchor)
-        infoTableView.pinHorizontal(to: view)
-        infoTableView.pinBottom(to: view)
+        view.addSubview(courseTableView)
+        courseTableView.pinTop(to: navigationBar.bottomAnchor)
+        courseTableView.pinHorizontal(to: view)
+        courseTableView.pinBottom(to: view)
     }
     
     // MARK: - Actions
