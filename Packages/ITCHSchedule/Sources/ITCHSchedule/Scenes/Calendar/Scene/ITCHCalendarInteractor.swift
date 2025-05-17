@@ -13,6 +13,7 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
     private let presenter: ITCHCalendarPresentationLogic & ITCHCalendarRouterLogic
     
     // MARK: - Variables
+    var tableType: ITCHScheduleTableType = .schedule
     var deadlines: [ITCHDeadlineModel] = [
         ITCHDeadlineModel(
             course: "НИС “Основы iOS разработки на UIKit”",
@@ -68,6 +69,96 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
                     timeInterval: "18:10 - 19:30"
                 )
             ]
+        ),
+        ITCHScheduleSection(
+            date: Date(),
+            items: [
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                ),
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                )
+            ]
+        ),
+        ITCHScheduleSection(
+            date: Date(),
+            items: [
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                ),
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                )
+            ]
+        ),
+        ITCHScheduleSection(
+            date: Date(),
+            items: [
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                ),
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                )
+            ]
+        ),
+        ITCHScheduleSection(
+            date: Date(),
+            items: [
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                ),
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit” skvfklsnvld ksslkdjvlzdfj v svl",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                )
+            ]
+        ),
+        ITCHScheduleSection(
+            date: Date(),
+            items: [
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”  skvfklsnvld ksslkdjvlzdfj v svl",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                ),
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                )
+            ]
+        ),
+        ITCHScheduleSection(
+            date: Date(),
+            items: [
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                ),
+                ITCHScheduleModel(
+                    courseName: "НИС “Основы iOS разработки на UIKit”",
+                    location: "N506, Покровский б-р, д. 11",
+                    timeInterval: "18:10 - 19:30"
+                )
+            ]
         )
     ]
     
@@ -77,84 +168,93 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
     }
 }
 
-// MARK: - UICollectionViewDataSource
+// MARK: - UITableViewDataSource
 extension ITCHCalendarInteractor: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        tableType == .schedule ? scheduleSections.count : 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        deadlines.count
+        switch tableType {
+        case .schedule:
+            /// with header
+            scheduleSections[section].items.count + 1
+        case .deadlines:
+            deadlines.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHDeadlineCell.reuseId
-        ) as? ITCHDeadlineCell else {
-            return UITableViewCell()
+        switch tableType {
+        case .schedule:
+            return makeScheduleCell(for: tableView, at: indexPath)
+        case .deadlines:
+            return makeDeadlineCell(for: tableView, at: indexPath)
         }
-        
-        cell.configure(
-            with: ITCHDeadlineViewModel(
-                course: deadlines[indexPath.row].course,
-                text: deadlines[indexPath.row].text,
-                deadline: deadlines[indexPath.row].deadline,
-                isChecked: deadlines[indexPath.row].isChecked
-            ), isLastCell: indexPath.row == deadlines.count - 1 
-        )
-        
-        return cell
     }
 }
 
-// MARK: - UICollectionViewDataSource
-extension ITCHCalendarInteractor: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        scheduleSections.count
+// MARK: - Cells configure
+extension ITCHCalendarInteractor {
+    func makeScheduleCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            return makeScheduleHeaderCell(for: tableView, section: indexPath.section)
+        } else {
+            return makeScheduleItemCell(for: tableView, indexPath: indexPath)
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        scheduleSections[section].items.count
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ITCHScheduleCell.reuseId,
-            for: indexPath
-        ) as? ITCHScheduleCell else {
-            return UICollectionViewCell()
+    func makeScheduleHeaderCell(for tableView: UITableView, section: Int) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ITCHScheduleHeaderCell.reuseId
+        ) as? ITCHScheduleHeaderCell else {
+            return UITableViewCell()
         }
         
-        let isLast = indexPath.item == scheduleSections[indexPath.section].items.count - 1
-        let model = scheduleSections[indexPath.section].items[indexPath.item]
+        let date = scheduleSections[section].date
+        cell.configure(with: date)
+        return cell
+    }
+    
+    func makeScheduleItemCell(for tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        /// without header
+        let actualIndex = indexPath.row - 1
+        let section = scheduleSections[indexPath.section]
+        let model = section.items[actualIndex]
+        let isLast = actualIndex == section.items.count - 1
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ITCHScheduleCell.reuseId
+        ) as? ITCHScheduleCell else {
+            return UITableViewCell()
+        }
+        
         let viewModel = ITCHScheduleViewModel(
             courseName: model.courseName,
             location: model.location,
             timeInterval: model.timeInterval
         )
         
-        cell.configure(
-            with: viewModel,
-            isLastCell: isLast
-        )
-        
+        cell.configure(with: viewModel, isLastCell: isLast)
         return cell
     }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionHeader,
-              let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: ITCHScheduleHeaderView.reuseId,
-                for: indexPath
-              ) as? ITCHScheduleHeaderView else {
-            return UICollectionReusableView()
+    
+    func makeDeadlineCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ITCHDeadlineCell.reuseId
+        ) as? ITCHDeadlineCell else {
+            return UITableViewCell()
         }
         
-        header.configure(with: scheduleSections[indexPath.section].date)
-        return header
+        let model = deadlines[indexPath.row]
+        let viewModel = ITCHDeadlineViewModel(
+            course: model.course,
+            text: model.text,
+            deadline: model.deadline,
+            isChecked: model.isChecked
+        )
+        
+        cell.configure(with: viewModel, isLastCell: indexPath.row == deadlines.count - 1)
+        return cell
     }
 }

@@ -23,7 +23,7 @@ final class ITCHSettingsFooterView: UIView {
             static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
             static let cornerRadius: CGFloat = 12
             static let maskedCorners: CACornerMask = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            static let height: CGFloat = 16
+            static let height: CGFloat = 22
             static let horizontalOffset: CGFloat = 16
         }
     }

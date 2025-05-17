@@ -27,7 +27,7 @@ final class ITCHSettingsHeaderView: UIView {
             static let textColor: UIColor = ITCHColor.base5.color
             static let horizontalOffset: CGFloat = 16
             static let topOffset: CGFloat = 16
-            static let bottomOffset: CGFloat = 12
+            static let bottomOffset: CGFloat = 8
         }
     }
 

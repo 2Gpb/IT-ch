@@ -31,7 +31,7 @@ final class ITCHSettingsCell: UITableViewCell {
         
         enum SettingsRow {
             static let horizontalOffset: CGFloat = 16
-            static let verticalOffset: CGFloat = 4
+            static let topOffset: CGFloat = 8
         }
     }
     
@@ -80,7 +80,8 @@ final class ITCHSettingsCell: UITableViewCell {
     
     private func setUpSettingsRow() {
         wrapView.addSubview(settingsRow)
-        settingsRow.pinVertical(to: wrapView, Constant.SettingsRow.verticalOffset)
+        settingsRow.pinTop(to: wrapView, Constant.SettingsRow.topOffset)
         settingsRow.pinHorizontal(to: wrapView, Constant.SettingsRow.horizontalOffset)
+        settingsRow.pinBottom(to: wrapView)
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHScheduleCell: UICollectionViewCell {
+final class ITCHScheduleCell: UITableViewCell {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -21,7 +21,7 @@ final class ITCHScheduleCell: UICollectionViewCell {
         
         enum Schedule {
             static let horizontalOffset: CGFloat = 16
-            static let verticalOffset: CGFloat = 16
+            static let verticalOffset: CGFloat = 20
         }
         
         enum Separator {
@@ -48,14 +48,19 @@ final class ITCHScheduleCell: UICollectionViewCell {
     private let separatorView: UIView = UIView()
     
     // MARK: - Lifecycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Constant.Error.message)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        wrapView.layer.cornerRadius = 0
     }
     
     // MARK: - Methods
@@ -71,6 +76,9 @@ final class ITCHScheduleCell: UICollectionViewCell {
     
     // MARK: - SetUp
     private func setUp() {
+        selectionStyle = .none
+        backgroundColor = .clear
+        
         setUpWrapView()
         setUpScheduleView()
         setUpSeparatorView()
@@ -80,8 +88,8 @@ final class ITCHScheduleCell: UICollectionViewCell {
         wrapView.backgroundColor = Constant.WrapView.backgroundColor
 
         contentView.addSubview(wrapView)
-        wrapView.pinHorizontal(to: self, Constant.WrapView.horizontalOffset)
-        wrapView.pinVertical(to: self)
+        wrapView.pinHorizontal(to: contentView, Constant.WrapView.horizontalOffset)
+        wrapView.pinVertical(to: contentView)
     }
     
     private func setUpScheduleView() {
