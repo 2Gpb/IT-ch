@@ -63,9 +63,9 @@ final class ITCHTitleCell: UITableViewCell {
         titleLabel.font = ITCHFont.bodyMMedium.font
         titleLabel.textColor = ITCHColor.base0.color
         
-        addSubview(titleLabel)
-        titleLabel.pinTop(to: self, Constant.Title.topOffset)
-        titleLabel.pinHorizontal(to: self, Constant.Title.horizontalOffset)
-        titleLabel.pinBottom(to: self)
+        contentView.addSubview(titleLabel)
+        titleLabel.pinTop(to: contentView, Constant.Title.topOffset)
+        titleLabel.pinHorizontal(to: contentView, Constant.Title.horizontalOffset)
+        titleLabel.pinBottom(to: contentView)
     }
 }

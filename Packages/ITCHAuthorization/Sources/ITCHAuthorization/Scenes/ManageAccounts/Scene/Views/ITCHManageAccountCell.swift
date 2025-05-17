@@ -56,8 +56,8 @@ final class ITCHManageAccountCell: UITableViewCell {
         selectionStyle = Constant.View.selectionStyle
         backgroundColor = Constant.View.backgroundColor
         
-        addSubview(accountRow)
-        accountRow.pinHorizontal(to: self, Constant.Row.horizontalOffset)
-        accountRow.pinVertical(to: self, Constant.Row.verticalOffset)
+        contentView.addSubview(accountRow)
+        accountRow.pinHorizontal(to: contentView, Constant.Row.horizontalOffset)
+        accountRow.pinVertical(to: contentView, Constant.Row.verticalOffset)
     }
 }

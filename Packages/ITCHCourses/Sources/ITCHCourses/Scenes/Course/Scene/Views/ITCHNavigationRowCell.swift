@@ -60,8 +60,8 @@ final class ITCHNavigationRowCell: UITableViewCell {
     }
     
     private func setNavigationRow() {
-        addSubview(navigationRow)
-        navigationRow.pinHorizontal(to: self, Constant.NavigationRow.horizontalOffset)
-        navigationRow.pinVertical(to: self, Constant.NavigationRow.verticalOffset)
+        contentView.addSubview(navigationRow)
+        navigationRow.pinHorizontal(to: contentView, Constant.NavigationRow.horizontalOffset)
+        navigationRow.pinVertical(to: contentView, Constant.NavigationRow.verticalOffset)
     }
 }

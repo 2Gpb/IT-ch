@@ -56,6 +56,7 @@ final class ITCHNotificationCell: UITableViewCell {
     private func setUp() {
         selectionStyle = Constant.View.selectionStyle
         backgroundColor = Constant.View.backgroundColor
+        
         contentView.addSubview(notificationView)
         notificationView.pinHorizontal(to: contentView, Constant.Notification.horizontalOffset)
         notificationView.pinTop(to: contentView, Constant.Notification.topOffset)
