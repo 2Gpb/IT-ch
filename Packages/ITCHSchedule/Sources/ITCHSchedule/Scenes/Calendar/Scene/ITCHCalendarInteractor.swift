@@ -26,6 +26,66 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
             text: "Домашняя работа 5",
             deadline: Date(),
             isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
+        ),
+        ITCHDeadlineModel(
+            course: "НИС “Основы iOS разработки на UIKit”",
+            text: "Домашняя работа 5",
+            deadline: Date(),
+            isChecked: false
         )
     ]
     
@@ -171,25 +231,36 @@ final class ITCHCalendarInteractor: NSObject, ITCHCalendarBusinessLogic, ITCHDea
 // MARK: - UITableViewDataSource
 extension ITCHCalendarInteractor: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        tableType == .schedule ? scheduleSections.count : 1
+        switch tableView.tag {
+        case 1:
+            scheduleSections.count
+        case 2:
+            1
+        default:
+            0
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tableType {
-        case .schedule:
+        switch tableView.tag {
+        case 1:
             /// with header
             scheduleSections[section].items.count + 1
-        case .deadlines:
+        case 2:
             deadlines.count
+        default:
+            0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch tableType {
-        case .schedule:
-            return makeScheduleCell(for: tableView, at: indexPath)
-        case .deadlines:
-            return makeDeadlineCell(for: tableView, at: indexPath)
+        switch tableView.tag {
+        case 1:
+            makeScheduleCell(for: tableView, at: indexPath)
+        case 2:
+            makeDeadlineCell(for: tableView, at: indexPath)
+        default:
+            UITableViewCell()
         }
     }
 }
@@ -198,34 +269,30 @@ extension ITCHCalendarInteractor: UITableViewDataSource {
 extension ITCHCalendarInteractor {
     func makeScheduleCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            return makeScheduleHeaderCell(for: tableView, section: indexPath.section)
+            makeScheduleHeaderCell(for: tableView, at: indexPath)
         } else {
-            return makeScheduleItemCell(for: tableView, indexPath: indexPath)
+            makeScheduleItemCell(for: tableView, at: indexPath)
         }
     }
     
-    func makeScheduleHeaderCell(for tableView: UITableView, section: Int) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHScheduleHeaderCell.reuseId
-        ) as? ITCHScheduleHeaderCell else {
+    func makeScheduleHeaderCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHScheduleHeaderCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         
-        let date = scheduleSections[section].date
+        let date = scheduleSections[indexPath.section].date
         cell.configure(with: date)
         return cell
     }
     
-    func makeScheduleItemCell(for tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+    func makeScheduleItemCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         /// without header
         let actualIndex = indexPath.row - 1
         let section = scheduleSections[indexPath.section]
         let model = section.items[actualIndex]
         let isLast = actualIndex == section.items.count - 1
         
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHScheduleCell.reuseId
-        ) as? ITCHScheduleCell else {
+        guard let cell: ITCHScheduleCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         
@@ -240,9 +307,7 @@ extension ITCHCalendarInteractor {
     }
     
     func makeDeadlineCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHDeadlineCell.reuseId
-        ) as? ITCHDeadlineCell else {
+        guard let cell: ITCHDeadlineCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         

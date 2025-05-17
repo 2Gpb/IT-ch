@@ -43,15 +43,18 @@ final class ITCHCalendarViewController: UIViewController {
         }
         
         enum Deadlines {
-            static let topOffset: CGFloat = 28
+            static let topOffset: CGFloat = 8
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
+            static let bottomInset: CGFloat = 8
+            static let ещзInset: CGFloat = 4
         }
         
         enum Schedule {
             static let topOffset: CGFloat = 8
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
+            static let bottomInset: CGFloat = 20
         }
     }
     
@@ -121,7 +124,11 @@ final class ITCHCalendarViewController: UIViewController {
         deadlinesTableView.dataSource = interactor
         deadlinesTableView.separatorStyle = Constant.Deadlines.separatorStyle
         deadlinesTableView.backgroundColor = Constant.Deadlines.backgroundColor
+        deadlinesTableView.showsVerticalScrollIndicator = false
+        deadlinesTableView.contentInset.bottom = Constant.Deadlines.bottomInset
+        deadlinesTableView.contentInset.top = Constant.Deadlines.topOffset
         deadlinesTableView.isHidden = true
+        deadlinesTableView.tag = 2
         deadlinesTableView.register(ITCHDeadlineCell.self, forCellReuseIdentifier: ITCHDeadlineCell.reuseId)
         
         view.addSubview(deadlinesTableView)
@@ -135,6 +142,9 @@ final class ITCHCalendarViewController: UIViewController {
         scheduleTableView.dataSource = interactor
         scheduleTableView.backgroundColor = Constant.Schedule.backgroundColor
         scheduleTableView.separatorStyle = Constant.Schedule.separatorStyle
+        scheduleTableView.showsVerticalScrollIndicator = false
+        scheduleTableView.contentInset.bottom = Constant.Schedule.bottomInset
+        scheduleTableView.tag = 1
         scheduleTableView.register(
             ITCHScheduleHeaderCell.self,
             forCellReuseIdentifier: ITCHScheduleHeaderCell.reuseId
@@ -157,30 +167,28 @@ final class ITCHCalendarViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0:
             view.backgroundColor = Constant.View.calendarBackgroundColor
-            
-            interactor.tableType = .schedule
-            scheduleTableView.reloadData()
             deadlinesTableView.isHidden = true
             scheduleTableView.isHidden = false
             
-            emptyStateView.isHidden = !interactor.scheduleSections.isEmpty
-            emptyStateView.configure(
-                title: Constant.EmptyState.calendarTitle,
-                subtitle: Constant.EmptyState.calendarSubtitle
-            )
+            if interactor.scheduleSections.isEmpty {
+                emptyStateView.isHidden = false
+                emptyStateView.configure(
+                    title: Constant.EmptyState.calendarTitle,
+                    subtitle: Constant.EmptyState.calendarSubtitle
+                )
+            }
         case 1:
             view.backgroundColor = Constant.View.deadlineBackgroundColor
-            
-            interactor.tableType = .deadlines
-            deadlinesTableView.reloadData()
             deadlinesTableView.isHidden = false
             scheduleTableView.isHidden = true
             
-            emptyStateView.isHidden = !interactor.deadlines.isEmpty
-            emptyStateView.configure(
-                title: Constant.EmptyState.deadlinesTitle,
-                subtitle: Constant.EmptyState.deadlinesSubtitle
-            )
+            if interactor.deadlines.isEmpty {
+                emptyStateView.isHidden = false
+                emptyStateView.configure(
+                    title: Constant.EmptyState.deadlinesTitle,
+                    subtitle: Constant.EmptyState.deadlinesSubtitle
+                )
+            }
         default:
             return
         }
