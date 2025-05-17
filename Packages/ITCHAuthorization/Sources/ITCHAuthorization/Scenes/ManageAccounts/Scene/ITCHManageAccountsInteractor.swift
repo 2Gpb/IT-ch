@@ -34,9 +34,7 @@ extension ITCHManageAccountsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHManageAccountCell.reuseId
-        ) as? ITCHManageAccountCell else {
+        guard let cell: ITCHManageAccountCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         

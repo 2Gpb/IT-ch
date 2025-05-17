@@ -31,6 +31,91 @@ final class ITCHNotificationsInteractor: NSObject, ITCHNotificationsBusinessLogi
         ),
         ITCHNotificationModel(
             courseName: "НИС “Основы iOS разработки на UIKit”",
+            title: "Новое задание",
+            date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
+            isNewNotify: true
+        ),
+        ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            title: "Новое задание",
+            date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
+            isNewNotify: true
+        ),
+        ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            title: "Новое задание",
+            date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
+            isNewNotify: true
+        ),
+        ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            title: "Новое задание",
+            date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
+            isNewNotify: true
+        ),
+        ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            title: "Новое задание",
+            date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
+            isNewNotify: true
+        ),
+        ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            title: "Новое задание",
+            date: Date(),
+            text: """
+            Доброго времени суток!
+            
+            В курс НИC "Основы iOS разработки на UIKit" добавлено новое задание!
+            
+            Загляните в раздел с заданиями, чтобы прокачать свои навыки и узнать что-то новое.
+            """,
+            type: .task,
+            isNewNotify: true
+        ),
+
+        ITCHNotificationModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
             title: "Новая запись",
             date: Date(),
             text: """
@@ -107,10 +192,7 @@ extension ITCHNotificationsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHNotificationCell.reuseId,
-            for: indexPath
-        ) as? ITCHNotificationCell else {
+        guard let cell: ITCHNotificationCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         

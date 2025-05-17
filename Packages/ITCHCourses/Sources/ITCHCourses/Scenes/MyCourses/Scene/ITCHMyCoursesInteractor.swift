@@ -114,9 +114,7 @@ extension ITCHMyCoursesInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHCourseCell.reuseId
-        ) as? ITCHCourseCell else {
+        guard let cell: ITCHCourseCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         

@@ -154,6 +154,8 @@ final class ITCHNotificationsViewController: UIViewController {
         notificationTableView.dataSource = interactor
         notificationTableView.separatorStyle = Constant.Notifications.separatorStyle
         notificationTableView.backgroundColor = Constant.Notifications.backgroundColor
+        notificationTableView.contentInset.bottom = 20
+        notificationTableView.showsVerticalScrollIndicator = false
         notificationTableView.register(
             ITCHNotificationCell.self,
             forCellReuseIdentifier: ITCHNotificationCell.reuseId

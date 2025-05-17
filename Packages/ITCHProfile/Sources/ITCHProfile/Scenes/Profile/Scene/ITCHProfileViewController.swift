@@ -172,9 +172,7 @@ extension ITCHProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHSettingsCell.reuseId
-        ) as? ITCHSettingsCell else {
+        guard let cell: ITCHSettingsCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         
