@@ -39,7 +39,6 @@ final class ITCHCourseViewController: UIViewController {
     
     // MARK: - Private fields
     private let interactor: ITCHCourseBusinessLogic & ITCHCourseRoleStorage
-    private let titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
@@ -111,6 +110,7 @@ final class ITCHCourseViewController: UIViewController {
         courseTableView.backgroundColor = Constant.CourseTable.backgroundColor
         courseTableView.separatorStyle = Constant.CourseTable.separatorStyle
         courseTableView.contentInset.bottom = Constant.CourseTable.bottomInset
+        courseTableView.register(ITCHCourseHeaderCell.self, forCellReuseIdentifier: ITCHCourseHeaderCell.reuseId)
         courseTableView.register(ITCHTitleCell.self, forCellReuseIdentifier: ITCHTitleCell.reuseId)
         courseTableView.register(ITCHTeacherCell.self, forCellReuseIdentifier: ITCHTeacherCell.reuseId)
         courseTableView.register(ITCHNavigationRowCell.self, forCellReuseIdentifier: ITCHNavigationRowCell.reuseId)
@@ -171,11 +171,5 @@ extension ITCHCourseViewController: UITableViewDelegate {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let type = ITCHCurrentCourseSection(rawValue: section) else { return nil }
-        
-        return type == .actions ? ITCHCourseHeaderView() : ITCHCourseHeaderView(with: titles[section])
     }
 }
