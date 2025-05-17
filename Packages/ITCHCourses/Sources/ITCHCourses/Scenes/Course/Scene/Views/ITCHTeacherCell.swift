@@ -83,6 +83,7 @@ final class ITCHTeacherCell: UITableViewCell {
         contentView.addSubview(avatarImageView)
         avatarImageView.pinLeft(to: contentView, Constant.Avatar.leadingOffset)
         avatarImageView.pinTop(to: contentView, Constant.Avatar.topOffset)
+        avatarImageView.pinBottom(to: contentView)
         avatarImageView.setHeight(Constant.Avatar.size)
         avatarImageView.setWidth(Constant.Avatar.size)
     }

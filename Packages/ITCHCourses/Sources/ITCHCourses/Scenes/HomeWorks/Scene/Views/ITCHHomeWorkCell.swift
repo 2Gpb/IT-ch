@@ -53,18 +53,8 @@ final class ITCHHomeWorkCell: UITableViewCell {
     }
     
     // MARK: - Methods
-    func configure(
-        for role: ITCHCourseUserRole,
-        title: String,
-        date: Date,
-        openAction: (() -> Void)?,
-        solutionsAction: (() -> Void)?,
-        editAction: (() -> Void)?
-    ) {
-        homeWorkView.configure(for: role, title: title, date: date)
-        homeWorkView.openAction = openAction
-        homeWorkView.solutionsAction = solutionsAction
-        homeWorkView.editAction = editAction
+    func configure(with model: ITCHHomeWorkViewModel) {
+        homeWorkView.configure(with: model)
     }
     
     // MARK: - SetUp

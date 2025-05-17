@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUIComponents
 import ITCHUtilities
 
 final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
@@ -101,18 +102,20 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
         }
         
         cell.configure(
-            for: role,
-            title: homeWorks[indexPath.row].name,
-            date: homeWorks[indexPath.row].date,
-            openAction: { [weak self] in
-                self?.presenter.routeToOpen(with: self?.homeWorks[indexPath.row].linkOnTask)
-            },
-            solutionsAction: { [weak self] in
-                self?.presenter.routeToSolutions(with: self?.homeWorks[indexPath.row].linkForCheck)
-            },
-            editAction: { [weak self] in
-                self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row])
-            }
+            with: ITCHHomeWorkViewModel(
+                title: homeWorks[indexPath.row].name,
+                date: homeWorks[indexPath.row].date,
+                role: role,
+                openAction: { [weak self] in
+                    self?.presenter.routeToOpen(with: self?.homeWorks[indexPath.row].linkOnTask)
+                },
+                solutionsAction: { [weak self] in
+                    self?.presenter.routeToSolutions(with: self?.homeWorks[indexPath.row].linkForCheck)
+                },
+                editAction: { [weak self] in
+                    self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row])
+                }
+            )
         )
         
         return cell

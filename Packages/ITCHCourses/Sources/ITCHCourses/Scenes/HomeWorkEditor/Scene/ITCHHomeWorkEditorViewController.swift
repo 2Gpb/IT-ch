@@ -92,6 +92,11 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
         interactor.loadStart()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        nameTextField.keyboardState = .open
+    }
+    
     // MARK: - Methods
     func displayStart(with model: ITCHHomeWorkModel?) {
         if let model {
