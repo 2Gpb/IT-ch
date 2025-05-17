@@ -15,10 +15,11 @@ final class ITCHSettingsHeaderView: UIView {
             static let message = "init(coder:) has not been implemented"
         }
         
-        enum View {
+        enum WrapView {
             static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
             static let cornerRadius: CGFloat = 12
             static let maskedCorners: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            static let horizontalOffset: CGFloat = 16
         }
 
         enum Label {
@@ -26,10 +27,12 @@ final class ITCHSettingsHeaderView: UIView {
             static let textColor: UIColor = ITCHColor.base5.color
             static let horizontalOffset: CGFloat = 16
             static let topOffset: CGFloat = 16
+            static let bottomOffset: CGFloat = 12
         }
     }
 
     // MARK: - UI Components
+    private let wrapView: UIView = UIView()
     private let titleLabel: UILabel = UILabel()
 
     // MARK: - Lifecycle
@@ -45,10 +48,18 @@ final class ITCHSettingsHeaderView: UIView {
 
     // MARK: - SetUp
     private func setUp(title: String) {
-        backgroundColor = Constant.View.backgroundColor
-        layer.cornerRadius = Constant.View.cornerRadius
-        layer.maskedCorners = Constant.View.maskedCorners
+        setUpWrapView()
         setUpTitleLabel(with: title)
+    }
+    
+    private func setUpWrapView() {
+        wrapView.backgroundColor = Constant.WrapView.backgroundColor
+        wrapView.layer.cornerRadius = Constant.WrapView.cornerRadius
+        wrapView.layer.maskedCorners = Constant.WrapView.maskedCorners
+
+        self.addSubview(wrapView)
+        wrapView.pinHorizontal(to: self, Constant.WrapView.horizontalOffset)
+        wrapView.pinVertical(to: self)
     }
     
     private func setUpTitleLabel(with text: String) {
@@ -56,8 +67,9 @@ final class ITCHSettingsHeaderView: UIView {
         titleLabel.textColor = Constant.Label.textColor
         titleLabel.font = Constant.Label.font
         
-        addSubview(titleLabel)
-        titleLabel.pinHorizontal(to: self, Constant.Label.horizontalOffset)
-        titleLabel.pinTop(to: self, Constant.Label.topOffset)
+        wrapView.addSubview(titleLabel)
+        titleLabel.pinHorizontal(to: wrapView, Constant.Label.horizontalOffset)
+        titleLabel.pinTop(to: wrapView, Constant.Label.topOffset)
+        titleLabel.pinBottom(to: wrapView, Constant.Label.bottomOffset)
     }
 }

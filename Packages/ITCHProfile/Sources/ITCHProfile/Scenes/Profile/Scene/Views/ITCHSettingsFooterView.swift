@@ -19,16 +19,17 @@ final class ITCHSettingsFooterView: UIView {
             static let backgroundColor: UIColor = .clear
         }
         
-        enum Footer {
+        enum FooterView {
             static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
             static let cornerRadius: CGFloat = 12
             static let maskedCorners: CACornerMask = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            static let height: CGFloat = 22
+            static let height: CGFloat = 16
+            static let horizontalOffset: CGFloat = 16
         }
     }
 
     // MARK: - UI Components
-    private let footer: UIView = UIView()
+    private let footerView: UIView = UIView()
 
     // MARK: - Lifecycle
     init() {
@@ -48,13 +49,13 @@ final class ITCHSettingsFooterView: UIView {
     }
     
     private func setUpFooter() {
-        footer.backgroundColor = Constant.Footer.backgroundColor
-        footer.layer.cornerRadius = Constant.Footer.cornerRadius
-        footer.layer.maskedCorners = Constant.Footer.maskedCorners
+        footerView.backgroundColor = Constant.FooterView.backgroundColor
+        footerView.layer.cornerRadius = Constant.FooterView.cornerRadius
+        footerView.layer.maskedCorners = Constant.FooterView.maskedCorners
         
-        addSubview(footer)
-        footer.setHeight(Constant.Footer.height)
-        footer.pinHorizontal(to: self)
-        footer.pinBottom(to: self)
+        addSubview(footerView)
+        footerView.setHeight(Constant.FooterView.height)
+        footerView.pinHorizontal(to: self, Constant.FooterView.horizontalOffset)
+        footerView.pinVertical(to: self)
     }
 }

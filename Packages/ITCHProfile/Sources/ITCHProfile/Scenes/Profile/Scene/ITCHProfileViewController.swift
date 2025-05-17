@@ -33,7 +33,6 @@ final class ITCHProfileViewController: UIViewController {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let showsVerticalScrollIndicator: Bool = false
             static let isScrollEnabled: Bool = false
-            static let horizontalOffset: CGFloat = 16
             static let headerHeight: CGFloat = 52
             static let footerHeight: CGFloat = 16
             static let rowHeight: CGFloat = 44
@@ -123,7 +122,7 @@ final class ITCHProfileViewController: UIViewController {
         
         view.addSubview(settingsTableView)
         settingsTableView.pinTop(to: accountWrapView.bottomAnchor)
-        settingsTableView.pinHorizontal(to: view, Constant.SettingsTable.horizontalOffset)
+        settingsTableView.pinHorizontal(to: view)
         settingsTableView.pinBottom(to: view)
     }
 }
@@ -152,21 +151,9 @@ extension ITCHProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         ITCHSettingsHeaderView(with: settingsSections[section].title)
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        Constant.SettingsTable.headerHeight
-    }
-    
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         ITCHSettingsFooterView()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        Constant.SettingsTable.footerHeight
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Constant.SettingsTable.rowHeight
     }
 }
 
