@@ -21,6 +21,7 @@ final class ITCHCourseHeaderCell: UITableViewCell {
         
         enum View {
             static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+            static let selectionStyle: UITableViewCell.SelectionStyle = .none
         }
 
         enum Label {
@@ -75,6 +76,7 @@ final class ITCHCourseHeaderCell: UITableViewCell {
     // MARK: - SetUp
     private func setUp() {
         backgroundColor = Constant.View.backgroundColor
+        selectionStyle = Constant.View.selectionStyle
         setUpTitleLabel()
         setUpSeparator()
     }

@@ -41,9 +41,9 @@ enum ITCHCurrentCourseAction: Int {
         }
     }
     
-    static func action(for indexPath: IndexPath, role: ITCHCourseUserRole) -> ITCHCurrentCourseAction? {
+    static func action(for row: Int, role: ITCHCourseUserRole) -> ITCHCurrentCourseAction? {
         let available = numberAvailableActions(for: role)
-        guard indexPath.row < available.count else { return nil }
-        return available[indexPath.row]
+        guard row < available.count else { return nil }
+        return available[row]
     }
 }

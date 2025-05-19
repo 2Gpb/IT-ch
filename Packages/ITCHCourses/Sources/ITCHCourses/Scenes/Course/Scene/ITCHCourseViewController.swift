@@ -154,8 +154,14 @@ final class ITCHCourseViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension ITCHCourseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = ITCHCurrentCourseSection(rawValue: indexPath.section), section == .actions else { return }
-        guard let action = ITCHCurrentCourseAction.action(for: indexPath, role: interactor.role) else { return }
+        guard let section = ITCHCurrentCourseSection(
+            rawValue: indexPath.section
+        ), section == .actions, indexPath.row != 0 else { return }
+        
+        guard let action = ITCHCurrentCourseAction.action(
+            for: indexPath.row - 1,
+            role: interactor.role
+        ) else { return }
         
         switch action {
         case .chat:
