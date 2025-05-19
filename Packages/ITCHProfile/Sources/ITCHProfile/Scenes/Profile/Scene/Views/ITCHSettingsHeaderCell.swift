@@ -8,11 +8,20 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHSettingsHeaderView: UIView {
+final class ITCHSettingsHeaderCell: UITableViewCell {
     // MARK: - Constants
     private enum Constant {
         enum Error {
             static let message = "init(coder:) has not been implemented"
+        }
+        
+        enum ReuseIdentifier {
+            static let value: String = "ITCHSettingsHeaderCell"
+        }
+        
+        enum View {
+            static let backgroundColor: UIColor = .clear
+            static let selectionStyle: UITableViewCell.SelectionStyle = .none
         }
         
         enum WrapView {
@@ -20,6 +29,7 @@ final class ITCHSettingsHeaderView: UIView {
             static let cornerRadius: CGFloat = 12
             static let maskedCorners: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             static let horizontalOffset: CGFloat = 16
+            static let topOffset: CGFloat = 20
         }
 
         enum Label {
@@ -30,26 +40,36 @@ final class ITCHSettingsHeaderView: UIView {
             static let bottomOffset: CGFloat = 8
         }
     }
+    
+    // MARK: - ReuseID
+    static let reuseId: String = Constant.ReuseIdentifier.value
 
     // MARK: - UI Components
     private let wrapView: UIView = UIView()
     private let titleLabel: UILabel = UILabel()
 
     // MARK: - Lifecycle
-    init(with title: String) {
-        super.init(frame: .zero)
-        setUp(title: title)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setUp()
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(Constant.Error.message)
     }
+    
+    // MARK: - Methods
+    func configure(with title: String) {
+        titleLabel.text = title
+    }
 
     // MARK: - SetUp
-    private func setUp(title: String) {
+    private func setUp() {
+        selectionStyle = Constant.View.selectionStyle
+        backgroundColor = Constant.View.backgroundColor
         setUpWrapView()
-        setUpTitleLabel(with: title)
+        setUpTitleLabel()
     }
     
     private func setUpWrapView() {
@@ -57,13 +77,13 @@ final class ITCHSettingsHeaderView: UIView {
         wrapView.layer.cornerRadius = Constant.WrapView.cornerRadius
         wrapView.layer.maskedCorners = Constant.WrapView.maskedCorners
 
-        self.addSubview(wrapView)
-        wrapView.pinHorizontal(to: self, Constant.WrapView.horizontalOffset)
-        wrapView.pinVertical(to: self)
+        contentView.addSubview(wrapView)
+        wrapView.pinHorizontal(to: contentView, Constant.WrapView.horizontalOffset)
+        wrapView.pinTop(to: contentView, Constant.WrapView.topOffset)
+        wrapView.pinBottom(to: contentView)
     }
     
-    private func setUpTitleLabel(with text: String) {
-        titleLabel.text = text
+    private func setUpTitleLabel() {
         titleLabel.textColor = Constant.Label.textColor
         titleLabel.font = Constant.Label.font
         

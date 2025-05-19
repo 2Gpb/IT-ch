@@ -8,15 +8,20 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHSettingsFooterView: UIView {
+final class ITCHSettingsFooterCell: UITableViewCell {
     // MARK: - Constants
     private enum Constant {
         enum Error {
             static let message = "init(coder:) has not been implemented"
         }
         
+        enum ReuseIdentifier {
+            static let value: String = "ITCHSettingsFooterCell"
+        }
+        
         enum View {
             static let backgroundColor: UIColor = .clear
+            static let selectionStyle: UITableViewCell.SelectionStyle = .none
         }
         
         enum FooterView {
@@ -27,13 +32,16 @@ final class ITCHSettingsFooterView: UIView {
             static let horizontalOffset: CGFloat = 16
         }
     }
+    
+    // MARK: - ReuseID
+    static let reuseId: String = Constant.ReuseIdentifier.value
 
     // MARK: - UI Components
     private let footerView: UIView = UIView()
 
     // MARK: - Lifecycle
-    init() {
-        super.init(frame: .zero)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
     }
 
@@ -45,6 +53,7 @@ final class ITCHSettingsFooterView: UIView {
     // MARK: - SetUp
     private func setUp() {
         backgroundColor = Constant.View.backgroundColor
+        selectionStyle = Constant.View.selectionStyle
         setUpFooter()
     }
     
@@ -53,9 +62,9 @@ final class ITCHSettingsFooterView: UIView {
         footerView.layer.cornerRadius = Constant.FooterView.cornerRadius
         footerView.layer.maskedCorners = Constant.FooterView.maskedCorners
         
-        addSubview(footerView)
+        contentView.addSubview(footerView)
         footerView.setHeight(Constant.FooterView.height)
-        footerView.pinHorizontal(to: self, Constant.FooterView.horizontalOffset)
-        footerView.pinVertical(to: self)
+        footerView.pinHorizontal(to: contentView, Constant.FooterView.horizontalOffset)
+        footerView.pinVertical(to: contentView)
     }
 }
