@@ -6,20 +6,31 @@
 //
 
 import UIKit
+import ITCHCore
 
 final class ITCHAppearanceInteractor: NSObject, ITCHAppearanceBusinessLogic, ITCHThemeStorage, ITCHIconStorage {
     // MARK: - Private fields
     private let presenter: ITCHAppearancePresentationLogic & ITCHAppearanceRouterLogic
     private let themes: [ITCHThemeOption] = ITCHThemeOption.allCases
     private let icons: [ITCHIconOption] = ITCHIconOption.allCases
+    private let storageService: ITCHUserDefaultsLogic
     
     // MARK: - Variables
     var currentThemeIndex: IndexPath = IndexPath(row: 0, section: 0)
     var currentIconIndex: IndexPath = IndexPath(row: 0, section: 0)
     
     // MARK: - Lifecycle
-    init(presenter: ITCHAppearancePresentationLogic & ITCHAppearanceRouterLogic) {
+    init(
+        presenter: ITCHAppearancePresentationLogic & ITCHAppearanceRouterLogic,
+        storageService: ITCHUserDefaultsLogic = ITCHUserDefaultsService()
+    ) {
         self.presenter = presenter
+        self.storageService = storageService
+        
+        currentIconIndex.row = self.storageService.get(
+            forKey: ITCHAppearanceKeys.appIcon.rawValue,
+            defaultValue: 0
+        )
     }
     
     // MARK: - Methods
@@ -29,7 +40,25 @@ final class ITCHAppearanceInteractor: NSObject, ITCHAppearanceBusinessLogic, ITC
     
     func loadChangeTheme(with index: Int) { }
     
-    func loadChangeIcon(with index: Int) { }
+    func loadChangeIcon(with index: Int) {
+        storageService.set(value: index, forKey: ITCHAppearanceKeys.appIcon.rawValue)
+        
+        switch index {
+        case ITCHIconOption.primary.rawValue:
+            changeIcon(to: ITCHIconOption.primary.appIconName)
+        case ITCHIconOption.secondary.rawValue:
+            changeIcon(to: ITCHIconOption.secondary.appIconName)
+        case ITCHIconOption.tertiary.rawValue:
+            changeIcon(to: ITCHIconOption.tertiary.appIconName)
+        default:
+            return
+        }
+    }
+    
+    private func changeIcon(to name: String?) {
+        guard UIApplication.shared.supportsAlternateIcons else { return }
+        UIApplication.shared.setAlternateIconName(name)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -38,7 +67,10 @@ extension ITCHAppearanceInteractor: UITableViewDataSource {
         themes.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         guard let cell: ITCHThemeCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
@@ -51,11 +83,17 @@ extension ITCHAppearanceInteractor: UITableViewDataSource {
 
 // MARK: - UICollectionViewDataSource
 extension ITCHAppearanceInteractor: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         icons.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ITCHIconCell.reuseId,
             for: indexPath
@@ -63,7 +101,10 @@ extension ITCHAppearanceInteractor: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configure(with: icons[indexPath.row].image, isSelected: currentIconIndex == indexPath)
+        cell.configure(
+            with: icons[indexPath.row].image,
+            isSelected: currentIconIndex == indexPath
+        )
         
         return cell
     }
