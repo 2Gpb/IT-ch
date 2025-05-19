@@ -188,8 +188,15 @@ extension ITCHTextField: UITextFieldDelegate {
     
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         beforeOpenKeyboardAction?()
-        insteadKeyboardAction?()
-        return insteadKeyboardAction != nil ? false : true
+        
+        if let action = insteadKeyboardAction {
+                DispatchQueue.main.async {
+                    action()
+                }
+                return false
+            }
+        
+        return true 
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {

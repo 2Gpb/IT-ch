@@ -195,6 +195,13 @@ final class ITCHCourseEditorViewController: UIViewController {
         
         durationTextField.insteadKeyboardAction = { [weak self] in
             guard let self else { return }
+            UIApplication.shared.sendAction(
+                #selector(UIResponder.resignFirstResponder),
+                to: nil,
+                from: nil,
+                for: nil
+            )
+            
             present(self.durationAlertController, animated: true)
         }
     
@@ -218,7 +225,6 @@ final class ITCHCourseEditorViewController: UIViewController {
         chatLinkTextField.text = model.chatLink
         gradesLinkTextField.text = model.gradesLink
         durationTextField.text = model.duration
-        durationTextField.setInputView(nil)
         
         let numbers = model.duration
             .components(separatedBy: ", ")
@@ -265,9 +271,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         setUpDurationPicker()
         wrapView.addSubview(durationPickerView)
         
-        let confirmAction = makeConfirmAction()
-        
-        durationAlertController.addAction(confirmAction)
+        durationAlertController.addAction(makeConfirmAction())
         durationAlertController.addAction(UIAlertAction(title: Constant.DurationPicker.cancelButtonTitle, style: .cancel))
     }
     
