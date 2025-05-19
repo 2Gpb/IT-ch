@@ -8,7 +8,8 @@
 struct ITCHCourseEditorModel {
     var name: String
     var location: String
-    var duration: String
+    var startModule: Int
+    var endModule: Int
     let chatLink: String?
     let gradesLink: String?
 }

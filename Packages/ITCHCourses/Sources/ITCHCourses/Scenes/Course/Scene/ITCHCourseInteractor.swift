@@ -35,11 +35,14 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseR
     }
     
     func loadChangeCourse() {
+        let durationRange = course.durationLocation[0].toIntArray()
+        
         presenter.routeToChangeCourse(
             with: ITCHCourseEditorModel(
                 name: course.courseName,
-                location: course.locationDuration[1],
-                duration: course.locationDuration[0],
+                location: course.durationLocation[1],
+                startModule: durationRange.first ?? 1,
+                endModule: durationRange.last ?? 1,
                 chatLink: course.chatLink,
                 gradesLink: course.gradesLink
             )
@@ -94,7 +97,7 @@ extension ITCHCourseInteractor: UITableViewDataSource {
         /// with header
         switch section {
         case .info:
-            return course.locationDuration.count + 1
+            return course.durationLocation.count + 1
         case .actions:
             return actionRowTitles.count + 1
         default:
@@ -166,7 +169,7 @@ extension ITCHCourseInteractor {
         
         let actualIndex = indexPath.row - 1
         let suffix = actualIndex == 0 ? " модули" : ""
-        let text = "•  \(course.locationDuration[actualIndex])\(suffix)"
+        let text = "•  \(course.durationLocation[actualIndex])\(suffix)"
         cell.configure(with: text)
         return cell
     }

@@ -20,7 +20,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "TEACHER",
             chatLink: "https://t.me/slyrack",
@@ -34,7 +35,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "STUDENT",
             chatLink: "https://t.me/slyrack",
@@ -48,7 +50,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "ASSISTANT",
             chatLink: "https://t.me/slyrack",
@@ -62,7 +65,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "ASSISTANT",
             chatLink: "https://t.me/slyrack",
@@ -76,7 +80,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "ASSISTANT",
             chatLink: "https://t.me/slyrack",
@@ -119,9 +124,11 @@ extension ITCHMyCoursesInteractor: UITableViewDataSource {
         }
         
         let model = courses[indexPath.row]
+        let range = Array(model.startModule...model.endModule)
+        
         cell.configure(
             with: ITCHCourseViewModel(
-                duration: model.duration + " модули",
+                duration: range.joinedString() + " модули",
                 role: ITCHCourseUserRole(rawValue: model.role)?.text ?? "",
                 courseName: model.courseName,
                 teacherName: model.teacherName,

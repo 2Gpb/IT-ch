@@ -24,6 +24,8 @@ extension ITCHCourseEditorPresenter: ITCHCourseEditorRouterLogic {
     func routeToCreateSchedule(with model: ITCHCourseEditorModel?) {
         guard let model else { return }
         
+        let range = Array(model.startModule...model.endModule)
+        
         /// A separate model may be required
         view?.navigationController?.pushViewController(
             ITCHScheduleEditorAssembly.build(
@@ -31,7 +33,7 @@ extension ITCHCourseEditorPresenter: ITCHCourseEditorRouterLogic {
                     courseName: model.name,
                     teacherName: "Сосновский Григорий Михайлович",
                     avatar: nil,
-                    locationDuration: [model.duration, model.location],
+                    durationLocation: [range.joinedString(), model.location],
                     role: "TEACHER",
                     chatLink: model.chatLink,
                     gradesLink: model.gradesLink,
