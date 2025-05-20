@@ -5,6 +5,8 @@
 //  Created by Peter on 20.05.2025.
 //
 
+import SwiftUI
+
 final class ITCHSignUpPresenter: ITCHSignUpPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHSignUpViewController?
@@ -17,7 +19,15 @@ extension ITCHSignUpPresenter: ITCHSignUpRouterLogic {
     }
     
     func routeToCode() {
-        view?.navigationController?.pushViewController(ITCHSignUpPasswordAssembly.build(), animated: true)
+        let viewModel: ITCHEnterCodeViewModel = ITCHEnterCodeViewModel(onNext: { [weak self] in
+            let nextVC = ITCHSignUpPasswordAssembly.build()
+            self?.view?.navigationController?.pushViewController(nextVC, animated: true)
+        })
+                                                                       
+        let enterCodeView = ITCHEnterCodeView(viewModel: viewModel)
+        
+        let enterCodeHosting = UIHostingController(rootView: enterCodeView)
+        view?.navigationController?.pushViewController(enterCodeHosting, animated: true)
     }
     
     func popViewController() {
