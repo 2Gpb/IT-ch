@@ -19,7 +19,7 @@ jobs:
         run: |
           xcodebuild \
             -scheme "IT-CH" \
-            -project "IT-CH.xcodeproj" \
+            -project "./IT-CH.xcodeproj" \
             -sdk iphoneos \
             -configuration Release \
             clean build
