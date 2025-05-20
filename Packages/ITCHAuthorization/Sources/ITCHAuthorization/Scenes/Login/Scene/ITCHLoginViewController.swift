@@ -278,8 +278,10 @@ final class ITCHLoginViewController: UIViewController {
         emailTextField.isError = false
         passwordTextField.isError = false
     }
+}
 
-    // MARK: - Actions
+// MARK: - Actions
+extension ITCHLoginViewController {
     @objc
     private func dismissKeyboard() {
         emailTextField.keyboardState = .close
