@@ -80,9 +80,10 @@ final class ITCHTeacherCell: UITableViewCell {
         avatarImageView.contentMode = Constant.Avatar.contentMode
         avatarImageView.layer.cornerRadius = Constant.Avatar.cornerRadius
         
-        addSubview(avatarImageView)
-        avatarImageView.pinLeft(to: self, Constant.Avatar.leadingOffset)
-        avatarImageView.pinTop(to: self, Constant.Avatar.topOffset)
+        contentView.addSubview(avatarImageView)
+        avatarImageView.pinLeft(to: contentView, Constant.Avatar.leadingOffset)
+        avatarImageView.pinTop(to: contentView, Constant.Avatar.topOffset)
+        avatarImageView.pinBottom(to: contentView)
         avatarImageView.setHeight(Constant.Avatar.size)
         avatarImageView.setWidth(Constant.Avatar.size)
     }
@@ -91,9 +92,9 @@ final class ITCHTeacherCell: UITableViewCell {
         titleLabel.font = Constant.Title.font
         titleLabel.textColor = Constant.Title.textColor
         
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.pinCenterY(to: avatarImageView)
         titleLabel.pinLeft(to: avatarImageView.trailingAnchor, Constant.Title.leadingOffset)
-        titleLabel.pinRight(to: self, Constant.Title.trailingOffset)
+        titleLabel.pinRight(to: contentView, Constant.Title.trailingOffset)
     }
 }

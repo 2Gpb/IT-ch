@@ -26,7 +26,7 @@ final class ITCHNotificationTextViewController: UIViewController {
         enum ContentView {
             static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
             static let cornerRadius: CGFloat = 16
-            static let verticalOffset: CGFloat = 8
+            static let verticalOffset: CGFloat = 20
             static let horizontalOffset: CGFloat = 16
             static let horizontalOffsets: CGFloat = 32
         }

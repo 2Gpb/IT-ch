@@ -31,19 +31,19 @@ final class ITCHNotificationsViewController: UIViewController {
         enum Filters {
             static let backgroundColor: UIColor = .clear
             static let scrollEnable: Bool = false
-            static let collectionHeight: CGFloat = 57
+            static let collectionHeight: CGFloat = 53
             static let interItemSpacing: CGFloat = 8
             static let scrollDirection: UICollectionLayoutSectionOrthogonalScrollingBehavior = .continuous
             static let collectionInsets: NSDirectionalEdgeInsets = NSDirectionalEdgeInsets(
                 top: 12,
                 leading: 16,
-                bottom: 12,
+                bottom: 8,
                 trailing: 16
             )
     
             static let cellSize: NSCollectionLayoutSize = NSCollectionLayoutSize(
                 widthDimension: .estimated(100),
-                heightDimension: .absolute(33)
+                heightDimension: .estimated(33)
             )
         }
         
@@ -154,6 +154,8 @@ final class ITCHNotificationsViewController: UIViewController {
         notificationTableView.dataSource = interactor
         notificationTableView.separatorStyle = Constant.Notifications.separatorStyle
         notificationTableView.backgroundColor = Constant.Notifications.backgroundColor
+        notificationTableView.contentInset.bottom = 20
+        notificationTableView.showsVerticalScrollIndicator = false
         notificationTableView.register(
             ITCHNotificationCell.self,
             forCellReuseIdentifier: ITCHNotificationCell.reuseId

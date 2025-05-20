@@ -72,19 +72,19 @@ public final class ITCHHomeWorkView: UIView {
     private var thirdRowBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Properties
-    public var openAction: (() -> Void)? {
+    private var openAction: (() -> Void)? {
         didSet {
             navigationRow.action = openAction
         }
     }
     
-    public var solutionsAction: (() -> Void)? {
+    private var solutionsAction: (() -> Void)? {
         didSet {
             secondNavigationRow.action = solutionsAction
         }
     }
     
-    public var editAction: (() -> Void)? {
+    private var editAction: (() -> Void)? {
         didSet {
             thirdNavigationRow.action = editAction
         }
@@ -102,17 +102,20 @@ public final class ITCHHomeWorkView: UIView {
     }
     
     // MARK: - Methods
-    public func configure(for role: ITCHCourseUserRole, title: String, date: Date) {
-        titleLabel.text = title
-        dateLabel.text = date.configure(to: Constant.Date.dateFormat)
+    public func configure(with model: ITCHHomeWorkViewModel) {
+        titleLabel.text = model.title
+        dateLabel.text = model.date.configure(to: Constant.Date.dateFormat)
+        openAction = model.openAction
+        solutionsAction = model.solutionsAction
+        editAction = model.editAction
         
-        switch role {
+        switch model.role {
         case .teacher:
             secondRowBottomConstraint?.isActive = false
             thirdRowBottomConstraint?.isActive = true
         case .student, .assistant:
             secondNavigationRow.configure(
-                title: role == .student ?
+                title: model.role == .student ?
                 Constant.NavigationRows.studentTitle :
                 Constant.NavigationRows.assistantTitle
             )

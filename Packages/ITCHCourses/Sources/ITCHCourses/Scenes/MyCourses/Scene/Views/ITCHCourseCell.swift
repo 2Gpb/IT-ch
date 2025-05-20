@@ -60,9 +60,9 @@ final class ITCHCourseCell: UITableViewCell {
     }
     
     private func setUpCourseView() {
-        addSubview(courseView)
-        courseView.pinTop(to: self, Constant.Course.topOffset)
-        courseView.pinHorizontal(to: self, Constant.Course.horizontalOffset)
-        courseView.pinBottom(to: self)
+        contentView.addSubview(courseView)
+        courseView.pinTop(to: contentView, Constant.Course.topOffset)
+        courseView.pinHorizontal(to: contentView, Constant.Course.horizontalOffset)
+        courseView.pinBottom(to: contentView)
     }
 }

@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - Fonts names
-enum Font: String {
+enum FontName: String {
     case regular = "SFProRounded-Regular"
     case medium = "SFProRounded-Medium"
     case semiBold = "SFProRounded-Semibold"
@@ -20,7 +21,7 @@ enum Font: String {
 }
 
 struct FontDescription {
-    let font: Font
+    let font: FontName
     let size: CGFloat
 }
 
@@ -125,5 +126,9 @@ public extension ITCHFont {
         }
         
         return font
+    }
+    
+    var swiftUIFont: Font {
+        Font.custom(fontDescription.font.name, size: fontDescription.size)
     }
 }

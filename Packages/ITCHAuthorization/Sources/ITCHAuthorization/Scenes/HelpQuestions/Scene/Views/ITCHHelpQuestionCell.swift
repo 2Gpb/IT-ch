@@ -55,8 +55,8 @@ final class ITCHHelpQuestionCell: UITableViewCell {
         selectionStyle = Constant.View.selectionStyle
         backgroundColor = Constant.View.backgroundColor
         
-        addSubview(helpQuestionView)
-        helpQuestionView.pinHorizontal(to: self, Constant.HelpQuestion.offsets)
-        helpQuestionView.pinVertical(to: self, Constant.HelpQuestion.offsets)
+        contentView.addSubview(helpQuestionView)
+        helpQuestionView.pinHorizontal(to: contentView, Constant.HelpQuestion.offsets)
+        helpQuestionView.pinVertical(to: contentView, Constant.HelpQuestion.offsets)
     }
 }

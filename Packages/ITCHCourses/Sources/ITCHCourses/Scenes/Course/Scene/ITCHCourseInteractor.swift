@@ -13,6 +13,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseR
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
     private let actionRowTitles: [String]
     private let course: ITCHCurrentCourseModel
+    private let titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
     
     // MARK: - Variables
     var role: ITCHCourseUserRole
@@ -34,11 +35,14 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseR
     }
     
     func loadChangeCourse() {
+        let durationRange = course.durationLocation[0].toIntArray()
+        
         presenter.routeToChangeCourse(
             with: ITCHCourseEditorModel(
                 name: course.courseName,
-                location: course.locationDuration[1],
-                duration: course.locationDuration[0],
+                location: course.durationLocation[1],
+                startModule: durationRange.first ?? 1,
+                endModule: durationRange.last ?? 1,
                 chatLink: course.chatLink,
                 gradesLink: course.gradesLink
             )
@@ -90,13 +94,14 @@ extension ITCHCourseInteractor: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = ITCHCurrentCourseSection(rawValue: section) else { return 0 }
         
+        /// with header
         switch section {
         case .info:
-            return course.locationDuration.count
+            return course.durationLocation.count + 1
         case .actions:
-            return actionRowTitles.count
+            return actionRowTitles.count + 1
         default:
-            return 1
+            return 2
         }
     }
     
@@ -105,31 +110,87 @@ extension ITCHCourseInteractor: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        if indexPath.row == 0 {
+            return headerCell(tableView, indexPath)
+        }
+        
         switch section {
         case .course:
-            let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: course.courseName)
-            return cell
-            
+            return courseCell(tableView, indexPath)
         case .teacher:
-            let cell: ITCHTeacherCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: course.teacherName, image: course.avatar)
-            return cell
-            
+            return teacherCell(tableView, indexPath)
         case .info:
-            let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: "•  " + course.locationDuration[indexPath.row] + (indexPath.row == 0 ? " модули" : ""))
-            return cell
-            
+            return infoCell(tableView, indexPath)
         case .role:
-            let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: ITCHCourseUserRole(rawValue: course.role)?.text ?? "")
-            return cell
-            
+            return roleCell(tableView, indexPath)
         case .actions:
-            let cell: ITCHNavigationRowCell = tableView.dequeueCell(for: indexPath)
-            cell.configure(with: actionRowTitles[indexPath.row])
-            return cell
+            return actionCell(tableView, indexPath)
         }
+    }
+}
+
+// MARK: - Configure cells
+extension ITCHCourseInteractor {
+    private func headerCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHCourseHeaderCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        guard let section = ITCHCurrentCourseSection(rawValue: indexPath.section) else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: section.title)
+        return cell
+    }
+    
+    private func courseCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: course.courseName)
+        return cell
+    }
+
+    private func teacherCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHTeacherCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: course.teacherName, image: course.avatar)
+        return cell
+    }
+
+    private func infoCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        let actualIndex = indexPath.row - 1
+        let suffix = actualIndex == 0 ? " модули" : ""
+        let text = "•  \(course.durationLocation[actualIndex])\(suffix)"
+        cell.configure(with: text)
+        return cell
+    }
+
+    private func roleCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        let roleText = ITCHCourseUserRole(rawValue: course.role)?.text ?? ""
+        cell.configure(with: roleText)
+        return cell
+    }
+
+    private func actionCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHNavigationRowCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        let actualIndex = indexPath.row - 1
+        cell.configure(with: actionRowTitles[actualIndex])
+        return cell
     }
 }

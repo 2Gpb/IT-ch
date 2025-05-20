@@ -14,6 +14,7 @@
 		D076E6B72DB6DED30015204F /* ITCHSchedule in Frameworks */ = {isa = PBXBuildFile; productRef = D076E6B62DB6DED30015204F /* ITCHSchedule */; };
 		D07D4F542DCB7216007C881B /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D07D4F532DCB7216007C881B /* IQKeyboardManagerSwift */; };
 		D07D4F572DCB7265007C881B /* IQKeyboardToolbarManager in Frameworks */ = {isa = PBXBuildFile; productRef = D07D4F562DCB7265007C881B /* IQKeyboardToolbarManager */; };
+		D08908662DDD0E1D0013203D /* ITCHControllers in Frameworks */ = {isa = PBXBuildFile; productRef = D08908652DDD0E1D0013203D /* ITCHControllers */; };
 		D093D3ED2DC7706400DC48D1 /* ITCHCourses in Frameworks */ = {isa = PBXBuildFile; productRef = D093D3EC2DC7706400DC48D1 /* ITCHCourses */; };
 		D0A11B132DA1665D006BD0D0 /* ITCHUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = D0A11B122DA1665D006BD0D0 /* ITCHUIComponents */; };
 		D0A426842DC24F1100DF283E /* ITCHNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = D0A426832DC24F1100DF283E /* ITCHNotifications */; };
@@ -75,6 +76,7 @@
 				D051A2D12DC3C927003BE6F6 /* ITCHUtilities in Frameworks */,
 				D093D3ED2DC7706400DC48D1 /* ITCHCourses in Frameworks */,
 				D07D4F572DCB7265007C881B /* IQKeyboardToolbarManager in Frameworks */,
+				D08908662DDD0E1D0013203D /* ITCHControllers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +140,7 @@
 				D093D3EC2DC7706400DC48D1 /* ITCHCourses */,
 				D07D4F532DCB7216007C881B /* IQKeyboardManagerSwift */,
 				D07D4F562DCB7265007C881B /* IQKeyboardToolbarManager */,
+				D08908652DDD0E1D0013203D /* ITCHControllers */,
 			);
 			productName = "IT-ch";
 			productReference = D09029012D54C89D008001CE /* IT-ch.app */;
@@ -159,11 +162,12 @@
 				};
 			};
 			buildConfigurationList = D09028FC2D54C89D008001CE /* Build configuration list for PBXProject "IT-ch" */;
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = D09028F82D54C89D008001CE;
 			minimizedProjectReferenceProxies = 1;
@@ -226,11 +230,13 @@
 		D09029152D54C89E008001CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPrimary;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Application/Info.plist;
@@ -259,11 +265,13 @@
 		D09029162D54C89E008001CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconPrimary;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = W4G8RWL3P3;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Application/Info.plist;
@@ -294,6 +302,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -324,6 +333,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -357,6 +367,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -387,6 +398,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -480,6 +492,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D07D4F552DCB7265007C881B /* XCRemoteSwiftPackageReference "IQKeyboardToolbarManager" */;
 			productName = IQKeyboardToolbarManager;
+		};
+		D08908652DDD0E1D0013203D /* ITCHControllers */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ITCHControllers;
 		};
 		D093D3EC2DC7706400DC48D1 /* ITCHCourses */ = {
 			isa = XCSwiftPackageProductDependency;

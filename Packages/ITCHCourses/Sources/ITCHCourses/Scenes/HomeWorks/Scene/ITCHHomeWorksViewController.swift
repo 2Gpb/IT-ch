@@ -30,6 +30,7 @@ final class ITCHHomeWorksViewController: UIViewController {
         enum HomeWorksTable {
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let backgroundColor: UIColor = .clear
+            static let bottomInset: CGFloat = 20
         }
     }
     
@@ -109,6 +110,8 @@ final class ITCHHomeWorksViewController: UIViewController {
         homeWorksTableView.delegate = self
         homeWorksTableView.separatorStyle = Constant.HomeWorksTable.separatorStyle
         homeWorksTableView.backgroundColor = Constant.HomeWorksTable.backgroundColor
+        homeWorksTableView.showsVerticalScrollIndicator = false
+        homeWorksTableView.contentInset.bottom = Constant.HomeWorksTable.bottomInset
         homeWorksTableView.register(ITCHHomeWorkCell.self, forCellReuseIdentifier: ITCHHomeWorkCell.reuseId)
         
         view.addSubview(homeWorksTableView)

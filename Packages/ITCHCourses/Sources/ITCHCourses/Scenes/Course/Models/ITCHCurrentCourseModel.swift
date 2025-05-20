@@ -11,7 +11,7 @@ struct ITCHCurrentCourseModel {
     let courseName: String
     let teacherName: String
     let avatar: UIImage?
-    let locationDuration: [String]
+    let durationLocation: [String]
     let role: String
     let chatLink: String?
     let gradesLink: String?

@@ -26,7 +26,7 @@ final class ITCHNotificationCell: UITableViewCell {
         
         enum Notification {
             static let horizontalOffset: CGFloat = 16
-            static let bottomOffset: CGFloat = 8
+            static let topOffset: CGFloat = 20
         }
     }
     
@@ -56,8 +56,10 @@ final class ITCHNotificationCell: UITableViewCell {
     private func setUp() {
         selectionStyle = Constant.View.selectionStyle
         backgroundColor = Constant.View.backgroundColor
-        addSubview(notificationView)
-        notificationView.pinHorizontal(to: self, Constant.Notification.horizontalOffset)
-        notificationView.pinVertical(to: self, Constant.Notification.bottomOffset)
+        
+        contentView.addSubview(notificationView)
+        notificationView.pinHorizontal(to: contentView, Constant.Notification.horizontalOffset)
+        notificationView.pinTop(to: contentView, Constant.Notification.topOffset)
+        notificationView.pinBottom(to: contentView)
     }
 }

@@ -41,9 +41,7 @@ extension ITCHAboutAppInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHAboutAppCell.reuseId
-        ) as? ITCHAboutAppCell else {
+        guard let cell: ITCHAboutAppCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         

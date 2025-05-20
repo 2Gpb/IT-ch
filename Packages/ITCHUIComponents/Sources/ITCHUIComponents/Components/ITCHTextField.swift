@@ -82,9 +82,9 @@ public final class ITCHTextField: UIView {
     }
     
     // MARK: - Lifecycle
-    public init() {
+    public init(type: ITCHTextFieldType = .label) {
         super.init(frame: .zero)
-        setUp()
+        setUp(with: type)
     }
     
     @available(*, unavailable)
@@ -116,9 +116,16 @@ public final class ITCHTextField: UIView {
     }
     
     // MARK: - SetUp
-    private func setUp() {
-        setUpTitleLabel()
-        setUpTextField()
+    private func setUp(with type: ITCHTextFieldType) {
+        switch type {
+        case .label:
+            setUpTitleLabel()
+            setUpTextField()
+            textField.pinTop(to: titleLabel.bottomAnchor, Constant.TextField.topOffset)
+        case .normal:
+            setUpTextField()
+            textField.pinTop(to: self)
+        }
     }
     
     private func setUpTitleLabel() {
@@ -145,7 +152,6 @@ public final class ITCHTextField: UIView {
         
         addSubview(textField)
         textField.pinHorizontal(to: self)
-        textField.pinTop(to: titleLabel.bottomAnchor, Constant.TextField.topOffset)
         textField.pinBottom(to: self)
         textField.setHeight(Constant.TextField.height)
     }
@@ -173,8 +179,8 @@ public final class ITCHTextField: UIView {
     @objc
     private func eyeButtonTapped() {
         eyeButton.isHidden = eyeOffButton.isHidden
-        textField.isSecureTextEntry = !eyeOffButton.isHidden
         eyeOffButton.isHidden = !eyeOffButton.isHidden
+        textField.isSecureTextEntry = !eyeOffButton.isHidden
     }
 }
 
@@ -188,8 +194,15 @@ extension ITCHTextField: UITextFieldDelegate {
     
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         beforeOpenKeyboardAction?()
-        insteadKeyboardAction?()
-        return insteadKeyboardAction != nil ? false : true
+        
+        if let action = insteadKeyboardAction {
+                DispatchQueue.main.async {
+                    action()
+                }
+                return false
+            }
+        
+        return true 
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {

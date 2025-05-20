@@ -30,11 +30,10 @@ public final class ITCHScheduleView: UIView {
         }
         
         enum BottomStack {
-            static let spacing: CGFloat = 24
             static let axis: NSLayoutConstraint.Axis = .horizontal
             static let topOffset: CGFloat = 12
             static let alignment: UIStackView.Alignment = .center
-            static let distribution: UIStackView.Distribution = .fill
+            static let distribution: UIStackView.Distribution = .equalSpacing
         }
         
         enum TimeInterval {
@@ -114,11 +113,11 @@ public final class ITCHScheduleView: UIView {
         bottomStack.axis = Constant.BottomStack.axis
         bottomStack.distribution = Constant.BottomStack.distribution
         bottomStack.alignment = Constant.BottomStack.alignment
-        bottomStack.spacing = Constant.BottomStack.spacing
         
         addSubview(bottomStack)
         bottomStack.pinTop(to: courseNameLabel.bottomAnchor, Constant.BottomStack.topOffset)
         bottomStack.pinLeft(to: self)
         bottomStack.pinRight(to: self)
+        bottomStack.pinBottom(to: self)
     }
 }

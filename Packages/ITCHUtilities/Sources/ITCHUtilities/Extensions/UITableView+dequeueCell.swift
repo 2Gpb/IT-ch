@@ -8,9 +8,9 @@
 import UIKit
 
 public extension UITableView {
-    func dequeueCell<T: UITableViewCell & Reusable>(
+    func dequeueCell<T: UITableViewCell>(
         for indexPath: IndexPath
-    ) -> T {
-        return dequeueReusableCell(withIdentifier: T.reuseId, for: indexPath) as! T
+    ) -> T? {
+        dequeueReusableCell(withIdentifier: T.reuseId, for: indexPath) as? T
     }
 }

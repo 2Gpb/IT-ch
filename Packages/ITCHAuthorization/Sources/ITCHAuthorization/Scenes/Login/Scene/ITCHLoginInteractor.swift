@@ -15,6 +15,10 @@ final class ITCHLoginInteractor: ITCHLoginBusinessLogic {
     }
     
     // MARK: - Methods
+    func loadCourses() {
+        presenter.routeToCourses()
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }

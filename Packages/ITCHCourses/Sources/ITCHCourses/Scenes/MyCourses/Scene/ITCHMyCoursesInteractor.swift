@@ -20,7 +20,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "TEACHER",
             chatLink: "https://t.me/slyrack",
@@ -34,7 +35,8 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "STUDENT",
             chatLink: "https://t.me/slyrack",
@@ -48,7 +50,38 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
             courseName: "НИС “Основы iOS разработки на UIKit”",
             teacherName: "Сосновский Григорий Михайлович",
             avatar: nil,
-            duration: "1, 2, 3",
+            startModule: 1,
+            endModule: 3,
+            location: "D106, Покровский б-р, д.11",
+            role: "ASSISTANT",
+            chatLink: "https://t.me/slyrack",
+            gradesLink: "https://t.me/slyrack",
+            dayOfWeek: "Вторник",
+            numberOfHours: 1,
+            time: "18:10",
+            frequency: "1 раз в неделю"
+        ),
+        ITCHCourseModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            teacherName: "Сосновский Григорий Михайлович",
+            avatar: nil,
+            startModule: 1,
+            endModule: 3,
+            location: "D106, Покровский б-р, д.11",
+            role: "ASSISTANT",
+            chatLink: "https://t.me/slyrack",
+            gradesLink: "https://t.me/slyrack",
+            dayOfWeek: "Вторник",
+            numberOfHours: 1,
+            time: "18:10",
+            frequency: "1 раз в неделю"
+        ),
+        ITCHCourseModel(
+            courseName: "НИС “Основы iOS разработки на UIKit”",
+            teacherName: "Сосновский Григорий Михайлович",
+            avatar: nil,
+            startModule: 1,
+            endModule: 3,
             location: "D106, Покровский б-р, д.11",
             role: "ASSISTANT",
             chatLink: "https://t.me/slyrack",
@@ -86,16 +119,16 @@ extension ITCHMyCoursesInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHCourseCell.reuseId
-        ) as? ITCHCourseCell else {
+        guard let cell: ITCHCourseCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         
         let model = courses[indexPath.row]
+        let range = Array(model.startModule...model.endModule)
+        
         cell.configure(
             with: ITCHCourseViewModel(
-                duration: model.duration + " модули",
+                duration: range.joinedString() + " модули",
                 role: ITCHCourseUserRole(rawValue: model.role)?.text ?? "",
                 courseName: model.courseName,
                 teacherName: model.teacherName,

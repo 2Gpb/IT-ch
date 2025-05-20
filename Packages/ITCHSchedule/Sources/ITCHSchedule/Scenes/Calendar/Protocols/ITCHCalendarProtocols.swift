@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ITCHCalendarBusinessLogic: UITableViewDataSource, UICollectionViewDataSource { }
+protocol ITCHCalendarBusinessLogic: UITableViewDataSource {
+    var tableType: ITCHScheduleTableType { get set }
+}
 
 protocol ITCHCalendarPresentationLogic { }
 

@@ -26,7 +26,7 @@ final class ITCHRecordCell: UITableViewCell {
         }
         
         enum ClassRecordView {
-            static let topOffset: CGFloat = 16
+            static let topOffset: CGFloat = 20
             static let horizontalOffset: CGFloat = 16
         }
     }

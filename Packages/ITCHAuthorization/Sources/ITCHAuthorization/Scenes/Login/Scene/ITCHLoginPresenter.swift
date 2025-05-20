@@ -5,8 +5,8 @@
 //  Created by Peter on 19.04.2025.
 //
 
-import Foundation
 import UIKit
+import ITCHControllers
 
 final class ITCHLoginPresenter: ITCHLoginPresentationLogic {
     // MARK: - Constants
@@ -20,13 +20,17 @@ final class ITCHLoginPresenter: ITCHLoginPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHLoginPresenter: ITCHLoginRouterLogic {
+    func routeToCourses() {
+        let tabBar = ITCHTabBarController()
+        tabBar.modalPresentationStyle = .fullScreen
+        view?.present(tabBar, animated: true)
+    }
+    
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
     }
     
     func routeToPasswordRecovery() {
-        if let url = URL(string: Constant.passwordRecoveryURLString) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+        Constant.passwordRecoveryURLString.openURL()
     }
 }

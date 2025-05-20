@@ -42,9 +42,7 @@ extension ITCHContactsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHContactsCell.reuseId
-        ) as? ITCHContactsCell else {
+        guard let cell: ITCHContactsCell = tableView.dequeueCell(for: indexPath) else {
             return UITableViewCell()
         }
         

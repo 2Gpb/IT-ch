@@ -117,12 +117,14 @@ final class ITCHCourseEditorViewController: UIViewController {
     // MARK: - Methods
     func displayStart(with model: ITCHCourseEditorModel?) {
         let title: String
+        let durationRange = durationTextField.text?.toIntArray()
         
         let courseModel = { [weak self] in
             return ITCHCourseEditorModel(
                 name: self?.nameTextField.text ?? "",
                 location: self?.locationTextField.text ?? "",
-                duration: self?.durationTextField.text ?? "",
+                startModule: durationRange?.first ?? 1,
+                endModule: durationRange?.last ?? 1,
                 chatLink: self?.chatLinkTextField.text ?? "",
                 gradesLink: self?.gradesLinkTextField.text ?? ""
             )
@@ -195,6 +197,13 @@ final class ITCHCourseEditorViewController: UIViewController {
         
         durationTextField.insteadKeyboardAction = { [weak self] in
             guard let self else { return }
+            UIApplication.shared.sendAction(
+                #selector(UIResponder.resignFirstResponder),
+                to: nil,
+                from: nil,
+                for: nil
+            )
+            
             present(self.durationAlertController, animated: true)
         }
     
@@ -217,21 +226,18 @@ final class ITCHCourseEditorViewController: UIViewController {
         locationTextField.text = model.location
         chatLinkTextField.text = model.chatLink
         gradesLinkTextField.text = model.gradesLink
-        durationTextField.text = model.duration
-        durationTextField.setInputView(nil)
         
-        let numbers = model.duration
-            .components(separatedBy: ", ")
-            .compactMap { Int($0) }
+        let range = Array(model.startModule...model.endModule)
+        durationTextField.text = range.joinedString()
 
-        selectedStart = numbers[0] - 1
-        selectedEnd = numbers.count - 1
+        selectedStart = model.startModule
+        selectedEnd = model.endModule
         
-        safeSelectRow(selectedStart, in: .start)
-        safeSelectRow(selectedEnd, in: .end)
+        safeSelectRow(index: selectedStart - 1, in: .start)
+        safeSelectRow(index: selectedEnd - 1, in: .end)
     }
     
-    private func safeSelectRow(_ row: Int, in component: ITCHDurationPickerComponent) {
+    private func safeSelectRow(index row: Int, in component: ITCHDurationPickerComponent) {
         let componentIndex = component.rawValue
         let rowCount = durationPickerView.numberOfRows(inComponent: componentIndex)
         
@@ -265,9 +271,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         setUpDurationPicker()
         wrapView.addSubview(durationPickerView)
         
-        let confirmAction = makeConfirmAction()
-        
-        durationAlertController.addAction(confirmAction)
+        durationAlertController.addAction(makeConfirmAction())
         durationAlertController.addAction(UIAlertAction(title: Constant.DurationPicker.cancelButtonTitle, style: .cancel))
     }
     
@@ -288,12 +292,8 @@ final class ITCHCourseEditorViewController: UIViewController {
         return UIAlertAction(title: Constant.DurationPicker.confirmButtonTitle, style: .default) { [weak self] _ in
             guard let self else { return }
             
-            var text = ""
-            for module in selectedStart...selectedEnd {
-                text += "\(module)" + (module == selectedEnd ? "" : ", ")
-            }
-            
-            self.durationTextField.text = text
+            let range = Array(selectedStart...selectedEnd)
+            self.durationTextField.text = range.joinedString()
         }
     }
 }

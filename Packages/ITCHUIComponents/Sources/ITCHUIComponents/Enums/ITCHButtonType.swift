@@ -8,5 +8,6 @@
 public enum ITCHButtonType {
     case primary
     case secondary
+    case tertiary
     case delete
 }

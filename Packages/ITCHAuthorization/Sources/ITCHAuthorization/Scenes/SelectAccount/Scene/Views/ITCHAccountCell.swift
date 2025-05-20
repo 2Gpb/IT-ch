@@ -78,12 +78,12 @@ final class ITCHAccountCell: UITableViewCell {
         selectionStyle = Constant.View.selectionStyle
         backgroundColor = Constant.View.backgroundColor
         
-        addSubview(accountRow)
-        accountRow.pinHorizontal(to: self, Constant.Rows.horizontalOffset)
-        accountRow.pinVertical(to: self, Constant.Rows.verticalOffset)
+        contentView.addSubview(accountRow)
+        accountRow.pinHorizontal(to: contentView, Constant.Rows.horizontalOffset)
+        accountRow.pinVertical(to: contentView, Constant.Rows.verticalOffset)
         
-        addSubview(addAccountRow)
-        addAccountRow.pinHorizontal(to: self, Constant.Rows.horizontalOffset)
-        addAccountRow.pinVertical(to: self, Constant.Rows.verticalOffset)
+        contentView.addSubview(addAccountRow)
+        addAccountRow.pinHorizontal(to: contentView, Constant.Rows.horizontalOffset)
+        addAccountRow.pinVertical(to: contentView, Constant.Rows.verticalOffset)
     }
 }

@@ -22,6 +22,8 @@ public final class ITCHButton: UIView {
             static let backgroundColor: UIColor = ITCHColor.blue60.color
             static let deleteBackgroundColor: UIColor = ITCHColor.red50.color
             static let secondaryBackground: UIColor = .clear
+            static let borderColor: CGColor = ITCHColor.blue60.color.cgColor
+            static let borderWidth: CGFloat = 1
             static let blueTextColor: UIColor = ITCHColor.blue60.color
         }
     }
@@ -59,6 +61,11 @@ public final class ITCHButton: UIView {
         case .primary:
             button.backgroundColor = Constant.Button.backgroundColor
         case .secondary:
+            button.backgroundColor = Constant.Button.secondaryBackground
+            button.tintColor = Constant.Button.blueTextColor
+            button.layer.borderWidth = Constant.Button.borderWidth
+            button.layer.borderColor = Constant.Button.borderColor
+        case .tertiary:
             button.backgroundColor = Constant.Button.secondaryBackground
             button.tintColor = Constant.Button.blueTextColor
         case .delete:

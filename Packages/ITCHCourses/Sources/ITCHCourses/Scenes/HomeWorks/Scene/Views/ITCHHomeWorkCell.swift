@@ -26,7 +26,7 @@ final class ITCHHomeWorkCell: UITableViewCell {
         }
         
         enum HomeWorkView {
-            static let topOffset: CGFloat = 16
+            static let topOffset: CGFloat = 20
             static let horizontalOffset: CGFloat = 16
         }
     }
@@ -53,18 +53,8 @@ final class ITCHHomeWorkCell: UITableViewCell {
     }
     
     // MARK: - Methods
-    func configure(
-        for role: ITCHCourseUserRole,
-        title: String,
-        date: Date,
-        openAction: (() -> Void)?,
-        solutionsAction: (() -> Void)?,
-        editAction: (() -> Void)?
-    ) {
-        homeWorkView.configure(for: role, title: title, date: date)
-        homeWorkView.openAction = openAction
-        homeWorkView.solutionsAction = solutionsAction
-        homeWorkView.editAction = editAction
+    func configure(with model: ITCHHomeWorkViewModel) {
+        homeWorkView.configure(with: model)
     }
     
     // MARK: - SetUp

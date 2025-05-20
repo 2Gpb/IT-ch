@@ -32,11 +32,11 @@ final class ITCHProfileViewController: UIViewController {
             static let backgroundColor: UIColor = .clear
             static let separatorStyle: UITableViewCell.SeparatorStyle = .none
             static let showsVerticalScrollIndicator: Bool = false
-            static let isScrollEnabled: Bool = false
-            static let horizontalOffset: CGFloat = 16
+            static let isScrollEnabled: Bool = true
             static let headerHeight: CGFloat = 52
             static let footerHeight: CGFloat = 16
             static let rowHeight: CGFloat = 44
+            static let bottomInset: CGFloat = 20
         }
     }
     
@@ -69,13 +69,8 @@ final class ITCHProfileViewController: UIViewController {
     
     // MARK: - Methods
     func dispayStart(with model: ITCHAccountModel) {
-        accountRow.configure(
-            with: ITCHAccountViewModel(
-                image: model.image,
-                name: model.name,
-                info: model.info
-            )
-        )
+        settingsSections[0].accountModel = model
+        settingsTableView.reloadData()
     }
     
     // MARK: - SetUp
@@ -84,9 +79,9 @@ final class ITCHProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         
         setUpNavigationBar()
-        setUpUserProfileWrapView()
-        setUpAccountRow()
         setUpSettingsTableView()
+        view.bringSubviewToFront(navigationBar)
+        navigationBar.backgroundColor = ITCHColor.backgroundDark.color
     }
     
     private func setUpNavigationBar() {
@@ -97,21 +92,6 @@ final class ITCHProfileViewController: UIViewController {
         navigationBar.pinHorizontal(to: view)
     }
     
-    private func setUpUserProfileWrapView() {
-        accountWrapView.backgroundColor = Constant.Account.wrapViewColor
-        accountWrapView.layer.cornerRadius = Constant.Account.wrapViewCornerRadius
-        
-        view.addSubview(accountWrapView)
-        accountWrapView.pinTop(to: navigationBar.bottomAnchor, Constant.Account.wrapViewTopOffset)
-        accountWrapView.pinHorizontal(to: view, Constant.Account.wrapViewHorizontalOffset)
-    }
-    
-    private func setUpAccountRow() {
-        accountWrapView.addSubview(accountRow)
-        accountRow.pinHorizontal(to: accountWrapView, Constant.Account.horizontalOffset)
-        accountRow.pinVertical(to: accountWrapView, Constant.Account.verticalOffset)
-    }
-    
     private func setUpSettingsTableView() {
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
@@ -119,11 +99,15 @@ final class ITCHProfileViewController: UIViewController {
         settingsTableView.separatorStyle = Constant.SettingsTable.separatorStyle
         settingsTableView.showsVerticalScrollIndicator = Constant.SettingsTable.showsVerticalScrollIndicator
         settingsTableView.isScrollEnabled = Constant.SettingsTable.isScrollEnabled
+        settingsTableView.contentInset.bottom = Constant.SettingsTable.bottomInset
         settingsTableView.register(ITCHSettingsCell.self, forCellReuseIdentifier: ITCHSettingsCell.reuseId)
+        settingsTableView.register(ITCHAccountCell.self, forCellReuseIdentifier: ITCHAccountCell.reuseId)
+        settingsTableView.register(ITCHSettingsHeaderCell.self, forCellReuseIdentifier: ITCHSettingsHeaderCell.reuseId)
+        settingsTableView.register(ITCHSettingsFooterCell.self, forCellReuseIdentifier: ITCHSettingsFooterCell.reuseId)
         
         view.addSubview(settingsTableView)
-        settingsTableView.pinTop(to: accountWrapView.bottomAnchor)
-        settingsTableView.pinHorizontal(to: view, Constant.SettingsTable.horizontalOffset)
+        settingsTableView.pinTop(to: navigationBar.bottomAnchor)
+        settingsTableView.pinHorizontal(to: view)
         settingsTableView.pinBottom(to: view)
     }
 }
@@ -131,9 +115,10 @@ final class ITCHProfileViewController: UIViewController {
 // MARK: - UITableViewDelegate
 extension ITCHProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = settingsSections[indexPath.section].settings[indexPath.row]
+        guard indexPath.section != 0 else { return }
+        let row = settingsSections[indexPath.section].rows?[indexPath.row]
         
-        guard let action = model.action else { return }
+        guard case let .setting(model) = row, let action = model.action else { return }
         
         switch action {
         case .appearance:
@@ -148,26 +133,6 @@ extension ITCHProfileViewController: UITableViewDelegate {
             interactor.loadExit()
         }
     }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        ITCHSettingsHeaderView(with: settingsSections[section].title)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        Constant.SettingsTable.headerHeight
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        ITCHSettingsFooterView()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        Constant.SettingsTable.footerHeight
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Constant.SettingsTable.rowHeight
-    }
 }
 
 // MARK: - UITableViewDataSource
@@ -177,21 +142,82 @@ extension ITCHProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        settingsSections[section].settings.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        settingsSections[section].title
+        if settingsSections[section].accountModel != nil {
+            return 1
+        } else {
+            return settingsSections[section].rows?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ITCHSettingsCell.reuseId
-        ) as? ITCHSettingsCell else {
+        let section = settingsSections[indexPath.section]
+        
+        if let account = section.accountModel {
+            return makeAccountCell(tableView, indexPath: indexPath, account: account)
+        }
+        
+        guard let row = section.rows?[indexPath.row] else {
             return UITableViewCell()
         }
         
-        let model = settingsSections[indexPath.section].settings[indexPath.row]
+        switch row {
+        case .header(let title):
+            return makeHeaderCell(tableView, indexPath: indexPath, title: title)
+        case .footer:
+            return makeFooterCell(tableView, indexPath: indexPath)
+        case .setting(let model):
+            return makeSettingCell(tableView, indexPath: indexPath, model: model)
+        }
+    }
+}
+
+// MARK: - Configure cells 
+extension ITCHProfileViewController {
+    func makeAccountCell(
+        _ tableView: UITableView,
+        indexPath: IndexPath,
+        account: ITCHAccountModel
+    ) -> UITableViewCell {
+        guard let cell: ITCHAccountCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(
+            with: ITCHAccountViewModel(
+                image: account.image,
+                name: account.name,
+                info: account.info
+            )
+        )
+        return cell
+    }
+    
+    func makeHeaderCell(_ tableView: UITableView, indexPath: IndexPath, title: String) -> UITableViewCell {
+        guard let cell: ITCHSettingsHeaderCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        cell.configure(with: title)
+        return cell
+    }
+    
+    func makeFooterCell(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ITCHSettingsFooterCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
+        return cell
+    }
+    
+    func makeSettingCell(
+        _ tableView: UITableView,
+        indexPath: IndexPath,
+        model: ITCHSettingsModel
+    ) -> UITableViewCell {
+        guard let cell: ITCHSettingsCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
+        
         let viewModel = ITCHSettingsRowViewModel(
             leftImage: model.image,
             title: model.title,
@@ -201,9 +227,8 @@ extension ITCHProfileViewController: UITableViewDataSource {
         
         switch model.type {
         case .toggle:
-            cell.configure(with: viewModel) { [weak self] isOn in
-                print(isOn ? "ON" : "OFF")
-                self?.settingsSections[indexPath.section].settings[indexPath.row].type = .toggle(isOn: isOn)
+            cell.configure(with: viewModel) { isOn in
+                print("Toggle changed to", isOn)
             }
         default:
             cell.configure(with: viewModel)

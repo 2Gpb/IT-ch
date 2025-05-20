@@ -22,6 +22,7 @@ final class ITCHDeadlineCell: UITableViewCell {
         enum View {
             static let backgroundColor: UIColor = .clear
             static let horizontalOffset: CGFloat = 16
+            static let verticalOffset: CGFloat = 8
             static let separatorHeight: CGFloat = 1
         }
     }
@@ -60,9 +61,10 @@ final class ITCHDeadlineCell: UITableViewCell {
     // MARK: - SetUp
     private func setUp() {
         backgroundColor = Constant.View.backgroundColor
-        addSubview(deadlineView)
-        deadlineView.pinVertical(to: self)
-        deadlineView.pinHorizontal(to: self, Constant.View.horizontalOffset)
+        contentView.addSubview(deadlineView)
+        deadlineView.pinTop(to: contentView, Constant.View.verticalOffset)
+        deadlineView.pinBottom(to: contentView, Constant.View.verticalOffset)
+        deadlineView.pinHorizontal(to: contentView, Constant.View.horizontalOffset)
         
         setUpSeparatorView()
     }
@@ -70,9 +72,9 @@ final class ITCHDeadlineCell: UITableViewCell {
     private func setUpSeparatorView() {
         separatorView.backgroundColor = ITCHColor.base70.color
         
-        addSubview(separatorView)
-        separatorView.pinBottom(to: self)
-        separatorView.pinHorizontal(to: self, Constant.View.horizontalOffset)
+        contentView.addSubview(separatorView)
+        separatorView.pinBottom(to: contentView)
+        separatorView.pinHorizontal(to: contentView, Constant.View.horizontalOffset)
         separatorView.setHeight(Constant.View.separatorHeight)
     }
 }

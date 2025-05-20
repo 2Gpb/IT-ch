@@ -89,6 +89,7 @@ final class ITCHHelpQuestionsViewController: UIViewController {
         questionsTableView.isScrollEnabled = Constant.QuestionsTable.isScrollEnabled
         questionsTableView.backgroundColor = Constant.QuestionsTable.backgroundColor
         questionsTableView.rowHeight = UITableView.automaticDimension
+        questionsTableView.showsVerticalScrollIndicator = false
         questionsTableView.register(ITCHHelpQuestionCell.self, forCellReuseIdentifier: ITCHHelpQuestionCell.reuseId)
         
         view.addSubview(questionsTableView)

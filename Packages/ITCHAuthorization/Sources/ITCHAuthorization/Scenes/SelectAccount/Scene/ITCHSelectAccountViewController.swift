@@ -56,7 +56,7 @@ final class ITCHSelectAccountViewController: UIViewController {
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .image)
     private let titleLabel: UILabel = UILabel()
     private let accountsTableView: UITableView = UITableView()
-    private let manageAccountsButton: ITCHButton = ITCHButton(type: .secondary)
+    private let manageAccountsButton: ITCHButton = ITCHButton(type: .tertiary)
     private let contentStack: UIStackView = UIStackView()
     
     // MARK: - Lifecycle

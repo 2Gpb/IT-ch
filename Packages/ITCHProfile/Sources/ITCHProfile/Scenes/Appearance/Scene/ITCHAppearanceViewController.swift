@@ -114,8 +114,10 @@ final class ITCHAppearanceViewController: UIViewController {
         view.addSubview(themesTableView)
         themesTableView.pinTop(to: navigationBar.bottomAnchor)
         themesTableView.pinHorizontal(to: view)
-        themesTableView.setHeight(Constant.ThemesTable.rowHeight * Constant.ThemesTable.numberThemes +
-                                  Constant.ThemesTable.headerHeight + Constant.ThemesTable.topOffset)
+        themesTableView.setHeight(
+            Constant.ThemesTable.rowHeight * Constant.ThemesTable.numberThemes +
+            Constant.ThemesTable.headerHeight + Constant.ThemesTable.topOffset
+        )
     }
     
     private func setUpSeparatorView() {

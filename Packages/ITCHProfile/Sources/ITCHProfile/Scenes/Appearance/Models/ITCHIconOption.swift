@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUIComponents
 
-enum ITCHIconOption: CaseIterable {
+enum ITCHIconOption: Int, CaseIterable {
     case primary, secondary, tertiary
     
     var title: String {
@@ -23,6 +23,17 @@ enum ITCHIconOption: CaseIterable {
             return ITCHImage.secondaryLogo60.image
         case .tertiary:
             return ITCHImage.tertiaryLogo60.image
+        }
+    }
+    
+    var appIconName: String? {
+        switch self {
+        case .primary:
+            return nil
+        case .secondary:
+            return "AppIconSecondary"
+        case .tertiary:
+            return "AppIconTertiary"
         }
     }
 }

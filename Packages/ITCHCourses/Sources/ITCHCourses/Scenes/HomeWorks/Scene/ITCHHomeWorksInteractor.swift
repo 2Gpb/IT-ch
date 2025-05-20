@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHUIComponents
 import ITCHUtilities
 
 final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
@@ -15,6 +16,48 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     
     // MARK: - Variables
     private var homeWorks: [ITCHHomeWorkModel] = [
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
+        ITCHHomeWorkModel(
+            name: "Домашняя работа 1",
+            date: Date(),
+            linkForLoad: "https://github.com/IT-CH-app",
+            linkForCheck: "https://github.com/IT-CH-app",
+            linkOnTask: "https://github.com/IT-CH-app"
+        ),
         ITCHHomeWorkModel(
             name: "Домашняя работа 1",
             date: Date(),
@@ -54,21 +97,25 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath)
+        guard let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath) else {
+            return UITableViewCell()
+        }
         
         cell.configure(
-            for: role,
-            title: homeWorks[indexPath.row].name,
-            date: homeWorks[indexPath.row].date,
-            openAction: { [weak self] in
-                self?.presenter.routeToOpen(with: self?.homeWorks[indexPath.row].linkOnTask)
-            },
-            solutionsAction: { [weak self] in
-                self?.presenter.routeToSolutions(with: self?.homeWorks[indexPath.row].linkForCheck)
-            },
-            editAction: { [weak self] in
-                self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row])
-            }
+            with: ITCHHomeWorkViewModel(
+                title: homeWorks[indexPath.row].name,
+                date: homeWorks[indexPath.row].date,
+                role: role,
+                openAction: { [weak self] in
+                    self?.presenter.routeToOpen(with: self?.homeWorks[indexPath.row].linkOnTask)
+                },
+                solutionsAction: { [weak self] in
+                    self?.presenter.routeToSolutions(with: self?.homeWorks[indexPath.row].linkForCheck)
+                },
+                editAction: { [weak self] in
+                    self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row])
+                }
+            )
         )
         
         return cell

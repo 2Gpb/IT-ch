@@ -20,12 +20,18 @@ final class ITCHSettingsCell: UITableViewCell {
         }
         
         enum View {
-            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+            static let backgroundColor: UIColor = .clear
             static let selectionStyle: UITableViewCell.SelectionStyle = .none
+        }
+        
+        enum WrapView {
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+            static let horizontalOffset: CGFloat = 16
         }
         
         enum SettingsRow {
             static let horizontalOffset: CGFloat = 16
+            static let topOffset: CGFloat = 8
         }
     }
     
@@ -33,6 +39,7 @@ final class ITCHSettingsCell: UITableViewCell {
     static let reuseId: String = Constant.ReuseIdentifier.value
     
     // MARK: - UI Components
+    private let wrapView: UIView = UIView()
     private let settingsRow: ITCHSettingsRow = ITCHSettingsRow()
     
     // MARK: - Lifecycle
@@ -58,13 +65,23 @@ final class ITCHSettingsCell: UITableViewCell {
     // MARK: - SetUp
     private func setUp() {
         selectionStyle = Constant.View.selectionStyle
-        contentView.backgroundColor = Constant.View.backgroundColor
+        backgroundColor = Constant.View.backgroundColor
+        setUpWrapView()
         setUpSettingsRow()
     }
     
+    private func setUpWrapView() {
+        wrapView.backgroundColor = Constant.WrapView.backgroundColor
+
+        contentView.addSubview(wrapView)
+        wrapView.pinHorizontal(to: contentView, Constant.WrapView.horizontalOffset)
+        wrapView.pinVertical(to: contentView)
+    }
+    
     private func setUpSettingsRow() {
-        contentView.addSubview(settingsRow)
-        settingsRow.pinCenterY(to: self)
-        settingsRow.pinHorizontal(to: self, Constant.SettingsRow.horizontalOffset)
+        wrapView.addSubview(settingsRow)
+        settingsRow.pinTop(to: wrapView, Constant.SettingsRow.topOffset)
+        settingsRow.pinHorizontal(to: wrapView, Constant.SettingsRow.horizontalOffset)
+        settingsRow.pinBottom(to: wrapView)
     }
 }

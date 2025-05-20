@@ -6,6 +6,11 @@
 //
 
 public enum ITCHTextFieldType {
+    case label
+    case normal
+}
+
+public enum ITCHTextFieldContentType {
     case normal
     case password
 }

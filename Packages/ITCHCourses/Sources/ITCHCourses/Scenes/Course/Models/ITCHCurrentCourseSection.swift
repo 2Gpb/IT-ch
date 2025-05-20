@@ -12,3 +12,15 @@ enum ITCHCurrentCourseSection: Int, CaseIterable {
     case role
     case actions
 }
+
+extension ITCHCurrentCourseSection {
+    var title: String? {
+        switch self {
+        case .course: return "КУРС"
+        case .teacher: return "ПРЕПОДАВАТЕЛЬ"
+        case .info: return "ОБЩАЯ ИНФОРМАЦИЯ"
+        case .role: return "ВАША РОЛЬ"
+        case .actions: return nil
+        }
+    }
+}
