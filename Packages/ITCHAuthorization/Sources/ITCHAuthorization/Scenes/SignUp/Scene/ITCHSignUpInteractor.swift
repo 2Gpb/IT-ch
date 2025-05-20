@@ -15,6 +15,10 @@ final class ITCHSignUpInteractor: ITCHSignUpBusinessLogic {
     }
     
     // MARK: - Methods
+    func loadInfo() {
+        presenter.routeToInfo()
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }

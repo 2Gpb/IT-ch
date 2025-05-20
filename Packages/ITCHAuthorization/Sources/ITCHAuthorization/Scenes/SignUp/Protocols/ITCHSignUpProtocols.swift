@@ -6,11 +6,13 @@
 //
 
 protocol ITCHSignUpBusinessLogic {
+    func loadInfo()
     func loadDismiss()
 }
 
 protocol ITCHSignUpPresentationLogic { }
 
 protocol ITCHSignUpRouterLogic {
+    func routeToInfo()
     func popViewController()
 }
