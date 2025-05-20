@@ -16,6 +16,10 @@ extension ITCHSignUpPresenter: ITCHSignUpRouterLogic {
         view?.navigationController?.pushViewController(ITCHHelpQuestionsAssembly.build(), animated: true)
     }
     
+    func routeToCode() {
+        view?.navigationController?.pushViewController(SignUpPasswordAssembly.build(), animated: true)
+    }
+    
     func popViewController() {
         view?.navigationController?.popViewController(animated: true)
     }

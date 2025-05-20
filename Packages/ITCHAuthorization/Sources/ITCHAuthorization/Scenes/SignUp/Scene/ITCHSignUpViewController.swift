@@ -151,7 +151,10 @@ final class ITCHSignUpViewController: UIViewController {
     
     private func setUpContinueButton() {
         continueButton.configure(title: Constant.ContinueButton.title)
-        continueButton.action = { }
+        continueButton.action = { [weak self] in
+            self?.mailTextField.keyboardState = .close
+            self?.interactor.loadCode()
+        }
         
         view.addSubview(continueButton)
         continueButton.pinTop(to: infoButton.bottomAnchor, Constant.ContinueButton.topOffset)
@@ -161,7 +164,6 @@ final class ITCHSignUpViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func openInfo() {
-        mailTextField.keyboardState = .close
         interactor.loadInfo()
     }
 }

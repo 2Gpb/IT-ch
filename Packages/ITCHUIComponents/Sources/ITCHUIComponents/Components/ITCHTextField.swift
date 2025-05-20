@@ -173,8 +173,8 @@ public final class ITCHTextField: UIView {
     @objc
     private func eyeButtonTapped() {
         eyeButton.isHidden = eyeOffButton.isHidden
-        textField.isSecureTextEntry = !eyeOffButton.isHidden
         eyeOffButton.isHidden = !eyeOffButton.isHidden
+        textField.isSecureTextEntry = !eyeOffButton.isHidden
     }
 }
 
