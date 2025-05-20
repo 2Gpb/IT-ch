@@ -63,7 +63,7 @@ final class ITCHEnterCodeViewModel: ObservableObject {
                 }
                 self.isFreeze = false
             } catch {
-                print("⛔️ Task cancelled or failed: \(error)")
+                print("Task cancelled or failed: \(error)")
                 self.isFreeze = false
             }
         }

@@ -12,31 +12,45 @@ struct ITCHEnterCodeView: View {
     // MARK: - Constants
     private enum Constant {
         enum CodeLoginText {
-            static let topPadding = 20.0
-            static let horizontalPadding = 16.0
-            static let spacing = 16.0
+            static let topPadding: CGFloat = 20.0
+            static let horizontalPadding: CGFloat = 16.0
+            static let spacing: CGFloat = 16.0
+            static let subLabelLineSpacing: CGFloat = 5.0
+            
             static let mainLabel = "Введите код подтверждения"
-            static let subLabel = "Мы отправили код на"
-            static let subLabelLineSpacing = 5.0
+            static let subLabel = "Мы отправили код на "
         }
         
         enum CodeLogin {
-            static let spacing = 32.0
+            static let spacing: CGFloat = 32.0
         }
         
         enum CodeLoginFields {
-            static let spacing = 12.0
+            static let spacing: CGFloat = 12.0
         }
         
         enum IncorrectCode {
             static let text = "Неверный код, попробуйте снова"
+            static let font = ITCHFont.bodySRegular.swiftUIFont
+            static let color = ITCHColor.red50.swiftUIColor
         }
         
         enum GetCodeButton {
             static let defaultText = "Получить новый код"
             static let loadingText = "Получить новый код через: "
-            static let bottomPadding = 16.0
-            static let bottomPaddingWithLoading = 26.0
+            static let bottomPadding: CGFloat = 16.0
+            static let bottomPaddingWithLoading: CGFloat = 26.0
+            static let height: CGFloat = 48.0
+            static let font = ITCHFont.bodyMMedium.swiftUIFont
+            static let activeColor = ITCHColor.blue60.swiftUIColor
+            static let inactiveColor = ITCHColor.base60.swiftUIColor
+            static let topPaddingWhenLoading: CGFloat = 32.0
+            static let topPaddingDefault: CGFloat = 16.0
+        }
+        
+        enum NavigationBar {
+            static let height: CGFloat = 56.0
+            static let leadingPadding: CGFloat = 16.0
         }
     }
     
@@ -51,33 +65,34 @@ struct ITCHEnterCodeView: View {
             ITCHColor.backgroundGray.swiftUIColor
                 .ignoresSafeArea()
         
-            VStack(spacing: 0) {
-                HStack {
-                    Button(
-                        action: {
-                            dismiss()
-                        }, label: {
-                            ITCHImage.chevronLeft24.swiftUIImage
-                        }
-                    )
-                    
-                    Spacer()
-                }
-                .frame(height: 56)
-                .padding(.leading, 16)
-                
+            VStack {
+                navigationBar
                 codeLogin
-                
                 newCodeButton
             }
         }
         .onAppear {
             isFocused = true
-            
         }
     }
     
     // MARK: - Subviews
+    private var navigationBar: some View {
+        HStack {
+            Button(
+                action: {
+                    dismiss()
+                }, label: {
+                    ITCHImage.chevronLeft24.swiftUIImage
+                }
+            )
+            
+            Spacer()
+        }
+        .frame(height: Constant.NavigationBar.height)
+        .padding(.leading, Constant.NavigationBar.leadingPadding)
+    }
+    
     private var codeLogin: some View {
         VStack(spacing: Constant.CodeLogin.spacing) {
             codeLoginText
@@ -134,15 +149,21 @@ struct ITCHEnterCodeView: View {
                         Text(viewModel.isFreeze ? Constant.GetCodeButton.loadingText + viewModel.timeRemaining :
                                 Constant.GetCodeButton.defaultText)
                         .font(ITCHFont.bodyMMedium.swiftUIFont)
-                        .foregroundStyle(viewModel.isFreeze ? ITCHColor.base60.swiftUIColor : ITCHColor.blue60.swiftUIColor)
+                        .foregroundStyle(viewModel.isFreeze
+                                         ? Constant.GetCodeButton.inactiveColor
+                                         : Constant.GetCodeButton.activeColor
+                        )
                     }
                 )
-                .frame(height: 48)
+                .frame(height: Constant.GetCodeButton.height)
                 
                 .disabled(viewModel.isFreeze)
             }
         }
-        .padding(.top, viewModel.isLoading ? 32 : 16)
+        .padding(.top, viewModel.isLoading
+                 ? Constant.GetCodeButton.topPaddingWhenLoading
+                 : Constant.GetCodeButton.topPaddingDefault
+        )
     }
 }
 

@@ -12,23 +12,29 @@ public struct ITCHCodeView: View {
     // MARK: - Constants
     private enum Constant {
         enum HidenTextField {
-            static let size = CGSize.zero
+            static let size = CGSize(width: 0, height: 0)
             static let opacity = 0.01
         }
         
         enum InputFieldView {
-            static let spacing = 8.0
-            static let size = 52.0
-            static let cornerRadius = 8.0
-            static let strokeWidth = 1.0
+            static let spacing: CGFloat = 8.0
+            static let size: CGFloat = 52.0
+            static let cornerRadius: CGFloat = 8.0
+            static let strokeWidth: CGFloat = 1.0
+            static let defaultBackground = ITCHColor.base80.swiftUIColor
+            static let errorBackground = ITCHColor.red30.swiftUIColor
+            static let textColor = ITCHColor.base0.swiftUIColor
+            static let errorTextColor = ITCHColor.red50.swiftUIColor
+            static let font = ITCHFont.header5SemiBold.swiftUIFont
         }
         
         enum Cursor {
-            static let width = 1.5
-            static let height = 17.0
-            static let duration = 0.5
-            static let hiddenOpacity = 0.0
-            static let visibleOpacity = 1.0
+            static let width: CGFloat = 1.5
+            static let height: CGFloat = 17.0
+            static let duration: Double = 0.5
+            static let hiddenOpacity: Double = 0.0
+            static let visibleOpacity: Double = 1.0
+            static let color = ITCHColor.blue60.swiftUIColor
         }
     }
     
@@ -76,16 +82,15 @@ public struct ITCHCodeView: View {
             ForEach(0..<length, id: \.self) { index in
                 ZStack {
                     Text(character(at: index))
-                        .font(ITCHFont.header5SemiBold.swiftUIFont)
-                        .foregroundStyle(isError ? ITCHColor.red50.swiftUIColor : ITCHColor.base0.swiftUIColor)
+                        .font(Constant.InputFieldView.font)
+                        .foregroundStyle(isError ? Constant.InputFieldView.errorTextColor : Constant.InputFieldView.textColor)
                         .frame(width: Constant.InputFieldView.size, height: Constant.InputFieldView.size)
-                        .background(isError ? ITCHColor.red30.swiftUIColor : ITCHColor.base80.swiftUIColor)
+                        .background(isError ? Constant.InputFieldView.errorBackground : Constant.InputFieldView.defaultBackground)
                         .cornerRadius(Constant.InputFieldView.cornerRadius)
-                    
                     if index == min(code.count, length),
                         isFocused.wrappedValue == true {
                         Rectangle()
-                            .fill(ITCHColor.blue60.swiftUIColor)
+                            .fill(Constant.Cursor.color)
                             .frame(width: Constant.Cursor.width, height: Constant.Cursor.height)
                             .opacity(cursorBlink ? Constant.Cursor.visibleOpacity : Constant.Cursor.hiddenOpacity)
                             .onAppear {
