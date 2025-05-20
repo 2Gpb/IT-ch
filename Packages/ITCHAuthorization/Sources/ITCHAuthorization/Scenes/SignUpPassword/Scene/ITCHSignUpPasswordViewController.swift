@@ -1,5 +1,5 @@
 //
-//  SignUpPasswordViewController.swift
+//  ITCHSignUpPasswordViewController.swift
 //  ITCHAuthorization
 //
 //  Created by Peter on 20.05.2025.
@@ -7,9 +7,8 @@
 
 import UIKit
 import ITCHUIComponents
-import IQKeyboardToolbarManager
 
-final class SignUpPasswordViewController: UIViewController {
+final class ITCHSignUpPasswordViewController: UIViewController {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -48,7 +47,7 @@ final class SignUpPasswordViewController: UIViewController {
     }
     
     // MARK: - Private fields
-    private let interactor: SignUpPasswordBusinessLogic
+    private let interactor: ITCHSignUpPasswordBusinessLogic
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
@@ -57,9 +56,8 @@ final class SignUpPasswordViewController: UIViewController {
     private let continueButton: ITCHButton = ITCHButton()
     
     // MARK: - Lifecycle
-    init(interactor: SignUpPasswordBusinessLogic) {
+    init(interactor: ITCHSignUpPasswordBusinessLogic) {
         self.interactor = interactor
-        IQKeyboardToolbarManager.shared.disabledToolbarClasses.append(SignUpPasswordViewController.self)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -131,7 +129,9 @@ final class SignUpPasswordViewController: UIViewController {
     
     private func setUpContinueButton() {
         continueButton.configure(title: Constant.ContinueButton.title)
-        continueButton.action = { }
+        continueButton.action = { [weak self] in
+            self?.interactor.loadEnterFullName()
+        }
         
         view.addSubview(continueButton)
         continueButton.pinTop(to: passwordTextField.bottomAnchor, Constant.ContinueButton.topOffset)

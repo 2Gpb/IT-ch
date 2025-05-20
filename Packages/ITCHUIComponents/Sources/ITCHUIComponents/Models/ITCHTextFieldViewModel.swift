@@ -10,14 +10,14 @@ import UIKit
 public struct ITCHTextFieldViewModel {
     public var title: String
     public var placeholder: String
-    public var type: ITCHTextFieldType
+    public var type: ITCHTextFieldContentType
     public var keyboardType: UIKeyboardType
     public var alignment: NSTextAlignment
     
     public init(
-        title: String,
+        title: String = "",
         placeholder: String,
-        type: ITCHTextFieldType = .normal,
+        type: ITCHTextFieldContentType = .normal,
         keyboardType: UIKeyboardType = .default,
         alignment: NSTextAlignment = .left
     ) {
