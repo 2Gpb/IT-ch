@@ -18,8 +18,8 @@ jobs:
       - name: Build project
         run: |
           xcodebuild \
-            -scheme "IT-CH" \
-            -project "./IT-CH.xcodeproj" \
+            -scheme "IT-ch" \
+            -project "./IT-ch.xcodeproj" \
             -sdk iphoneos \
             -configuration Release \
             clean build
