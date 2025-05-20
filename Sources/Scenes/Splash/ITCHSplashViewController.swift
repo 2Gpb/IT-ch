@@ -7,6 +7,8 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHAuthorization
+import ITCHControllers
 
 final class ITCHSplashViewController: UIViewController {
     // MARK: - Constants
@@ -24,8 +26,15 @@ final class ITCHSplashViewController: UIViewController {
         setUp()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        routeToAuth()
+        routeToCourses()
+    }
+    
     // MARK: - SetUp
     private func setUp() {
+        navigationController?.isNavigationBarHidden = true
         view.backgroundColor = Constant.backgroundColor
         setUpLogoImageView()
     }
@@ -35,5 +44,15 @@ final class ITCHSplashViewController: UIViewController {
         
         view.addSubview(logoImageView)
         logoImageView.pinCenter(to: view)
+    }
+    
+    private func routeToAuth() {
+        navigationController?.pushViewController(ITCHWelcomeAssembly.build(), animated: true)
+    }
+    
+    private func routeToCourses() {
+        let tabBar = ITCHTabBarController()
+        tabBar.modalPresentationStyle = .fullScreen
+        present(tabBar, animated: true)
     }
 }

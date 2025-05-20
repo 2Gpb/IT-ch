@@ -16,8 +16,8 @@ extension ITCHWelcomePresenter: ITCHWelcomeRouterLogic {
         view?.navigationController?.pushViewController(ITCHSelectAccountAssembly.build(), animated: true)
     }
     
-    func routeToSignUp() {
-        view?.navigationController?.pushViewController(ITCHSignUpAssembly.build(), animated: true)
+    func routeToFullName() {
+        view?.navigationController?.pushViewController(ITCHFullNameAssembly.build(), animated: true)
     }
     
     func routeToReadMore() {

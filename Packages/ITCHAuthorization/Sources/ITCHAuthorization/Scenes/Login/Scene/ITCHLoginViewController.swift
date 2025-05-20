@@ -197,6 +197,9 @@ final class ITCHLoginViewController: UIViewController {
     
     private func setUpEnterButton() {
         enterButton.configure(title: Constant.Enter.title)
+        enterButton.action = { [weak self] in
+            self?.interactor.loadCourses()
+        }
         
         view.addSubview(enterButton)
         enterButton.pinTop(to: forgotPasswordButton.bottomAnchor, Constant.Enter.topOffset)

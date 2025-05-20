@@ -6,13 +6,13 @@
 //
 
 protocol ITCHSignUpPasswordBusinessLogic {
-    func loadEnterFullName()
+    func loadCourses()
     func loadDismiss()
 }
 
 protocol ITCHSignUpPasswordPresentationLogic { }
 
 protocol ITCHSignUpPasswordRouterLogic {
-    func routeToEnterFullName()
+    func routeToCourses()
     func popViewController()
 }

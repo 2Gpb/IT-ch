@@ -40,7 +40,7 @@ final class ITCHSignUpPasswordViewController: UIViewController {
         }
         
         enum ContinueButton {
-            static let title: String = "Далее"
+            static let title: String = "Создать аккаунт"
             static let topOffset: CGFloat = 32
             static let horizontalOffset: CGFloat = 16
         }
@@ -130,7 +130,7 @@ final class ITCHSignUpPasswordViewController: UIViewController {
     private func setUpContinueButton() {
         continueButton.configure(title: Constant.ContinueButton.title)
         continueButton.action = { [weak self] in
-            self?.interactor.loadEnterFullName()
+            self?.interactor.loadCourses()
         }
         
         view.addSubview(continueButton)

@@ -12,7 +12,7 @@ import ITCHSchedule
 import ITCHNotifications
 import ITCHProfile
 
-final class ITCHTabBarController: UITabBarController {
+public final class ITCHTabBarController: UITabBarController {
     // MARK: - Constants
     private enum Constant {
         enum TabBar {
@@ -54,7 +54,7 @@ final class ITCHTabBarController: UITabBarController {
     }
     
     // MARK: - Lifecycle
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
     }

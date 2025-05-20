@@ -119,7 +119,7 @@ final class ITCHWelcomeViewController: UIViewController {
         }
         
         signUpButton.action = { [weak self] in
-            self?.interactor.loadSignUpAccount()
+            self?.interactor.loadFullName()
         }
         
         buttonStack.axis = Constant.ButtonStack.axis

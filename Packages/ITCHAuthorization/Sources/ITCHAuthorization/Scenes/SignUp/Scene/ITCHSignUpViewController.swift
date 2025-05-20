@@ -24,7 +24,7 @@ final class ITCHSignUpViewController: UIViewController {
         }
         
         enum CreateTitle {
-            static let text: String = "Создать новый аккаунт"
+            static let text: String = "Подтвердите почту"
             static let font: UIFont = ITCHFont.header4.font
             static let textColor: UIColor = ITCHColor.base0.color
             static let topOffset: CGFloat = 20

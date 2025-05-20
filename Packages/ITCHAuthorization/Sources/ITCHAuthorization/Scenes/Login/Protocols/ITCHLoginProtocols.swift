@@ -6,6 +6,7 @@
 //
 
 protocol ITCHLoginBusinessLogic {
+    func loadCourses()
     func loadDismiss()
     func loadPasswordRecovery()
 }
@@ -13,6 +14,7 @@ protocol ITCHLoginBusinessLogic {
 protocol ITCHLoginPresentationLogic { }
 
 protocol ITCHLoginRouterLogic {
+    func routeToCourses()
     func popViewController()
     func routeToPasswordRecovery()
 }

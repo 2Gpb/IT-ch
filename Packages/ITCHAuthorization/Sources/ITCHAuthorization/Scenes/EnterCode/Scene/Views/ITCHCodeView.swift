@@ -12,7 +12,7 @@ public struct ITCHCodeView: View {
     // MARK: - Constants
     private enum Constant {
         enum HidenTextField {
-            static let size = CGSize(width: 0, height: 0)
+            static let size: CGSize = .zero
             static let opacity = 0.01
         }
         

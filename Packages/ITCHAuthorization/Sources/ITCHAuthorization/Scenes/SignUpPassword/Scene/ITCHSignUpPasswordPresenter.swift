@@ -5,6 +5,8 @@
 //  Created by Peter on 20.05.2025.
 //
 
+import ITCHControllers
+
 final class ITCHSignUpPasswordPresenter: ITCHSignUpPasswordPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHSignUpPasswordViewController?
@@ -12,8 +14,10 @@ final class ITCHSignUpPasswordPresenter: ITCHSignUpPasswordPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHSignUpPasswordPresenter: ITCHSignUpPasswordRouterLogic {
-    func routeToEnterFullName() {
-        view?.navigationController?.pushViewController(ITCHEnterFullNameAssembly.build(), animated: true)
+    func routeToCourses() {
+        let tabBar = ITCHTabBarController()
+        tabBar.modalPresentationStyle = .fullScreen
+        view?.present(tabBar, animated: true)
     }
     
     func popViewController() {

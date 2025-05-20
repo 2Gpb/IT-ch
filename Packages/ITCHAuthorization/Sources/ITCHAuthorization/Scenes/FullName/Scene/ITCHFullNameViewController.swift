@@ -1,5 +1,5 @@
 //
-//  EnterFullNameViewController.swift
+//  ITCHFullNameViewController.swift
 //  ITCHAuthorization
 //
 //  Created by Peter on 20.05.2025.
@@ -8,7 +8,7 @@
 import UIKit
 import ITCHUIComponents
 
-final class ITCHEnterFullNameViewController: UIViewController {
+final class ITCHFullNameViewController: UIViewController {
     // MARK: - Constants
     private enum Constant {
         enum Error {
@@ -43,14 +43,14 @@ final class ITCHEnterFullNameViewController: UIViewController {
         }
         
         enum CreateButton {
-            static let title: String = "Создать аккаунт"
+            static let title: String = "Далее"
             static let topOffset: CGFloat = 32
             static let horizontalOffset: CGFloat = 16
         }
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHEnterFullNameBusinessLogic
+    private let interactor: ITCHFullNameBusinessLogic
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
@@ -62,7 +62,7 @@ final class ITCHEnterFullNameViewController: UIViewController {
     private let contentStackView: UIStackView = UIStackView()
     
     // MARK: - Lifecycle
-    init(interactor: ITCHEnterFullNameBusinessLogic) {
+    init(interactor: ITCHFullNameBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -136,7 +136,10 @@ final class ITCHEnterFullNameViewController: UIViewController {
     private func setUpCreateButton() {
         createButton.configure(title: Constant.CreateButton.title)
         createButton.action = { [weak self] in
-            self?.interactor.loadCourses()
+            self?.nameTextField.keyboardState = .close
+            self?.surnameTextField.keyboardState = .close
+            self?.patronymicTextField.keyboardState = .close
+            self?.interactor.loadSignUp()
         }
         
         view.addSubview(createButton)

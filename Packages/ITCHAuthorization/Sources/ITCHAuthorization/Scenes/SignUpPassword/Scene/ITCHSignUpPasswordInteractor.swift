@@ -15,8 +15,8 @@ final class ITCHSignUpPasswordInteractor: ITCHSignUpPasswordBusinessLogic {
     }
     
     // MARK: - Methods
-    func loadEnterFullName() {
-        presenter.routeToEnterFullName()
+    func loadCourses() {
+        presenter.routeToCourses()
     }
     
     func loadDismiss() {

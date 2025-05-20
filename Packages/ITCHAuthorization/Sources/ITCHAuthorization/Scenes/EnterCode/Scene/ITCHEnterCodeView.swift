@@ -81,7 +81,10 @@ struct ITCHEnterCodeView: View {
         HStack {
             Button(
                 action: {
-                    dismiss()
+                    isFocused = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        dismiss()
+                    }
                 }, label: {
                     ITCHImage.chevronLeft24.swiftUIImage
                 }
@@ -149,9 +152,10 @@ struct ITCHEnterCodeView: View {
                         Text(viewModel.isFreeze ? Constant.GetCodeButton.loadingText + viewModel.timeRemaining :
                                 Constant.GetCodeButton.defaultText)
                         .font(ITCHFont.bodyMMedium.swiftUIFont)
-                        .foregroundStyle(viewModel.isFreeze
-                                         ? Constant.GetCodeButton.inactiveColor
-                                         : Constant.GetCodeButton.activeColor
+                        .foregroundStyle(
+                            viewModel.isFreeze
+                            ? Constant.GetCodeButton.inactiveColor
+                            : Constant.GetCodeButton.activeColor
                         )
                     }
                 )
@@ -160,9 +164,10 @@ struct ITCHEnterCodeView: View {
                 .disabled(viewModel.isFreeze)
             }
         }
-        .padding(.top, viewModel.isLoading
-                 ? Constant.GetCodeButton.topPaddingWhenLoading
-                 : Constant.GetCodeButton.topPaddingDefault
+        .padding(
+            .top, viewModel.isLoading
+            ? Constant.GetCodeButton.topPaddingWhenLoading
+            : Constant.GetCodeButton.topPaddingDefault
         )
     }
 }
