@@ -7,6 +7,7 @@
 
 protocol ITCHWelcomeBusinessLogic {
     func loadSelectAccount()
+    func loadSignUpAccount()
     func loadReadMore()
 }
 
@@ -14,5 +15,6 @@ protocol ITCHWelcomePresentationLogic { }
 
 protocol ITCHWelcomeRouterLogic {
     func routeToSelectAccount()
+    func routeToSignUp()
     func routeToReadMore()
 }

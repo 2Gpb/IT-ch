@@ -22,8 +22,12 @@ final class ITCHWelcomeViewController: UIViewController {
             static let numberOfLines: Int = 2
         }
         
-        enum Enter {
-            static let title: String = "Войти через ЕЛК"
+        enum ButtonStack {
+            static let enterTitle: String = "Войти"
+            static let signUpTitle: String = "Зарегистрироваться"
+            static let axis: NSLayoutConstraint.Axis = .vertical
+            static let spacing: CGFloat = 12
+            static let distribution: UIStackView.Distribution = .fillEqually
         }
         
         enum WelcomeStack {
@@ -54,6 +58,8 @@ final class ITCHWelcomeViewController: UIViewController {
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .image)
     private let titleLabel: UILabel = UILabel()
     private let enterButton: ITCHButton = ITCHButton()
+    private let signUpButton: ITCHButton = ITCHButton(type: .secondary)
+    private let buttonStack: UIStackView = UIStackView()
     private let welcomeStack: UIStackView = UIStackView()
     private let readMoreLabel: UILabel = UILabel()
     private let readMoreButton: UIButton = UIButton(type: .system)
@@ -80,6 +86,7 @@ final class ITCHWelcomeViewController: UIViewController {
         setUpView()
         setUpNavigationBar()
         setUpTitleLabel()
+        setUpButtonStack()
         setUpWelcomeStack()
         setUpReadMoreStackContent()
         setUpReadMoreStack()
@@ -103,17 +110,33 @@ final class ITCHWelcomeViewController: UIViewController {
         titleLabel.numberOfLines = Constant.Title.numberOfLines
     }
     
-    private func setUpWelcomeStack() {
-        enterButton.configure(title: Constant.Enter.title)
+    private func setUpButtonStack() {
+        enterButton.configure(title: Constant.ButtonStack.enterTitle)
+        signUpButton.configure(title: Constant.ButtonStack.signUpTitle)
+        
         enterButton.action = { [weak self] in
             self?.interactor.loadSelectAccount()
         }
         
+        signUpButton.action = { [weak self] in
+            self?.interactor.loadSignUpAccount()
+        }
+        
+        buttonStack.axis = Constant.ButtonStack.axis
+        buttonStack.spacing = Constant.ButtonStack.spacing
+        buttonStack.distribution = Constant.ButtonStack.distribution
+        
+        [enterButton, signUpButton].forEach { element in
+            buttonStack.addArrangedSubview(element)
+        }
+    }
+    
+    private func setUpWelcomeStack() {
         welcomeStack.axis = Constant.WelcomeStack.axis
         welcomeStack.spacing = Constant.WelcomeStack.spacing
         welcomeStack.distribution = Constant.WelcomeStack.distribution
         
-        [titleLabel, enterButton].forEach { element in
+        [titleLabel, buttonStack].forEach { element in
             welcomeStack.addArrangedSubview(element)
         }
         

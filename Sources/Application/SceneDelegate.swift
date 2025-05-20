@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         window?.overrideUserInterfaceStyle = .dark
-        window?.rootViewController = ITCHTabBarController()
+        window?.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build()) //ITCHTabBarController()
         window?.makeKeyAndVisible()
     }
 
