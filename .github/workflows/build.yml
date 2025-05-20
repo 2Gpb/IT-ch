@@ -1,0 +1,25 @@
+name: Build IT-CH App
+
+on:
+ pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_15.2.app
+
+      - name: Build project
+        run: |
+          xcodebuild \
+            -scheme "IT-CH" \
+            -project "IT-CH.xcodeproj" \
+            -sdk iphoneos \
+            -configuration Release \
+            clean build
