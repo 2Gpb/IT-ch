@@ -15,6 +15,8 @@ public final class ITCHButton: UIView {
         }
         
         enum Button {
+            static let defaultAlpha: CGFloat = 1
+            static let disabledAlpha: CGFloat = 0.9
             static let height: CGFloat = 48
             static let cornerRadius: CGFloat = 12
             static let textColor: UIColor = ITCHColor.base0.color
@@ -33,6 +35,12 @@ public final class ITCHButton: UIView {
     
     // MARK: - Properties
     public var action: (() -> Void)?
+    public var isEnabled: Bool = true {
+        didSet {
+            button.alpha = isEnabled ? Constant.Button.defaultAlpha : Constant.Button.disabledAlpha
+            button.isEnabled = isEnabled
+        }
+    }
     
     // MARK: - Lifecycle
     public init(type: ITCHButtonType = .primary) {
