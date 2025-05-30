@@ -1,14 +1,14 @@
 //
-//  Request.swift
-//  TestTaskAvito
+//  ITCHRequest.swift
+//  ITCHNetworking
 //
 //  Created by Peter on 11.02.2025.
 //
 
 import Foundation
 
-struct Request {
-    enum Method: String {
+public struct ITCHRequest {
+    public enum Method: String {
         case get = "GET"
         case post = "POST"
         case put = "PUT"
@@ -17,16 +17,16 @@ struct Request {
         case options = "OPTIONS"
     }
     
-    var endpoint: Endpoint
-    var method: Method
-    var parameters: [String: String]?
-    var timeInterval: TimeInterval
-    let body: Data?
+    public var endpoint: ITCHEndpoint
+    public var method: Method
+    public var parameters: [String: String]?
+    public var timeInterval: TimeInterval
+    public let body: Data?
     
-    init(
-        endpoint: Endpoint,
+    public init(
+        endpoint: ITCHEndpoint,
         method: Method = .get,
-        parameters: [String : String]? = nil,
+        parameters: [String: String]? = nil,
         body: Data? = nil,
         timeInterval: TimeInterval = 5
     ) {

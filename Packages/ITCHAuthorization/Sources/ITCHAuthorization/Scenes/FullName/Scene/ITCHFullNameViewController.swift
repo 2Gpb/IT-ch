@@ -121,11 +121,16 @@ final class ITCHFullNameViewController: UIViewController {
         
         [nameTextField, surnameTextField].forEach { textField in
             textField.editingAction = { [weak self] in
-                if self?.nameTextField.text != "" && self?.surnameTextField.text != "" {
-                    self?.createButton.isEnabled = true
-                } else {
+                guard
+                    let self,
+                    let name = self.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                    let surname = self.surnameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                else {
                     self?.createButton.isEnabled = false
+                    return
                 }
+                
+                self.createButton.isEnabled = !name.isEmpty && !surname.isEmpty
             }
         }
     }

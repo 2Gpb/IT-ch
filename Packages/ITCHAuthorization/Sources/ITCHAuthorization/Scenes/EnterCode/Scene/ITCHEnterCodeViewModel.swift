@@ -15,10 +15,10 @@ final class ITCHEnterCodeViewModel: ObservableObject {
         static let step = 1.0
     }
     
-    let pushNext: () -> Void
-    
     // MARK: - Fields
     let codeLenght = 4
+    let pushNext: () -> Void
+    let email: String
     
     // MARK: - Properties
     @Published var isCodeIncorrect = false
@@ -38,8 +38,9 @@ final class ITCHEnterCodeViewModel: ObservableObject {
     
     private var freezeTimeInterval: TimeInterval = 0.0
     
-    init(onNext: @escaping () -> Void) {
+    init(onNext: @escaping () -> Void, email: String) {
         self.pushNext = onNext
+        self.email = email
     }
     
     @MainActor

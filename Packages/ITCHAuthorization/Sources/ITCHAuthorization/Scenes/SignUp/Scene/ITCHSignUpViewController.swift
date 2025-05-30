@@ -37,6 +37,8 @@ final class ITCHSignUpViewController: UIViewController {
             static let keyboardType: UIKeyboardType = .emailAddress
             static let topOffset: CGFloat = 20
             static let horizontalOffset: CGFloat = 16
+            static let studentSuffix: String = "@edu.hse.ru"
+            static let teacherSuffix: String = "@hse.ru"
         }
         
         enum InfoButton {
@@ -45,7 +47,7 @@ final class ITCHSignUpViewController: UIViewController {
             static let textColor: UIColor = ITCHColor.blue60.color
             static let leadingOffset: CGFloat = 16
             static let height: CGFloat = 32
-            static let width: CGFloat = 206
+            static let width: CGFloat = 186
         }
         
         enum ContinueButton {
@@ -131,6 +133,21 @@ final class ITCHSignUpViewController: UIViewController {
             )
         )
         
+        mailTextField.editingAction = { [weak self] in
+            guard
+                let self,
+                let text = self.mailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            else {
+                self?.continueButton.isEnabled = false
+                return
+            }
+            
+            let isValid = text.hasSuffix(Constant.MailTextField.studentSuffix) ||
+            text.hasSuffix(Constant.MailTextField.teacherSuffix)
+            
+            self.continueButton.isEnabled = !text.isEmpty && isValid
+        }
+        
         view.addSubview(mailTextField)
         mailTextField.pinTop(to: createTitle.bottomAnchor, Constant.MailTextField.topOffset)
         mailTextField.pinHorizontal(to: view, Constant.MailTextField.horizontalOffset)
@@ -151,9 +168,10 @@ final class ITCHSignUpViewController: UIViewController {
     
     private func setUpContinueButton() {
         continueButton.configure(title: Constant.ContinueButton.title)
+        continueButton.isEnabled = false
         continueButton.action = { [weak self] in
             self?.mailTextField.keyboardState = .close
-            self?.interactor.loadCode()
+            self?.interactor.loadCode(with: self?.mailTextField.text ?? "")
         }
         
         view.addSubview(continueButton)

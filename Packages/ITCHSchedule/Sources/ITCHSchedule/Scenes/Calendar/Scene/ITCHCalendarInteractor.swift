@@ -293,7 +293,6 @@ extension ITCHCalendarInteractor {
         let model = section.items[actualIndex]
         let isLast = actualIndex == section.items.count - 1
         
-        
         let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHScheduleCell.reuseId, for: indexPath)
         guard let cell = rawCell as? ITCHScheduleCell else {
             return rawCell
