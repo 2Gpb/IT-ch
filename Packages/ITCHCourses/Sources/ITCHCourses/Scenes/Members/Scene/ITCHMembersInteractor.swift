@@ -101,8 +101,9 @@ extension ITCHMembersInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHMemberCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHMemberCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHMemberCell else {
+            return rawCell
         }
         
         cell.configure(

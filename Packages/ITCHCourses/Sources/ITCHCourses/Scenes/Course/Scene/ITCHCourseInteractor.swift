@@ -132,8 +132,9 @@ extension ITCHCourseInteractor: UITableViewDataSource {
 // MARK: - Configure cells
 extension ITCHCourseInteractor {
     private func headerCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHCourseHeaderCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHCourseHeaderCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHCourseHeaderCell else {
+            return rawCell
         }
         
         guard let section = ITCHCurrentCourseSection(rawValue: indexPath.section) else {
@@ -145,8 +146,9 @@ extension ITCHCourseInteractor {
     }
     
     private func courseCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHTitleCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHTitleCell else {
+            return rawCell
         }
         
         cell.configure(with: course.courseName)
@@ -154,8 +156,9 @@ extension ITCHCourseInteractor {
     }
 
     private func teacherCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHTeacherCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHTeacherCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHTeacherCell else {
+            return rawCell
         }
         
         cell.configure(with: course.teacherName, image: course.avatar)
@@ -163,8 +166,9 @@ extension ITCHCourseInteractor {
     }
 
     private func infoCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHTitleCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHTitleCell else {
+            return rawCell
         }
         
         let actualIndex = indexPath.row - 1
@@ -175,8 +179,9 @@ extension ITCHCourseInteractor {
     }
 
     private func roleCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHTitleCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHTitleCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHTitleCell else {
+            return rawCell
         }
         
         let roleText = ITCHCourseUserRole(rawValue: course.role)?.text ?? ""
@@ -185,8 +190,9 @@ extension ITCHCourseInteractor {
     }
 
     private func actionCell(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHNavigationRowCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHNavigationRowCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHNavigationRowCell else {
+            return rawCell
         }
         
         let actualIndex = indexPath.row - 1

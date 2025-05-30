@@ -87,8 +87,9 @@ extension ITCHRecordsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHRecordCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHRecordCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHRecordCell else {
+            return rawCell
         }
         
         cell.configure(

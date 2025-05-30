@@ -97,8 +97,9 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHHomeWorkCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHHomeWorkCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHHomeWorkCell else {
+            return rawCell
         }
         
         cell.configure(

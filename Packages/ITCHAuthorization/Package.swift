@@ -15,13 +15,15 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "Packages/ITCHCore")
+        .package(path: "Packages/ITCHCore"),
+        .package(path: "Package/ITCHControllers")
     ],
     targets: [
         .target(
             name: "ITCHAuthorization",
             dependencies: [
-                "ITCHCore"
+                "ITCHCore",
+                "ITCHControllers"
             ]
         )
     ],

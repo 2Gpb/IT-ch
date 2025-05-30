@@ -71,8 +71,9 @@ extension ITCHAppearanceInteractor: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        guard let cell: ITCHThemeCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHThemeCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHThemeCell else {
+            return rawCell
         }
         
         cell.configure(with: themes[indexPath.row].title, isChecked: currentThemeIndex == indexPath)

@@ -61,8 +61,9 @@ extension ITCHHelpQuestionsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHHelpQuestionCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHHelpQuestionCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHHelpQuestionCell else {
+            return rawCell
         }
         
         cell.configure(
