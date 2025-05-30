@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ITCHNetworking
 
 final class ITCHEnterCodeViewModel: ObservableObject {
     // MARK: - Constants
@@ -20,9 +21,12 @@ final class ITCHEnterCodeViewModel: ObservableObject {
     let pushNext: () -> Void
     let email: String
     
+    private let service: ITCHEnterCodeService = ITCHEnterCodeService()
+    
     // MARK: - Properties
     @Published var isCodeIncorrect = false
     @Published var shownErrorMessage = false
+    @Published var errorMessage = "Неверный код, попробуйте снова"
     @Published var isLoading = false
     @Published var isFreeze = false
     @Published var timeRemaining = "01:00"
@@ -79,20 +83,25 @@ final class ITCHEnterCodeViewModel: ObservableObject {
         
         Task { @MainActor [weak self] in
             guard let self else { return }
+            let model = ITCHEnterCode.Network.ITCHDTOCode(email: email, code: code)
             
-            /// Simulated loading
-            try? await Task.sleep(for: .seconds(2))
+            do {
+                let errorResponse: ITCHErrorResponse? = try await service.request(for: .confirm, with: model)
+                
+                if let errorResponse {
+                    print(errorResponse.message)
+                    shownErrorMessage = true
+                    isCodeIncorrect = true
+                } else {
+                    shownErrorMessage = false
+                    pushNext()
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
             
             isLoading = false
             isFreeze = freezeTimeInterval > 0
-            
-            if code == "0000" {
-                shownErrorMessage = false
-                pushNext()
-            } else {
-                shownErrorMessage = true
-                isCodeIncorrect = true
-            }
         }
     }
 }

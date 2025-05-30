@@ -110,7 +110,7 @@ struct ITCHEnterCodeView: View {
                 .foregroundStyle(ITCHColor.base0.swiftUIColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text(Constant.CodeLoginText.subLabel + "example@mail.ru")
+            Text(Constant.CodeLoginText.subLabel + viewModel.email)
                 .font(ITCHFont.bodyMRegular.swiftUIFont)
                 .foregroundStyle(ITCHColor.base0.swiftUIColor)
                 .lineSpacing(Constant.CodeLoginText.subLabelLineSpacing)
@@ -174,5 +174,5 @@ struct ITCHEnterCodeView: View {
 
 // MARK: - Preview
 #Preview {
-    ITCHEnterCodeView(viewModel: ITCHEnterCodeViewModel(onNext: {}))
+    ITCHEnterCodeView(viewModel: ITCHEnterCodeViewModel(onNext: {}, email: ""))
 }
