@@ -1,22 +1,21 @@
 //
-//  KeychainLogic.swift
+//  ITCHKeychainLogic.swift
 //  ITCHCore
 //
 //  Created by Peter on 31.05.2025.
 //
 
-
 import Security
 import Foundation
 
-protocol KeychainLogic {
+protocol ITCHKeychainLogic {
     func removeData(forKey key: String)
     func getData(forKey key: String) -> Data?
     func setData(_ data: Data, forKey key: String)
     func clearKeychain()
 }
 
-final class KeychainService: KeychainLogic {
+final class ITCHKeychainService: ITCHKeychainLogic {
     // MARK: - Properties
 
     private var service: String
