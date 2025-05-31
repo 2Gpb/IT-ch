@@ -31,7 +31,11 @@ final class ITCHSignUpInteractor: ITCHSignUpBusinessLogic {
     
     func loadCode(with email: String) {
         service.sendUserInfo(
-            with: ITCHSignUp.Network.ITCHDTOFullName(email: email, fullName: userFullName)) { [weak self] response in
+            with: ITCHSignUp.Network.ITCHDTOFullName(
+                email: email,
+                fullName: userFullName
+            )
+        ) { [weak self] response in
             switch response {
             case .success(let respone):
                 if let respone {

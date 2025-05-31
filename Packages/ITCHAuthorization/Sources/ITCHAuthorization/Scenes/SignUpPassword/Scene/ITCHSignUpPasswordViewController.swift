@@ -130,7 +130,7 @@ final class ITCHSignUpPasswordViewController: UIViewController {
     private func setUpContinueButton() {
         continueButton.configure(title: Constant.ContinueButton.title)
         continueButton.action = { [weak self] in
-            self?.interactor.loadCourses()
+            self?.interactor.loadCourses(with: self?.passwordTextField.text ?? "")
         }
         
         view.addSubview(continueButton)

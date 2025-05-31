@@ -21,7 +21,7 @@ extension ITCHSignUpPresenter: ITCHSignUpRouterLogic {
     func routeToCode(with email: String) {
         let viewModel: ITCHEnterCodeViewModel = ITCHEnterCodeViewModel(
             onNext: { [weak self] in
-                let nextVC = ITCHSignUpPasswordAssembly.build()
+                let nextVC = ITCHSignUpPasswordAssembly.build(with: email)
                 self?.view?.navigationController?.pushViewController(nextVC, animated: true)
             },
             email: email
