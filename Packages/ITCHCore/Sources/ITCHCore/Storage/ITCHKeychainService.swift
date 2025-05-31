@@ -8,20 +8,19 @@
 import Security
 import Foundation
 
-protocol ITCHKeychainLogic {
+public protocol ITCHKeychainLogic {
     func removeData(forKey key: String)
     func getData(forKey key: String) -> Data?
     func setData(_ data: Data, forKey key: String)
     func clearKeychain()
 }
 
-final class ITCHKeychainService: ITCHKeychainLogic {
+public final class ITCHKeychainService: ITCHKeychainLogic {
     // MARK: - Properties
-
     private var service: String
 
     // MARK: - Initialization
-    init(service: String? = nil) {
+    public init(service: String? = nil) {
         if let service {
             self.service = service
         }
@@ -29,12 +28,12 @@ final class ITCHKeychainService: ITCHKeychainLogic {
         self.service = Self.getAppName()
     }
 
-    func removeData(forKey key: String) {
+    public func removeData(forKey key: String) {
         let query = [
             kSecClass as String: kSecClassGenericPassword as String,
             kSecAttrService as String: service,
             kSecAttrAccount as String: key
-        ] as [String : Any]
+        ] as [String: Any]
 
         let status = SecItemDelete(query as CFDictionary)
 
@@ -43,13 +42,13 @@ final class ITCHKeychainService: ITCHKeychainLogic {
         }
     }
 
-    func getData(forKey key: String) -> Data? {
+    public func getData(forKey key: String) -> Data? {
         let query = [
             kSecClass as String: kSecClassGenericPassword as String,
             kSecAttrService as String: service,
             kSecAttrAccount as String: key,
             kSecReturnData as String: true
-        ] as [String : Any]
+        ] as [String: Any]
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -64,7 +63,7 @@ final class ITCHKeychainService: ITCHKeychainLogic {
     }
 
     // MARK: - Keychain Access
-    func setData(_ data: Data, forKey key: String) {
+    public func setData(_ data: Data, forKey key: String) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword as String,
             kSecAttrService as String: service,
@@ -80,11 +79,11 @@ final class ITCHKeychainService: ITCHKeychainLogic {
                 kSecClass as String: kSecClassGenericPassword as String,
                 kSecAttrService as String: service,
                 kSecAttrAccount as String: key
-            ] as [String : Any]
+            ] as [String: Any]
 
             let attributesToUpdate = [
                 kSecValueData as String: data
-            ] as [String : Any]
+            ] as [String: Any]
 
             SecItemUpdate(updateQuery as CFDictionary, attributesToUpdate as CFDictionary)
         } else if status != errSecSuccess {
@@ -92,7 +91,7 @@ final class ITCHKeychainService: ITCHKeychainLogic {
         }
     }
 
-    func clearKeychain() {
+    public func clearKeychain() {
         let query = [
             kSecClass as String: kSecClassGenericPassword as String,
             kSecAttrService as String: service
