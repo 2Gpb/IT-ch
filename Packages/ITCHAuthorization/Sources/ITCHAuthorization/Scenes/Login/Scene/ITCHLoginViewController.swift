@@ -122,6 +122,12 @@ final class ITCHLoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Methods
+    func showErrorAnimated() {
+        prepareErrorState()
+        animateErrorEntry()
+    }
+    
     // MARK: - SetUp
     private func setUp() {
         setUpView()
@@ -198,7 +204,10 @@ final class ITCHLoginViewController: UIViewController {
     private func setUpEnterButton() {
         enterButton.configure(title: Constant.Enter.title)
         enterButton.action = { [weak self] in
-            self?.interactor.loadCourses()
+            self?.interactor.loadCourses(
+                email: self?.emailTextField.text ?? "",
+                password: self?.passwordTextField.text ?? ""
+            )
         }
         
         view.addSubview(enterButton)
@@ -221,11 +230,6 @@ final class ITCHLoginViewController: UIViewController {
     }
     
     // MARK: - Animations
-    private func showErrorAnimated() {
-        prepareErrorState()
-        animateErrorEntry()
-    }
-
     private func prepareErrorState() {
         errorView.transform = CGAffineTransform(
             translationX: -view.bounds.width,

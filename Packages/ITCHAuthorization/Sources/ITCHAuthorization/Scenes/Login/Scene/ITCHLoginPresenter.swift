@@ -16,6 +16,11 @@ final class ITCHLoginPresenter: ITCHLoginPresentationLogic {
     
     // MARK: - Variables
     weak var view: ITCHLoginViewController?
+    
+    // MARK: - Methods
+    func presentError() {
+        view?.showErrorAnimated()
+    }
 }
 
 // MARK: - RouterLogic

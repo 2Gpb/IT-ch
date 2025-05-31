@@ -16,7 +16,7 @@ final class ITCHWelcomeInteractor: ITCHWelcomeBusinessLogic {
     
     // MARK: - Methods
     func loadSelectAccount() {
-        presenter.routeToSelectAccount()
+        presenter.routeToLogin()
     }
     
     func loadFullName() {

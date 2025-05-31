@@ -26,22 +26,22 @@ final class ITCHSignUpPasswordInteractor: ITCHSignUpPasswordBusinessLogic {
     
     // MARK: - Methods
     func loadCourses(with password: String) {
-        service.sendPassword(with: ITCHSignUpPassword.Network.ITCHDTOPassword(
-            email: email,
-            password: password
-        ), completion: { [weak self] result in
-            switch result {
-            case .success(let tokens):
-                print(tokens?.token)
-                print(tokens?.refreshToken)
-                
-                DispatchQueue.main.async {
-                    self?.presenter.routeToCourses()
+        service.sendPassword(
+            with: ITCHSignUpPassword.Network.ITCHDTOPassword(
+                email: email,
+                password: password
+            ), completion: { [weak self] result in
+                switch result {
+                case .success(let tokens):
+                    print(tokens?.token ?? "")
+                    DispatchQueue.main.async {
+                        self?.presenter.routeToCourses()
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-        })
+        )
     }
     
     func loadDismiss() {

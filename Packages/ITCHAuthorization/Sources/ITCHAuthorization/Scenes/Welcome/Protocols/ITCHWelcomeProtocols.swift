@@ -14,7 +14,7 @@ protocol ITCHWelcomeBusinessLogic {
 protocol ITCHWelcomePresentationLogic { }
 
 protocol ITCHWelcomeRouterLogic {
-    func routeToSelectAccount()
+    func routeToLogin()
     func routeToFullName()
     func routeToReadMore()
 }
