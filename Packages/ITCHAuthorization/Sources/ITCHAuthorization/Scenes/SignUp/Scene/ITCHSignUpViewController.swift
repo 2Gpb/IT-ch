@@ -171,7 +171,7 @@ final class ITCHSignUpViewController: UIViewController {
         continueButton.isEnabled = false
         continueButton.action = { [weak self] in
             self?.mailTextField.keyboardState = .close
-            self?.interactor.loadCode(with: self?.mailTextField.text ?? "")
+            self?.interactor.loadCode(with: self?.mailTextField.text?.lowercased() ?? "")
         }
         
         view.addSubview(continueButton)

@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         window?.overrideUserInterfaceStyle = .dark
-        window?.rootViewController = UINavigationController(rootViewController: ITCHSplashViewController())
+        window?.rootViewController = UINavigationController(rootViewController: ITCHSplashAssembly.build())
         window?.makeKeyAndVisible()
     }
 

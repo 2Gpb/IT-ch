@@ -19,12 +19,6 @@ final class ITCHWelcomeInteractor: ITCHWelcomeBusinessLogic {
     // MARK: - Methods
     func loadSelectAccount() {
         presenter.routeToLogin()
-        let serv = ITCHUserRoleService()
-        let serv1 = ITCHSecureSessionService()
-        
-        print(serv.get())
-        print(serv1.get()?.token)
-        print(serv1.get()?.refreshToken)
     }
     
     func loadFullName() {

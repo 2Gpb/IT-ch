@@ -9,7 +9,7 @@ import Foundation
 
 public protocol ITCHNetworkingLogic {
     typealias Response = ((_ response: Result<ITCHNetworking.ServerResponse, Error>) -> Void)
-    
+    var baseUrl: String { get set }
     func execute(with request: ITCHRequest, completion: @escaping Response)
 }
 

@@ -205,7 +205,7 @@ final class ITCHLoginViewController: UIViewController {
         enterButton.configure(title: Constant.Enter.title)
         enterButton.action = { [weak self] in
             self?.interactor.loadCourses(
-                email: self?.emailTextField.text ?? "",
+                email: self?.emailTextField.text?.lowercased() ?? "",
                 password: self?.passwordTextField.text ?? ""
             )
         }

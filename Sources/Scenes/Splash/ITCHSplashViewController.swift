@@ -17,10 +17,21 @@ final class ITCHSplashViewController: UIViewController {
         static let logoImage: UIImage? = UIImage.logo
     }
     
-    // MARK: - Properties
+    // MARK: - Private fields
+    private let interactor: ITCHSplashBusinessLogic
     private let logoImageView: UIImageView = UIImageView()
     
     // MARK: - Lifecycle
+    init(interactor: ITCHSplashBusinessLogic) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -28,8 +39,7 @@ final class ITCHSplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        routeToAuth()
-        routeToCourses()
+        interactor.checkAuth()
     }
     
     // MARK: - SetUp
@@ -44,15 +54,5 @@ final class ITCHSplashViewController: UIViewController {
         
         view.addSubview(logoImageView)
         logoImageView.pinCenter(to: view)
-    }
-    
-    private func routeToAuth() {
-        navigationController?.pushViewController(ITCHWelcomeAssembly.build(), animated: true)
-    }
-    
-    private func routeToCourses() {
-        let tabBar = ITCHTabBarController()
-        tabBar.modalPresentationStyle = .fullScreen
-        present(tabBar, animated: true)
     }
 }
