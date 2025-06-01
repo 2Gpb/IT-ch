@@ -50,7 +50,7 @@ final class ITCHSignUpPasswordInteractor: ITCHSignUpPasswordBusinessLogic {
                         )
                     )
                     
-                    self?.userRoleService.set(for: model.token)
+                    self?.userRoleService.set(for: model.token, with: self?.email ?? "")
                     
                     DispatchQueue.main.async {
                         self?.presenter.routeToCourses()

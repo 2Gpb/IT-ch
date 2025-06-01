@@ -11,6 +11,7 @@ import ITCHUtilities
 public protocol ITCHSecureSessionLogic {
     func set(tokensModel: ITCHAccessToken)
     func get() -> ITCHAccessToken?
+    func clearTokens()
 }
 
 public final class ITCHSecureSessionService: ITCHSecureSessionLogic {
@@ -42,5 +43,9 @@ public final class ITCHSecureSessionService: ITCHSecureSessionLogic {
         }
         
         return try? decoder.decode(ITCHAccessToken.self, from: data)
+    }
+    
+    public func clearTokens() {
+        service.clearKeychain()
     }
 }

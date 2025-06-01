@@ -5,7 +5,7 @@
 //  Created by Peter on 04.05.2025.
 //
 
-public enum ITCHUserRole: String {
+public enum ITCHUserRole: String, Codable {
     case teacher, student
     
     public init?(rawValue: String) {

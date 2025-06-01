@@ -69,7 +69,7 @@ final class ITCHSplashInteractor: ITCHSplashBusinessLogic {
                         )
                     )
                     
-                    self?.userRoleService.set(for: tokensModel.token)
+//                    self?.userRoleService.set(for: tokensModel.token, with: <#String#>)
                 }
                 
                 DispatchQueue.main.async {

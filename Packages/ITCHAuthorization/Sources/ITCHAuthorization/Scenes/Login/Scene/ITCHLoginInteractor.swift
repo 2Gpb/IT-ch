@@ -41,6 +41,8 @@ final class ITCHLoginInteractor: ITCHLoginBusinessLogic {
                 switch result {
                 case .success(let model):
                     guard let model else { return }
+                    print(model.token)
+                    print(model.refreshToken)
                     
                     self?.secureSessionService.set(
                         tokensModel: ITCHAccessToken(
@@ -49,7 +51,7 @@ final class ITCHLoginInteractor: ITCHLoginBusinessLogic {
                         )
                     )
                     
-                    self?.userRoleService.set(for: model.token)
+                    self?.userRoleService.set(for: model.token, with: email)
                     
                     DispatchQueue.main.async {
                         self?.presenter.routeToCourses()

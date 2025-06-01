@@ -9,14 +9,15 @@ import ITCHUtilities
 import Foundation
 
 public protocol ITCHUserRoleLogic {
-    func set(for token: String)
-    func get() -> ITCHUserRole?
+    func set(for token: String, with email: String)
+    func get() -> ITCHUserInfo?
+    func clearRole()
 }
 
 public final class ITCHUserRoleService: ITCHUserRoleLogic {
     // MARK: - Constants
     enum Constant {
-        static let key: String = "currentRole"
+        static let key: String = "currentUser"
     }
     
     // MARK: - Private fields
@@ -28,15 +29,20 @@ public final class ITCHUserRoleService: ITCHUserRoleLogic {
     }
     
     // MARK: - Methods
-    public func set(for token: String) {
+    public func set(for token: String, with email: String) {
         if let userInfo: ITCHJWTUserInfo = decodeJWT(token, as: ITCHJWTUserInfo.self) {
-            service.set(value: userInfo.role, forKey: Constant.key)
+            let user = ITCHUserInfo(email: email, role: ITCHUserRole(rawValue: userInfo.role) ?? .student)
+            service.set(value: user, forKey: Constant.key)
         }
     }
     
-    public func get() -> ITCHUserRole? {
-        let role = service.get(forKey: Constant.key, defaultValue: "")
-        return ITCHUserRole(rawValue: role)
+    public func get() -> ITCHUserInfo? {
+        let user = service.get(forKey: Constant.key, defaultValue: ITCHUserInfo(email: "Error", role: .student))
+        return user
+    }
+    
+    public func clearRole() {
+        service.removeObject(for: Constant.key)
     }
     
     // MARK: - Private methods
