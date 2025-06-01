@@ -5,13 +5,19 @@
 //  Created by Peter on 02.05.2025.
 //
 
-//import ITCHAuthorization
 import Foundation
 import UIKit
 
 final class ITCHProfilePresenter: ITCHProfilePresentationLogic {
     // MARK: - Variables
     weak var view: ITCHProfileViewController?
+    
+    // MARK: - Private fields
+    private let exitAction: () -> Void
+    
+    init(exitAction: @escaping () -> Void) {
+        self.exitAction = exitAction
+    }
     
     // MARK: - Methods
     func presentStart(with model: ITCHAccountModel) {
@@ -38,18 +44,19 @@ extension ITCHProfilePresenter: ITCHProfileRouterLogic {
     }
     
     func routeToLogOut() {
-        if let rootNav = view?.presentingViewController as? UINavigationController {
-            view?.dismiss(animated: false) {
-                let controllers = rootNav.viewControllers
-                
-                if controllers.count > 1 {
-                    let secondVC = controllers[1]
-                    DispatchQueue.main.async {
-                        rootNav.setViewControllers([secondVC], animated: false)
-                    }
-//                    rootNav.popToViewController(secondVC, animated: false)
-                }
-            }
-        }
+        exitAction()
+//        if let rootNav = view?.presentingViewController as? UINavigationController {
+//            view?.dismiss(animated: false) {
+//                let controllers = rootNav.viewControllers
+//                
+//                if controllers.count > 1 {
+//                    let secondVC = controllers[1]
+//                    DispatchQueue.main.async {
+//                        rootNav.popToViewController(secondVC, animated: false)
+////                        rootNav.setViewControllers([secondVC], animated: false)
+//                    }
+//                }
+//            }
+//        }
     }
 }

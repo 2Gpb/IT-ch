@@ -12,13 +12,22 @@ protocol ITCHMyCoursesBusinessLogic: UITableViewDataSource {
     func loadStart()
     func loadCourse(for index: Int)
     func loadCreateCourse()
+    func loadCourses()
 }
 
 protocol ITCHMyCoursesPresentationLogic {
-    func presentStart(with role: ITCHUserRole?, isEmpty: Bool)
+    func presentStart(with role: ITCHUserRole?)
+    func presentCourses(isEmpty: Bool)
 }
 
 protocol ITCHMyCoursesRouterLogic {
-    func roteToCourse(with model: ITCHCourseModel)
+    func roteToCourse(with model: ITCHCoursesModel.Local.ITCHCourse)
     func routeToCreateCourse()
+}
+
+protocol ITCHMyCoursesWorker {
+    func fetchCourses(
+        for token: String,
+        completion: ((Result<[ITCHCoursesModel.Network.ITCHCourse]?, Error>) -> Void)?
+    )
 }

@@ -26,7 +26,13 @@ final class ITCHLoginPresenter: ITCHLoginPresentationLogic {
 // MARK: - RouterLogic
 extension ITCHLoginPresenter: ITCHLoginRouterLogic {
     func routeToCourses() {
-        let tabBar = ITCHTabBarController()
+        let tabBar = ITCHTabBarController(exitAction: {
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = scene.windows.first {
+                window.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
+                window.makeKeyAndVisible()
+            }
+        })
         tabBar.modalPresentationStyle = .fullScreen
         view?.present(tabBar, animated: true)
     }

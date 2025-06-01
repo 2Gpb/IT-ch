@@ -7,18 +7,30 @@
 
 import UIKit
 
-struct ITCHCourseModel {
-    let courseName: String
-    let teacherName: String
-    let avatar: UIImage?
-    var startModule: Int
-    var endModule: Int
-    let location: String
-    let role: String
-    let chatLink: String?
-    let gradesLink: String?
-    var dayOfWeek: String
-    var numberOfHours: Int
-    var time: String
-    var frequency: String
+enum ITCHCoursesModel {
+    enum Network {
+        struct ITCHCourse: Codable {
+            let id: Int
+            let courseName: String
+            let duration: DurationRange
+            let teacherName: String
+            let courseRole: String
+        }
+    }
+    
+    enum Local {
+        struct ITCHCourse: Codable {
+            let id: Int
+            let courseName: String
+            let duration: DurationRange
+            let avatarUrl: String?
+            let teacherName: String
+            let courseRole: String
+        }
+    }
+    
+    struct DurationRange: Codable {
+        let start: Int
+        let end: Int
+    }
 }
