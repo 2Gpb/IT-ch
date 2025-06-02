@@ -6,11 +6,22 @@
 //
 
 import UIKit
+import ITCHCore
+import ITCHNetworking
 
 final class ITCHMembersAssembly {
-    static func build() -> UIViewController {
+    static func build(with id: Int) -> UIViewController {
+        let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8081")
+        let networkService = ITCHMembersService(networking: worker)
+        let secureService = ITCHSecureSessionService()
         let presenter = ITCHMembersPresenter()
-        let interactor = ITCHMembersInteractor(presenter: presenter)
+        let interactor = ITCHMembersInteractor(
+            with: id,
+            presenter: presenter,
+            networkService: networkService,
+            secureService: secureService
+        )
+        
         let view = ITCHMembersViewController(interactor: interactor)
         
         presenter.view = view

@@ -10,6 +10,10 @@ final class ITCHMembersPresenter: ITCHMembersPresentationLogic {
     weak var view: ITCHMembersViewController?
     
     // MARK: - Methods
+    func presentStart() {
+        view?.displayStart()
+    }
+    
     func presentChangeRoleAlert() {
         view?.displayRoleChangeAlert()
     }
