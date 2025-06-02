@@ -9,6 +9,8 @@ import UIKit
 import ITCHUtilities
 
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
+    var role: ITCHCourseUserRole { get }
+    
     func loadStart()
     func loadDismiss()
     func loadChangeCourse()
@@ -22,7 +24,7 @@ protocol ITCHCourseBusinessLogic: UITableViewDataSource {
 }
 
 protocol ITCHCoursePresentationLogic {
-    func presentStart()
+    func presentStart(with role: ITCHCourseUserRole)
 }
 
 protocol ITCHCourseRouterLogic {
@@ -37,6 +39,10 @@ protocol ITCHCourseRouterLogic {
     func routeToHomeWorks(with role: ITCHCourseUserRole)
 }
 
-protocol ITCHCourseRoleStorage {
-    var role: ITCHCourseUserRole { get }
+protocol ITCHCourseWorker {
+    func fetchCourse(
+        for token: String,
+        with id: Int,
+        completion: ((Result<ITCHCurrentCourseModel.Network.ITCHCourse?, Error>) -> Void)?
+    ) 
 }

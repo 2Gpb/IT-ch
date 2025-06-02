@@ -42,7 +42,7 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
     }
     
     func loadCourse(for index: Int) {
-        presenter.roteToCourse(with: courses[index])
+        presenter.routeToCourse(with: courses[index].id)
     }
     
     func loadCreateCourse() {

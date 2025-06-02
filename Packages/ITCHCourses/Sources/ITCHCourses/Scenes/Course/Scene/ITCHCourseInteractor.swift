@@ -6,58 +6,103 @@
 //
 
 import UIKit
+import ITCHCore
 import ITCHUtilities
 
-final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseRoleStorage {
+final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
-    private let actionRowTitles: [String]
-    private let course: ITCHCurrentCourseModel
+    private let networkService: ITCHCourseWorker
+    private let secureService: ITCHSecureSessionService
+    
+    private var actionRowTitles: [String] = []
+    private let id: Int
+    private var course: ITCHCurrentCourseModel.Local.ITCHCourse?
     private let titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
     
     // MARK: - Variables
-    var role: ITCHCourseUserRole
+    var role: ITCHCourseUserRole = .none
     
     // MARK: - Lifecycle
     init(
+        with id: Int,
         presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic,
-        with model: ITCHCurrentCourseModel
+        networkService: ITCHCourseWorker,
+        secureService: ITCHSecureSessionService
     ) {
+        self.id = id
         self.presenter = presenter
-        self.role = ITCHCourseUserRole(rawValue: model.role) ?? .none
-        self.course = model
-        actionRowTitles = ITCHCurrentCourseAction.titleActions(for: self.role)
+        self.networkService = networkService
+        self.secureService = secureService
     }
     
     // MARK: - Methods
     func loadStart() {
-        presenter.presentStart()
+        guard let tokensModel = secureService.get() else { return }
+        
+        networkService.fetchCourse(
+            for: tokensModel.token,
+            with: id,
+            completion: { [weak self] result in
+                switch result {
+                case .success(let course):
+                    guard let course else { return }
+                    let range = Array(course.duration.start...course.duration.end)
+                    let duration = range.joinedString()
+                    let postfix = range.count == 1 ? " модуль" : " модулей"
+                    self?.course = ITCHCurrentCourseModel.Local.ITCHCourse(
+                        courseName: course.courseName,
+                        teacherName: course.teacherName,
+                        avatar: nil,
+                        durationLocation: [duration + postfix, course.location],
+                        role: course.courseRole,
+                        chatLink: course.refToChat,
+                        gradesLink: course.refToGrades,
+                        schedule: ITCHCurrentCourseModel.Schedule(
+                            frequency: course.schedule.frequency,
+                            academicHours: course.schedule.academicHours,
+                            dayOfWeek: course.schedule.dayOfWeek,
+                            startTime: course.schedule.startTime
+                        )
+                    )
+                    
+                    self?.role = ITCHCourseUserRole(rawValue: course.courseRole) ?? .none
+                    DispatchQueue.main.async {
+                        self?.actionRowTitles = ITCHCurrentCourseAction.titleActions(for: self?.role ?? .none)
+                        self?.presenter.presentStart(with: self?.role ?? .none)
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        )
     }
     
     func loadChangeCourse() {
-        let durationRange = course.durationLocation[0].toIntArray()
-        
-        presenter.routeToChangeCourse(
-            with: ITCHCourseEditorModel(
-                name: course.courseName,
-                location: course.durationLocation[1],
-                startModule: durationRange.first ?? 1,
-                endModule: durationRange.last ?? 1,
-                chatLink: course.chatLink,
-                gradesLink: course.gradesLink
-            )
-        )
+//        let durationRange = course.durationLocation[0].toIntArray()
+//        
+//        presenter.routeToChangeCourse(
+//            with: ITCHCourseEditorModel(
+//                name: course.courseName,
+//                location: course.durationLocation[1],
+//                startModule: durationRange.first ?? 1,
+//                endModule: durationRange.last ?? 1,
+//                chatLink: course.chatLink,
+//                gradesLink: course.gradesLink
+//            )
+//        )
     }
     
     func loadChangeSchedule() {
-        presenter.routeToChangeSchedule(
-            with: ITCHScheduleEditorModel(
-                dayOfWeek: course.dayOfWeek,
-                numberOfHours: course.numberOfHours,
-                time: course.time,
-                frequency: course.frequency
-            )
-        )
+//        presenter.routeToChangeSchedule(
+//            with: ITCHScheduleEditorModel(
+//                dayOfWeek: course.dayOfWeek,
+//                numberOfHours: course.numberOfHours,
+//                time: course.time,
+//                frequency: course.frequency
+//            )
+//        )
     }
     
     func loadDismiss() {
@@ -65,11 +110,11 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseR
     }
     
     func loadChat() {
-        presenter.routeToChat(for: course.chatLink)
+        presenter.routeToChat(for: course?.chatLink)
     }
     
     func loadGrades() {
-        presenter.routeToGrades(for: course.gradesLink)
+        presenter.routeToGrades(for: course?.gradesLink)
     }
     
     func loadMembers() {
@@ -77,10 +122,12 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic, ITCHCourseR
     }
     
     func loadRecords() {
+        guard let role = ITCHCourseUserRole(rawValue: course?.role ?? "") else { return }
         presenter.routeToRecords(with: role)
     }
     
     func loadHomeWorks() {
+        guard let role = ITCHCourseUserRole(rawValue: course?.role ?? "") else { return }
         presenter.routeToHomeWorks(with: role)
     }
 }
@@ -93,13 +140,13 @@ extension ITCHCourseInteractor: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = ITCHCurrentCourseSection(rawValue: section) else { return 0 }
-        
+        guard let course else { return 0 }
         /// with header
         switch section {
         case .info:
             return course.durationLocation.count + 1
         case .actions:
-            return actionRowTitles.count + 1
+            return actionRowTitles.isEmpty ? 0 : actionRowTitles.count + 1
         default:
             return 2
         }
@@ -151,7 +198,7 @@ extension ITCHCourseInteractor {
             return rawCell
         }
         
-        cell.configure(with: course.courseName)
+        if let course { cell.configure(with: course.courseName) }
         return cell
     }
 
@@ -161,7 +208,7 @@ extension ITCHCourseInteractor {
             return rawCell
         }
         
-        cell.configure(with: course.teacherName, image: course.avatar)
+        if let course { cell.configure(with: course.teacherName, image: course.avatar) }
         return cell
     }
 
@@ -172,9 +219,10 @@ extension ITCHCourseInteractor {
         }
         
         let actualIndex = indexPath.row - 1
-        let suffix = actualIndex == 0 ? " модули" : ""
-        let text = "•  \(course.durationLocation[actualIndex])\(suffix)"
-        cell.configure(with: text)
+        if let course {
+            let text = "•  \(course.durationLocation[actualIndex])"
+            cell.configure(with: text)
+        }
         return cell
     }
 
@@ -184,8 +232,10 @@ extension ITCHCourseInteractor {
             return rawCell
         }
         
-        let roleText = ITCHCourseUserRole(rawValue: course.role)?.text ?? ""
-        cell.configure(with: roleText)
+        if let course {
+            let roleText = ITCHCourseUserRole(rawValue: course.role)?.text ?? ""
+            cell.configure(with: roleText)
+        }
         return cell
     }
 

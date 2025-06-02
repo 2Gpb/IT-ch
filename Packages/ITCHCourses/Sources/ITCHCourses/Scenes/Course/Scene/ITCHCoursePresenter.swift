@@ -12,8 +12,8 @@ final class ITCHCoursePresenter: ITCHCoursePresentationLogic {
     weak var view: ITCHCourseViewController?
     
     // MARK: - Methods
-    func presentStart() {
-        view?.displayStart()
+    func presentStart(with role: ITCHCourseUserRole) {
+        view?.displayStart(with: role)
     }
 }
 

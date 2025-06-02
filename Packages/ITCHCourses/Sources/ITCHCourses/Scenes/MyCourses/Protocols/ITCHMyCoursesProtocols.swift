@@ -21,7 +21,7 @@ protocol ITCHMyCoursesPresentationLogic {
 }
 
 protocol ITCHMyCoursesRouterLogic {
-    func roteToCourse(with model: ITCHCoursesModel.Local.ITCHCourse)
+    func routeToCourse(with id: Int)
     func routeToCreateCourse()
 }
 

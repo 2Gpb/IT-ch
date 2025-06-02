@@ -9,7 +9,10 @@ import UIKit
 
 public extension String {
     func openURL() {
-        guard let url = URL(string: self) else { return }
+        guard let url = URL(string: self) else {
+            print(self, "is't a valid URL")
+            return
+        }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }

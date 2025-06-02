@@ -14,13 +14,13 @@ public final class ITCHMyCoursesAssembly {
     public static func build() -> UIViewController {
         let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8081")
         let networkService = ITCHMyCoursesService(networking: worker)
-        let secureSessionService = ITCHSecureSessionService()
+        let secureService = ITCHSecureSessionService()
         let userRoleService = ITCHUserRoleService()
         let presenter = ITCHMyCoursesPresenter()
         let interactor = ITCHMyCoursesInteractor(
             presenter: presenter,
             networkService: networkService,
-            secureSessionService: secureSessionService,
+            secureSessionService: secureService,
             userRoleService: userRoleService
         )
         
