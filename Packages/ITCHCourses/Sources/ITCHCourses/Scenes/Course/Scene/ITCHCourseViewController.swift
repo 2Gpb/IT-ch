@@ -153,7 +153,7 @@ final class ITCHCourseViewController: UIViewController {
             image: Constant.ContextActions.deleteImage,
             attributes: .destructive
         ) { [weak self] _ in
-            self?.interactor.loadDismiss()
+            self?.interactor.loadDeleteCourse()
         }
     }
 }

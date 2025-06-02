@@ -8,6 +8,7 @@
 import UIKit
 import ITCHCore
 import ITCHUtilities
+import ITCHNetworking
 
 final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Private fields
@@ -103,6 +104,29 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
 //                frequency: course.frequency
 //            )
 //        )
+    }
+    
+    func loadDeleteCourse() {
+        guard let tokensModel = secureService.get() else { return }
+        
+        networkService.deleteCourse(
+            for: tokensModel.token,
+            with: id,
+            completion: { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.presenter.popViewController()
+                    }
+                case .failure(let error):
+                    if let error = error as? ITCHErrorResponse {
+                        print(error.message)
+                    } else {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        )
     }
     
     func loadDismiss() {

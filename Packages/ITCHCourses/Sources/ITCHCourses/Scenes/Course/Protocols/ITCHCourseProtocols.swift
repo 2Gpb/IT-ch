@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ITCHNetworking
 import ITCHUtilities
 
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
@@ -15,6 +16,7 @@ protocol ITCHCourseBusinessLogic: UITableViewDataSource {
     func loadDismiss()
     func loadChangeCourse()
     func loadChangeSchedule()
+    func loadDeleteCourse()
     
     func loadChat()
     func loadGrades()
@@ -44,5 +46,11 @@ protocol ITCHCourseWorker {
         for token: String,
         with id: Int,
         completion: ((Result<ITCHCurrentCourseModel.Network.ITCHCourse?, Error>) -> Void)?
-    ) 
+    )
+    
+    func deleteCourse(
+        for token: String,
+        with id: Int,
+        completion: ((Result<String?, Error>) -> Void)?
+    )
 }
