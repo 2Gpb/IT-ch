@@ -18,4 +18,13 @@ public enum ITCHUserRole: String, Codable {
             return nil
         }
     }
+    
+    public var roleDescription: String {
+        switch self {
+        case .student:
+            return "Студент"
+        case .teacher:
+            return "Преподаватель"
+        }
+    }
 }

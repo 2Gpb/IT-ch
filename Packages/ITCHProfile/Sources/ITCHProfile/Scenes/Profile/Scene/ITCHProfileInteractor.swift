@@ -29,7 +29,7 @@ final class ITCHProfileInteractor: ITCHProfileBusinessLogic {
     func loadStart() {
         guard let user = userRoleService.get() else { return }
         
-        let role = user.role == .student ? "Студент" : "Преподаватель"
+        let role = user.role.roleDescription
         presenter.presentStart(with: ITCHAccountModel(name: user.email, info: role))
     }
     

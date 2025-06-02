@@ -13,8 +13,8 @@ struct ITCHCurrentCourseModel {
     let avatar: UIImage?
     let durationLocation: [String]
     let role: String
-    let chatLink: String?
-    let gradesLink: String?
+    let chatLink: String
+    let gradesLink: String
     var dayOfWeek: String
     var numberOfHours: Int
     var time: String

@@ -117,9 +117,9 @@ final class ITCHCourseEditorViewController: UIViewController {
     // MARK: - Methods
     func displayStart(with model: ITCHCourseEditorModel?) {
         let title: String
-        let durationRange = durationTextField.text?.toIntArray()
         
         let courseModel = { [weak self] in
+            let durationRange = self?.durationTextField.text?.toIntArray()
             return ITCHCourseEditorModel(
                 name: self?.nameTextField.text ?? "",
                 location: self?.locationTextField.text ?? "",

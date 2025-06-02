@@ -5,6 +5,8 @@
 //  Created by Peter on 07.05.2025.
 //
 
+import ITCHNetworking
+
 protocol ITCHScheduleEditorBusinessLogic {
     func loadStart()
     func loadCourses()
@@ -20,4 +22,12 @@ protocol ITCHScheduleEditorPresentationLogic {
 protocol ITCHScheduleEditorRouterLogic {
     func routeToCourses()
     func popViewController()
+}
+
+protocol ITCHScheduleWorker {
+    func sendCourseInfo(
+        for token: String,
+        model: ITCHCreateCourseModel.Network.ITCHDTOCreateCourse,
+        completion: ((Result<Void?, Error>) -> Void)?
+    )
 }

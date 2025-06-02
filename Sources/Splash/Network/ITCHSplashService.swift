@@ -56,7 +56,6 @@ final class ITCHSplashService: ITCHSplashWorker {
             case .success(let serverResponse):
                 guard let self,
                       let data = serverResponse.data else {
-                    print(1)
                     completion?(.success(nil))
                     return
                 }

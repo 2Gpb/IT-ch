@@ -6,14 +6,25 @@
 //
 
 import UIKit
+import ITCHNetworking
+import ITCHCore
 
 final class ITCHScheduleEditorAssembly {
     static func build(
-        createWith course: ITCHCurrentCourseModel? = nil,
+        createWith course: ITCHCourseEditorModel? = nil,
         editWith model: ITCHScheduleEditorModel? = nil
     ) -> UIViewController {
+        let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8081")
+        let networkService = ITCHScheduleService(networking: worker)
+        let secureSessionService = ITCHSecureSessionService()
         let presenter = ITCHScheduleEditorPresenter()
-        let interactor = ITCHScheduleEditorInteractor(presenter: presenter, createWith: course, editWith: model)
+        let interactor = ITCHScheduleEditorInteractor(
+            presenter: presenter,
+            networkService: networkService,
+            secureService: secureSessionService,
+            createWith: course,
+            editWith: model
+        )
         let view = ITCHScheduleEditorViewController(interactor: interactor)
         
         presenter.view = view

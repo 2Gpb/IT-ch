@@ -121,7 +121,6 @@ final class ITCHScheduleEditorViewController: UIViewController {
             saveButton.configure(title: Constant.SaveButton.createTitle)
             saveButton.action = { [weak self] in
                 self?.interactor.loadCreate(with: scheduleModel())
-                self?.interactor.loadCourses()
             }
         }
         

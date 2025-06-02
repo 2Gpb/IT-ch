@@ -51,24 +51,23 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
     
     // MARK: - Private methods
     func loadCourses() {
+        guard let tokenModel = secureSessionService.get() else { return }
         networkService.fetchCourses(
-            for: secureSessionService.get()?.token ?? "token",
+            for: tokenModel.token,
             completion: { [weak self] response in
                 guard let self else { return }
                 switch response {
                 case .success(let courses):
-                    courses?.forEach { course in
-                        self.courses.append(
-                            ITCHCoursesModel.Local.ITCHCourse(
+                    self.courses = courses?.map { course in
+                        ITCHCoursesModel.Local.ITCHCourse(
                                 id: course.id,
                                 courseName: course.courseName,
                                 duration: course.duration,
                                 avatarUrl: nil,
                                 teacherName: course.teacherName,
-                                courseRole: course.courseRole
+                                courseRole: ITCHUserRole(rawValue: course.courseRole)?.roleDescription ?? "-"
                             )
-                        )
-                    }
+                    } ?? []
                     
                     DispatchQueue.main.async {
                         self.presenter.presentCourses(isEmpty: self.courses.isEmpty)
@@ -99,10 +98,10 @@ extension ITCHMyCoursesInteractor: UITableViewDataSource {
         
         let model = courses[indexPath.row]
         let range = Array(model.duration.start...model.duration.end)
-        
+        let postfix = range.count == 1 ? " модуль" : " модулей"
         cell.configure(
             with: ITCHCourseViewModel(
-                duration: range.joinedString() + " модули",
+                duration: range.joinedString() + postfix,
                 role: model.courseRole,
                 courseName: model.courseName,
                 teacherName: model.teacherName,

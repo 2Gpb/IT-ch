@@ -10,6 +10,6 @@ struct ITCHCourseEditorModel {
     var location: String
     var startModule: Int
     var endModule: Int
-    let chatLink: String?
-    let gradesLink: String?
+    let chatLink: String
+    let gradesLink: String
 }
