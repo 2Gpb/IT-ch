@@ -98,7 +98,7 @@ extension ITCHMyCoursesInteractor: UITableViewDataSource {
         
         let model = courses[indexPath.row]
         let range = Array(model.duration.start...model.duration.end)
-        let postfix = range.count == 1 ? " модуль" : " модулей"
+        let postfix = range.count == 1 ? " модуль" : " модули"
         cell.configure(
             with: ITCHCourseViewModel(
                 duration: range.joinedString() + postfix,

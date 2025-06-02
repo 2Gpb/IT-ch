@@ -185,4 +185,16 @@ extension ITCHCourseViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = ITCHCurrentCourseSection(rawValue: indexPath.section)
+        
+        if section == .actions && indexPath.row == 0 {
+            return 19
+        } else if indexPath.row == 0 {
+            return 40
+        }
+        
+        return UITableView.automaticDimension
+    }
 }
