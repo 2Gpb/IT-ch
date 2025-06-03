@@ -91,15 +91,19 @@ final class ITCHScheduleEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         interactor.loadStart()
     }
     
     // MARK: - Methods
-    func displayStart(with model: ITCHScheduleEditorModel?) {
+    func displayStart(with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) {
         let title: String
         
         let scheduleModel = { [weak self] in
-            return ITCHScheduleEditorModel(
+            return ITCHScheduleEditorModel.Local.ITCHSchedule(
                 dayOfWeek: self?.dayTextField.text ?? "",
                 numberOfHours: Int(self?.numberOfHoursTextField.text ?? "") ?? 0,
                 time: self?.startTimeTextField.text ?? "",
@@ -112,7 +116,6 @@ final class ITCHScheduleEditorViewController: UIViewController {
             saveButton.configure(title: Constant.SaveButton.saveTitle)
             saveButton.action = { [weak self] in
                 self?.interactor.loadChangeSchedule(with: scheduleModel())
-                self?.interactor.loadDismiss()
             }
             
             setUpTextFields(with: model)
@@ -189,7 +192,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
         }
     }
     
-    private func setUpTextFields(with model: ITCHScheduleEditorModel) {
+    private func setUpTextFields(with model: ITCHScheduleEditorModel.Local.ITCHSchedule) {
         dayTextField.text = model.dayOfWeek
         dayAlert.selectRow(at: pickerConfigs[0].items.firstIndex(of: model.dayOfWeek) ?? 0)
         numberOfHoursTextField.text = "\(model.numberOfHours)"

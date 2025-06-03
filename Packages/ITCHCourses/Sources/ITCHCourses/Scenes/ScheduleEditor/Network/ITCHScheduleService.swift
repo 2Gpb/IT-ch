@@ -34,40 +34,88 @@ final class ITCHScheduleService: ITCHScheduleWorker {
         )
     }
     
+    func changeSchedule(
+        for token: String,
+        with id: Int,
+        model: ITCHScheduleEditorModel.Network.ITCHSchedule,
+        completion: ((Result<Void?, Error>) -> Void)?
+    ) {
+        print(model)
+        let endpoint = ITCHScheduleEndpoint.changeSchedule(token: token, id: id)
+        let body = try? encoder.encode(model)
+        
+        fetch(request: ITCHRequest(endpoint: endpoint, method: .patch, body: body), completion: completion)
+    }
+    
     // MARK: - Private methods
     private func fetch(
         request: ITCHRequest,
         completion: ((Result<Void?, Error>) -> Void)?
     ) {
-        networking.execute(with: request) { [weak self] response in
+        networking.execute(with: request) { response in
             switch response {
             case .success(let serverResponse):
-                guard
-                    self != nil,
-                    serverResponse.data != nil
-                else {
-                    completion?(
-                        .failure(
-                            ITCHErrorResponse(
-                                status: -1,
-                                error: "",
-                                message: "data error"
-                            )
-                        )
-                    )
+                let httpResponse = serverResponse.response as? HTTPURLResponse
+                if httpResponse?.statusCode == 200 {
+                    completion?(.success(nil))
                     return
                 }
                 
-                let response = serverResponse.response as? HTTPURLResponse
-                if let status = response?.statusCode, (200...299).contains(status) {
-                    completion?(.success(nil))
-                } else {
+                if httpResponse?.statusCode == 403 {
                     completion?(.failure(ITCHErrorResponse(
                         status: -1,
                         error: "Error",
                         message: "No access"
                     )))
+                    return
                 }
+                
+                guard let data = serverResponse.data, !data.isEmpty else {
+                    completion?(.failure(ITCHErrorResponse(
+                        status: -1,
+                        error: "Error",
+                        message: "Data is empty"
+                    )))
+                    return
+                }
+                
+//                do {
+//                    let decoded = try self?.decoder.decode(T.self, from: data)
+//                    completion?(.success(decoded))
+//                } catch {
+                    completion?(.failure(ITCHErrorResponse(
+                        status: -1,
+                        error: "",
+                        message: "unknown error"
+                    )))
+//                }
+                
+//                guard
+//                    self != nil,
+//                    serverResponse.data != nil
+//                else {
+//                    completion?(
+//                        .failure(
+//                            ITCHErrorResponse(
+//                                status: -1,
+//                                error: "",
+//                                message: "data error"
+//                            )
+//                        )
+//                    )
+//                    return
+//                }
+//                
+//                let response = serverResponse.response as? HTTPURLResponse
+//                if let status = response?.statusCode, (200...299).contains(status) {
+//                    completion?(.success(nil))
+//                } else {
+//                    completion?(.failure(ITCHErrorResponse(
+//                        status: -1,
+//                        error: "Error",
+//                        message: "No access"
+//                    )))
+//                }
                 
             case .failure(let error):
                 completion?(.failure(ITCHErrorResponse(

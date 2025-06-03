@@ -12,19 +12,22 @@ import ITCHNetworking
 final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHScheduleEditorPresentationLogic & ITCHScheduleEditorRouterLogic
+    private let id: Int
     private let networkService: ITCHScheduleWorker
     private let secureService: ITCHSecureSessionLogic
     private var course: ITCHCourseEditorModel.Local.ITCHCourse?
-    private var schedule: ITCHScheduleEditorModel?
+    private var schedule: ITCHScheduleEditorModel.Local.ITCHSchedule?
     
     // MARK: - Lifecycle
     init(
+        for id: Int,
         presenter: ITCHScheduleEditorPresentationLogic & ITCHScheduleEditorRouterLogic,
         networkService: ITCHScheduleWorker,
         secureService: ITCHSecureSessionLogic,
         createWith course: ITCHCourseEditorModel.Local.ITCHCourse?,
-        editWith model: ITCHScheduleEditorModel?
+        editWith model: ITCHScheduleEditorModel.Local.ITCHSchedule?
     ) {
+        self.id = id
         self.presenter = presenter
         self.networkService = networkService
         self.secureService = secureService
@@ -37,7 +40,7 @@ final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
         presenter.presentStart(with: schedule)
     }
     
-    func loadCreate(with model: ITCHScheduleEditorModel) {
+    func loadCreate(with model: ITCHScheduleEditorModel.Local.ITCHSchedule) {
         guard let course else { return }
         networkService.sendCourseInfo(
             for: secureService.get()?.token ?? "token",
@@ -72,8 +75,33 @@ final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
         )
     }
     
-    func loadChangeSchedule(with model: ITCHScheduleEditorModel) {
-        schedule = model
+    func loadChangeSchedule(with model: ITCHScheduleEditorModel.Local.ITCHSchedule) {
+        guard let tokensModel = secureService.get() else { return }
+        networkService.changeSchedule(
+            for: tokensModel.token,
+            with: id,
+            model: ITCHScheduleEditorModel.Network.ITCHSchedule(
+                frequency: ITCHFrequency(russianString: model.frequency)?.rawValue ?? "",
+                academicHours: model.numberOfHours,
+                dayOfWeek: ITCHWeekday(russianString: model.dayOfWeek)?.rawValue ?? "",
+                startTime: model.time,
+                startDate: "2025-09-02"
+            ),
+            completion: { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.presenter.popViewController()
+                    }
+                case .failure(let error):
+                    if let error = error as? ITCHErrorResponse {
+                        print(error.message)
+                    } else {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        )
     }
     
     func loadCourses() {

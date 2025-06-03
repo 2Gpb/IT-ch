@@ -11,14 +11,16 @@ import ITCHCore
 
 final class ITCHScheduleEditorAssembly {
     static func build(
+        for id: Int? = nil,
         createWith course: ITCHCourseEditorModel.Local.ITCHCourse? = nil,
-        editWith model: ITCHScheduleEditorModel? = nil
+        editWith model: ITCHScheduleEditorModel.Local.ITCHSchedule? = nil
     ) -> UIViewController {
         let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8081")
         let networkService = ITCHScheduleService(networking: worker)
         let secureSessionService = ITCHSecureSessionService()
         let presenter = ITCHScheduleEditorPresenter()
         let interactor = ITCHScheduleEditorInteractor(
+            for: id ?? 0,
             presenter: presenter,
             networkService: networkService,
             secureService: secureSessionService,

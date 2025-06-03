@@ -60,9 +60,10 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
                         chatLink: course.refToChat,
                         gradesLink: course.refToGrades,
                         schedule: ITCHCurrentCourseModel.Schedule(
-                            frequency: course.schedule.frequency,
+                            /// wrong response
+                            frequency: course.schedule.dayOfWeek,
                             academicHours: course.schedule.academicHours,
-                            dayOfWeek: course.schedule.dayOfWeek,
+                            dayOfWeek: course.schedule.frequency,
                             startTime: course.schedule.startTime
                         )
                     )
@@ -98,14 +99,21 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadChangeSchedule() {
-//        presenter.routeToChangeSchedule(
-//            with: ITCHScheduleEditorModel(
-//                dayOfWeek: course.dayOfWeek,
-//                numberOfHours: course.numberOfHours,
-//                time: course.time,
-//                frequency: course.frequency
-//            )
-//        )
+        print(ITCHScheduleEditorModel.Local.ITCHSchedule(
+            dayOfWeek: course?.schedule.dayOfWeek ?? "",
+            numberOfHours: course?.schedule.academicHours ?? 0,
+            time: course?.schedule.startTime ?? "",
+            frequency: course?.schedule.frequency ?? ""
+        ))
+        presenter.routeToChangeSchedule(
+            for: id,
+            with: ITCHScheduleEditorModel.Local.ITCHSchedule(
+                dayOfWeek: course?.schedule.dayOfWeek ?? "",
+                numberOfHours: course?.schedule.academicHours ?? 0,
+                time: course?.schedule.startTime ?? "",
+                frequency: course?.schedule.frequency ?? "" 
+            )
+        )
     }
     
     func loadDeleteCourse() {

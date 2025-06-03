@@ -10,13 +10,13 @@ import ITCHNetworking
 protocol ITCHScheduleEditorBusinessLogic {
     func loadStart()
     func loadCourses()
-    func loadChangeSchedule(with model: ITCHScheduleEditorModel)
-    func loadCreate(with model: ITCHScheduleEditorModel)
+    func loadChangeSchedule(with model: ITCHScheduleEditorModel.Local.ITCHSchedule)
+    func loadCreate(with model: ITCHScheduleEditorModel.Local.ITCHSchedule)
     func loadDismiss()
 }
 
 protocol ITCHScheduleEditorPresentationLogic {
-    func presentStart(with model: ITCHScheduleEditorModel?)
+    func presentStart(with model: ITCHScheduleEditorModel.Local.ITCHSchedule?)
 }
 
 protocol ITCHScheduleEditorRouterLogic {
@@ -28,6 +28,13 @@ protocol ITCHScheduleWorker {
     func sendCourseInfo(
         for token: String,
         model: ITCHCreateCourseModel.Network.ITCHDTOCreateCourse,
+        completion: ((Result<Void?, Error>) -> Void)?
+    )
+    
+    func changeSchedule(
+        for token: String,
+        with id: Int,
+        model: ITCHScheduleEditorModel.Network.ITCHSchedule,
         completion: ((Result<Void?, Error>) -> Void)?
     )
 }
