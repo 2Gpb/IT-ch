@@ -21,8 +21,8 @@ final class ITCHMembersPresenter: ITCHMembersPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHMembersPresenter: ITCHMembersRouterLogic {
-    func routeToAddMembers() {
-        view?.present(ITCHAddMembersAssembly.build(), animated: true)
+    func routeToAddMembers(with id: Int, actionOnDismiss: (() -> Void)?) {
+        view?.present(ITCHAddMembersAssembly.build(with: id, actionOnDismiss: actionOnDismiss), animated: true)
     }
     
     func popViewController() {

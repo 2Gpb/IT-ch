@@ -38,6 +38,8 @@ final class ITCHSplashInteractor: ITCHSplashBusinessLogic {
             return
         }
         
+        print(tokensModel.token)
+        
         networkService.checkAccess(for: tokensModel.token) { [weak self] result in
             switch result {
             case .success:

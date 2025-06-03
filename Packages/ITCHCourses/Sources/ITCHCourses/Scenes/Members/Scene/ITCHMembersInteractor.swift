@@ -67,7 +67,11 @@ final class ITCHMembersInteractor: NSObject, ITCHMembersBusinessLogic {
     }
     
     func loadAddMembers() {
-        presenter.routeToAddMembers()
+        let actionOnDismiss: (() -> Void)?
+        actionOnDismiss = { [weak self] in
+            self?.loadStart()
+        }
+        presenter.routeToAddMembers(with: id, actionOnDismiss: actionOnDismiss)
     }
     
     func loadDismiss() {

@@ -65,6 +65,16 @@ final class ITCHAddMembersViewController: UIViewController {
         setUp()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        interactor.loadStart()
+    }
+    
+    // MARK: - Methods
+    func displayStart() {
+        membersTableView.reloadData()
+    }
+    
     // MARK: - SetUp
     private func setUp() {
         view.backgroundColor = ITCHColor.backgroundGray.color
@@ -80,7 +90,7 @@ final class ITCHAddMembersViewController: UIViewController {
         }
         
         navigationBar.rightAction = { [weak self] in
-            self?.interactor.loadDismiss()
+            self?.interactor.loadAddMembers()
         }
         
         view.addSubview(navigationBar)
@@ -130,6 +140,7 @@ extension ITCHAddMembersViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         if let cell = tableView.cellForRow(at: indexPath) as? ITCHMemberToAddCell {
             cell.isSelected.toggle()
+            interactor.selectedMember(at: indexPath.row)
         }
     }
 }

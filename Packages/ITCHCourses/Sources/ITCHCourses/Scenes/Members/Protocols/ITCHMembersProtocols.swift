@@ -19,7 +19,7 @@ protocol ITCHMembersPresentationLogic {
 }
 
 protocol ITCHMembersRouterLogic {
-    func routeToAddMembers()
+    func routeToAddMembers(with id: Int, actionOnDismiss: (() -> Void)?)
     func popViewController()
 }
 
