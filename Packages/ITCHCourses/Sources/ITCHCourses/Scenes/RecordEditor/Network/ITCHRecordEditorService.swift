@@ -42,6 +42,18 @@ final class ITCHRecordEditorService: ITCHRecordEditorWorker {
         fetch(request: ITCHRequest(endpoint: endpoint, method: .delete), completion: completion)
     }
     
+    func changeRecord(
+        for token: String,
+        with id: Int,
+        model: ITCHRecordEditorModel.Network.ITCHRecord,
+        completion: ((Result<String?, Error>) -> Void)?
+    ) {
+        let endpoint = ITCHRecordEditorEndpoint.changeRecord(token: token, id: id)
+        let body = try? encoder.encode(model)
+        
+        fetch(request: ITCHRequest(endpoint: endpoint, method: .patch, body: body), completion: completion)
+    }
+     
     // MARK: - Private methods
     private func fetch<T: Decodable>(
         request: ITCHRequest,
@@ -52,12 +64,7 @@ final class ITCHRecordEditorService: ITCHRecordEditorWorker {
             case .success(let serverResponse):
                 let httpResponse = serverResponse.response as? HTTPURLResponse
                 
-                if httpResponse?.statusCode == 201 {
-                    completion?(.success(nil))
-                    return
-                }
-                
-                if httpResponse?.statusCode == 204 {
+                if (200...204).contains(httpResponse?.statusCode ?? 0) {
                     completion?(.success(nil))
                     return
                 }

@@ -107,6 +107,13 @@ final class ITCHRecordEditorViewController: UIViewController {
             dateTextField.text = model.title
             datePicker.configure(with: date ?? Date())
             linkTextField.text = model.videoLink
+            
+            navigationBar.rightAction = { [weak self] in
+                self?.interactor.loadChangeRecord(
+                    date: self?.dateTextField.text ?? "",
+                    videoURL: self?.linkTextField.text ?? ""
+                )
+            }
         } else {
             navigationBar.configure(with: Constant.NavigationBar.createTitle)
             navigationBar.rightAction = { [weak self] in

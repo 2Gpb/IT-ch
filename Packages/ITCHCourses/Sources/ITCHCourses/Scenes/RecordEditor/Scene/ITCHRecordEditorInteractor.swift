@@ -87,6 +87,33 @@ final class ITCHRecordEditorInteractor: ITCHRecordEditorBusinessLogic {
         )
     }
     
+    func loadChangeRecord(date: String, videoURL: String) {
+        guard let record, let tokensModel = secureService.get() else { return }
+        
+        networkService.changeRecord(
+            for: tokensModel.token,
+            with: record.id,
+            model: ITCHRecordEditorModel.Network.ITCHRecord(
+                title: date,
+                refToVideo: videoURL
+            ),
+            completion: { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.presenter.popViewController()
+                    }
+                case .failure(let error):
+                    if let error = error as? ITCHErrorResponse {
+                        print(error.message)
+                    } else {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        )
+    }
+    
     func loadDismiss() {
         presenter.popViewController()
     }
