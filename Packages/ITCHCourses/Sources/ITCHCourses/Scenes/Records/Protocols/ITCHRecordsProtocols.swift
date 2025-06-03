@@ -12,7 +12,6 @@ protocol ITCHRecordsBusinessLogic: UITableViewDataSource {
     func loadAddRecord()
     func loadDismiss()
     func loadStart()
-    func loadRecords()
 }
 
 protocol ITCHRecordsPresentationLogic {
@@ -21,9 +20,9 @@ protocol ITCHRecordsPresentationLogic {
 }
 
 protocol ITCHRecordsRouterLogic {
-    func routeToAddRecord()
+    func routeToAddRecord(with id: Int, actionOnDismiss: (() -> Void)?)
     func routeToOpenRecord(with link: String?)
-    func routeToEditRecord(with model: ITCHRecordModel?)
+    func routeToEditRecord(for id: Int, with model: ITCHRecordModel?, actionOnDismiss: (() -> Void)?)
     func popViewController()
 }
 

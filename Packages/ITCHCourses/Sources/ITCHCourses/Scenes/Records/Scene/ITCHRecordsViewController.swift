@@ -60,12 +60,11 @@ final class ITCHRecordsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        interactor.loadStart()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor.loadRecords()
+        interactor.loadStart()
     }
     
     // MARK: - Methods

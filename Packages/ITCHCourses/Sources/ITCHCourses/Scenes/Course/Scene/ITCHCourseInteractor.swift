@@ -146,7 +146,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadRecords() {
-        presenter.routeToRecords(with: role)
+        presenter.routeToRecords(with: id, for: role)
     }
     
     func loadHomeWorks() {

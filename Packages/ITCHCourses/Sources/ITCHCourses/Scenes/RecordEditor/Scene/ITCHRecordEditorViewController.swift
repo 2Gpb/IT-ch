@@ -103,6 +103,12 @@ final class ITCHRecordEditorViewController: UIViewController {
             linkTextField.text = model.link
         } else {
             navigationBar.configure(with: Constant.NavigationBar.createTitle)
+            navigationBar.rightAction = { [weak self] in
+                self?.interactor.loadAddRecord(
+                    date: self?.dateTextField.text ?? "",
+                    videoURL: self?.linkTextField.text ?? ""
+                )
+            }
         }
     }
     
@@ -117,7 +123,6 @@ final class ITCHRecordEditorViewController: UIViewController {
     
     private func setUpNavigationBar() {
         navigationBar.leftAction = { [weak self] in self?.interactor.loadDismiss() }
-        navigationBar.rightAction = { [weak self] in self?.interactor.loadDismiss() }
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.topAnchor, Constant.NavigationBar.topOffset)

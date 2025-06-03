@@ -23,16 +23,23 @@ final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHRecordsPresenter: ITCHRecordsRouterLogic {
-    func routeToAddRecord() {
-        view?.present(ITCHRecordEditorAssembly.build(), animated: true)
+    func routeToAddRecord(with id: Int, actionOnDismiss: (() -> Void)?) {
+        view?.present(ITCHRecordEditorAssembly.build(for: id, actionOnDismiss: actionOnDismiss), animated: true)
     }
     
     func routeToOpenRecord(with link: String?) {
         link?.openURL()
     }
     
-    func routeToEditRecord(with model: ITCHRecordModel?) {
-        view?.present(ITCHRecordEditorAssembly.build(with: model), animated: true)
+    func routeToEditRecord(for id: Int, with model: ITCHRecordModel?, actionOnDismiss: (() -> Void)?) {
+        view?.present(
+            ITCHRecordEditorAssembly.build(
+                for: id,
+                with: model,
+                actionOnDismiss: actionOnDismiss
+            ),
+            animated: true
+        )
     }
     
     func popViewController() {

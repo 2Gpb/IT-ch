@@ -38,7 +38,7 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     
     // MARK: - Methods
     func loadAddRecord() {
-        presenter.routeToAddRecord()
+        presenter.routeToAddRecord(with: id, actionOnDismiss: loadRecords)
     }
     
     func loadDismiss() {
@@ -47,9 +47,11 @@ final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     
     func loadStart() {
         presenter.presentStart(for: role)
+        loadRecords()
     }
     
-    func loadRecords() {
+    // MARK: - Private methods
+    private func loadRecords() {
         guard let tokenModels = secureService.get() else { return }
         
         networkService.fetchRecords(
