@@ -203,11 +203,30 @@ final class ITCHLoginViewController: UIViewController {
     
     private func setUpEnterButton() {
         enterButton.configure(title: Constant.Enter.title)
+        enterButton.isEnabled = false
         enterButton.action = { [weak self] in
             self?.interactor.loadCourses(
                 email: self?.emailTextField.text?.lowercased() ?? "",
                 password: self?.passwordTextField.text ?? ""
             )
+        }
+        
+        [emailTextField, passwordTextField].forEach { textField in
+            textField.editingAction = { [weak self] in
+                guard
+                    let self,
+                    let email = self.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                    let password = self.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                else {
+                    self?.enterButton.isEnabled = false
+                    return
+                }
+                
+                let isValid = email.hasSuffix("@edu.hse.ru") ||
+                email.hasSuffix("@hse.ru")
+                
+                self.enterButton.isEnabled = !email.isEmpty && !password.isEmpty && isValid
+            }
         }
         
         view.addSubview(enterButton)
