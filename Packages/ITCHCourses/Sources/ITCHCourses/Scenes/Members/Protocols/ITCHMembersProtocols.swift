@@ -29,4 +29,11 @@ protocol ITCHMembersWorker {
         with id: Int,
         completion: ((Result<[ITCHMembersModel.Network.ITCHMember]?, Error>) -> Void)?
     )
+    
+    func deleteCourse(
+        for token: String,
+        courseId: Int,
+        userId: Int,
+        completion: ((Result<String?, Error>) -> Void)?
+    )
 }

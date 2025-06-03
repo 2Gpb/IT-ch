@@ -44,7 +44,7 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
     }
     
     func routeToRecords(with role: ITCHCourseUserRole) {
-        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(for: role), animated: true)
+        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(with: 0, for: role), animated: true)
     }
     
     func routeToHomeWorks(with role: ITCHCourseUserRole) {

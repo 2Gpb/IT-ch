@@ -34,6 +34,23 @@ final class ITCHMembersInteractor: NSObject, ITCHMembersBusinessLogic {
     
     // MARK: - Methods
     func loadStart() {
+        fetchMembers()
+    }
+    
+    func loadAddMembers() {
+        let actionOnDismiss: (() -> Void)?
+        actionOnDismiss = { [weak self] in
+            self?.loadStart()
+        }
+        presenter.routeToAddMembers(with: id, actionOnDismiss: actionOnDismiss)
+    }
+    
+    func loadDismiss() {
+        presenter.popViewController()
+    }
+    
+    // MARK: - Private methods
+    private func fetchMembers() {
         guard let tokensModel = secureService.get() else { return }
         
         networkService.fetchMembers(
@@ -66,16 +83,26 @@ final class ITCHMembersInteractor: NSObject, ITCHMembersBusinessLogic {
         )
     }
     
-    func loadAddMembers() {
-        let actionOnDismiss: (() -> Void)?
-        actionOnDismiss = { [weak self] in
-            self?.loadStart()
-        }
-        presenter.routeToAddMembers(with: id, actionOnDismiss: actionOnDismiss)
-    }
-    
-    func loadDismiss() {
-        presenter.popViewController()
+    private func deleteMember(at userId: Int) {
+        guard let tokensModel = secureService.get() else { return }
+        networkService.deleteCourse(
+            for: tokensModel.token,
+            courseId: id,
+            userId: userId,
+            completion: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.fetchMembers()
+                    
+                case .failure(let error):
+                    if let error = error as? ITCHErrorResponse {
+                        print(error.message)
+                    } else {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        )
     }
 }
 
@@ -97,8 +124,12 @@ extension ITCHMembersInteractor: UITableViewDataSource {
                 name: members[indexPath.row].name,
                 info: members[indexPath.row].role
             ),
-            changeRoleAction: { [weak self] in self?.presenter.presentChangeRoleAlert() },
-            deleteAction: { print(1) }
+            changeRoleAction: { [weak self] in
+                self?.presenter.presentChangeRoleAlert()
+            },
+            deleteAction: { [weak self] in
+                self?.deleteMember(at: self?.members[indexPath.row].id ?? 0)
+            }
         )
         
         return cell

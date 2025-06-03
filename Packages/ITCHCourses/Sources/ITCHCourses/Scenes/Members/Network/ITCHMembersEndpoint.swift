@@ -13,17 +13,25 @@ enum ITCHMembersEndpoint: ITCHEndpoint {
         id: Int
     )
     
+    case deleteMember(
+        token: String,
+        courseId: Int,
+        userId: Int
+    )
+    
     var compositePath: String {
         switch self {
         case .membersOfCourse(_, let id):
             return "/api/course/\(id)/participants"
+        case .deleteMember(_, let courseId, let userId):
+            return "/api/course/\(courseId)/delete/\(userId)"
         }
     }
     
     var headers: [String: String] {
         var headers: [String: String] = [:]
         switch self {
-        case .membersOfCourse(let token, _):
+        case .membersOfCourse(let token, _), .deleteMember(let token, _, _):
             headers["Authorization"] = "Bearer \(token)"
         }
         

@@ -29,6 +29,17 @@ final class ITCHMembersService: ITCHMembersWorker {
         fetch(request: ITCHRequest(endpoint: endpoint), completion: completion)
     }
     
+    func deleteCourse(
+        for token: String,
+        courseId: Int,
+        userId: Int,
+        completion: ((Result<String?, Error>) -> Void)?
+    ) {
+        let endpoint = ITCHMembersEndpoint.deleteMember(token: token, courseId: courseId, userId: userId)
+        
+        fetch(request: ITCHRequest(endpoint: endpoint, method: .delete), completion: completion)
+    }
+    
     // MARK: - Private methods
     private func fetch<T: Decodable>(
         request: ITCHRequest,
@@ -39,11 +50,11 @@ final class ITCHMembersService: ITCHMembersWorker {
             case .success(let serverResponse):
                 let httpResponse = serverResponse.response as? HTTPURLResponse
                 
-//                if httpResponse?.statusCode == 204 {
-//                    completion?(.success(nil))
-//                    return
-//                }
-//                
+                if httpResponse?.statusCode == 204 {
+                    completion?(.success(nil))
+                    return
+                }
+
                 if httpResponse?.statusCode == 403 {
                     completion?(.failure(ITCHErrorResponse(
                         status: -1,

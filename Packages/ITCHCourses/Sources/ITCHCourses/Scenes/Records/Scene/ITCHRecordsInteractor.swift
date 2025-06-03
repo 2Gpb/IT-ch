@@ -11,58 +11,20 @@ import ITCHUtilities
 final class ITCHRecordsInteractor: NSObject, ITCHRecordsBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHRecordsPresentationLogic & ITCHRecordsRouterLogic
+    private let id: Int
     private let role: ITCHCourseUserRole
     
     // MARK: - Variables
-    private var records: [ITCHRecordModel] = [
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        ),
-        ITCHRecordModel(
-            date: Date(),
-            link: "https://habr.com/ru/articles/133559/"
-        )
-    ]
+    private var records: [ITCHRecordModel] = []
     
     // MARK: - Lifecycle
     init(
         presenter: ITCHRecordsPresentationLogic & ITCHRecordsRouterLogic,
+        with id: Int,
         for role: ITCHCourseUserRole
     ) {
         self.presenter = presenter
+        self.id = id
         self.role = role
     }
     
