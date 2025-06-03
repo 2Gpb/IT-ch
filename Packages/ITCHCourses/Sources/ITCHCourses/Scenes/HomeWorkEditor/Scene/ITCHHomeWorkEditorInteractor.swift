@@ -66,6 +66,28 @@ final class ITCHHomeWorkEditorInteractor: ITCHHomeWorkEditorBusinessLogic {
         )
     }
     
+    func loadDeleteHomeWork() {
+        guard let tokensModel = secureService.get() else { return }
+        networkService.deleteHomeWork(
+            for: tokensModel.token,
+            with: homeWork?.id ?? 0,
+            completion: { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.presenter.popViewController()
+                    }
+                case .failure(let error):
+                    if let error = error as? ITCHErrorResponse {
+                        print(error.message)
+                    } else {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        )
+    }
+    
     func loadChangeHomeWork(with model: ITCHHomeWorkEditorModel.Local.ITCHHomeWork) {
         guard let tokensModel = secureService.get() else { return }
         networkService.changeHomeWork(

@@ -175,7 +175,7 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     private func setUpDeleteButton() {
         deleteButton.configure(title: Constant.DeleteButton.title)
         deleteButton.action = { [weak self] in
-            self?.interactor.loadDismiss()
+            self?.interactor.loadDeleteHomeWork()
         }
         
         view.addSubview(deleteButton)

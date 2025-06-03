@@ -9,6 +9,7 @@ protocol ITCHHomeWorkEditorBusinessLogic {
     func loadStart()
     func loadDismiss()
     func loadAddHomeWork(with model: ITCHHomeWorkEditorModel.Local.ITCHHomeWork)
+    func loadDeleteHomeWork()
     func loadChangeHomeWork(with model: ITCHHomeWorkEditorModel.Local.ITCHHomeWork)
 }
 
@@ -25,6 +26,12 @@ protocol ITCHHomeWorkEditorWorker {
         for token: String,
         with id: Int,
         model: ITCHHomeWorkEditorModel.Network.ITCHHomeWork,
+        completion: ((Result<String?, Error>) -> Void)?
+    )
+    
+    func deleteHomeWork(
+        for token: String,
+        with id: Int,
         completion: ((Result<String?, Error>) -> Void)?
     )
     

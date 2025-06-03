@@ -61,8 +61,6 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
         default:
             fetchForStudent(with: tokenModels.token)
         }
-        
-        presenter.presentHomeWorks(isEmpty: homeWorks.isEmpty)
     }
     
     private func fetchForStudent(with token: String) {
