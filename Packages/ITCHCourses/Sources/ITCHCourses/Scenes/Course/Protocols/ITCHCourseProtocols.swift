@@ -30,7 +30,7 @@ protocol ITCHCoursePresentationLogic {
 }
 
 protocol ITCHCourseRouterLogic {
-    func routeToChangeCourse(with model: ITCHCourseEditorModel?)
+    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?)
     func routeToChangeSchedule(with model: ITCHScheduleEditorModel?)
     func popViewController()
     

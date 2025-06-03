@@ -23,8 +23,8 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToChangeCourse(with model: ITCHCourseEditorModel?) {
-        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(with: model), animated: true)
+    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
+        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(for: id, with: model), animated: true)
     }
     
     func routeToChangeSchedule(with model: ITCHScheduleEditorModel?) {

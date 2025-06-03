@@ -115,12 +115,12 @@ final class ITCHCourseEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with model: ITCHCourseEditorModel?) {
+    func displayStart(with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
         let title: String
         
         let courseModel = { [weak self] in
             let durationRange = self?.durationTextField.text?.toIntArray()
-            return ITCHCourseEditorModel(
+            return ITCHCourseEditorModel.Local.ITCHCourse(
                 name: self?.nameTextField.text ?? "",
                 location: self?.locationTextField.text ?? "",
                 startModule: durationRange?.first ?? 1,
@@ -135,7 +135,6 @@ final class ITCHCourseEditorViewController: UIViewController {
             continueButton.configure(title: Constant.ContinueButton.saveTitle)
             continueButton.action = { [weak self] in
                 self?.interactor.loadChangeCourse(with: courseModel())
-                self?.interactor.loadDismiss()
             }
             
             setUpTextFields(with: model)
@@ -221,7 +220,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         }
     }
     
-    private func setUpTextFields(with model: ITCHCourseEditorModel) {
+    private func setUpTextFields(with model: ITCHCourseEditorModel.Local.ITCHCourse) {
         nameTextField.text = model.name
         locationTextField.text = model.location
         chatLinkTextField.text = model.chatLink

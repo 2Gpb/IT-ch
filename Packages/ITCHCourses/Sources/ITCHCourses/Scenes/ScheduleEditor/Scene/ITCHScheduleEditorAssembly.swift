@@ -11,7 +11,7 @@ import ITCHCore
 
 final class ITCHScheduleEditorAssembly {
     static func build(
-        createWith course: ITCHCourseEditorModel? = nil,
+        createWith course: ITCHCourseEditorModel.Local.ITCHCourse? = nil,
         editWith model: ITCHScheduleEditorModel? = nil
     ) -> UIViewController {
         let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8081")

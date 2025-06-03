@@ -50,7 +50,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
                     guard let course else { return }
                     let range = Array(course.duration.start...course.duration.end)
                     let duration = range.joinedString()
-                    let postfix = range.count == 1 ? " модуль" : " модулей"
+                    let postfix = range.count == 1 ? " модуль" : " модули"
                     self?.course = ITCHCurrentCourseModel.Local.ITCHCourse(
                         courseName: course.courseName,
                         teacherName: course.teacherName,
@@ -81,18 +81,20 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadChangeCourse() {
-//        let durationRange = course.durationLocation[0].toIntArray()
-//        
-//        presenter.routeToChangeCourse(
-//            with: ITCHCourseEditorModel(
-//                name: course.courseName,
-//                location: course.durationLocation[1],
-//                startModule: durationRange.first ?? 1,
-//                endModule: durationRange.last ?? 1,
-//                chatLink: course.chatLink,
-//                gradesLink: course.gradesLink
-//            )
-//        )
+        guard let course else { return }
+        let durationRange = course.durationLocation[0].toIntArray()
+
+        presenter.routeToChangeCourse(
+            for: id,
+            with: ITCHCourseEditorModel.Local.ITCHCourse(
+                name: course.courseName,
+                location: course.durationLocation[1],
+                startModule: durationRange.first ?? 1,
+                endModule: durationRange.last ?? 1,
+                chatLink: course.chatLink,
+                gradesLink: course.gradesLink
+            )
+        )
     }
     
     func loadChangeSchedule() {

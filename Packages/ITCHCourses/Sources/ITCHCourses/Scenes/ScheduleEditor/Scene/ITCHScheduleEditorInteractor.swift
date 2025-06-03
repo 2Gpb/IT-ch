@@ -14,7 +14,7 @@ final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
     private let presenter: ITCHScheduleEditorPresentationLogic & ITCHScheduleEditorRouterLogic
     private let networkService: ITCHScheduleWorker
     private let secureService: ITCHSecureSessionLogic
-    private var course: ITCHCourseEditorModel?
+    private var course: ITCHCourseEditorModel.Local.ITCHCourse?
     private var schedule: ITCHScheduleEditorModel?
     
     // MARK: - Lifecycle
@@ -22,7 +22,7 @@ final class ITCHScheduleEditorInteractor: ITCHScheduleEditorBusinessLogic {
         presenter: ITCHScheduleEditorPresentationLogic & ITCHScheduleEditorRouterLogic,
         networkService: ITCHScheduleWorker,
         secureService: ITCHSecureSessionLogic,
-        createWith course: ITCHCourseEditorModel?,
+        createWith course: ITCHCourseEditorModel.Local.ITCHCourse?,
         editWith model: ITCHScheduleEditorModel?
     ) {
         self.presenter = presenter
