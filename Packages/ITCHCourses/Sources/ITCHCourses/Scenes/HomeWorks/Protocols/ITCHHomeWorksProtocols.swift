@@ -12,7 +12,6 @@ protocol ITCHHomeWorksBusinessLogic: UITableViewDataSource {
     func loadAddHomeWork()
     func loadDismiss()
     func loadStart()
-    func loadHomeWorks()
 }
 
 protocol ITCHHomeWorksPresentationLogic {
@@ -21,10 +20,14 @@ protocol ITCHHomeWorksPresentationLogic {
 }
 
 protocol ITCHHomeWorksRouterLogic {
-    func routeToAddHomeWork()
+    func routeToAddHomeWork(with id: Int, actionOnDismiss: (() -> Void)?)
     func routeToOpen(with link: String?)
     func routeToSolutions(with link: String?)
-    func routeToEditHomeWork(with model: ITCHHomeWorkModel?)
+    func routeToEditHomeWork(
+        for id: Int,
+        with model: ITCHHomeWorksModel.Local.ITCHHomeWork?,
+        actionOnDismiss: (() -> Void)?
+    )
     func popViewController()
 }
 

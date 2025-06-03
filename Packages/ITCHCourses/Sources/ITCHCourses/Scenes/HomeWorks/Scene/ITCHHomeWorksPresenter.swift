@@ -23,8 +23,8 @@ final class ITCHHomeWorksPresenter: ITCHHomeWorksPresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHHomeWorksPresenter: ITCHHomeWorksRouterLogic {
-    func routeToAddHomeWork() {
-        view?.present(ITCHHomeWorkEditorAssembly.build(), animated: true)
+    func routeToAddHomeWork(with id: Int, actionOnDismiss: (() -> Void)?) {
+        view?.present(ITCHHomeWorkEditorAssembly.build(for: id, actionOnDismiss: actionOnDismiss), animated: true)
     }
     
     func routeToOpen(with link: String?) {
@@ -35,8 +35,15 @@ extension ITCHHomeWorksPresenter: ITCHHomeWorksRouterLogic {
         link?.openURL()
     }
     
-    func routeToEditHomeWork(with model: ITCHHomeWorkModel?) {
-        view?.present(ITCHHomeWorkEditorAssembly.build(with: model), animated: true)
+    func routeToEditHomeWork(
+        for id: Int,
+        with model: ITCHHomeWorksModel.Local.ITCHHomeWork?,
+        actionOnDismiss: (() -> Void)?
+    ) {
+//        view?.present(
+//            ITCHHomeWorkEditorAssembly.build(with: model),
+//            animated: true
+//        )
     }
     
     func popViewController() {

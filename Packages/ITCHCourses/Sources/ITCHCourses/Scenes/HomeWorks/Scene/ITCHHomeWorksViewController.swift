@@ -61,7 +61,6 @@ final class ITCHHomeWorksViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor.loadStart()
-        interactor.loadHomeWorks()
     }
     
     // MARK: - Methods

@@ -39,7 +39,7 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     
     // MARK: - Methods    
     func loadAddHomeWork() {
-        presenter.routeToAddHomeWork()
+        presenter.routeToAddHomeWork(with: id, actionOnDismiss: loadHomeWorks)
     }
     
     func loadDismiss() {
@@ -48,9 +48,11 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
     
     func loadStart() {
         presenter.presentStart(for: role)
+        loadHomeWorks()
     }
     
-    func loadHomeWorks() {
+    // MARK: - Private methods
+    private func loadHomeWorks() {
         guard let tokenModels = secureService.get() else { return }
         
         switch role {
@@ -63,7 +65,6 @@ final class ITCHHomeWorksInteractor: NSObject, ITCHHomeWorksBusinessLogic {
         presenter.presentHomeWorks(isEmpty: homeWorks.isEmpty)
     }
     
-    // MARK: - Private methods
     private func fetchForStudent(with token: String) {
         networkService.fetchStudentHomeWorks(
             for: token,
@@ -162,8 +163,12 @@ extension ITCHHomeWorksInteractor: UITableViewDataSource {
                 solutionsAction: { [weak self] in
                     self?.presenter.routeToSolutions(with: self?.homeWorks[indexPath.row].linkForCheck)
                 },
-                editAction: { // [weak self] in
-//                    self?.presenter.routeToEditHomeWork(with: self?.homeWorks[indexPath.row])
+                editAction: { [weak self] in
+                    self?.presenter.routeToEditHomeWork(
+                        for: self?.id ?? 0,
+                        with: self?.homeWorks[indexPath.row],
+                        actionOnDismiss: self?.loadHomeWorks
+                    )
                 }
             )
         )
