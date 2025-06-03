@@ -122,6 +122,18 @@ final class ITCHSignUpPasswordViewController: UIViewController {
             )
         )
         
+        passwordTextField.editingAction = { [weak self] in
+            guard
+                let self,
+                let text = self.passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            else {
+                self?.continueButton.isEnabled = false
+                return
+            }
+            
+            self.continueButton.isEnabled = !text.isEmpty
+        }
+        
         view.addSubview(passwordTextField)
         passwordTextField.pinTop(to: passwordTitle.bottomAnchor, Constant.PasswordTextField.topOffset)
         passwordTextField.pinHorizontal(to: view, Constant.PasswordTextField.horizontalOffset)
@@ -129,6 +141,7 @@ final class ITCHSignUpPasswordViewController: UIViewController {
     
     private func setUpContinueButton() {
         continueButton.configure(title: Constant.ContinueButton.title)
+        continueButton.isEnabled = false
         continueButton.action = { [weak self] in
             self?.interactor.loadCourses(with: self?.passwordTextField.text ?? "")
         }

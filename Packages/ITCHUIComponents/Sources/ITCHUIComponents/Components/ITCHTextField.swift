@@ -107,6 +107,7 @@ public final class ITCHTextField: UIView {
             textField.keyboardType = model.keyboardType
         case .password:
             setUpHideShowButton()
+            textField.isSecureTextEntry = true
             textField.keyboardType = .asciiCapable
             textField.autocorrectionType = .no
         }
@@ -182,7 +183,7 @@ public final class ITCHTextField: UIView {
     private func eyeButtonTapped() {
         eyeButton.isHidden = eyeOffButton.isHidden
         eyeOffButton.isHidden = !eyeOffButton.isHidden
-        textField.isSecureTextEntry = !eyeOffButton.isHidden
+        textField.isSecureTextEntry = eyeOffButton.isHidden
     }
     
     @objc
