@@ -12,8 +12,12 @@ final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
     weak var view: ITCHRecordsViewController?
     
     // MARK: - Methods
-    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
-        view?.displayStart(for: role, isEmpty: isEmpty)
+    func presentStart(for role: ITCHCourseUserRole) {
+        view?.displayStart(for: role)
+    }
+    
+    func presentRecords(isEmpty: Bool) {
+        view?.displayRecords(isEmpty: isEmpty)
     }
 }
 

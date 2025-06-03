@@ -12,10 +12,12 @@ protocol ITCHRecordsBusinessLogic: UITableViewDataSource {
     func loadAddRecord()
     func loadDismiss()
     func loadStart()
+    func loadRecords()
 }
 
 protocol ITCHRecordsPresentationLogic {
-    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool)
+    func presentStart(for role: ITCHCourseUserRole)
+    func presentRecords(isEmpty: Bool)
 }
 
 protocol ITCHRecordsRouterLogic {
@@ -23,4 +25,12 @@ protocol ITCHRecordsRouterLogic {
     func routeToOpenRecord(with link: String?)
     func routeToEditRecord(with model: ITCHRecordModel?)
     func popViewController()
+}
+
+protocol ITCHRecordWorker {
+    func fetchRecords(
+        for token: String,
+        with id: Int,
+        completion: ((Result<[ITCHRecordsModel.Network.ITCHRecord]?, Error>) -> Void)?
+    ) 
 }

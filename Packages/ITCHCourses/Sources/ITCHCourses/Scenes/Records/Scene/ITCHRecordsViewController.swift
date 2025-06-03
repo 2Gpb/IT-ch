@@ -63,10 +63,13 @@ final class ITCHRecordsViewController: UIViewController {
         interactor.loadStart()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor.loadRecords()
+    }
+    
     // MARK: - Methods
-    func displayStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
-        emptyStateView.isHidden = !isEmpty
-        
+    func displayStart(for role: ITCHCourseUserRole) {
         navigationBar.configure(
             with: ITCHNavigationBarModel(
                 title: Constant.NavigationBar.title,
@@ -74,6 +77,11 @@ final class ITCHRecordsViewController: UIViewController {
                 rightImage: role == .teacher ? Constant.NavigationBar.rightImage : nil
             )
         )
+    }
+    
+    func displayRecords(isEmpty: Bool) {
+        emptyStateView.isHidden = !isEmpty
+        recordsTableView.reloadData()
     }
     
     // MARK: - SetUp

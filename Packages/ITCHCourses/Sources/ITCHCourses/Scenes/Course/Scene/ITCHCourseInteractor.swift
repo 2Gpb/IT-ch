@@ -146,12 +146,10 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadRecords() {
-        guard let role = ITCHCourseUserRole(rawValue: course?.role ?? "") else { return }
         presenter.routeToRecords(with: role)
     }
     
     func loadHomeWorks() {
-        guard let role = ITCHCourseUserRole(rawValue: course?.role ?? "") else { return }
         presenter.routeToHomeWorks(with: role)
     }
 }

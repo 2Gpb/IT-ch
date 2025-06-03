@@ -56,8 +56,8 @@ final class ITCHRecordCell: UITableViewCell {
     func configure(
         for role: ITCHCourseUserRole,
         with date: Date,
-        openAction: (() -> Void)?,
-        editAction: (() -> Void)?
+        openAction: @escaping () -> Void,
+        editAction: @escaping () -> Void
     ) {
         classRecordView.configure(for: role, with: date)
         classRecordView.openRecordAction = openAction
