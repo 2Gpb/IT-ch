@@ -114,6 +114,23 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
             linkForLoadTextField.text = model.linkForLoad
             linkForCheckTextField.text = model.linkForCheck
             linkOnTaskTextField.text = model.linkOnTask
+            navigationBar.rightAction = { [weak self] in
+                let inputFormatter = DateFormatter()
+                inputFormatter.locale = Locale(identifier: "ru_RU")
+                inputFormatter.dateFormat = "d MMMM yyyyг., H:mm"
+                let date = inputFormatter.date(from: self?.dateTextField.text ?? "")
+                
+                self?.interactor.loadChangeHomeWork(
+                    with: ITCHHomeWorkEditorModel.Local.ITCHHomeWork(
+                        id: 0,
+                        title: self?.nameTextField.text ?? "",
+                        date: date?.configure(to: "yyyy-MM-dd") ?? "",
+                        linkOnTask: self?.linkOnTaskTextField.text ?? "",
+                        linkForCheck: self?.linkForCheckTextField.text ?? "",
+                        linkForLoad: self?.linkForLoadTextField.text ?? ""
+                    )
+                )
+            }
         } else {
             navigationBar.configure(with: Constant.NavigationBar.createTitle)
             navigationBar.rightAction = { [weak self] in

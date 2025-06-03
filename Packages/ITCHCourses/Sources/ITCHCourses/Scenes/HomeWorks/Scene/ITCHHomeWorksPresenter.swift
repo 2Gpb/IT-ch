@@ -40,10 +40,21 @@ extension ITCHHomeWorksPresenter: ITCHHomeWorksRouterLogic {
         with model: ITCHHomeWorksModel.Local.ITCHHomeWork?,
         actionOnDismiss: (() -> Void)?
     ) {
-//        view?.present(
-//            ITCHHomeWorkEditorAssembly.build(with: model),
-//            animated: true
-//        )
+        view?.present(
+            ITCHHomeWorkEditorAssembly.build(
+                for: id,
+                with: ITCHHomeWorkEditorModel.Local.ITCHHomeWork(
+                    id: model?.id ?? 0,
+                    title: model?.title ?? "",
+                    date: model?.date ?? "",
+                    linkOnTask: model?.linkOnTask ?? "",
+                    linkForCheck: model?.linkForCheck,
+                    linkForLoad: model?.linkForLoad
+                ),
+                actionOnDismiss: actionOnDismiss
+            ),
+            animated: true
+        )
     }
     
     func popViewController() {
