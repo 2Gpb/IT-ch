@@ -12,8 +12,12 @@ final class ITCHHomeWorksPresenter: ITCHHomeWorksPresentationLogic {
     weak var view: ITCHHomeWorksViewController?
         
     // MARK: - Methods
-    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
-        view?.displayStart(for: role, isEmpty: isEmpty)
+    func presentStart(for role: ITCHCourseUserRole) {
+        view?.displayStart(for: role)
+    }
+    
+    func presentHomeWorks(isEmpty: Bool) {
+        view?.displayHomeWorks(isEmpty: isEmpty)
     }
 }
 

@@ -150,7 +150,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadHomeWorks() {
-        presenter.routeToHomeWorks(with: role)
+        presenter.routeToHomeWorks(with: id, for: role)
     }
 }
 

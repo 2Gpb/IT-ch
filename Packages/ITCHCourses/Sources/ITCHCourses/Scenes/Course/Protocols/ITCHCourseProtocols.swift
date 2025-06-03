@@ -38,7 +38,7 @@ protocol ITCHCourseRouterLogic {
     func routeToGrades(for link: String?)
     func routeToMembers(with id: Int)
     func routeToRecords(with id: Int, for role: ITCHCourseUserRole)
-    func routeToHomeWorks(with role: ITCHCourseUserRole)
+    func routeToHomeWorks(with id: Int, for role: ITCHCourseUserRole)
 }
 
 protocol ITCHCourseWorker {
