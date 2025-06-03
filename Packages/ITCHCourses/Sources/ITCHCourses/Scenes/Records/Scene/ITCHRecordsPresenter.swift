@@ -31,11 +31,19 @@ extension ITCHRecordsPresenter: ITCHRecordsRouterLogic {
         link?.openURL()
     }
     
-    func routeToEditRecord(for id: Int, with model: ITCHRecordModel?, actionOnDismiss: (() -> Void)?) {
+    func routeToEditRecord(
+        for id: Int,
+        with model: ITCHRecordsModel.Local.ITCHRecord?,
+        actionOnDismiss: (() -> Void)?
+    ) {
         view?.present(
             ITCHRecordEditorAssembly.build(
                 for: id,
-                with: model,
+                with: ITCHRecordEditorModel.Local.ITCHRecord(
+                    id: model?.id ?? 0,
+                    title: model?.dateTitle ?? "",
+                    videoLink: model?.videoLink ?? ""
+                ),
                 actionOnDismiss: actionOnDismiss
             ),
             animated: true

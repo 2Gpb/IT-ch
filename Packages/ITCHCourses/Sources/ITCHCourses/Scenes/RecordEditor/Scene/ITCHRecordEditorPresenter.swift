@@ -15,7 +15,7 @@ final class ITCHRecordEditorPresenter: ITCHRecordEditorPresentationLogic {
     }
     
     // MARK: - Methods
-    func presentStart(with model: ITCHRecordModel?) {
+    func presentStart(with model: ITCHRecordEditorModel.Local.ITCHRecord?) {
         view?.displayStart(with: model)
     }
 }

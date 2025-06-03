@@ -13,17 +13,24 @@ enum ITCHRecordEditorEndpoint: ITCHEndpoint {
         id: Int
     )
     
+    case deleteRecord(
+        token: String,
+        id: Int
+    )
+    
     var compositePath: String {
         switch self {
         case .addRecord(_, let id):
             return "/api/records/\(id)/course/add"
+        case .deleteRecord(_, let id):
+            return "/api/records/\(id)/delete"
         }
     }
     
     var headers: [String: String] {
         var headers: [String: String] = [:]
         switch self {
-        case .addRecord(let token, _):
+        case .addRecord(let token, _), .deleteRecord(let token, _):
             headers["Authorization"] = "Bearer \(token)"
         }
         

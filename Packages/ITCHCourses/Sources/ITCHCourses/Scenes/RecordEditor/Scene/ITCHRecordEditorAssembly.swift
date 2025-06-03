@@ -12,7 +12,7 @@ import ITCHNetworking
 final class ITCHRecordEditorAssembly {
     static func build(
         for id: Int,
-        with model: ITCHRecordModel? = nil,
+        with model: ITCHRecordEditorModel.Local.ITCHRecord? = nil,
         actionOnDismiss: (() -> Void)?
     ) -> UIViewController {
         let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8081")

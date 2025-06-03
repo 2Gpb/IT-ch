@@ -12,4 +12,12 @@ enum ITCHRecordEditorModel {
             let refToVideo: String
         }
     }
+    
+    enum Local {
+        struct ITCHRecord: Codable {
+            let id: Int
+            let title: String
+            let videoLink: String
+        }
+    }
 }

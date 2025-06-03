@@ -22,7 +22,11 @@ protocol ITCHRecordsPresentationLogic {
 protocol ITCHRecordsRouterLogic {
     func routeToAddRecord(with id: Int, actionOnDismiss: (() -> Void)?)
     func routeToOpenRecord(with link: String?)
-    func routeToEditRecord(for id: Int, with model: ITCHRecordModel?, actionOnDismiss: (() -> Void)?)
+    func routeToEditRecord(
+        for id: Int,
+        with model: ITCHRecordsModel.Local.ITCHRecord?,
+        actionOnDismiss: (() -> Void)?
+    )
     func popViewController()
 }
 

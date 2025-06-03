@@ -108,9 +108,13 @@ extension ITCHRecordsInteractor: UITableViewDataSource {
             openAction: { [weak self] in
                 self?.presenter.routeToOpenRecord(with: self?.records[indexPath.row].videoLink)
             },
-            editAction: { } // [weak self] in
-//                self?.presenter.routeToEditRecord(with: self?.records[indexPath.row])
-//            }
+            editAction: { [weak self] in
+                self?.presenter.routeToEditRecord(
+                    for: self?.id ?? 0,
+                    with: self?.records[indexPath.row],
+                    actionOnDismiss: self?.loadRecords
+                )
+            }
         )
         
         return cell
