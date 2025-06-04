@@ -106,6 +106,32 @@ final class ITCHCourseTests: XCTestCase {
         XCTAssertEqual(presenter.passedCourseModel?.endModule, 2)
         XCTAssertEqual(presenter.passedCourseModel?.location, "Аудитория 101")
     }
+    
+    func testLoadChangeSchedule() {
+        interactor.course = ITCHCurrentCourseModel.Local.ITCHCourse(
+            courseName: "Math",
+            teacherName: "Ivanov",
+            avatar: nil,
+            durationLocation: ["1, 2 модули", "Аудитория 101"],
+            role: "STUDENT",
+            chatLink: "chat-link",
+            gradesLink: "grades-link",
+            schedule: ITCHCurrentCourseModel.Schedule(
+                frequency: "Раз в неделю",
+                academicHours: 2,
+                dayOfWeek: "Понедельник",
+                startTime: "10:00"
+            )
+        )
+
+        interactor.loadChangeSchedule()
+        
+        XCTAssertTrue(presenter.didRouteToChangeSchedule)
+        XCTAssertEqual(presenter.passedScheduleModel?.dayOfWeek, "Понедельник")
+        XCTAssertEqual(presenter.passedScheduleModel?.numberOfHours, 2)
+        XCTAssertEqual(presenter.passedScheduleModel?.time, "10:00")
+        XCTAssertEqual(presenter.passedScheduleModel?.frequency, "Раз в неделю")
+    }
 }
 
 // MARK: - Mocks
@@ -116,6 +142,9 @@ final class ITCHCoursePresenterMock: ITCHCoursePresentationLogic, ITCHCourseRout
     
     var didRouteToChangeCourse = false
     var passedCourseModel: ITCHCourseEditorModel.Local.ITCHCourse?
+    
+    var didRouteToChangeSchedule = false
+    var passedScheduleModel: ITCHScheduleEditorModel.Local.ITCHSchedule?
     
     var didPop = false
     
@@ -135,7 +164,11 @@ final class ITCHCoursePresenterMock: ITCHCoursePresentationLogic, ITCHCourseRout
         passedCourseModel = model
     }
     
-    func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) { }
+    func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) {
+        didRouteToChangeSchedule = true
+        passedScheduleModel = model
+    }
+    
     func routeToChat(for link: String?) { }
     func routeToGrades(for link: String?) { }
     func routeToMembers(with id: Int) { }
