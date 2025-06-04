@@ -11,63 +11,6 @@ import IQKeyboardManagerSwift
 import IQKeyboardToolbarManager
 
 final class ITCHCourseEditorViewController: UIViewController {
-    // MARK: - Constants
-    private enum Constant {
-        enum Error {
-            static let message: String = "init(coder:) has not been implemented"
-        }
-        
-        enum View {
-            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
-        }
-        
-        enum NavigationBar {
-            static let createTitle: String = "Создать курс"
-            static let changeTitle: String = "Изменить курс"
-            static let leftImage: UIImage = ITCHImage.chevronLeft24.image
-        }
-        
-        enum ContinueButton {
-            static let continueTitle: String = "Далее"
-            static let saveTitle: String = "Сохранить"
-            static let bottomOffset: CGFloat = 20
-            static let horizontalOffset: CGFloat = 16
-        }
-        
-        enum ContentScrollView {
-            static let bottomOffset: CGFloat = 20
-            static let horizontalOffset: CGFloat = 16
-        }
-        
-        enum DurationPicker {
-            static let alertTitle: String = "Модули начала и конца курса"
-            static let alertMessage: String = "\n\n\n\n\n\n\n\n\n\n"
-            static let style: UIAlertController.Style = .actionSheet
-            static let x: CGFloat = 0
-            static let y: CGFloat = 0
-            static let height: CGFloat = 220
-            static let horizontalPadding: CGFloat = 40
-            static let topOffset: CGFloat = 28
-            static let confirmButtonTitle: String = "Готово"
-            static let cancelButtonTitle: String = "Отмена"
-            static let numberOfColumns: Int = 2
-            static let textSuffix: String = " Модуль"
-        }
-        
-        enum LocationDurationStack {
-            static let axis: NSLayoutConstraint.Axis = .horizontal
-            static let spacing: CGFloat = 20
-            static let distribution: UIStackView.Distribution = .fillEqually
-            static let horizontalPadding: CGFloat = 32
-        }
-        
-        enum ContentStack {
-            static let axis: NSLayoutConstraint.Axis = .vertical
-            static let spacing: CGFloat = 20
-            static let topOffset: CGFloat = 20
-        }
-    }
-    
     // MARK: - Private fields
     private let interactor: ITCHCourseEditorBusinessLogic
     private let modules: [Int] = [1, 2, 3, 4]
@@ -355,5 +298,64 @@ extension ITCHCourseEditorViewController: UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         "\(modules[row])"
+    }
+}
+
+extension ITCHCourseEditorViewController {
+    // MARK: - Constants
+    private enum Constant {
+        enum Error {
+            static let message: String = "init(coder:) has not been implemented"
+        }
+        
+        enum View {
+            static let backgroundColor: UIColor = ITCHColor.backgroundGray.color
+        }
+        
+        enum NavigationBar {
+            static let createTitle: String = "Создать курс"
+            static let changeTitle: String = "Изменить курс"
+            static let leftImage: UIImage = ITCHImage.chevronLeft24.image
+        }
+        
+        enum ContinueButton {
+            static let continueTitle: String = "Далее"
+            static let saveTitle: String = "Сохранить"
+            static let bottomOffset: CGFloat = 20
+            static let horizontalOffset: CGFloat = 16
+        }
+        
+        enum ContentScrollView {
+            static let bottomOffset: CGFloat = 20
+            static let horizontalOffset: CGFloat = 16
+        }
+        
+        enum DurationPicker {
+            static let alertTitle: String = "Модули начала и конца курса"
+            static let alertMessage: String = "\n\n\n\n\n\n\n\n\n\n"
+            static let style: UIAlertController.Style = .actionSheet
+            static let x: CGFloat = 0
+            static let y: CGFloat = 0
+            static let height: CGFloat = 220
+            static let horizontalPadding: CGFloat = 40
+            static let topOffset: CGFloat = 28
+            static let confirmButtonTitle: String = "Готово"
+            static let cancelButtonTitle: String = "Отмена"
+            static let numberOfColumns: Int = 2
+            static let textSuffix: String = " Модуль"
+        }
+        
+        enum LocationDurationStack {
+            static let axis: NSLayoutConstraint.Axis = .horizontal
+            static let spacing: CGFloat = 20
+            static let distribution: UIStackView.Distribution = .fillEqually
+            static let horizontalPadding: CGFloat = 32
+        }
+        
+        enum ContentStack {
+            static let axis: NSLayoutConstraint.Axis = .vertical
+            static let spacing: CGFloat = 20
+            static let topOffset: CGFloat = 20
+        }
     }
 }

@@ -21,8 +21,8 @@ public extension String {
     func toIntArray(separator: String = ",") -> [Int] {
         return self
             .split(separator: Character(separator))
-            .compactMap {
-                let cleaned = $0.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+            .compactMap { element in
+                let cleaned = element.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
                 return Int(cleaned)
             }
     }
