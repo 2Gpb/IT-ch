@@ -99,12 +99,6 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     }
     
     func loadChangeSchedule() {
-        print(ITCHScheduleEditorModel.Local.ITCHSchedule(
-            dayOfWeek: course?.schedule.dayOfWeek ?? "",
-            numberOfHours: course?.schedule.academicHours ?? 0,
-            time: course?.schedule.startTime ?? "",
-            frequency: course?.schedule.frequency ?? ""
-        ))
         presenter.routeToChangeSchedule(
             for: id,
             with: ITCHScheduleEditorModel.Local.ITCHSchedule(

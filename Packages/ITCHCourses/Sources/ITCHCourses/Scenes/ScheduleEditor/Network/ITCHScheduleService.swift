@@ -56,7 +56,7 @@ final class ITCHScheduleService: ITCHScheduleWorker {
             switch response {
             case .success(let serverResponse):
                 let httpResponse = serverResponse.response as? HTTPURLResponse
-                if httpResponse?.statusCode == 200 {
+                if (200...204).contains(httpResponse?.statusCode ?? 0) {
                     completion?(.success(nil))
                     return
                 }
@@ -79,44 +79,11 @@ final class ITCHScheduleService: ITCHScheduleWorker {
                     return
                 }
                 
-//                do {
-//                    let decoded = try self?.decoder.decode(T.self, from: data)
-//                    completion?(.success(decoded))
-//                } catch {
-                    completion?(.failure(ITCHErrorResponse(
-                        status: -1,
-                        error: "",
-                        message: "unknown error"
-                    )))
-//                }
-                
-//                guard
-//                    self != nil,
-//                    serverResponse.data != nil
-//                else {
-//                    completion?(
-//                        .failure(
-//                            ITCHErrorResponse(
-//                                status: -1,
-//                                error: "",
-//                                message: "data error"
-//                            )
-//                        )
-//                    )
-//                    return
-//                }
-//                
-//                let response = serverResponse.response as? HTTPURLResponse
-//                if let status = response?.statusCode, (200...299).contains(status) {
-//                    completion?(.success(nil))
-//                } else {
-//                    completion?(.failure(ITCHErrorResponse(
-//                        status: -1,
-//                        error: "Error",
-//                        message: "No access"
-//                    )))
-//                }
-                
+                completion?(.failure(ITCHErrorResponse(
+                    status: -1,
+                    error: "",
+                    message: "unknown error"
+                )))
             case .failure(let error):
                 completion?(.failure(ITCHErrorResponse(
                     status: -1,

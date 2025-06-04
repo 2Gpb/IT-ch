@@ -112,6 +112,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
         }
         
         if let model {
+            saveButton.isEnabled = true
             title = Constant.NavigationBar.changeTitle
             saveButton.configure(title: Constant.SaveButton.saveTitle)
             saveButton.action = { [weak self] in
@@ -120,6 +121,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
             
             setUpTextFields(with: model)
         } else {
+            saveButton.isEnabled = false
             title = Constant.NavigationBar.createTitle
             saveButton.configure(title: Constant.SaveButton.createTitle)
             saveButton.action = { [weak self] in
@@ -190,6 +192,10 @@ final class ITCHScheduleEditorViewController: UIViewController {
             guard let self else { return }
             self.frequencyAlert.present(on: self)
         }
+        
+        [dayTextField, numberOfHoursTextField, startTimeTextField, frequencyTextField].forEach { element in
+            element.editingAction = checkEnableSaveButton
+        }
     }
     
     private func setUpTextFields(with model: ITCHScheduleEditorModel.Local.ITCHSchedule) {
@@ -232,6 +238,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
                 dataSource: self,
                 confirmAction: { [weak self] in
                     self?.dayTextField.text = self?.selectedDay
+                    self?.checkEnableSaveButton()
                 }
             ),
             ITCHPickerAlertConfig.time(
@@ -240,6 +247,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
                 dataSource: self,
                 confirmAction: { [weak self] in
                     self?.startTimeTextField.text = self?.selectedTime
+                    self?.checkEnableSaveButton()
                 }
             ),
             ITCHPickerAlertConfig.frequency(
@@ -248,6 +256,7 @@ final class ITCHScheduleEditorViewController: UIViewController {
                 dataSource: self,
                 confirmAction: { [weak self] in
                     self?.frequencyTextField.text = self?.selectedFrequency
+                    self?.checkEnableSaveButton()
                 }
             )
         ]
@@ -259,6 +268,22 @@ final class ITCHScheduleEditorViewController: UIViewController {
         selectedDay = pickerConfigs[0].items[0]
         selectedTime = pickerConfigs[1].items[0]
         selectedFrequency = pickerConfigs[2].items[0]
+    }
+    
+    // MARK: - Actions
+    private func checkEnableSaveButton() {
+        guard
+            let day = self.dayTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let numberOfHours = self.numberOfHoursTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let startTime = self.startTimeTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let frequency = self.frequencyTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        else {
+            saveButton.isEnabled = false
+            return
+        }
+        
+        self.saveButton.isEnabled = !day.isEmpty && !numberOfHours.isEmpty &&
+        !startTime.isEmpty && !frequency.isEmpty
     }
 }
 
