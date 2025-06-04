@@ -37,46 +37,61 @@ final class ITCHCourseTests: XCTestCase {
         try super.tearDownWithError()
     }
     
-    
+    func testLoadStart() {
+        secureService.set(tokensModel: ITCHAccessToken(token: "mock-token", refreshToken: "refresh"))
+        networkService.mockResult = ITCHCurrentCourseModel.Network.ITCHCourse(
+            courseName: "Math",
+            location: "Room 101",
+            refToChat: "chat",
+            refToGrades: "grades",
+            duration: ITCHCurrentCourseModel.DurationRange(start: 1, end: 2),
+            courseRole: "STUDENT",
+            teacherName: "Ivanov",
+            schedule: ITCHCurrentCourseModel.Schedule(
+                frequency: "Раз в неделю",
+                academicHours: 2,
+                dayOfWeek: "Понедельник",
+                startTime: "10:00"
+            )
+        )
+        
+        let expectation = XCTestExpectation(description: "Course loaded and presented")
+        presenter.onPresentStart = {
+            expectation.fulfill()
+        }
+        
+        interactor.loadStart()
+        
+        wait(for: [expectation], timeout: 1.0)
+        XCTAssertTrue(presenter.didPresentStart)
+        XCTAssertEqual(presenter.role, .student)
+    }
 }
 
 // MARK: - Mocks
 final class ITCHCoursePresenterMock: ITCHCoursePresentationLogic, ITCHCourseRouterLogic {
     var didPresentStart = false
-    var didPop = false
-    var lastRole: ITCHCourseUserRole?
+    var role: ITCHCourseUserRole?
+    var onPresentStart: (() -> Void)?
     
     func presentStart(with role: ITCHCourseUserRole) {
         didPresentStart = true
-        lastRole = role
+        self.role = role
+        onPresentStart?()
     }
     
-    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) {}
-    func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) {}
-    func popViewController() { didPop = true }
-    func routeToChat(for link: String?) {}
-    func routeToGrades(for link: String?) {}
-    func routeToMembers(with id: Int) {}
-    func routeToRecords(with id: Int, for role: ITCHCourseUserRole) {}
-    func routeToHomeWorks(with id: Int, for role: ITCHCourseUserRole) {}
+    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) { }
+    func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) { }
+    func popViewController() { }
+    func routeToChat(for link: String?) { }
+    func routeToGrades(for link: String?) { }
+    func routeToMembers(with id: Int) { }
+    func routeToRecords(with id: Int, for role: ITCHCourseUserRole) { }
+    func routeToHomeWorks(with id: Int, for role: ITCHCourseUserRole) { }
 }
 
 final class ITCHCourseServiceMock: ITCHCourseWorker {
-    var mockResult = ITCHCurrentCourseModel.Network.ITCHCourse(
-        courseName: "Math",
-        location: "Room 101",
-        refToChat: "chat",
-        refToGrades: "grades",
-        duration: ITCHCurrentCourseModel.DurationRange(start: 1, end: 2),
-        courseRole: "STUDENT",
-        teacherName: "Ivanov",
-        schedule: ITCHCurrentCourseModel.Schedule(
-            frequency: "Раз в неделю",
-            academicHours: 2,
-            dayOfWeek: "Понедельник",
-            startTime: "10:00"
-        )
-    )
+    var mockResult: ITCHCurrentCourseModel.Network.ITCHCourse?
     
     func fetchCourse(
         for token: String,
