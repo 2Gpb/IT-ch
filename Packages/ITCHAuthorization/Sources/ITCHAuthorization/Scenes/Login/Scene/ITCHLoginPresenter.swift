@@ -16,12 +16,23 @@ final class ITCHLoginPresenter: ITCHLoginPresentationLogic {
     
     // MARK: - Variables
     weak var view: ITCHLoginViewController?
+    
+    // MARK: - Methods
+    func presentError() {
+        view?.showErrorAnimated()
+    }
 }
 
 // MARK: - RouterLogic
 extension ITCHLoginPresenter: ITCHLoginRouterLogic {
     func routeToCourses() {
-        let tabBar = ITCHTabBarController()
+        let tabBar = ITCHTabBarController(exitAction: {
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = scene.windows.first {
+                window.rootViewController = UINavigationController(rootViewController: ITCHWelcomeAssembly.build())
+                window.makeKeyAndVisible()
+            }
+        })
         tabBar.modalPresentationStyle = .fullScreen
         view?.present(tabBar, animated: true)
     }

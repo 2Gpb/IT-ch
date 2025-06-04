@@ -62,12 +62,17 @@ final class ITCHMyCoursesViewController: UIViewController {
         interactor.loadStart()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor.loadCourses()
+    }
+    
     // MARK: - Methods
-    func displayStart(with role: ITCHUserRole?, isEmpty: Bool) {
+    func displayStart(with role: ITCHUserRole?) {
         let emptyState: ITCHCoursesEmptyState = role == .teacher ? .teacher : .student
         
         emptyStateView.configure(title: emptyState.title, subtitle: emptyState.subTitle)
-        emptyStateView.isHidden = !isEmpty
+        emptyStateView.isHidden = true
         
         navigationBar.configure(
             with: ITCHNavigationBarModel(
@@ -75,6 +80,11 @@ final class ITCHMyCoursesViewController: UIViewController {
                 rightImage: role == .teacher ? Constant.NavigationBar.rightImage : nil
             )
         )
+    }
+    
+    func displayCourses(isEmpty: Bool) {
+        emptyStateView.isHidden = !isEmpty
+        coursesTableView.reloadData()
     }
     
     // MARK: - SetUp

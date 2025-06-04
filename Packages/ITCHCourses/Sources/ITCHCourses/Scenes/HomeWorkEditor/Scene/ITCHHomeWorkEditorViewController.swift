@@ -98,18 +98,58 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with model: ITCHHomeWorkModel?) {
+    func displayStart(with model: ITCHHomeWorkEditorModel.Local.ITCHHomeWork?) {
         if let model {
             navigationBar.configure(with: Constant.NavigationBar.editTitle)
             setUpDeleteButton()
             
-            nameTextField.text = model.name
-            dateTextField.text = model.date.configure(to: Constant.DatePicker.dateFormat)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.locale = Locale(identifier: "ru_RU")
+
+            let date = formatter.date(from: model.date)
+            
+            nameTextField.text = model.title
+            dateTextField.text = date?.configure(to: Constant.DatePicker.dateFormat)
             linkForLoadTextField.text = model.linkForLoad
             linkForCheckTextField.text = model.linkForCheck
             linkOnTaskTextField.text = model.linkOnTask
+            navigationBar.rightAction = { [weak self] in
+                let inputFormatter = DateFormatter()
+                inputFormatter.locale = Locale(identifier: "ru_RU")
+                inputFormatter.dateFormat = "d MMMM yyyyг., H:mm"
+                let date = inputFormatter.date(from: self?.dateTextField.text ?? "")
+                
+                self?.interactor.loadChangeHomeWork(
+                    with: ITCHHomeWorkEditorModel.Local.ITCHHomeWork(
+                        id: 0,
+                        title: self?.nameTextField.text ?? "",
+                        date: date?.configure(to: "yyyy-MM-dd") ?? "",
+                        linkOnTask: self?.linkOnTaskTextField.text ?? "",
+                        linkForCheck: self?.linkForCheckTextField.text ?? "",
+                        linkForLoad: self?.linkForLoadTextField.text ?? ""
+                    )
+                )
+            }
         } else {
             navigationBar.configure(with: Constant.NavigationBar.createTitle)
+            navigationBar.rightAction = { [weak self] in
+                let inputFormatter = DateFormatter()
+                inputFormatter.locale = Locale(identifier: "ru_RU")
+                inputFormatter.dateFormat = "d MMMM yyyyг., H:mm"
+                let date = inputFormatter.date(from: self?.dateTextField.text ?? "")
+                
+                self?.interactor.loadAddHomeWork(
+                    with: ITCHHomeWorkEditorModel.Local.ITCHHomeWork(
+                        id: 0,
+                        title: self?.nameTextField.text ?? "",
+                        date: date?.configure(to: "yyyy-MM-dd") ?? "",
+                        linkOnTask: self?.linkOnTaskTextField.text ?? "",
+                        linkForCheck: self?.linkForCheckTextField.text ?? "",
+                        linkForLoad: self?.linkForLoadTextField.text ?? ""
+                    )
+                )
+            }
         }
     }
     
@@ -126,7 +166,6 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     
     private func setUpNavigationBar() {
         navigationBar.leftAction = { [weak self] in self?.interactor.loadDismiss() }
-        navigationBar.rightAction = { [weak self] in self?.interactor.loadDismiss() }
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constant.NavigationBar.topOffset)
@@ -136,7 +175,7 @@ final class ITCHHomeWorkEditorViewController: UIViewController {
     private func setUpDeleteButton() {
         deleteButton.configure(title: Constant.DeleteButton.title)
         deleteButton.action = { [weak self] in
-            self?.interactor.loadDismiss()
+            self?.interactor.loadDeleteHomeWork()
         }
         
         view.addSubview(deleteButton)

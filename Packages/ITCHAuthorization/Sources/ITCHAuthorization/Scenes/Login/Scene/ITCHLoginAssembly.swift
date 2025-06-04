@@ -6,11 +6,23 @@
 //
 
 import UIKit
+import ITCHNetworking
+import ITCHCore
 
 final class ITCHLoginAssembly {
     static func build() -> UIViewController {
+        let worker = ITCHBaseURLWorker(baseUrl: "http://localhost:8080")
+        let networkService = ITCHLoginService(networking: worker)
+        let secureSessionService = ITCHSecureSessionService()
+        let userRoleService = ITCHUserRoleService()
         let presenter = ITCHLoginPresenter()
-        let interactor = ITCHLoginInteractor(presenter: presenter)
+        let interactor = ITCHLoginInteractor(
+            presenter: presenter,
+            networkService: networkService,
+            secureSessionService: secureSessionService,
+            userRoleService: userRoleService
+        )
+        
         let view = ITCHLoginViewController(interactor: interactor)
         
         presenter.view = view

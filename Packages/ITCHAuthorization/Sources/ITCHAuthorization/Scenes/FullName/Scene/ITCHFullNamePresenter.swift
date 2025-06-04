@@ -12,8 +12,8 @@ final class ITCHFullNamePresenter: ITCHFullNamePresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHFullNamePresenter: ITCHFullNameRouterLogic {
-    func routeToSignUp() {
-        view?.navigationController?.pushViewController(ITCHSignUpAssembly.build(), animated: true)
+    func routeToSignUp(with fullName: String) {
+        view?.navigationController?.pushViewController(ITCHSignUpAssembly.build(with: fullName), animated: true)
     }
     
     func popViewController() {

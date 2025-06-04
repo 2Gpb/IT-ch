@@ -12,8 +12,8 @@ final class ITCHWelcomePresenter: ITCHWelcomePresentationLogic {
 
 // MARK: - RouterLogic
 extension ITCHWelcomePresenter: ITCHWelcomeRouterLogic {
-    func routeToSelectAccount() {
-        view?.navigationController?.pushViewController(ITCHSelectAccountAssembly.build(), animated: true)
+    func routeToLogin() {
+        view?.navigationController?.pushViewController(ITCHLoginAssembly.build(), animated: true)
     }
     
     func routeToFullName() {

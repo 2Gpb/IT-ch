@@ -6,13 +6,13 @@
 //
 
 protocol ITCHFullNameBusinessLogic {
-    func loadSignUp()
+    func loadSignUp(with fullname: String)
     func loadDismiss()
 }
 
 protocol ITCHFullNamePresentationLogic { }
 
 protocol ITCHFullNameRouterLogic {
-    func routeToSignUp()
+    func routeToSignUp(with fullname: String)
     func popViewController()
 }

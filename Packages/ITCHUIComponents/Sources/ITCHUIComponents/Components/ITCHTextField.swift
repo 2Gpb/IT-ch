@@ -51,6 +51,7 @@ public final class ITCHTextField: UIView {
     private let eyeOffButton: ITCHCustomButton = ITCHCustomButton()
     
     // MARK: - Properties
+    public var editingAction: (() -> Void)?
     public var returnAction: (() -> Void)?
     public var insteadKeyboardAction: (() -> Void)?
     public var beforeOpenKeyboardAction: (() -> Void)?
@@ -106,6 +107,7 @@ public final class ITCHTextField: UIView {
             textField.keyboardType = model.keyboardType
         case .password:
             setUpHideShowButton()
+            textField.isSecureTextEntry = true
             textField.keyboardType = .asciiCapable
             textField.autocorrectionType = .no
         }
@@ -149,6 +151,7 @@ public final class ITCHTextField: UIView {
         textField.layer.borderWidth = Constant.TextField.borderWidth
         textField.layer.borderColor = Constant.TextField.borderColor
         textField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(textFieldTapped)))
+        textField.addTarget(self, action: #selector(textWasChanged), for: .editingChanged)
         
         addSubview(textField)
         textField.pinHorizontal(to: self)
@@ -180,7 +183,12 @@ public final class ITCHTextField: UIView {
     private func eyeButtonTapped() {
         eyeButton.isHidden = eyeOffButton.isHidden
         eyeOffButton.isHidden = !eyeOffButton.isHidden
-        textField.isSecureTextEntry = !eyeOffButton.isHidden
+        textField.isSecureTextEntry = eyeOffButton.isHidden
+    }
+    
+    @objc
+    private func textWasChanged() {
+        editingAction?()
     }
 }
 
@@ -196,11 +204,9 @@ extension ITCHTextField: UITextFieldDelegate {
         beforeOpenKeyboardAction?()
         
         if let action = insteadKeyboardAction {
-                DispatchQueue.main.async {
-                    action()
-                }
-                return false
-            }
+            action()
+            return false
+        }
         
         return true 
     }

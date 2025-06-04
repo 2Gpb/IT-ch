@@ -115,12 +115,12 @@ final class ITCHCourseEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with model: ITCHCourseEditorModel?) {
+    func displayStart(with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
         let title: String
-        let durationRange = durationTextField.text?.toIntArray()
         
         let courseModel = { [weak self] in
-            return ITCHCourseEditorModel(
+            let durationRange = self?.durationTextField.text?.toIntArray()
+            return ITCHCourseEditorModel.Local.ITCHCourse(
                 name: self?.nameTextField.text ?? "",
                 location: self?.locationTextField.text ?? "",
                 startModule: durationRange?.first ?? 1,
@@ -131,15 +131,16 @@ final class ITCHCourseEditorViewController: UIViewController {
         }
         
         if let model {
+            continueButton.isEnabled = true
             title = Constant.NavigationBar.changeTitle
             continueButton.configure(title: Constant.ContinueButton.saveTitle)
             continueButton.action = { [weak self] in
                 self?.interactor.loadChangeCourse(with: courseModel())
-                self?.interactor.loadDismiss()
             }
             
             setUpTextFields(with: model)
         } else {
+            continueButton.isEnabled = false
             title = Constant.NavigationBar.createTitle
             continueButton.configure(title: Constant.ContinueButton.continueTitle)
             continueButton.action = { [weak self] in
@@ -209,6 +210,10 @@ final class ITCHCourseEditorViewController: UIViewController {
     
         chatLinkTextField.configure(with: ITCHCourseEditorTextFieldConfig.chatLink())
         gradesLinkTextField.configure(with: ITCHCourseEditorTextFieldConfig.gradesLink())
+        
+        [nameTextField, locationTextField, durationTextField, chatLinkTextField, gradesLinkTextField].forEach { element in
+            element.editingAction = checkEnableConfirmButton
+        }
     }
     
     private func setUpLocationDurationStackView() {
@@ -221,7 +226,7 @@ final class ITCHCourseEditorViewController: UIViewController {
         }
     }
     
-    private func setUpTextFields(with model: ITCHCourseEditorModel) {
+    private func setUpTextFields(with model: ITCHCourseEditorModel.Local.ITCHCourse) {
         nameTextField.text = model.name
         locationTextField.text = model.location
         chatLinkTextField.text = model.chatLink
@@ -292,9 +297,26 @@ final class ITCHCourseEditorViewController: UIViewController {
         return UIAlertAction(title: Constant.DurationPicker.confirmButtonTitle, style: .default) { [weak self] _ in
             guard let self else { return }
             
+            self.checkEnableConfirmButton()
             let range = Array(selectedStart...selectedEnd)
             self.durationTextField.text = range.joinedString()
         }
+    }
+    
+    private func checkEnableConfirmButton() {
+        guard
+            let name = self.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let location = self.locationTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let duration = self.durationTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let chatLink = self.chatLinkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let gradesLink = self.gradesLinkTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        else {
+            continueButton.isEnabled = false
+            return
+        }
+        
+        continueButton.isEnabled = !name.isEmpty && !location.isEmpty &&
+        !duration.isEmpty && !chatLink.isEmpty && !gradesLink.isEmpty
     }
 }
 

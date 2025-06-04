@@ -5,6 +5,8 @@
 //  Created by Peter on 17.04.2025.
 //
 
+import ITCHCore
+
 final class ITCHWelcomeInteractor: ITCHWelcomeBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHWelcomePresentationLogic & ITCHWelcomeRouterLogic
@@ -16,7 +18,7 @@ final class ITCHWelcomeInteractor: ITCHWelcomeBusinessLogic {
     
     // MARK: - Methods
     func loadSelectAccount() {
-        presenter.routeToSelectAccount()
+        presenter.routeToLogin()
     }
     
     func loadFullName() {

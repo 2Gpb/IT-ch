@@ -276,8 +276,9 @@ extension ITCHCalendarInteractor {
     }
     
     func makeScheduleHeaderCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHScheduleHeaderCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHScheduleHeaderCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHScheduleHeaderCell else {
+            return rawCell
         }
         
         let date = scheduleSections[indexPath.section].date
@@ -292,8 +293,9 @@ extension ITCHCalendarInteractor {
         let model = section.items[actualIndex]
         let isLast = actualIndex == section.items.count - 1
         
-        guard let cell: ITCHScheduleCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHScheduleCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHScheduleCell else {
+            return rawCell
         }
         
         let viewModel = ITCHScheduleViewModel(
@@ -307,8 +309,9 @@ extension ITCHCalendarInteractor {
     }
     
     func makeDeadlineCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHDeadlineCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHDeadlineCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHDeadlineCell else {
+            return rawCell
         }
         
         let model = deadlines[indexPath.row]

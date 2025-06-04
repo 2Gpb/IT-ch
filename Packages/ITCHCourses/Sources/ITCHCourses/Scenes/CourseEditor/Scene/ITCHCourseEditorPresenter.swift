@@ -10,7 +10,7 @@ final class ITCHCourseEditorPresenter: ITCHCourseEditorPresentationLogic {
     weak var view: ITCHCourseEditorViewController?
     
     // MARK: - Methods
-    func presentStart(with model: ITCHCourseEditorModel?) {
+    func presentStart(with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
         view?.displayStart(with: model)
     }
 }
@@ -21,29 +21,11 @@ extension ITCHCourseEditorPresenter: ITCHCourseEditorRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToCreateSchedule(with model: ITCHCourseEditorModel?) {
+    func routeToCreateSchedule(with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
         guard let model else { return }
         
-        let range = Array(model.startModule...model.endModule)
-        
-        /// A separate model may be required
         view?.navigationController?.pushViewController(
-            ITCHScheduleEditorAssembly.build(
-                createWith: ITCHCurrentCourseModel(
-                    courseName: model.name,
-                    teacherName: "Сосновский Григорий Михайлович",
-                    avatar: nil,
-                    durationLocation: [range.joinedString(), model.location],
-                    role: "TEACHER",
-                    chatLink: model.chatLink,
-                    gradesLink: model.gradesLink,
-                    dayOfWeek: "",
-                    numberOfHours: 0,
-                    time: "",
-                    frequency: ""
-                )
-            ),
-            animated: true
+            ITCHScheduleEditorAssembly.build(createWith: model), animated: true
         )
     }
 }

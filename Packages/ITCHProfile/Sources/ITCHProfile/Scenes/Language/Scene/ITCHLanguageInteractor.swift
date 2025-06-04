@@ -35,8 +35,9 @@ extension ITCHLanguageInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHLanguageCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHLanguageCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHLanguageCell else {
+            return rawCell
         }
         
         cell.configure(with: languages[indexPath.row].title, isChecked: currentLanguageIndex == indexPath)

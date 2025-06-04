@@ -12,23 +12,42 @@ final class ITCHRecordsPresenter: ITCHRecordsPresentationLogic {
     weak var view: ITCHRecordsViewController?
     
     // MARK: - Methods
-    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
-        view?.displayStart(for: role, isEmpty: isEmpty)
+    func presentStart(for role: ITCHCourseUserRole) {
+        view?.displayStart(for: role)
+    }
+    
+    func presentRecords(isEmpty: Bool) {
+        view?.displayRecords(isEmpty: isEmpty)
     }
 }
 
 // MARK: - RouterLogic
 extension ITCHRecordsPresenter: ITCHRecordsRouterLogic {
-    func routeToAddRecord() {
-        view?.present(ITCHRecordEditorAssembly.build(), animated: true)
+    func routeToAddRecord(with id: Int, actionOnDismiss: (() -> Void)?) {
+        view?.present(ITCHRecordEditorAssembly.build(for: id, actionOnDismiss: actionOnDismiss), animated: true)
     }
     
     func routeToOpenRecord(with link: String?) {
         link?.openURL()
     }
     
-    func routeToEditRecord(with model: ITCHRecordModel?) {
-        view?.present(ITCHRecordEditorAssembly.build(with: model), animated: true)
+    func routeToEditRecord(
+        for id: Int,
+        with model: ITCHRecordsModel.Local.ITCHRecord?,
+        actionOnDismiss: (() -> Void)?
+    ) {
+        view?.present(
+            ITCHRecordEditorAssembly.build(
+                for: id,
+                with: ITCHRecordEditorModel.Local.ITCHRecord(
+                    id: model?.id ?? 0,
+                    title: model?.dateTitle ?? "",
+                    videoLink: model?.videoLink ?? ""
+                ),
+                actionOnDismiss: actionOnDismiss
+            ),
+            animated: true
+        )
     }
     
     func popViewController() {

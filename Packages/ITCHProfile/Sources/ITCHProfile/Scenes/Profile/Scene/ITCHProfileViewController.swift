@@ -178,8 +178,9 @@ extension ITCHProfileViewController {
         indexPath: IndexPath,
         account: ITCHAccountModel
     ) -> UITableViewCell {
-        guard let cell: ITCHAccountCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHAccountCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHAccountCell else {
+            return rawCell
         }
         
         cell.configure(
@@ -193,8 +194,9 @@ extension ITCHProfileViewController {
     }
     
     func makeHeaderCell(_ tableView: UITableView, indexPath: IndexPath, title: String) -> UITableViewCell {
-        guard let cell: ITCHSettingsHeaderCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHSettingsHeaderCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHSettingsHeaderCell else {
+            return rawCell
         }
         
         cell.configure(with: title)
@@ -202,8 +204,9 @@ extension ITCHProfileViewController {
     }
     
     func makeFooterCell(_ tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHSettingsFooterCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHSettingsFooterCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHSettingsFooterCell else {
+            return rawCell
         }
         
         return cell
@@ -214,8 +217,9 @@ extension ITCHProfileViewController {
         indexPath: IndexPath,
         model: ITCHSettingsModel
     ) -> UITableViewCell {
-        guard let cell: ITCHSettingsCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHSettingsCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHSettingsCell else {
+            return rawCell
         }
         
         let viewModel = ITCHSettingsRowViewModel(

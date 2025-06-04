@@ -56,13 +56,15 @@ final class ITCHHomeWorksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         interactor.loadStart()
     }
     
     // MARK: - Methods
-    func displayStart(for role: ITCHCourseUserRole, isEmpty: Bool) {
-        emptyStateView.isHidden = !isEmpty
-        
+    func displayStart(for role: ITCHCourseUserRole) {
         navigationBar.configure(
             with: ITCHNavigationBarModel(
                 title: Constant.NavigationBar.title,
@@ -70,6 +72,11 @@ final class ITCHHomeWorksViewController: UIViewController {
                 rightImage: role == .teacher ? Constant.NavigationBar.rightImage : nil
             )
         )
+    }
+    
+    func displayHomeWorks(isEmpty: Bool) {
+        emptyStateView.isHidden = !isEmpty
+        homeWorksTableView.reloadData()
     }
     
     // MARK: - SetUp

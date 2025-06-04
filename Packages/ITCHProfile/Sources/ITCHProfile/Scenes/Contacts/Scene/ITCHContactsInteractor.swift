@@ -42,8 +42,9 @@ extension ITCHContactsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHContactsCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHContactsCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHContactsCell else {
+            return rawCell
         }
         
         cell.configure(with: contacts[indexPath.row].title, image: contacts[indexPath.row].image)

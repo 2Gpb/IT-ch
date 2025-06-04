@@ -7,6 +7,7 @@
 
 import UIKit
 import ITCHUIComponents
+import ITCHUtilities
 
 final class ITCHCourseViewController: UIViewController {
     // MARK: - Constants
@@ -38,14 +39,14 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     // MARK: - Private fields
-    private let interactor: ITCHCourseBusinessLogic & ITCHCourseRoleStorage
+    private let interactor: ITCHCourseBusinessLogic
     
     // MARK: - UI Components
     private let navigationBar: ITCHNavigationBar = ITCHNavigationBar(type: .title)
     private let courseTableView: UITableView = UITableView()
     
     // MARK: - Lifecycle
-    init(interactor: ITCHCourseBusinessLogic & ITCHCourseRoleStorage) {
+    init(interactor: ITCHCourseBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -58,6 +59,10 @@ final class ITCHCourseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         interactor.loadStart()
     }
     
@@ -68,14 +73,16 @@ final class ITCHCourseViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart() {
+    func displayStart(with role: ITCHCourseUserRole) {
         navigationBar.configure(
             with: ITCHNavigationBarModel(
                 title: Constant.NavigationBar.title,
                 leftImage: Constant.NavigationBar.leftImage,
-                rightImage: interactor.role == .teacher ? Constant.NavigationBar.rightImage : nil
+                rightImage: role == .teacher ? Constant.NavigationBar.rightImage : nil
             )
         )
+        
+        courseTableView.reloadData()
     }
     
     // MARK: - SetUp
@@ -146,7 +153,7 @@ final class ITCHCourseViewController: UIViewController {
             image: Constant.ContextActions.deleteImage,
             attributes: .destructive
         ) { [weak self] _ in
-            self?.interactor.loadDismiss()
+            self?.interactor.loadDeleteCourse()
         }
     }
 }
@@ -177,5 +184,17 @@ extension ITCHCourseViewController: UITableViewDelegate {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = ITCHCurrentCourseSection(rawValue: indexPath.section)
+        
+        if section == .actions && indexPath.row == 0 {
+            return 19
+        } else if indexPath.row == 0 {
+            return 40
+        }
+        
+        return UITableView.automaticDimension
     }
 }

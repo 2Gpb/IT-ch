@@ -23,4 +23,5 @@ protocol ITCHProfileRouterLogic {
     func routeToLanguage()
     func routeToAboutApp()
     func routeToContacts()
+    func routeToLogOut()
 }

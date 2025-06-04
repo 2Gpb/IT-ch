@@ -1,41 +1,41 @@
 //
-//  Networking.swift
-//  TestTaskAvito
+//  ITCHNetworking.swift
+//  ITCHNetworking
 //
 //  Created by Peter on 11.02.2025.
 //
 
 import Foundation
 
-protocol NetworkingLogic {
-    typealias Response = ((_ response: Result<Networking.ServerResponse, Error>) -> Void)
-    
-    func execute(with request: Request, completion: @escaping Response)
+public protocol ITCHNetworkingLogic {
+    typealias Response = ((_ response: Result<ITCHNetworking.ServerResponse, Error>) -> Void)
+    var baseUrl: String { get set }
+    func execute(with request: ITCHRequest, completion: @escaping Response)
 }
 
-enum Networking {
-    struct ServerResponse {
-        let data: Data?
-        let response: URLResponse?
+public enum ITCHNetworking {
+    public struct ServerResponse {
+        public let data: Data?
+        public let response: URLResponse?
     }
 }
 
-final class BaseURLWorker: NetworkingLogic {
+public final class ITCHBaseURLWorker: ITCHNetworkingLogic {
     // MARK: - Error
-    enum BaseURLError: Error {
+    public enum BaseURLError: Error {
         case invalidRequest
     }
     
     // MARK: - Variables
-    var baseUrl: String
+    public var baseUrl: String
     
     // MARK: - Lifecycle
-    init(baseUrl: String) {
+    public init(baseUrl: String) {
         self.baseUrl = baseUrl
     }
     
     // MARK: - Methods
-    func execute(with request: Request, completion: @escaping Response) {
+    public func execute(with request: ITCHRequest, completion: @escaping Response) {
         guard let urlRequest = convert(request) else {
             completion(.failure(BaseURLError.invalidRequest))
             return
@@ -47,14 +47,14 @@ final class BaseURLWorker: NetworkingLogic {
                 return
             }
             
-            completion(.success(Networking.ServerResponse(data: data, response: response)))
+            completion(.success(ITCHNetworking.ServerResponse(data: data, response: response)))
         }
         
         task.resume()
     }
     
     // MARK: - Private fields
-    private func convert(_ request: Request) -> URLRequest? {
+    private func convert(_ request: ITCHRequest) -> URLRequest? {
         guard let url = generateDestinationURL(for: request) else {
             return nil
         }
@@ -68,7 +68,7 @@ final class BaseURLWorker: NetworkingLogic {
         return urlRequest
     }
     
-    private func generateDestinationURL(for request: Request) -> URL? {
+    private func generateDestinationURL(for request: ITCHRequest) -> URL? {
         guard
             let url = URL(string: baseUrl),
             var components = URLComponents(url: url, resolvingAgainstBaseURL: true)

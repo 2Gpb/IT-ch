@@ -18,11 +18,14 @@ extension ITCHSignUpPresenter: ITCHSignUpRouterLogic {
         view?.navigationController?.pushViewController(ITCHHelpQuestionsAssembly.build(), animated: true)
     }
     
-    func routeToCode() {
-        let viewModel: ITCHEnterCodeViewModel = ITCHEnterCodeViewModel(onNext: { [weak self] in
-            let nextVC = ITCHSignUpPasswordAssembly.build()
-            self?.view?.navigationController?.pushViewController(nextVC, animated: true)
-        })
+    func routeToCode(with email: String) {
+        let viewModel: ITCHEnterCodeViewModel = ITCHEnterCodeViewModel(
+            onNext: { [weak self] in
+                let nextVC = ITCHSignUpPasswordAssembly.build(with: email)
+                self?.view?.navigationController?.pushViewController(nextVC, animated: true)
+            },
+            email: email
+        )
                                                                        
         let enterCodeView = ITCHEnterCodeView(viewModel: viewModel)
         

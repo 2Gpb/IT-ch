@@ -67,7 +67,16 @@ final class ITCHMembersViewController: UIViewController {
         setUp()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor.loadStart()
+    }
+    
     // MARK: - Methods
+    func displayStart() {
+        membersTableView.reloadData()
+    }
+    
     func displayRoleChangeAlert() {
         let alert = UIAlertController(
             title: Constant.RoleAlert.title,

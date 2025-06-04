@@ -36,15 +36,24 @@ final class ITCHCourseHeaderCell: UITableViewCell {
             static let height: CGFloat = 1
             static let topOffset: CGFloat = 12
             static let horizontalOffset: CGFloat = 16
+            static let bottomOffset: CGFloat = 6
         }
     }
     
     // MARK: - Reuse ID
     static let reuseId: String = Constant.ReuseIdentifier.value
+    
+    // MARK: - Properties
+    private var titleBottom: NSLayoutConstraint?
+    private var separatorBottom: NSLayoutConstraint?
+    
+    private var stackTopWithTitle: NSLayoutConstraint?
+    private var stackTopWithSeparator: NSLayoutConstraint?
 
     // MARK: - UI Components
     private let titleLabel: UILabel = UILabel()
     private let separatorView: UIView = UIView()
+    private let stack = UIStackView()
 
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -59,14 +68,16 @@ final class ITCHCourseHeaderCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        titleLabel.isHidden = false
-        separatorView.isHidden = true
+//        titleLabel.isHidden = true
+//        separatorView.isHidden = true
     }
     
     // MARK: - Configure
     func configure(with title: String?) {
         if let title {
             titleLabel.text = title
+            titleLabel.isHidden = false
+            separatorView.isHidden = true
         } else {
             titleLabel.isHidden = true
             separatorView.isHidden = false
@@ -81,6 +92,36 @@ final class ITCHCourseHeaderCell: UITableViewCell {
         setUpSeparator()
     }
     
+//    private func setUp() {
+//        backgroundColor = Constant.View.backgroundColor
+//        selectionStyle = Constant.View.selectionStyle
+//
+//        stack.addArrangedSubview(titleLabel)
+//        stack.addArrangedSubview(separatorView)
+//        stack.axis = .vertical
+//        stack.spacing = 12
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+//
+//        contentView.addSubview(stack)
+//        
+//        stackTopWithTitle = stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constant.Label.topOffset)
+//        stackTopWithSeparator = stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constant.Separator.topOffset)
+//        
+//        stackTopWithTitle?.isActive = true
+//        
+//        NSLayoutConstraint.activate([
+//            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constant.Label.horizontalOffset),
+//            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constant.Label.horizontalOffset),
+//            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constant.Separator.bottomOffset)
+//        ])
+//
+//        separatorView.setHeight(Constant.Separator.height)
+//
+//        titleLabel.textColor = Constant.Label.textColor
+//        titleLabel.font = Constant.Label.font
+//        separatorView.backgroundColor = Constant.Separator.backgroundColor
+//    }
+    
     private func setUpTitleLabel() {
         titleLabel.textColor = Constant.Label.textColor
         titleLabel.font = Constant.Label.font
@@ -88,7 +129,8 @@ final class ITCHCourseHeaderCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.pinHorizontal(to: contentView, Constant.Label.horizontalOffset)
         titleLabel.pinTop(to: contentView, Constant.Label.topOffset)
-        titleLabel.pinBottom(to: contentView)
+//        titleBottom = titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+//        titleBottom?.isActive = true
     }
     
     private func setUpSeparator() {
@@ -99,5 +141,11 @@ final class ITCHCourseHeaderCell: UITableViewCell {
         separatorView.setHeight(Constant.Separator.height)
         separatorView.pinTop(to: contentView, Constant.Separator.topOffset)
         separatorView.pinHorizontal(to: contentView, Constant.Separator.horizontalOffset)
+//        separatorBottom = separatorView.bottomAnchor.constraint(
+//            equalTo: contentView.bottomAnchor,
+//            constant: -Constant.Separator.bottomOffset
+//        )
+//        
+//        separatorBottom?.isActive = true
     }
 }

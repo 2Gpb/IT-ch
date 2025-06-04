@@ -63,9 +63,9 @@ extension ITCHSelectAccountInteractor: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = ITCHAccountsCollectionSection.allCases[indexPath.section]
-        
-        guard let cell: ITCHAccountCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHAccountCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHAccountCell else {
+            return rawCell
         }
         
         switch section {

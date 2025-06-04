@@ -192,8 +192,9 @@ extension ITCHNotificationsInteractor: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ITCHNotificationCell = tableView.dequeueCell(for: indexPath) else {
-            return UITableViewCell()
+        let rawCell = tableView.dequeueReusableCell(withIdentifier: ITCHNotificationCell.reuseId, for: indexPath)
+        guard let cell = rawCell as? ITCHNotificationCell else {
+            return rawCell
         }
         
         let model = notifications[indexPath.row]

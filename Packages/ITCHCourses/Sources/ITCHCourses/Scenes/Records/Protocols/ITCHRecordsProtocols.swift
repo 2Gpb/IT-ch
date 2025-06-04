@@ -15,12 +15,25 @@ protocol ITCHRecordsBusinessLogic: UITableViewDataSource {
 }
 
 protocol ITCHRecordsPresentationLogic {
-    func presentStart(for role: ITCHCourseUserRole, isEmpty: Bool)
+    func presentStart(for role: ITCHCourseUserRole)
+    func presentRecords(isEmpty: Bool)
 }
 
 protocol ITCHRecordsRouterLogic {
-    func routeToAddRecord()
+    func routeToAddRecord(with id: Int, actionOnDismiss: (() -> Void)?)
     func routeToOpenRecord(with link: String?)
-    func routeToEditRecord(with model: ITCHRecordModel?)
+    func routeToEditRecord(
+        for id: Int,
+        with model: ITCHRecordsModel.Local.ITCHRecord?,
+        actionOnDismiss: (() -> Void)?
+    )
     func popViewController()
+}
+
+protocol ITCHRecordWorker {
+    func fetchRecords(
+        for token: String,
+        with id: Int,
+        completion: ((Result<[ITCHRecordsModel.Network.ITCHRecord]?, Error>) -> Void)?
+    ) 
 }

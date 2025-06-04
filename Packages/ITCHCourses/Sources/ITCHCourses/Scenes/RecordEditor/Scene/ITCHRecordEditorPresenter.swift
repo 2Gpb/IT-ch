@@ -8,9 +8,14 @@
 final class ITCHRecordEditorPresenter: ITCHRecordEditorPresentationLogic {
     // MARK: - Variables
     weak var view: ITCHRecordEditorViewController?
+    private let actionOnDismiss: (() -> Void)?
+    
+    init(actionOnDismiss: (() -> Void)?) {
+        self.actionOnDismiss = actionOnDismiss
+    }
     
     // MARK: - Methods
-    func presentStart(with model: ITCHRecordModel?) {
+    func presentStart(with model: ITCHRecordEditorModel.Local.ITCHRecord?) {
         view?.displayStart(with: model)
     }
 }
@@ -18,6 +23,7 @@ final class ITCHRecordEditorPresenter: ITCHRecordEditorPresentationLogic {
 // MARK: - RouterLogic
 extension ITCHRecordEditorPresenter: ITCHRecordEditorRouterLogic {
     func popViewController() {
+        actionOnDismiss?()
         view?.dismiss(animated: true)
     }
 }

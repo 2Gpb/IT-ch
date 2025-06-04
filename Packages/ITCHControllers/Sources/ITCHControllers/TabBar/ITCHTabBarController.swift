@@ -53,7 +53,20 @@ public final class ITCHTabBarController: UITabBarController {
         }
     }
     
+    // MARK: - Private fields
+    private let exitAction: () -> Void
+    
     // MARK: - Lifecycle
+    public init(exitAction: @escaping () -> Void) {
+        self.exitAction = exitAction
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -97,7 +110,7 @@ public final class ITCHTabBarController: UITabBarController {
         )
         
         let profile = createNavController(
-            rootViewController: ITCHProfileAssembly.build(),
+            rootViewController: ITCHProfileAssembly.build(exitAction: exitAction),
             title: Constant.Profile.title,
             image: Constant.Profile.image,
             selectedImage: Constant.Profile.selectedImage

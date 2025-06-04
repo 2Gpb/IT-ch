@@ -7,16 +7,25 @@
 
 protocol ITCHCourseEditorBusinessLogic {
     func loadStart()
-    func loadChangeCourse(with model: ITCHCourseEditorModel)
+    func loadChangeCourse(with model: ITCHCourseEditorModel.Local.ITCHCourse)
     func loadDismiss()
-    func loadCreateSchedule(with model: ITCHCourseEditorModel)
+    func loadCreateSchedule(with model: ITCHCourseEditorModel.Local.ITCHCourse)
 }
 
 protocol ITCHCourseEditorPresentationLogic {
-    func presentStart(with model: ITCHCourseEditorModel?)
+    func presentStart(with model: ITCHCourseEditorModel.Local.ITCHCourse?)
 }
 
 protocol ITCHCourseEditorRouterLogic {
     func popViewController()
-    func routeToCreateSchedule(with model: ITCHCourseEditorModel?)
+    func routeToCreateSchedule(with model: ITCHCourseEditorModel.Local.ITCHCourse?)
+}
+
+protocol ITCHCourseEditorWorker {
+    func changeCourse(
+        for token: String,
+        with id: Int,
+        model: ITCHCourseEditorModel.Network.ITCHCourse,
+        completion: ((Result<ITCHCourseEditorModel.Network.ITCHCourse?, Error>) -> Void)?
+    )
 }

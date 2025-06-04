@@ -118,6 +118,21 @@ final class ITCHFullNameViewController: UIViewController {
         nameTextField.configure(with: ITCHTextFieldViewModel(placeholder: Constant.Placeholders.name))
         surnameTextField.configure(with: ITCHTextFieldViewModel(placeholder: Constant.Placeholders.surname))
         patronymicTextField.configure(with: ITCHTextFieldViewModel(placeholder: Constant.Placeholders.patronymic))
+        
+        [nameTextField, surnameTextField].forEach { textField in
+            textField.editingAction = { [weak self] in
+                guard
+                    let self,
+                    let name = self.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                    let surname = self.surnameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                else {
+                    self?.createButton.isEnabled = false
+                    return
+                }
+                
+                self.createButton.isEnabled = !name.isEmpty && !surname.isEmpty
+            }
+        }
     }
     
     private func setUpContentStackView() {
@@ -135,15 +150,23 @@ final class ITCHFullNameViewController: UIViewController {
     
     private func setUpCreateButton() {
         createButton.configure(title: Constant.CreateButton.title)
-        createButton.action = { [weak self] in
-            self?.nameTextField.keyboardState = .close
-            self?.surnameTextField.keyboardState = .close
-            self?.patronymicTextField.keyboardState = .close
-            self?.interactor.loadSignUp()
-        }
+        createButton.action = createButtonAction
+        createButton.isEnabled = false
         
         view.addSubview(createButton)
         createButton.pinTop(to: contentStackView.bottomAnchor, Constant.CreateButton.topOffset)
         createButton.pinHorizontal(to: view, Constant.CreateButton.horizontalOffset)
+    }
+    
+    // MARK: - Actions
+    private func createButtonAction() {
+        nameTextField.keyboardState = .close
+        surnameTextField.keyboardState = .close
+        patronymicTextField.keyboardState = .close
+        
+        interactor.loadSignUp(
+            with:
+                "\(surnameTextField.text ?? "") \(nameTextField.text ?? "") \(patronymicTextField.text ?? "")"
+        )
     }
 }

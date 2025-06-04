@@ -15,8 +15,8 @@ final class ITCHFullNameInteractor: ITCHFullNameBusinessLogic {
     }
     
     // MARK: - Methods
-    func loadSignUp() {
-        presenter.routeToSignUp()
+    func loadSignUp(with fullName: String) {
+        presenter.routeToSignUp(with: fullName)
     }
     
     func loadDismiss() {

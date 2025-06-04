@@ -12,8 +12,8 @@ final class ITCHCoursePresenter: ITCHCoursePresentationLogic {
     weak var view: ITCHCourseViewController?
     
     // MARK: - Methods
-    func presentStart() {
-        view?.displayStart()
+    func presentStart(with role: ITCHCourseUserRole) {
+        view?.displayStart(with: role)
     }
 }
 
@@ -23,12 +23,12 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
         view?.navigationController?.popViewController(animated: true)
     }
     
-    func routeToChangeCourse(with model: ITCHCourseEditorModel?) {
-        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(with: model), animated: true)
+    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
+        view?.navigationController?.pushViewController(ITCHCourseEditorAssembly.build(for: id, with: model), animated: true)
     }
     
-    func routeToChangeSchedule(with model: ITCHScheduleEditorModel?) {
-        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(editWith: model), animated: true)
+    func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) {
+        view?.navigationController?.pushViewController(ITCHScheduleEditorAssembly.build(for: id, editWith: model), animated: true)
     }
     
     func routeToChat(for link: String?) {
@@ -39,15 +39,15 @@ extension ITCHCoursePresenter: ITCHCourseRouterLogic {
         link?.openURL()
     }
     
-    func routeToMembers() {
-        view?.navigationController?.pushViewController(ITCHMembersAssembly.build(), animated: true)
+    func routeToMembers(with id: Int) {
+        view?.navigationController?.pushViewController(ITCHMembersAssembly.build(with: id), animated: true)
     }
     
-    func routeToRecords(with role: ITCHCourseUserRole) {
-        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(for: role), animated: true)
+    func routeToRecords(with id: Int, for role: ITCHCourseUserRole) {
+        view?.navigationController?.pushViewController(ITCHRecordsAssembly.build(with: id, for: role), animated: true)
     }
     
-    func routeToHomeWorks(with role: ITCHCourseUserRole) {
-        view?.navigationController?.pushViewController(ITCHHomeWorksAssembly.build(for: role), animated: true)
+    func routeToHomeWorks(with id: Int, for role: ITCHCourseUserRole) {
+        view?.navigationController?.pushViewController(ITCHHomeWorksAssembly.build(with: id, for: role), animated: true)
     }
 }

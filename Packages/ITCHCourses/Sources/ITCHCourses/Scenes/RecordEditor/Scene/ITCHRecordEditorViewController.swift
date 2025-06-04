@@ -93,16 +93,35 @@ final class ITCHRecordEditorViewController: UIViewController {
     }
     
     // MARK: - Methods
-    func displayStart(with model: ITCHRecordModel?) {
+    func displayStart(with model: ITCHRecordEditorModel.Local.ITCHRecord?) {
         if let model {
             navigationBar.configure(with: Constant.NavigationBar.editTitle)
             setUpDeleteButton()
             
-            dateTextField.text = model.date.configure(to: Constant.DateTextField.dateFormat)
-            datePicker.configure(with: model.date)
-            linkTextField.text = model.link
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d MMMM yyyy'г.'"
+            formatter.locale = Locale(identifier: "ru_RU")
+
+            let date = formatter.date(from: model.title)
+            
+            dateTextField.text = model.title
+            datePicker.configure(with: date ?? Date())
+            linkTextField.text = model.videoLink
+            
+            navigationBar.rightAction = { [weak self] in
+                self?.interactor.loadChangeRecord(
+                    date: self?.dateTextField.text ?? "",
+                    videoURL: self?.linkTextField.text ?? ""
+                )
+            }
         } else {
             navigationBar.configure(with: Constant.NavigationBar.createTitle)
+            navigationBar.rightAction = { [weak self] in
+                self?.interactor.loadAddRecord(
+                    date: self?.dateTextField.text ?? "",
+                    videoURL: self?.linkTextField.text ?? ""
+                )
+            }
         }
     }
     
@@ -117,7 +136,6 @@ final class ITCHRecordEditorViewController: UIViewController {
     
     private func setUpNavigationBar() {
         navigationBar.leftAction = { [weak self] in self?.interactor.loadDismiss() }
-        navigationBar.rightAction = { [weak self] in self?.interactor.loadDismiss() }
         
         view.addSubview(navigationBar)
         navigationBar.pinTop(to: view.topAnchor, Constant.NavigationBar.topOffset)
@@ -175,7 +193,7 @@ final class ITCHRecordEditorViewController: UIViewController {
     
     private func setUpDeleteButton() {
         deleteButton.configure(title: Constant.DeleteButton.title)
-        deleteButton.action = { [weak self] in self?.interactor.loadDismiss() }
+        deleteButton.action = { [weak self] in self?.interactor.loadDeleteRecord() }
         
         view.addSubview(deleteButton)
         deleteButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constant.DeleteButton.bottomOffset)
