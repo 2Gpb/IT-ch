@@ -14,7 +14,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     // MARK: - Private fields
     private let presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic
     private let networkService: ITCHCourseWorker
-    private let secureService: ITCHSecureSessionService
+    private let secureService: ITCHSecureSessionLogic
     
     private var actionRowTitles: [String] = []
     private let id: Int
@@ -29,7 +29,7 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
         with id: Int,
         presenter: ITCHCoursePresentationLogic & ITCHCourseRouterLogic,
         networkService: ITCHCourseWorker,
-        secureService: ITCHSecureSessionService
+        secureService: ITCHSecureSessionLogic
     ) {
         self.id = id
         self.presenter = presenter
