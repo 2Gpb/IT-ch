@@ -66,6 +66,19 @@ final class ITCHCourseTests: XCTestCase {
         XCTAssertTrue(presenter.didPresentStart)
         XCTAssertEqual(presenter.role, .student)
     }
+    
+    func testDeleteCourse() {
+        secureService.set(tokensModel: ITCHAccessToken(token: "mock-token", refreshToken: "refresh"))
+        
+        let expectation = XCTestExpectation(description: "Course delete loaded")
+        presenter.onPresentStart = {
+            expectation.fulfill()
+        }
+        
+        interactor.loadDeleteCourse()
+        wait(for: [expectation], timeout: 1.0)
+        XCTAssertTrue(presenter.didPop)
+    }
 }
 
 // MARK: - Mocks
@@ -74,15 +87,21 @@ final class ITCHCoursePresenterMock: ITCHCoursePresentationLogic, ITCHCourseRout
     var role: ITCHCourseUserRole?
     var onPresentStart: (() -> Void)?
     
+    var didPop = false
+    
     func presentStart(with role: ITCHCourseUserRole) {
         didPresentStart = true
         self.role = role
         onPresentStart?()
     }
     
+    func popViewController() {
+        didPop = true
+        onPresentStart?()
+    }
+    
     func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) { }
     func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) { }
-    func popViewController() { }
     func routeToChat(for link: String?) { }
     func routeToGrades(for link: String?) { }
     func routeToMembers(with id: Int) { }
