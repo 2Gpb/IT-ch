@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D09029002D54C89D008001CE"
-               BuildableName = "IT-ch.app"
-               BlueprintName = "IT-ch"
-               ReferencedContainer = "container:IT-ch.xcodeproj">
+               BlueprintIdentifier = "ITCHCourses"
+               BuildableName = "ITCHCourses"
+               BlueprintName = "ITCHCourses"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,25 +31,13 @@
       shouldAutocreateTestPlan = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D06238FF2DF0719000288C1E"
-               BuildableName = "IT-chTests.xctest"
-               BlueprintName = "IT-chTests"
-               ReferencedContainer = "container:IT-ch.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D06238FF2DF0719000288C1E"
-               BuildableName = "IT-chTests.xctest"
-               BlueprintName = "IT-chTests"
-               ReferencedContainer = "container:IT-ch.xcodeproj">
+               BlueprintIdentifier = "ITCHCoursesTests"
+               BuildableName = "ITCHCoursesTests"
+               BlueprintName = "ITCHCoursesTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -64,16 +52,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D09029002D54C89D008001CE"
-            BuildableName = "IT-ch.app"
-            BlueprintName = "IT-ch"
-            ReferencedContainer = "container:IT-ch.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -81,16 +59,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D09029002D54C89D008001CE"
-            BuildableName = "IT-ch.app"
-            BlueprintName = "IT-ch"
-            ReferencedContainer = "container:IT-ch.xcodeproj">
+            BlueprintIdentifier = "ITCHCourses"
+            BuildableName = "ITCHCourses"
+            BlueprintName = "ITCHCourses"
+            ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

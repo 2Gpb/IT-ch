@@ -9,6 +9,8 @@ import UIKit
 import ITCHUtilities
 
 protocol ITCHMyCoursesBusinessLogic: UITableViewDataSource {
+    var courses: [ITCHCoursesModel.Local.ITCHCourse] { get }
+    
     func loadStart()
     func loadCourse(for index: Int)
     func loadCreateCourse()

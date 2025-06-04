@@ -15,7 +15,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "Packages/ITCHCore")
+        .package(path: "Packages/ITCHCore"),
+        .package(url: "https://github.com/hackiftekhar/IQKeyboardManager", from: "8.0.1"),
+        .package(url: "https://github.com/hackiftekhar/IQKeyboardToolbarManager", from: "1.0.10")
     ],
     targets: [
         .target(
@@ -23,6 +25,16 @@ let package = Package(
             dependencies: [
                 "ITCHCore"
             ]
+        ),
+        .testTarget(
+            name: "ITCHCoursesTests",
+            dependencies: [
+                "ITCHCore",
+                "ITCHCourses",
+                .product(name: "IQKeyboardManagerSwift", package: "IQKeyboardManager"),
+                .product(name: "IQKeyboardToolbarManager", package: "IQKeyboardToolbarManager")
+            ],
+            path: "Sources/ITCHCoursesTests"
         )
     ],
     swiftLanguageModes: [.v5]

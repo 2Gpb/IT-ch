@@ -19,7 +19,7 @@ final class ITCHMyCoursesInteractor: NSObject, ITCHMyCoursesBusinessLogic {
     private let userRoleService: ITCHUserRoleLogic
     
     // MARK: - Variables
-    private var courses: [ITCHCoursesModel.Local.ITCHCourse] = []
+    var courses: [ITCHCoursesModel.Local.ITCHCourse] = []
     
     // MARK: - Lifecycle
     init(
