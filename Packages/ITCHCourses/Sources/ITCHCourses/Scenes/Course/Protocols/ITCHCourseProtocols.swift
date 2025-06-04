@@ -11,6 +11,7 @@ import ITCHUtilities
 
 protocol ITCHCourseBusinessLogic: UITableViewDataSource {
     var role: ITCHCourseUserRole { get }
+    var course: ITCHCurrentCourseModel.Local.ITCHCourse? { get }
     
     func loadStart()
     func loadDismiss()

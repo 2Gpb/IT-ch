@@ -105,6 +105,6 @@ public final class ITCHKeychainService: ITCHKeychainLogic {
     }
 
     private static func getAppName() -> String {
-        return "com.\((Bundle.main.infoDictionary!["CFBundleName"] as? String) ?? "").app"
+        return "com.\((Bundle.main.infoDictionary?["CFBundleName"] as? String) ?? "").app"
     }
 }
