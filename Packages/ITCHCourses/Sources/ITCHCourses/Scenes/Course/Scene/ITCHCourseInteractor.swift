@@ -18,11 +18,11 @@ final class ITCHCourseInteractor: NSObject, ITCHCourseBusinessLogic {
     
     private var actionRowTitles: [String] = []
     private let id: Int
-    private var course: ITCHCurrentCourseModel.Local.ITCHCourse?
     private let titles = ["КУРС", "ПРЕПОДАВАТЕЛЬ", "ОБЩАЯ ИНФОРМАЦИЯ", "ВАША РОЛЬ"]
     
     // MARK: - Variables
     var role: ITCHCourseUserRole = .none
+    var course: ITCHCurrentCourseModel.Local.ITCHCourse?
     
     // MARK: - Lifecycle
     init(

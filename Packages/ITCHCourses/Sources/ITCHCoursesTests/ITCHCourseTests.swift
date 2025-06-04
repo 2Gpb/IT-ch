@@ -79,6 +79,33 @@ final class ITCHCourseTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(presenter.didPop)
     }
+    
+    func testLoadChangeCourse() {
+        interactor.course = ITCHCurrentCourseModel.Local.ITCHCourse(
+            courseName: "Math",
+            teacherName: "Ivanov",
+            avatar: nil,
+            durationLocation: ["1, 2 модули", "Аудитория 101"],
+            role: "STUDENT",
+            chatLink: "chat-link",
+            gradesLink: "grades-link",
+            schedule: ITCHCurrentCourseModel.Schedule(
+                frequency: "Раз в неделю",
+                academicHours: 2,
+                dayOfWeek: "Понедельник",
+                startTime: "10:00"
+            )
+        )
+
+        interactor.loadChangeCourse()
+
+        // then
+        XCTAssertTrue(presenter.didRouteToChangeCourse)
+        XCTAssertEqual(presenter.passedCourseModel?.name, "Math")
+        XCTAssertEqual(presenter.passedCourseModel?.startModule, 1)
+        XCTAssertEqual(presenter.passedCourseModel?.endModule, 2)
+        XCTAssertEqual(presenter.passedCourseModel?.location, "Аудитория 101")
+    }
 }
 
 // MARK: - Mocks
@@ -86,6 +113,9 @@ final class ITCHCoursePresenterMock: ITCHCoursePresentationLogic, ITCHCourseRout
     var didPresentStart = false
     var role: ITCHCourseUserRole?
     var onPresentStart: (() -> Void)?
+    
+    var didRouteToChangeCourse = false
+    var passedCourseModel: ITCHCourseEditorModel.Local.ITCHCourse?
     
     var didPop = false
     
@@ -100,7 +130,11 @@ final class ITCHCoursePresenterMock: ITCHCoursePresentationLogic, ITCHCourseRout
         onPresentStart?()
     }
     
-    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) { }
+    func routeToChangeCourse(for id: Int, with model: ITCHCourseEditorModel.Local.ITCHCourse?) {
+        didRouteToChangeCourse = true
+        passedCourseModel = model
+    }
+    
     func routeToChangeSchedule(for id: Int, with model: ITCHScheduleEditorModel.Local.ITCHSchedule?) { }
     func routeToChat(for link: String?) { }
     func routeToGrades(for link: String?) { }
